@@ -1,0 +1,18 @@
+﻿# Local Mihomo runtime/cache files
+.cache/
+cache.db
+*.log
+
+# Private local configs
+*.local.yaml
+*.private.yaml
+private/
+secrets/
+
+# OS/editor noise
+.DS_Store
+Thumbs.db
+.idea/
+.vscode/
+*.swp
+*~
