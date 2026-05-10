@@ -16,3 +16,7 @@ Thumbs.db
 .vscode/
 *.swp
 *~
+
+# Local working files that should not be published
+README.md
+mihomo_byallen注释版.yaml
