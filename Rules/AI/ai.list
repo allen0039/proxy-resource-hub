@@ -21,7 +21,8 @@ DOMAIN-SUFFIX,generativelanguage.googleapis.com
 
 # Microsoft Copilot
 DOMAIN-SUFFIX,copilot.microsoft.com
-DOMAIN-SUFFIX,bingapis.com
+DOMAIN-SUFFIX,copilot.cloud.microsoft
+DOMAIN-SUFFIX,edgeservices.bing.com
 
 # Perplexity / Poe
 DOMAIN-SUFFIX,perplexity.ai
