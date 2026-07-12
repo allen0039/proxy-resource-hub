@@ -1,0 +1,36 @@
+# OpenAI / ChatGPT
+openai.com
+chatgpt.com
+oaistatic.com
+oaiusercontent.com
+openaiapi-site.azureedge.net
+openaicom-api-bdcpf8c6d2e9atf6.z01.azurefd.net
+
+# Anthropic / Claude
+anthropic.com
+claude.ai
+
+# Google AI / Gemini
+gemini.google.com
+aistudio.google.com
+makersuite.google.com
+generativelanguage.googleapis.com
+
+# Microsoft Copilot
+copilot.microsoft.com
+copilot.cloud.microsoft
+edgeservices.bing.com
+
+# Perplexity / Poe
+perplexity.ai
+poe.com
+
+# xAI / Grok
+grok.com
+x.ai
+
+# Other common AI tools
+character.ai
+midjourney.com
+runwayml.com
+notebooklm.google.com
