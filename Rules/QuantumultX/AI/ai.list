@@ -1,0 +1,38 @@
+# Generated from Rules/Source/AI/ai.txt by tools/generate_rules.py. Do not edit.
+
+# OpenAI / ChatGPT
+host-suffix, openai.com, proxy
+host-suffix, chatgpt.com, proxy
+host-suffix, oaistatic.com, proxy
+host-suffix, oaiusercontent.com, proxy
+host-suffix, openaiapi-site.azureedge.net, proxy
+host-suffix, openaicom-api-bdcpf8c6d2e9atf6.z01.azurefd.net, proxy
+
+# Anthropic / Claude
+host-suffix, anthropic.com, proxy
+host-suffix, claude.ai, proxy
+
+# Google AI / Gemini
+host-suffix, gemini.google.com, proxy
+host-suffix, aistudio.google.com, proxy
+host-suffix, makersuite.google.com, proxy
+host-suffix, generativelanguage.googleapis.com, proxy
+
+# Microsoft Copilot
+host-suffix, copilot.microsoft.com, proxy
+host-suffix, copilot.cloud.microsoft, proxy
+host-suffix, edgeservices.bing.com, proxy
+
+# Perplexity / Poe
+host-suffix, perplexity.ai, proxy
+host-suffix, poe.com, proxy
+
+# xAI / Grok
+host-suffix, grok.com, proxy
+host-suffix, x.ai, proxy
+
+# Other common AI tools
+host-suffix, character.ai, proxy
+host-suffix, midjourney.com, proxy
+host-suffix, runwayml.com, proxy
+host-suffix, notebooklm.google.com, proxy

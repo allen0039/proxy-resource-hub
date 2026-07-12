@@ -1,0 +1,9 @@
+# Generated from Rules/Source/AI/gongyiai.txt by tools/generate_rules.py. Do not edit.
+
+# Public-welfare AI services maintained by Allen
+host-suffix, abrdns.com, proxy
+host-suffix, anyrouter.top, proxy
+host-suffix, muyuan.do, proxy
+host-suffix, 7r.fit, proxy
+host-suffix, hybgzs.com, proxy
+host-suffix, muapi.cn, proxy
