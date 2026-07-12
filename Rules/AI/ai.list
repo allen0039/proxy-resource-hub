@@ -1,5 +1,4 @@
-# AI services maintained by Allen
-# Format: Mihomo classical rule-provider list. Do not append policy names here.
+# Generated from Rules/Source/AI/ai.txt by tools/generate_rules.py. Do not edit.
 
 # OpenAI / ChatGPT
 DOMAIN-SUFFIX,openai.com
