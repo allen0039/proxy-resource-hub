@@ -20,6 +20,53 @@ def load_generator():
 
 
 class RuleGeneratorTests(unittest.TestCase):
+    def test_all_generated_outputs_are_current(self):
+        generator = load_generator()
+        self.assertEqual([], generator.sync_outputs(ROOT, check=True))
+
+    def test_output_map_contains_all_ten_files(self):
+        generator = load_generator()
+        outputs = generator.build_outputs(ROOT)
+
+        self.assertEqual(10, len(outputs))
+        for client in ("Mihomo", "Surge", "QuantumultX", "Loon"):
+            for ruleset in ("ai", "gongyiai"):
+                expected = ROOT / "Rules" / client / "AI" / f"{ruleset}.list"
+                self.assertIn(expected, outputs)
+        for ruleset in ("ai", "gongyiai"):
+            legacy = ROOT / "Rules" / "AI" / f"{ruleset}.list"
+            self.assertIn(legacy, outputs)
+
+    def test_check_mode_detects_a_stale_output(self):
+        generator = load_generator()
+        with tempfile.TemporaryDirectory() as tmp:
+            root = Path(tmp)
+            source_dir = root / "Rules" / "Source" / "AI"
+            source_dir.mkdir(parents=True)
+            for name in ("ai", "gongyiai"):
+                (source_dir / f"{name}.txt").write_text(
+                    "example.com\n", encoding="utf-8"
+                )
+            generator.sync_outputs(root, check=False)
+            stale_path = root / "Rules" / "Mihomo" / "AI" / "ai.list"
+            stale_path.write_text("stale\n", encoding="utf-8")
+
+            self.assertIn(stale_path, generator.sync_outputs(root, check=True))
+
+    def test_generated_rule_lines_have_platform_specific_fields(self):
+        generator = load_generator()
+        outputs = generator.build_outputs(ROOT)
+
+        for path, content in outputs.items():
+            rule_lines = [line for line in content.splitlines() if line and not line.startswith("#")]
+            if "QuantumultX" in path.parts:
+                self.assertTrue(all(line.startswith("host-suffix, ") for line in rule_lines))
+                self.assertTrue(all(line.endswith(", proxy") for line in rule_lines))
+                self.assertTrue(all(len(line.split(", ")) == 3 for line in rule_lines))
+            else:
+                self.assertTrue(all(line.startswith("DOMAIN-SUFFIX,") for line in rule_lines))
+                self.assertTrue(all(len(line.split(",")) == 2 for line in rule_lines))
+
     def test_parse_source_rejects_duplicates(self):
         generator = load_generator()
         with tempfile.TemporaryDirectory() as tmp:
