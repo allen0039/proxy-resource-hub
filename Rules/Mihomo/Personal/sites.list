@@ -1,0 +1,7 @@
+# Generated from Rules/Source/Personal/sites.txt by tools/generate_rules.py. Do not edit.
+
+# Allen personal sites (default: DIRECT)
+DOMAIN-SUFFIX,ikirito.de
+DOMAIN-SUFFIX,allennas.de
+DOMAIN-SUFFIX,052909.xyz
+DOMAIN-SUFFIX,mfallen.de

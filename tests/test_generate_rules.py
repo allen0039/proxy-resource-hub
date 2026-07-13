@@ -24,11 +24,11 @@ class RuleGeneratorTests(unittest.TestCase):
         generator = load_generator()
         self.assertEqual([], generator.sync_outputs(ROOT, check=True))
 
-    def test_output_map_contains_all_ten_files(self):
+    def test_output_map_contains_all_expected_files(self):
         generator = load_generator()
         outputs = generator.build_outputs(ROOT)
 
-        self.assertEqual(10, len(outputs))
+        self.assertEqual(14, len(outputs))
         for client in ("Mihomo", "Surge", "QuantumultX", "Loon"):
             for ruleset in ("ai", "gongyiai"):
                 expected = ROOT / "Rules" / client / "AI" / f"{ruleset}.list"
@@ -36,6 +36,35 @@ class RuleGeneratorTests(unittest.TestCase):
         for ruleset in ("ai", "gongyiai"):
             legacy = ROOT / "Rules" / "AI" / f"{ruleset}.list"
             self.assertIn(legacy, outputs)
+
+    def test_personal_sites_outputs_are_generated_for_every_client(self):
+        generator = load_generator()
+        outputs = generator.build_outputs(ROOT)
+        expected_domains = (
+            "ikirito.de",
+            "allennas.de",
+            "052909.xyz",
+            "mfallen.de",
+        )
+
+        for client in ("Mihomo", "Surge", "QuantumultX", "Loon"):
+            path = ROOT / "Rules" / client / "Personal" / "sites.list"
+            self.assertIn(path, outputs)
+            content = outputs[path]
+            rule_lines = tuple(
+                line
+                for line in content.splitlines()
+                if line and not line.startswith("#")
+            )
+            if client == "QuantumultX":
+                expected_lines = tuple(
+                    f"host-suffix, {domain}, proxy" for domain in expected_domains
+                )
+            else:
+                expected_lines = tuple(
+                    f"DOMAIN-SUFFIX,{domain}" for domain in expected_domains
+                )
+            self.assertEqual(expected_lines, rule_lines)
 
     def test_check_mode_detects_a_stale_output(self):
         generator = load_generator()
@@ -47,6 +76,11 @@ class RuleGeneratorTests(unittest.TestCase):
                 (source_dir / f"{name}.txt").write_text(
                     "example.com\n", encoding="utf-8"
                 )
+            personal_dir = root / "Rules" / "Source" / "Personal"
+            personal_dir.mkdir(parents=True)
+            (personal_dir / "sites.txt").write_text(
+                "example.com\n", encoding="utf-8"
+            )
             generator.sync_outputs(root, check=False)
             stale_path = root / "Rules" / "Mihomo" / "AI" / "ai.list"
             stale_path.write_text("stale\n", encoding="utf-8")
