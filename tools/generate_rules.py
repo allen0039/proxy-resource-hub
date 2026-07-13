@@ -9,7 +9,7 @@ ROOT = Path(__file__).resolve().parents[1]
 RULESET_SPECS = (
     ("AI", "ai", True),
     ("AI", "gongyiai", True),
-    ("Personal", "sites", False),
+    ("Personal", "Domain", False),
 )
 CLASSICAL_TARGETS = ("Mihomo", "Surge", "Loon")
 DOMAIN_RE = re.compile(
