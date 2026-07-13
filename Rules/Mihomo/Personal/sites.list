@@ -1,0 +1,7 @@
+# Generated from Rules/Source/Personal/sites.txt by tools/generate_rules.py. Do not edit.
+
+# Allen personal sites (default: DIRECT)
+DOMAIN-SUFFIX,private-service-1.invalid
+DOMAIN-SUFFIX,private-service-2.invalid
+DOMAIN-SUFFIX,private-service-3.invalid
+DOMAIN-SUFFIX,private-service-4.invalid

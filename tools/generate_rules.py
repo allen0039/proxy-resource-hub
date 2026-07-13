@@ -6,7 +6,11 @@ from pathlib import Path
 
 
 ROOT = Path(__file__).resolve().parents[1]
-RULESETS = ("ai", "gongyiai")
+RULESET_SPECS = (
+    ("AI", "ai", True),
+    ("AI", "gongyiai", True),
+    ("Personal", "sites", False),
+)
 CLASSICAL_TARGETS = ("Mihomo", "Surge", "Loon")
 DOMAIN_RE = re.compile(
     r"(?=.{1,253}\Z)(?:[a-z0-9](?:[a-z0-9-]{0,61}[a-z0-9])?\.)+"
@@ -47,17 +51,18 @@ def render(lines: list[str], style: str, source_label: str) -> str:
 
 def build_outputs(root: Path) -> dict[Path, str]:
     outputs: dict[Path, str] = {}
-    for name in RULESETS:
-        source = root / "Rules" / "Source" / "AI" / f"{name}.txt"
+    for directory, name, legacy_output in RULESET_SPECS:
+        source = root / "Rules" / "Source" / directory / f"{name}.txt"
         source_label = source.relative_to(root).as_posix()
         lines = parse_source(source)
         classical = render(lines, "classical", source_label)
         for client in CLASSICAL_TARGETS:
-            outputs[root / "Rules" / client / "AI" / f"{name}.list"] = classical
-        outputs[root / "Rules" / "QuantumultX" / "AI" / f"{name}.list"] = render(
-            lines, "quantumultx", source_label
-        )
-        outputs[root / "Rules" / "AI" / f"{name}.list"] = classical
+            outputs[root / "Rules" / client / directory / f"{name}.list"] = classical
+        outputs[
+            root / "Rules" / "QuantumultX" / directory / f"{name}.list"
+        ] = render(lines, "quantumultx", source_label)
+        if legacy_output:
+            outputs[root / "Rules" / "AI" / f"{name}.list"] = classical
     return outputs
 
 
