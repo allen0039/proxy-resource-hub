@@ -69,11 +69,11 @@ https://raw.githubusercontent.com/allen0039/proxy-resource-hub/main/Rules/Loon/A
 
 ## 个人网站（默认直连）
 
-个人网站域名统一在 `Rules/Source/Personal/sites.txt` 中维护，四端订阅默认映射到直连策略。
+个人网站域名统一在 `Rules/Source/Personal/Domain.txt` 中维护，四端订阅默认映射到直连策略。
 
 ### Mihomo
 
-- [个人网站](https://raw.githubusercontent.com/allen0039/proxy-resource-hub/main/Rules/Mihomo/Personal/sites.list)
+- [个人网站](https://raw.githubusercontent.com/allen0039/proxy-resource-hub/main/Rules/Mihomo/Personal/Domain.list)
 
 ```yaml
 rule-providers:
@@ -81,8 +81,8 @@ rule-providers:
     type: http
     behavior: classical
     format: text
-    url: https://raw.githubusercontent.com/allen0039/proxy-resource-hub/main/Rules/Mihomo/Personal/sites.list
-    path: ./ruleset/personal-sites.list
+    url: https://raw.githubusercontent.com/allen0039/proxy-resource-hub/main/Rules/Mihomo/Personal/Domain.list
+    path: ./ruleset/Domain.list
     interval: 86400
 
 rules:
@@ -91,29 +91,29 @@ rules:
 
 ### Surge
 
-- [个人网站](https://raw.githubusercontent.com/allen0039/proxy-resource-hub/main/Rules/Surge/Personal/sites.list)
+- [个人网站](https://raw.githubusercontent.com/allen0039/proxy-resource-hub/main/Rules/Surge/Personal/Domain.list)
 
 ```ini
 [Rule]
-RULE-SET,https://raw.githubusercontent.com/allen0039/proxy-resource-hub/main/Rules/Surge/Personal/sites.list,DIRECT
+RULE-SET,https://raw.githubusercontent.com/allen0039/proxy-resource-hub/main/Rules/Surge/Personal/Domain.list,DIRECT
 ```
 
 ### Quantumult X
 
-- [个人网站](https://raw.githubusercontent.com/allen0039/proxy-resource-hub/main/Rules/QuantumultX/Personal/sites.list)
+- [个人网站](https://raw.githubusercontent.com/allen0039/proxy-resource-hub/main/Rules/QuantumultX/Personal/Domain.list)
 
 ```ini
 [filter_remote]
-https://raw.githubusercontent.com/allen0039/proxy-resource-hub/main/Rules/QuantumultX/Personal/sites.list, tag=个人网站, force-policy=direct, update-interval=86400, enabled=true
+https://raw.githubusercontent.com/allen0039/proxy-resource-hub/main/Rules/QuantumultX/Personal/Domain.list, tag=个人网站, force-policy=direct, update-interval=86400, enabled=true
 ```
 
 ### Loon
 
-- [个人网站](https://raw.githubusercontent.com/allen0039/proxy-resource-hub/main/Rules/Loon/Personal/sites.list)
+- [个人网站](https://raw.githubusercontent.com/allen0039/proxy-resource-hub/main/Rules/Loon/Personal/Domain.list)
 
 ```ini
 [Remote Rule]
-https://raw.githubusercontent.com/allen0039/proxy-resource-hub/main/Rules/Loon/Personal/sites.list, policy=DIRECT, tag=个人网站, enabled=true
+https://raw.githubusercontent.com/allen0039/proxy-resource-hub/main/Rules/Loon/Personal/Domain.list, policy=DIRECT, tag=个人网站, enabled=true
 ```
 
 ## 兼容地址
