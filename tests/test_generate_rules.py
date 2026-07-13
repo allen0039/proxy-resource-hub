@@ -40,6 +40,8 @@ class RuleGeneratorTests(unittest.TestCase):
     def test_personal_sites_outputs_are_generated_for_every_client(self):
         generator = load_generator()
         outputs = generator.build_outputs(ROOT)
+        source = ROOT / "Rules" / "Source" / "Personal" / "Domain.txt"
+        old_source = ROOT / "Rules" / "Source" / "Personal" / "sites.txt"
         expected_domains = (
             "ikirito.de",
             "allennas.de",
@@ -47,9 +49,14 @@ class RuleGeneratorTests(unittest.TestCase):
             "mfallen.de",
         )
 
+        self.assertTrue(source.exists())
+        self.assertFalse(old_source.exists())
         for client in ("Mihomo", "Surge", "QuantumultX", "Loon"):
-            path = ROOT / "Rules" / client / "Personal" / "sites.list"
+            path = ROOT / "Rules" / client / "Personal" / "Domain.list"
+            old_path = ROOT / "Rules" / client / "Personal" / "sites.list"
             self.assertIn(path, outputs)
+            self.assertNotIn(old_path, outputs)
+            self.assertFalse(old_path.exists())
             content = outputs[path]
             rule_lines = tuple(
                 line
@@ -78,7 +85,7 @@ class RuleGeneratorTests(unittest.TestCase):
                 )
             personal_dir = root / "Rules" / "Source" / "Personal"
             personal_dir.mkdir(parents=True)
-            (personal_dir / "sites.txt").write_text(
+            (personal_dir / "Domain.txt").write_text(
                 "example.com\n", encoding="utf-8"
             )
             generator.sync_outputs(root, check=False)

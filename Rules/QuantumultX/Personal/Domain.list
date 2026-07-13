@@ -1,4 +1,4 @@
-# Generated from Rules/Source/Personal/sites.txt by tools/generate_rules.py. Do not edit.
+# Generated from Rules/Source/Personal/Domain.txt by tools/generate_rules.py. Do not edit.
 
 # Allen personal sites (default: DIRECT)
 host-suffix, ikirito.de, proxy
