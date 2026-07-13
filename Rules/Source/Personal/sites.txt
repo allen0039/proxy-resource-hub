@@ -1,0 +1,5 @@
+# Allen personal sites (default: DIRECT)
+ikirito.de
+allennas.de
+052909.xyz
+mfallen.de

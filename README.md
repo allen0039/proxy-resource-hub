@@ -67,6 +67,55 @@ https://raw.githubusercontent.com/allen0039/proxy-resource-hub/main/Rules/Quantu
 https://raw.githubusercontent.com/allen0039/proxy-resource-hub/main/Rules/Loon/AI/gongyiai.list, AI
 ```
 
+## 个人网站（默认直连）
+
+个人网站域名统一在 `Rules/Source/Personal/sites.txt` 中维护，四端订阅默认映射到直连策略。
+
+### Mihomo
+
+- [个人网站](https://raw.githubusercontent.com/allen0039/proxy-resource-hub/main/Rules/Mihomo/Personal/sites.list)
+
+```yaml
+rule-providers:
+  personal_sites:
+    type: http
+    behavior: classical
+    format: text
+    url: https://raw.githubusercontent.com/allen0039/proxy-resource-hub/main/Rules/Mihomo/Personal/sites.list
+    path: ./ruleset/personal-sites.list
+    interval: 86400
+
+rules:
+  - RULE-SET,personal_sites,DIRECT
+```
+
+### Surge
+
+- [个人网站](https://raw.githubusercontent.com/allen0039/proxy-resource-hub/main/Rules/Surge/Personal/sites.list)
+
+```ini
+[Rule]
+RULE-SET,https://raw.githubusercontent.com/allen0039/proxy-resource-hub/main/Rules/Surge/Personal/sites.list,DIRECT
+```
+
+### Quantumult X
+
+- [个人网站](https://raw.githubusercontent.com/allen0039/proxy-resource-hub/main/Rules/QuantumultX/Personal/sites.list)
+
+```ini
+[filter_remote]
+https://raw.githubusercontent.com/allen0039/proxy-resource-hub/main/Rules/QuantumultX/Personal/sites.list, tag=个人网站, force-policy=direct, update-interval=86400, enabled=true
+```
+
+### Loon
+
+- [个人网站](https://raw.githubusercontent.com/allen0039/proxy-resource-hub/main/Rules/Loon/Personal/sites.list)
+
+```ini
+[Remote Rule]
+https://raw.githubusercontent.com/allen0039/proxy-resource-hub/main/Rules/Loon/Personal/sites.list, policy=DIRECT, tag=个人网站, enabled=true
+```
+
 ## 兼容地址
 
 原有地址继续保留，并由同一个生成器维护：
@@ -80,10 +129,20 @@ https://raw.githubusercontent.com/allen0039/proxy-resource-hub/main/Rules/Loon/A
 
 ```text
 Rules/
-├── Source/AI/       # 唯一手工维护入口
-├── Mihomo/AI/       # Mihomo classical
-├── Surge/AI/        # Surge RULE-SET
-├── QuantumultX/AI/  # Quantumult X filter_remote
-├── Loon/AI/         # Loon Remote Rule
-└── AI/              # 旧订阅地址兼容层
+├── Source/                  # 唯一手工维护入口
+│   ├── AI/
+│   └── Personal/
+├── Mihomo/
+│   ├── AI/
+│   └── Personal/
+├── Surge/
+│   ├── AI/
+│   └── Personal/
+├── QuantumultX/
+│   ├── AI/
+│   └── Personal/
+├── Loon/
+│   ├── AI/
+│   └── Personal/
+└── AI/                      # 旧订阅地址兼容层
 ```
