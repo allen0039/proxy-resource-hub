@@ -1,0 +1,355 @@
+# Loon全局配置 by Tartarus
+# 作者GitHub： https://github.com/Tartarus2014
+# 脚本库GitHub： https://github.com/Tartarus2014/Loon-Script
+# Loon官方文档：https://nsloon.app/docs/intro
+# Loon第三方插件中心：https://hub.kelee.one
+# Loon第三方知识库：https://t.me/ibilibili/581
+#
+# ==========================================================
+# Allen 维护备注
+# ==========================================================
+# 1. 修改订阅：只改 [Remote Proxy] 每行等号后的第一个 URL，后面的 udp、block-quic、enabled、img-url 等参数按需保留。
+# 2. 修改节点筛选：优先改 [Remote Filter] 的正则；香港/台湾/日本/韩国/美国/新加坡筛选器供地区策略组调用。
+# 3. 修改策略入口：优先改 [Proxy Group]。业务组建议按“美国节点,香港节点,新加坡节点,日本节点,台湾节点,韩国节点,Proxy”的顺序维护。
+# 4. 修改本地优先规则：改 [Rule]。本地规则优先级高于 [Remote Rule]，越靠上越先匹配。
+# 5. 修改远程规则：改 [Remote Rule] 的 policy 或 enabled；新增业务分流时，先建策略组，再把远程规则 policy 指向该组。
+# 6. 插件和 MitM：改 [Plugin] 前确认是否依赖 MitM；[Mitm] 内含证书和口令，分享配置前必须脱敏。
+
+# 导入配置。
+# 导入完成后点 https://www.nsloon.com/openloon/flowmodel=filter 切换至自动分流模式。
+# 再点 https://www.nsloon.com/openloon/proxymode=tun 切换代理模式至 TUN Only 模式 [此操作点击跳转至Loon后即为切换成功]。
+# 打开［MitM］［脚本］［复写］三个功能的开关。
+# 打开［MitM］里的［MitM over HTTP/2］和［QUIC回退保护］开关。
+# 保证Safari是默认浏览器的情况下，安装并信任证书。
+# 点击Loon底部导航栏的［配置］→ 右上角的［⋯］，打开［始终开启］的开关。
+# 添加你的机场订阅。
+# 打开Loon的开关后并点击 https://www.nsloon.com/openloon/update?sub=all 一键更新所有外部资源。
+
+[General]
+# 全局运行参数：控制 DNS、TUN、UDP、Wi-Fi 访问、测速和资源解析器。
+# 一般日常维护优先看 dns-server、hijack-dns、proxy-test-url、resource-parser。
+# IPv6 支持
+ip-mode = prefer-v4
+ipv6-vif = auto
+# UDP相关
+disable-stun = true
+udp-fallback-mode = REJECT
+# SNI辅助规则匹配
+sni-sniffing = true
+# 策略组切换时关闭连接
+disconnect-on-policy-change = true
+# 域名拦截行为
+domain-reject-mode = DNS
+dns-reject-mode = LoopbackIP
+# > 跳过代理
+# 跳过某个域名或者 IP 段，这些目标主机将不会由 Loon Proxy 处理。
+skip-proxy = 192.168.0.0/16,10.0.0.0/8,172.16.0.0/12,localhost,*.local,e.crashlynatics.com
+# > Always Real IP Hosts
+# DNS 数据包将被转发到上游 DNS 服务器。
+real-ip = *.apple.com,*apple.com
+# 绕过路由
+bypass-tun = 10.0.0.0/8,100.64.0.0/10,127.0.0.0/8,169.254.0.0/16,172.16.0.0/12,192.0.0.0/24,192.0.2.0/24,192.88.99.0/24,192.168.0.0/16,198.51.100.0/24,203.0.113.0/24,224.0.0.0/4,255.255.255.255/32
+# DNS 服务器
+dns-server = system,223.5.5.5,180.184.1.1
+# doh-server = https://223.5.5.5/dns-query,https://8.8.8.8/dns-query
+# Hijack DNS
+# 默认情况下，Loon 只返回发送到 Loon DNS 地址的 DNS 查询的假 IP 地址(198.18.0.2)。
+# 有些设备或软件总是使用硬编码的 DNS 服务器。 (例如 Google Speakers 总是使用 8.8.8.8)。 您可以使用此选项劫持查询，以获得一个假地址。
+hijack-dns = 8.8.8.8:53,8.8.4.4:53
+# Wi-Fi 访问
+allow-wifi-access = false
+wifi-access-http-port = 8585
+wifi-access-socks5-port = 1235
+mitm-on-wifi-access = true
+# 代理测速 URL
+internet-test-url = http://connectivitycheck.platform.hicloud.com/generate_204
+proxy-test-url = http://detectportal.firefox.com/success.txt
+# 测速超时 (s)
+test-timeout = 5
+# 网络接口
+interface-mode = auto
+# ssid-trigger参数，用于指定SSID下流量模式切换，（default表示默认，cellular表示蜂窝，目前支持三种值：rule，direct，proxy）
+# ssid-trigger = "default":rule, "cellular":rule,"ASUS_5G":direct
+# 解析器
+resource-parser = https://raw.githubusercontent.com/sub-store-org/Sub-Store/release/sub-store-parser.loon.min.js
+
+[Proxy]
+# Configure local proxy nodes privately.
+
+[Remote Proxy]
+# 远程订阅区：每行格式为“订阅名 = 订阅URL,参数...”
+# 当前订阅 URL 已统一使用占位符；导入真实订阅时只替换 URL，不要误删后续参数。
+# enabled=true 表示启用该订阅；enabled=false 表示保留但不拉取。
+白菜灵车 = https://example.com/loon/subscription-1.conf,udp=true,block-quic=true,fast-open=default,vmess-aead=true,skip-cert-verify=true,enabled=true,flexible-sni=false,img-url=https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/Bamboo.png
+v2tun = https://example.com/loon/subscription-2.conf,udp=true,block-quic=false,fast-open=default,vmess-aead=true,skip-cert-verify=true,enabled=true,flexible-sni=false,img-url=https://raw.githubusercontent.com/Orz-3/mini/master/Color/V2tun.png
+Allen自建 = https://example.com/loon/subscription-3.conf,udp=true,block-quic=false,fast-open=default,vmess-aead=true,skip-cert-verify=true,enabled=true,flexible-sni=false,img-url=https://raw.githubusercontent.com/Orz-3/mini/master/Alpha/Vpn.png
+良心云 = https://example.com/loon/subscription-4.conf,udp=true,block-quic=true,fast-open=default,vmess-aead=true,skip-cert-verify=true,enabled=false,flexible-sni=false,img-url=https://raw.githubusercontent.com/Orz-3/mini/master/Color/Dianliang.png
+三分 = https://example.com/loon/subscription-5.conf,udp=true,block-quic=true,fast-open=default,vmess-aead=true,skip-cert-verify=true,enabled=false,flexible-sni=false,img-url=https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/Filter.png
+
+[Proxy Group]
+# 策略组区：规则最终会指向这里的策略组。
+# select = 手动选择；url-test = 自动测速选择；地区组调用 [Remote Filter] 的筛选器。
+# 业务组候选项按偏好顺序维护：美国节点,香港节点,新加坡节点,日本节点,台湾节点,韩国节点,Proxy。
+# Final 是漏网兜底策略；Proxy 是手动总入口；全部节点是节点池入口。
+Final = select,DIRECT,美国节点,香港节点,新加坡节点,日本节点,台湾节点,韩国节点,Proxy,img-url = https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/Final.png
+Proxy = select,美国节点,香港节点,新加坡节点,日本节点,台湾节点,韩国节点,img-url = https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/Proxy.png
+全部节点 = select,All Server,url = http://cp.cloudflare.com/generate_204,img-url = https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/Server.png
+# AI 服务：OpenAI/Claude/Gemini 等远程 AI 规则指向这里。
+OpenAI = select,美国节点,香港节点,新加坡节点,日本节点,全部节点,url = http://cp.cloudflare.com/generate_204,img-url = https://raw.githubusercontent.com/chxm1023/Script_X/main/icon/ChatGPT/ChatGPT4.png
+# GitHub 独立分流，便于单独切换代码托管、Release、raw.githubusercontent.com 等流量。
+GitHub = select,美国节点,香港节点,新加坡节点,日本节点,台湾节点,韩国节点,Proxy,img-url = https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/GitHub.png
+# Google 组当前保留 DIRECT 作为首选，若直连不可用可把 DIRECT 后移。
+Google = select,美国节点,香港节点,新加坡节点,台湾节点,韩国节点,Proxy,DIRECT,img-url = https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/Google_Search.png
+# Apple 服务组用于远程 Apple 规则；本地 APNs 规则在 [Rule] 中优先生效。
+Apple = select,DIRECT,美国节点,香港节点,新加坡节点,台湾节点,韩国节点,Proxy,img-url = https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/Apple.png
+# 流媒体和通讯业务组。
+Netflix = select,美国节点,香港节点,新加坡节点,台湾节点,韩国节点,Proxy,img-url = https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/Netflix.png
+YouTube = select,美国节点,香港节点,新加坡节点,台湾节点,韩国节点,Proxy,img-url = https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/YouTube.png
+巴哈姆特 = select,DIRECT,美国节点,香港节点,新加坡节点,日本节点,台湾节点,img-url = https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/Bahamut.png
+Telegram = select,美国节点,香港节点,新加坡节点,台湾节点,韩国节点,Proxy,img-url = https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/Telegram.png
+国内媒体 = select,DIRECT,美国节点,香港节点,新加坡节点,台湾节点,韩国节点,img-url = https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/StreamingSE.png
+# 地区节点组：每个地区组使用 [Remote Filter] 中对应筛选器挑出订阅节点。
+香港节点 = select,香港,url = http://www.qualcomm.cn/generate_204,img-url = https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/Hong_Kong.png
+台湾节点 = url-test,台湾,url = http://www.qualcomm.cn/generate_204,interval = 60,tolerance = 50,img-url = https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/Taiwan.png
+新加坡节点 = select,新加坡,url = http://www.qualcomm.cn/generate_204,img-url = https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/Singapore.png
+韩国节点 = url-test,韩国,url = http://www.qualcomm.cn/generate_204,interval = 60,tolerance = 50,img-url = https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/Korea.png
+日本节点 = select,日本,url = http://www.qualcomm.cn/generate_204,img-url = https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/Japan.png
+美国节点 = select,美国,url = http://www.qualcomm.cn/generate_204,img-url = https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/United_States.png
+# 工具类策略组：测速、广告处理、游戏平台。
+Speedtest = select,美国节点,香港节点,新加坡节点,日本节点,台湾节点,DIRECT,url = http://cp.cloudflare.com/generate_204,img-url = https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/Speedtest.png
+广告拦截 = select,REJECT,DIRECT,Proxy,url = http://cp.cloudflare.com/generate_204,img-url = https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/Advertising.png
+游戏平台 = select,DIRECT,美国节点,香港节点,新加坡节点,日本节点,台湾节点,url = http://cp.cloudflare.com/generate_204,img-url = https://github.com/shindgewongxj/WHATSINStash/raw/main/icon/applegamecenter.png
+
+[Remote Filter]
+# 远程筛选器区：根据订阅节点名称筛出地区节点。
+# 新增地区时：先在这里添加筛选器，再到 [Proxy Group] 新增对应地区组。
+# exclude 条件用于排除回国、校园、游戏等不适合通用代理的节点。
+All Server = NameRegex, FilterKey = "^(?=.*(.*))(?!.*((?i)邀请|返利|循环|官网|客服|网站|网址|获取|订阅|流量|到期|机场|下次|版本|官址|备用|到期|过期|已用|联系|邮箱|工单|群|贩卖|倒卖|防止|国内|🎮|(\b(GAME|USE|USED|TOTAL|EXPIRE|EMAIL|Panel)\b|(\d{4}-\d{2}-\d{2}|\dG)))).*$"
+香港 = NameRegex, FilterKey = "^(?=.*((?i)🇭🇰|香港|(\b(HK|HKG|Hong)(\d+)?\b)))(?!.*((?i)回国|校园|游戏|🎮|(\b(GAME)\b))).*$"
+台湾 = NameRegex, FilterKey = "^(?=.*((?i)🇹🇼|台湾|(\b(TW|TWN|Tai|Taiwan)(\d+)?\b)))(?!.*((?i)回国|校园|游戏|🎮|(\b(GAME)\b))).*$"
+日本 = NameRegex, FilterKey = "^(?=.*((?i)🇯🇵|日本|川日|东京|大阪|泉日|埼玉|(\b(JP|JPN|Japan)(\d+)?\b)))(?!.*((?i)回国|校园|游戏|🎮|(\b(GAME)\b))).*$"
+韩国 = NameRegex, FilterKey = "^(?=.*((?i)🇰🇷|韩国|韓|首尔|(\b(KR|KOR|Korea)(\d+)?\b)))(?!.*((?i)回国|校园|游戏|🎮|(\b(GAME)\b))).*$"
+美国 = NameRegex, FilterKey = "^(?=.*((?i)🇺🇸|美国|波特兰|达拉斯|俄勒冈|凤凰城|费利蒙|硅谷|拉斯维加斯|洛杉矶|圣何塞|圣克拉拉|西雅图|芝加哥|(\b(US|USA|United States)(\d+)?\b)))(?!.*((?i)回国|校园|游戏|🎮|(\b(GAME)\b))).*$"
+新加坡 = NameRegex, FilterKey = "^(?=.*((?i)🇸🇬|新加坡|狮|(\b(SG|SGP|Singapore)(\d+)?\b)))(?!.*((?i)回国|校园|游戏|🎮|(\b(GAME)\b))).*$"
+
+[Proxy Chain]
+# 代理链区：当前未使用。只有需要“节点 A 经节点 B 转发”时才在这里配置。
+[Rule]
+# 本地规则区：优先级高于远程规则，适合放个人域名、特殊站点和需要立即覆盖的规则。
+# 格式：规则类型,匹配内容,策略组[,no-resolve]
+# 注意：同一域名不要重复写多条不同策略；Loon 会按从上到下先匹配先生效。
+# Apple / APNs
+# Apple Push Notification service (APNs)
+DOMAIN-SUFFIX,push.apple.com,香港节点
+DOMAIN-SUFFIX,cloudflare.com,香港节点
+# Apple 关键词直连曾经容易覆盖其它 Apple 分流，暂时注释保留。
+# DOMAIN-KEYWORD,apple,DIRECT
+
+# Direct / LAN / self-hosted
+# 直连区：个人内网、自托管、国内服务和明确不需要代理的域名。
+DOMAIN-KEYWORD,volcengine,DIRECT
+DOMAIN-SUFFIX,open.cd,DIRECT
+DOMAIN-SUFFIX,snssdk.com,DIRECT
+DOMAIN-SUFFIX,amemv.com,DIRECT
+
+# Custom proxy sites
+# 个人代理站点区：适合放 PT、面板、论坛、境外服务等临时或长期指定出口的站点。
+DOMAIN-SUFFIX,hytron.io,香港节点
+DOMAIN-SUFFIX,linux.do,美国节点
+DOMAIN-KEYWORD,oracle3,美国节点
+DOMAIN-KEYWORD,uspatriottactical,美国节点
+DOMAIN-KEYWORD,hdhive,美国节点
+DOMAIN-SUFFIX,rundongex.com,美国节点
+DOMAIN-SUFFIX,servercontrolpanel.de,美国节点
+DOMAIN-SUFFIX,mgboard.net,美国节点
+DOMAIN-KEYWORD,sehuatang,美国节点
+DOMAIN-SUFFIX,pterclub.net,美国节点
+DOMAIN-SUFFIX,mjji.de,美国节点
+DOMAIN-SUFFIX,embyapp.top,美国节点
+
+# Shopping / brands
+# 购物/品牌区：品牌官网、海淘站点等按地区指定出口。
+# Onitsuka Tiger 日本购物/品牌站点
+DOMAIN-KEYWORD,onitsukatiger,日本节点
+DOMAIN-SUFFIX,montbell.com,香港节点
+
+# Adult / special media
+# 成人与特殊媒体区：按站点常见地区可用性分流。
+DOMAIN-KEYWORD,javrate,日本节点
+DOMAIN-KEYWORD,dmm,日本节点
+DOMAIN-KEYWORD,jav321,日本节点
+DOMAIN-KEYWORD,freejavbt,日本节点
+DOMAIN-KEYWORD,javbus,日本节点
+DOMAIN-KEYWORD,mgstage,日本节点
+DOMAIN-KEYWORD,mmtv,日本节点
+DOMAIN-KEYWORD,javdb,新加坡节点
+DOMAIN-KEYWORD,javlibrary,新加坡节点
+DOMAIN-KEYWORD,avbase,新加坡节点
+#DOMAIN-SUFFIX,pterclub.com,DIRECT
+
+# Surge Mac 规范补充：仅保留未被 Loon 远程规则等价覆盖的本地意图。
+DOMAIN-SUFFIX,piggo.me,DIRECT
+DOMAIN-KEYWORD,m-team,DIRECT
+DOMAIN-SUFFIX,synology.cn,DIRECT
+DOMAIN,qbittorrent-nox,DIRECT
+DOMAIN-SUFFIX,hhanclub.top,美国节点
+DOMAIN-SUFFIX,pt.keepfrds.com,美国节点
+DOMAIN-SUFFIX,ourbits.club,美国节点
+DOMAIN-SUFFIX,sunnypt.top,美国节点
+DOMAIN-SUFFIX,docker.com,美国节点
+DOMAIN-SUFFIX,docker.io,美国节点
+DOMAIN-SUFFIX,dockerhub.com,美国节点
+DOMAIN-SUFFIX,openwrt.ai,美国节点
+DOMAIN-SUFFIX,lsposed.org,美国节点
+DOMAIN-SUFFIX,digitalocean.com,DIRECT
+DOMAIN-SUFFIX,dyndns.com,DIRECT
+DOMAIN-SUFFIX,whatismyip.akamai.com,DIRECT
+DOMAIN-SUFFIX,xmwsyy.com,DIRECT
+DOMAIN-SUFFIX,ui.com,DIRECT
+DOMAIN-SUFFIX,imgse.com,DIRECT
+DOMAIN-SUFFIX,tagweb.vip,DIRECT
+DOMAIN-KEYWORD,allen0039,DIRECT
+DOMAIN-KEYWORD,yqc-premium,DIRECT
+DOMAIN-SUFFIX,ad.12306.cn,DIRECT
+DOMAIN-SUFFIX,gg.caixin.com,DIRECT
+DOMAIN-SUFFIX,sdkapp.uve.weibo.com,DIRECT
+DOMAIN-SUFFIX,ucweb.com,DIRECT
+DOMAIN-SUFFIX,copilot.microsoft.com,OpenAI
+DOMAIN-KEYWORD,deepseek,OpenAI
+DOMAIN-KEYWORD,open-meteo,OpenAI
+DOMAIN-KEYWORD,grok,OpenAI
+DOMAIN-SUFFIX,clawhub.ai,OpenAI
+DOMAIN-KEYWORD,googleapis,美国节点
+DOMAIN-KEYWORD,themoviedb,美国节点
+DOMAIN-KEYWORD,tmdb,美国节点
+DOMAIN-SUFFIX,v4.plex.tv,DIRECT
+DOMAIN-KEYWORD,dashboardicons,美国节点
+DOMAIN-KEYWORD,greasyfork,美国节点
+DOMAIN-KEYWORD,qichiyu,美国节点
+DOMAIN-SUFFIX,hdhive.online,香港节点
+DOMAIN-KEYWORD,hd-torrents,美国节点
+DOMAIN-SUFFIX,vps.town,美国节点
+DOMAIN-SUFFIX,2fa.fun,美国节点
+DOMAIN-SUFFIX,macwk.cn,美国节点
+DOMAIN-SUFFIX,appstorrent.ru,美国节点
+DOMAIN-KEYWORD,kejilion,香港节点
+DOMAIN-SUFFIX,nfbyte.com,香港节点
+DOMAIN-SUFFIX,ultrahd.net,香港节点
+DOMAIN-SUFFIX,audiences.me,香港节点
+DOMAIN-SUFFIX,pterclub.com,香港节点
+DOMAIN-SUFFIX,springsunday.net,香港节点
+DOMAIN-SUFFIX,rei.com,美国节点
+DOMAIN-SUFFIX,compliance.chippercash.com,美国节点
+DOMAIN-SUFFIX,dmm.co.jp,日本节点
+DOMAIN-KEYWORD,missav,美国节点
+DOMAIN-KEYWORD,ftvgirls,美国节点
+DOMAIN,lcs-cops.adobe.io,DIRECT
+DOMAIN-SUFFIX,ic.adobe.io,REJECT
+DOMAIN-SUFFIX,hstatic.io,REJECT
+DOMAIN-SUFFIX,adobestats.io,REJECT
+DOMAIN-SUFFIX,adobe.io,REJECT
+DOMAIN,ntb.lanjie100.com,REJECT
+DOMAIN-SUFFIX,ggpht.com,YouTube
+DOMAIN-SUFFIX,googleusercontent.com,Google
+DOMAIN-SUFFIX,safebrowsing.google.com,Google
+
+# Reject / fixes
+# 修正/拦截区：放需要拒绝或规避异常连接的精确规则。
+DOMAIN,msmp.abchina.com.cn,REJECT
+IP-CIDR,17.0.0.0/8,美国节点,no-resolve
+IP-CIDR,95.161.76.100/31,REJECT-NO-DROP,no-resolve
+
+# Final
+# 漏网兜底：没有命中任何本地或远程规则的流量会进入 Final 策略组。
+FINAL,Final
+[Remote Rule]
+# 远程规则区：用于维护大类规则集，按 policy 指向对应策略组。
+# 修改业务出口时优先改 policy；临时停用某个规则集可改 enabled=false。
+# 注意顺序：本地 [Rule] 在前，远程规则在后；同类规则尽量避免在两边重复。
+https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/rule/QuantumultX/Google/Google.list, policy=DIRECT, tag=Google.list, enabled=false
+https://github.com/Moli-X/Tool/raw/X/Loon/Rules/Google.list, policy=Google, tag=谷歌分流, enabled=true
+https://raw.githubusercontent.com/allen0039/proxy-resource-hub/main/Rules/Loon/AI/gongyiai.list, policy=DIRECT, tag=公益AI, enabled=true
+https://raw.githubusercontent.com/allen0039/proxy-resource-hub/main/Rules/Loon/Personal/Domain.list, policy=DIRECT, tag=个人域名, enabled=true
+https://kelee.one/Tool/Loon/Lsr/AI.lsr, policy=OpenAI, tag=AI, enabled=true
+https://rule.kelee.one/Loon/Speedtest.lsr, policy=Speedtest, tag=Speedtest, enabled=true
+https://raw.githubusercontent.com/ACL4SSR/ACL4SSR/master/Clash/LocalAreaNetwork.list, policy=DIRECT, tag=局域网, enabled=true
+https://raw.githubusercontent.com/Tartarus2014/Loon-Script/master/Rule/Reject/Advertising.lsr, policy=REJECT, tag=去广告, enabled=false
+https://raw.githubusercontent.com/fmz200/wool_scripts/main/Loon/rule/rejectAd.list, policy=广告拦截, tag=广告拦截合集-规则@奶思, enabled=false
+https://raw.githubusercontent.com/Tartarus2014/Loon-Script/master/Rule/Apple/TestFlight.lsr, policy=Proxy, tag=TestFlight, enabled=false
+https://raw.githubusercontent.com/Tartarus2014/Loon-Script/master/Rule/Apple/Apple.lsr, policy=Apple, tag=Apple, enabled=true
+https://raw.githubusercontent.com/Tartarus2014/Loon-Script/master/Rule/Other/Github.lsr, policy=GitHub, tag=Github, enabled=true
+https://github.com/Moli-X/Resources/raw/main/Loon/Update.list, policy=REJECT, tag=屏蔽系统更新, enabled=false
+https://raw.githubusercontent.com/Tartarus2014/Loon-Script/master/Rule/Media/YouTube.lsr, policy=YouTube, tag=YouTube, enabled=true
+https://raw.githubusercontent.com/Tartarus2014/Loon-Script/master/Rule/Media/Netflix.lsr, policy=Netflix, tag=Netflix, enabled=true
+https://raw.githubusercontent.com/Tartarus2014/Loon-Script/master/Rule/Media/Bahamut.lsr, policy=巴哈姆特, tag=巴哈姆特, enabled=true
+https://raw.githubusercontent.com/Tartarus2014/Loon-Script/master/Rule/Media/CN.lsr, policy=国内媒体, tag=国内媒体, enabled=true
+https://raw.githubusercontent.com/Tartarus2014/Loon-Script/master/Rule/Other/Telegram.lsr, policy=Telegram, tag=Telegram, enabled=true
+https://gist.github.com/MrRegret/5bb2df7c332157fd35b514af8e635b10/raw, policy=Proxy, tag=forward分流, enabled=false
+https://raw.githubusercontent.com/Tartarus2014/Loon-Script/master/Rule/Direct.lsr, policy=DIRECT, tag=全球直连, enabled=true
+https://yqc-premium.pages.dev/Rules/DIRECT.list, policy=DIRECT, tag=直连策略[浥轻尘会员专属], enabled=true
+https://raw.githubusercontent.com/Tartarus2014/Loon-Script/master/Rule/GEOIP.lsr, policy=DIRECT, tag=GEOIP_CN, enabled=true
+https://rule.kelee.one/Loon/Steam.lsr, policy=游戏平台, tag=Steam, enabled=true
+https://rule.kelee.one/Loon/Game.lsr, policy=游戏平台, tag=Game, enabled=true
+https://raw.githubusercontent.com/ACL4SSR/ACL4SSR/master/Clash/ProxyLite.list, policy=Proxy, tag=全球规则, enabled=false
+https://raw.githubusercontent.com/ACL4SSR/ACL4SSR/master/Clash/ProxyGFWlist.list, policy=Proxy, tag=全球规则, enabled=true
+https://raw.githubusercontent.com/VirgilClyne/GetSomeFries/main/ruleset/ASN.China.list, policy=DIRECT, tag=ASN.China, enabled=false
+
+[Host]
+# 静态 Host 区：当前未使用。只有需要手动指定域名解析结果时才添加。
+
+[Rewrite]
+# 本地重写区：当前未使用。远程重写/脚本主要通过 [Plugin] 管理。
+
+[Script]
+# 本地脚本区：当前未使用。若要写本地脚本，建议先确认是否已有插件可替代。
+
+[Plugin]
+# 插件区：主要用于去广告、HTTPDNS 拦截、App 增强、BoxJS 等功能。
+# enabled=true 会启用插件；enabled=false 保留配置但不启用。
+# 带 policy 的插件会把相关请求交给指定策略组；启用 MitM 类插件前确认 [Mitm] 证书已安装并信任。
+# 插件越多越可能影响性能和兼容性，排查异常时优先临时关闭最近新增的插件。
+https://yqc-premium.pages.dev/Loon/sfw.plugin, enabled=false
+https://raw.githubusercontent.com/app2smile/rules/master/plugin/qidian.plugin, enabled=true
+https://whatshub.top/plugin/youtube.plugin, enabled=false
+https://whatshub.top/plugin/photoshop.plugin, enabled=false
+https://whatshub.top/plugin/fanqienovel.plugin, enabled=true
+https://whatshub.top/plugin/lightroom.plugin, enabled=true
+https://github.com/Repcz/Tool/raw/X/Surge/Module/Function/FKTG.sgmodule, enabled=true
+https://kelee.one/Tool/Loon/Lpx/BlockAdvertisers.lpx, tag=广告平台拦截器, enabled=true
+https://kelee.one/Tool/Loon/Lpx/Remove_ads_by_keli.lpx, tag=可莉广告过滤器, enabled=true
+https://kelee.one/Tool/Loon/Lpx/Block_HTTPDNS.lpx, tag=HTTPDNS拦截器, enabled=true
+https://raw.githubusercontent.com/Tartarus2014/Loon-Script/master/Plugin/Block/Advertising.lpx, tag=去广告, enabled=false
+https://kelee.one/Tool/Loon/Lpx/Taobao_remove_ads.lpx, enabled=true
+https://github.com/fmz200/wool_scripts/raw/main/Loon/plugin/blockAds.plugin, tag=fmz200奶思插件合集, enabled=false
+https://kelee.one/Tool/Loon/Lpx/YoudaoDict_remove_ads.lpx, enabled=true
+https://kelee.one/Tool/Loon/Lpx/ColorfulClouds_remove_ads.lpx, enabled=true
+https://kelee.one/Tool/Loon/Lpx/YouTube_remove_ads.lpx, tag=YouTube去除广告, enabled=true
+https://kelee.one/Tool/Loon/Lpx/Cainiao_remove_ads.lpx, enabled=true
+https://kelee.one/Tool/Loon/Lpx/JD_remove_ads.lpx, enabled=true
+https://kelee.one/Tool/Loon/Lpx/PinDuoDuo_remove_ads.lpx, enabled=false
+https://kelee.one/Tool/Loon/Lpx/DragonRead_remove_ads.lpx, tag=番茄小说去广告, enabled=false
+https://kelee.one/Tool/Loon/Lpx/Bilibili_remove_ads.lpx, policy=DIRECT, enabled=true
+https://kelee.one/Tool/Loon/Lpx/Amap_remove_ads.lpx, enabled=true
+https://kelee.one/Tool/Loon/Lpx/FenBi_remove_ads.lpx, tag=粉笔去广告, enabled=true
+https://raw.githubusercontent.com/zqzess/rule_for_quantumultX/master/Loon/Plugin/FanQieNovel.plugin, tag=番茄去广告, img-url=https://raw.githubusercontent.com/luestr/IconResource/main/App_icon/120px/DragonRead.png, enabled=false
+https://kelee.one/Tool/Loon/Lpx/RedPaper_remove_ads.lpx, tag=小红书去广告去水印, enabled=true
+https://kelee.one/Tool/Loon/Lpx/FleaMarket_remove_ads.lpx, tag=闲鱼去广告, enabled=true
+https://gitlab.com/isous/loonresource/-/raw/main/Plugin/Emby_crack.plugin, tag=emby解锁, enabled=true
+https://kelee.one/Tool/Loon/Lpx/MailMaster_remove_ads.lpx, enabled=true
+https://raw.githubusercontent.com/zqzess/rule_for_quantumultX/master/Loon/Plugin/SkipProxy.plugin, enabled=true
+https://kelee.one/Tool/Loon/Lpx/Node_detection_tool.lpx, tag=节点解锁检测, enabled=true
+https://raw.githubusercontent.com/chavyleung/scripts/master/box/rewrite/boxjs.rewrite.loon.plugin, policy=DIRECT, tag=BoxJS, enabled=true
+https://raw.githubusercontent.com/Peng-YM/Sub-Store/master/config/Loon.plugin, enabled=false
+https://kelee.one/Tool/Loon/Lpx/AppleWeatherEnhancer.lpx, tag=Apple天气增强, enabled=false
+https://raw.githubusercontent.com/Script-Hub-Org/Script-Hub/main/modules/script-hub.loon.plugin, enabled=false
+https://kelee.one/Tool/Loon/Lpx/LoonGallery.lpx, policy=Proxy, enabled=true
+https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/rewrite/Loon/Redirect/Redirect.plugin, enabled=false
+
+
+[Mitm]
+# MitM 证书区：用于 HTTPS 解密、脚本和部分去广告插件。
+# 高敏感：ca-p12 与 ca-passphrase 不应公开分享；发布配置前务必脱敏或删除。
+# hostname 为空表示当前未在这里显式声明 MitM 域名，具体域名可能由插件提供。
+# Configure MITM certificate and passphrase locally.
+hostname =
+skip-server-cert-verify = false
