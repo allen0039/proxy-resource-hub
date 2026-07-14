@@ -39,7 +39,8 @@ class SanitizationError(ValueError):
 
 
 def normalize_text(text: str) -> str:
-    return text.replace("\r\n", "\n").replace("\r", "\n").rstrip() + "\n"
+    normalized = text.replace("\r\n", "\n").replace("\r", "\n")
+    return "\n".join(line.rstrip() for line in normalized.splitlines()).rstrip() + "\n"
 
 
 def section_name(line: str) -> str | None:
@@ -125,7 +126,7 @@ def sanitize_surge(text: str, slug: str) -> str:
                 mitm_marker,
             )
             continue
-        if current == "proxy" and _active_content(line):
+        if current == "proxy" and line.strip():
             proxy_marker = _append_placeholder_once(
                 output,
                 "# Configure local proxy nodes privately.",
@@ -157,16 +158,23 @@ def sanitize_quantumultx(text: str) -> str:
             continue
 
         content = _active_content(line)
-        if current == "server_remote" and content:
-            subscription_index += 1
-            output.append(
-                _replace_first_url(
-                    line,
-                    example_url("quantumultx", "subscription", subscription_index),
+        if current == "server_remote":
+            if URL_RE.search(line):
+                subscription_index += 1
+                output.append(
+                    _replace_first_url(
+                        line,
+                        example_url(
+                            "quantumultx", "subscription", subscription_index
+                        ),
+                    )
                 )
-            )
-            continue
-        if current == "server_local" and content:
+                continue
+            if content:
+                raise SanitizationError(
+                    "quantumultx: active remote subscription has no URL"
+                )
+        if current == "server_local" and line.strip():
             node_marker = _append_placeholder_once(
                 output,
                 "# Configure local proxy nodes privately.",
@@ -207,16 +215,21 @@ def sanitize_loon(text: str) -> str:
             continue
 
         content = _active_content(line)
-        if current == "remote proxy" and content:
-            subscription_index += 1
-            output.append(
-                _replace_first_url(
-                    line,
-                    example_url("loon", "subscription", subscription_index),
+        if current == "remote proxy":
+            if URL_RE.search(line):
+                subscription_index += 1
+                output.append(
+                    _replace_first_url(
+                        line,
+                        example_url("loon", "subscription", subscription_index),
+                    )
                 )
-            )
-            continue
-        if current == "proxy" and content:
+                continue
+            if content:
+                raise SanitizationError(
+                    "loon: active remote subscription has no URL"
+                )
+        if current == "proxy" and line.strip():
             node_marker = _append_placeholder_once(
                 output,
                 "# Configure local proxy nodes privately.",
@@ -364,11 +377,22 @@ def _sensitive_section_urls(
     filename: str, lines: list[tuple[int, str]]
 ) -> None:
     for number, line in lines:
-        for url in URL_RE.findall(line):
-            if urlsplit(url).hostname != "example.com":
-                raise SanitizationError(
-                    f"{filename}:{number}: non-placeholder subscription URL remains"
-                )
+        match = URL_RE.search(line)
+        if match and urlsplit(match.group(0)).hostname != "example.com":
+            raise SanitizationError(
+                f"{filename}:{number}: non-placeholder subscription URL remains"
+            )
+
+
+def _surge_policy_path_urls(
+    filename: str, lines: list[tuple[int, str]]
+) -> None:
+    for number, line in lines:
+        match = re.search(r"policy-path\s*=\s*([^,\s]+)", line)
+        if match is None or urlsplit(match.group(1)).hostname != "example.com":
+            raise SanitizationError(
+                f"{filename}:{number}: non-placeholder policy-path remains"
+            )
 
 
 def _validate_ini_client(filename: str, text: str) -> None:
@@ -380,7 +404,7 @@ def _validate_ini_client(filename: str, text: str) -> None:
             for number, line in sections["proxy group"]
             if "policy-path" in line
         ]
-        _sensitive_section_urls(filename, policy_paths)
+        _surge_policy_path_urls(filename, policy_paths)
         forbidden = {"ca-passphrase", "ca-p12"}
     elif filename == "quantumultx_allen.conf":
         _require_sections(
@@ -389,7 +413,11 @@ def _validate_ini_client(filename: str, text: str) -> None:
             {"policy", "server_remote", "server_local", "filter_remote", "filter_local", "mitm"},
         )
         _sensitive_section_urls(filename, sections["server_remote"])
-        if any(_active_content(line) for _, line in sections["server_local"]):
+        if any(
+            line.strip()
+            and line.strip() != "# Configure local proxy nodes privately."
+            for _, line in sections["server_local"]
+        ):
             raise SanitizationError(f"{filename}: active local proxy node remains")
         forbidden = {"passphrase", "p12", "certificate", "private-key"}
     elif filename == "loon_allen.lcf":
@@ -400,7 +428,9 @@ def _validate_ini_client(filename: str, text: str) -> None:
         )
         _sensitive_section_urls(filename, sections["remote proxy"])
         if "proxy" in sections and any(
-            _active_content(line) for _, line in sections["proxy"]
+            line.strip()
+            and line.strip() != "# Configure local proxy nodes privately."
+            for _, line in sections["proxy"]
         ):
             raise SanitizationError(f"{filename}: active local proxy node remains")
         forbidden = {"ca-p12", "ca-passphrase", "certificate", "private-key"}

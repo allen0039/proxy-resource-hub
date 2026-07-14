@@ -35,13 +35,18 @@ def load_sanitizer():
 
 
 class SanitizedToolConfigTests(unittest.TestCase):
+    def test_normalize_text_removes_trailing_whitespace(self):
+        sanitizer = load_sanitizer()
+
+        self.assertEqual("one\n two\n", sanitizer.normalize_text("one  \r\n two\t \n"))
+
     def test_surge_replaces_policy_paths_and_mitm_material(self):
         sanitizer = load_sanitizer()
         source = f"""[General]
 loglevel = notify
 
 [Proxy Group]
-Proxy = select, policy-path={PRIVATE_URL}, DIRECT
+Proxy = select, policy-path={PRIVATE_URL}, DIRECT, img-url=https://public.example/icon.png
 
 [Rule]
 RULE-SET,{PUBLIC_RULE_URL},Proxy
@@ -60,7 +65,9 @@ ca-p12 = FAKE_P12_BASE64
         self.assertNotIn("FAKE_P12_BASE64", result)
         self.assertIn("https://example.com/surge-mac/subscription-1.conf", result)
         self.assertIn(PUBLIC_RULE_URL, result)
+        self.assertIn("https://public.example/icon.png", result)
         self.assertIn("Configure MITM certificate and passphrase locally", result)
+        sanitizer.validate_client_structure("surge_mac_allen.conf", result)
 
     def test_quantumultx_replaces_remote_servers_and_removes_local_nodes(self):
         sanitizer = load_sanitizer()
@@ -68,11 +75,13 @@ ca-p12 = FAKE_P12_BASE64
 static=Proxy, direct
 
 [server_remote]
-{PRIVATE_URL}, tag=One, enabled=true
+{PRIVATE_URL}, tag=One, enabled=true, resource-parser=https://public.example/parser.js
 https://private.invalid/two, tag=Two, enabled=false
+;https://private.invalid/commented, tag=Backup, enabled=false
 
 [server_local]
 shadowsocks=private.invalid:443, password=FAKE_PASSWORD
+;vmess=private.invalid:443, password=FAKE-COMMENTED-UUID
 
 [filter_remote]
 {PUBLIC_RULE_URL}, tag=Rules, force-policy=Proxy, enabled=true
@@ -90,11 +99,14 @@ p12 = FAKE_P12_BASE64
 
         self.assertNotIn("private.invalid", result)
         self.assertNotIn("FAKE_PASSWORD", result)
+        self.assertNotIn("FAKE-COMMENTED-UUID", result)
         self.assertNotIn("FAKE_P12_BASE64", result)
         self.assertIn("https://example.com/quantumultx/subscription-1.conf", result)
         self.assertIn("https://example.com/quantumultx/subscription-2.conf", result)
         self.assertIn("Configure local proxy nodes privately", result)
         self.assertIn(PUBLIC_RULE_URL, result)
+        self.assertIn("https://public.example/parser.js", result)
+        sanitizer.validate_client_structure("quantumultx_allen.conf", result)
 
     def test_loon_replaces_remote_proxies_and_mitm_material(self):
         sanitizer = load_sanitizer()
@@ -102,8 +114,9 @@ p12 = FAKE_P12_BASE64
 Local = Shadowsocks, private.invalid, 443, encrypt-method=aes-128-gcm, password=FAKE_PASSWORD
 
 [Remote Proxy]
-One = {PRIVATE_URL}, enabled=true
+One = {PRIVATE_URL}, enabled=true, img-url=https://public.example/icon.png
 Two = https://private.invalid/two, enabled=false
+# Backup = https://private.invalid/commented, enabled=false
 
 [Proxy Group]
 Proxy = select, One, Two, DIRECT
@@ -113,6 +126,8 @@ FINAL,Proxy
 
 [Remote Rule]
 {PUBLIC_RULE_URL},policy=Proxy,tag=Rules,enabled=true
+
+[Plugin]
 
 [Mitm]
 hostname = example.org
@@ -129,6 +144,8 @@ ca-passphrase = FAKE_PASSWORD
         self.assertIn("https://example.com/loon/subscription-2.conf", result)
         self.assertIn("Configure local proxy nodes privately", result)
         self.assertIn(PUBLIC_RULE_URL, result)
+        self.assertIn("https://public.example/icon.png", result)
+        sanitizer.validate_client_structure("loon_allen.lcf", result)
 
     def test_mihomo_renames_providers_and_replaces_secrets(self):
         sanitizer = load_sanitizer()
@@ -190,8 +207,7 @@ rule-providers:
             sanitizer.validate_sanitized_outputs(outputs)
 
     def test_committed_outputs_are_safe_and_structurally_complete(self):
-        if not OUTPUT_DIR.exists():
-            self.skipTest("generated templates are added in the generation task")
+        self.assertTrue(OUTPUT_DIR.exists())
         actual = {
             path.name
             for path in OUTPUT_DIR.iterdir()
@@ -213,6 +229,31 @@ rule-providers:
         self.assertIsNone(re.search(r"(?i)token=[^\s,]+", combined))
         self.assertNotIn("BEGIN PRIVATE KEY", combined)
         self.assertNotIn("BEGIN CERTIFICATE", combined)
+
+        for name in ("surge_mac_allen.conf", "surge_iphone_allen.conf"):
+            self.assertRegex(outputs[name], r"gongyiai\.list,DIRECT(?:,|\n)")
+            self.assertRegex(
+                outputs[name], r"Personal/Domain\.list,DIRECT(?:,|\n)"
+            )
+        self.assertRegex(
+            outputs["quantumultx_allen.conf"],
+            r"gongyiai\.list[^\n]*force-policy=direct",
+        )
+        self.assertRegex(
+            outputs["quantumultx_allen.conf"],
+            r"Personal/Domain\.list[^\n]*force-policy=direct",
+        )
+        self.assertRegex(
+            outputs["loon_allen.lcf"], r"gongyiai\.list[^\n]*policy=DIRECT"
+        )
+        self.assertRegex(
+            outputs["loon_allen.lcf"], r"Personal/Domain\.list[^\n]*policy=DIRECT"
+        )
+        mihomo = yaml.safe_load(outputs["mihomo_allen.yaml"])
+        self.assertEqual(1, mihomo["rules"].count("RULE-SET,gongyiai,直连策略"))
+        self.assertEqual(
+            1, mihomo["rules"].count("RULE-SET,personal_domain,直连策略")
+        )
 
 
 if __name__ == "__main__":
