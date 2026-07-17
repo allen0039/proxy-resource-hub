@@ -34,7 +34,7 @@ proxy-providers:
       url: https://www.gstatic.com/generate_204
       interval: 300
     proxy: 直连            # 通过直连去下载订阅
-#  备用:
+#  白菜:
 #    url: "https://example.com/mihomo/subscription-example-1.yaml"
 #    type: http
 #    interval: 46400
@@ -52,7 +52,16 @@ proxy-providers:
 #      enable: true
 #      url: https://www.gstatic.com/generate_204
 #      interval: 300
-#    proxy: 美国节点          # 通过美国节点下载自建订阅（防止域名无法访问）
+#    proxy: 直连          # 通过直连下载自建订阅
+#  备用:
+#    url: "https://example.com/mihomo/subscription-example-1.yaml"
+#    type: http
+#    interval: 46400
+#    health-check:
+#      enable: true
+#      url: https://www.gstatic.com/generate_204
+#      interval: 300
+#    proxy: 直连
 
 # ----------------------------------------------------------
 # 🛡️ 节点信息

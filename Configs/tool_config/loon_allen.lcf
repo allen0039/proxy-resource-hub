@@ -80,11 +80,10 @@ resource-parser = https://raw.githubusercontent.com/sub-store-org/Sub-Store/rele
 # 远程订阅区：每行格式为“订阅名 = 订阅URL,参数...”
 # 当前订阅 URL 已统一使用占位符；导入真实订阅时只替换 URL，不要误删后续参数。
 # enabled=true 表示启用该订阅；enabled=false 表示保留但不拉取。
-白菜灵车 = https://example.com/loon/subscription-1.conf,udp=true,block-quic=true,fast-open=default,vmess-aead=true,skip-cert-verify=true,enabled=true,flexible-sni=false,img-url=https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/Bamboo.png
-v2tun = https://example.com/loon/subscription-2.conf,udp=true,block-quic=false,fast-open=default,vmess-aead=true,skip-cert-verify=true,enabled=true,flexible-sni=false,img-url=https://raw.githubusercontent.com/Orz-3/mini/master/Color/V2tun.png
-Allen自建 = https://example.com/loon/subscription-3.conf,udp=true,block-quic=false,fast-open=default,vmess-aead=true,skip-cert-verify=true,enabled=true,flexible-sni=false,img-url=https://raw.githubusercontent.com/Orz-3/mini/master/Alpha/Vpn.png
-良心云 = https://example.com/loon/subscription-4.conf,udp=true,block-quic=true,fast-open=default,vmess-aead=true,skip-cert-verify=true,enabled=false,flexible-sni=false,img-url=https://raw.githubusercontent.com/Orz-3/mini/master/Color/Dianliang.png
-三分 = https://example.com/loon/subscription-5.conf,udp=true,block-quic=true,fast-open=default,vmess-aead=true,skip-cert-verify=true,enabled=false,flexible-sni=false,img-url=https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/Filter.png
+Allen合集订阅 = https://example.com/loon/subscription-1.conf,udp=true,block-quic=true,fast-open=default,vmess-aead=true,skip-cert-verify=true,enabled=true,flexible-sni=false,img-url=https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/Bamboo.png
+白菜灵车 = https://example.com/loon/subscription-2.conf,udp=true,block-quic=true,fast-open=default,vmess-aead=true,skip-cert-verify=true,enabled=false,flexible-sni=false,img-url=https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/Bamboo.png
+Allen自建 = https://example.com/loon/subscription-3.conf,udp=true,block-quic=false,fast-open=default,vmess-aead=true,skip-cert-verify=true,enabled=false,flexible-sni=false,img-url=https://raw.githubusercontent.com/Orz-3/mini/master/Alpha/Vpn.png
+三分 = https://example.com/loon/subscription-4.conf,udp=true,block-quic=true,fast-open=default,vmess-aead=true,skip-cert-verify=true,enabled=false,flexible-sni=false,img-url=https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/Filter.png
 
 [Proxy Group]
 # 策略组区：规则最终会指向这里的策略组。
