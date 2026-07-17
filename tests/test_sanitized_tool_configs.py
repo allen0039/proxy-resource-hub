@@ -19,6 +19,33 @@ CONFIG_NAMES = {
 
 PUBLIC_RULE_URL = "https://public.example/rules.list"
 PRIVATE_URL = "https://private.invalid/sub?token=FAKE_TOKEN"
+SURGE_PT_URL = (
+    "https://raw.githubusercontent.com/allen0039/proxy-resource-hub/main/"
+    "Rules/Surge/PT/Domain.list"
+)
+QX_PT_URL = (
+    "https://raw.githubusercontent.com/allen0039/proxy-resource-hub/main/"
+    "Rules/QuantumultX/PT/Domain.list"
+)
+LOON_PT_URL = (
+    "https://raw.githubusercontent.com/allen0039/proxy-resource-hub/main/"
+    "Rules/Loon/PT/Domain.list"
+)
+MIHOMO_PT_URL = (
+    "https://raw.githubusercontent.com/allen0039/proxy-resource-hub/main/"
+    "Rules/Mihomo/PT/Domain.list"
+)
+DUPLICATE_PT_VALUES = {
+    "piggo.me",
+    "pt.keepfrds.com",
+    "ourbits.club",
+    "sunnypt.top",
+    "open.cd",
+    "ultrahd.net",
+    "audiences.me",
+    "pterclub.com",
+    "springsunday.net",
+}
 
 
 def load_sanitizer():
@@ -235,6 +262,8 @@ rule-providers:
             self.assertRegex(
                 outputs[name], r"Personal/Domain\.list,DIRECT(?:,|\n)"
             )
+            self.assertEqual(1, outputs[name].count(SURGE_PT_URL))
+            self.assertIn(f"RULE-SET,{SURGE_PT_URL},DIRECT", outputs[name])
         self.assertRegex(
             outputs["quantumultx_allen.conf"],
             r"gongyiai\.list[^\n]*force-policy=direct",
@@ -243,17 +272,47 @@ rule-providers:
             outputs["quantumultx_allen.conf"],
             r"Personal/Domain\.list[^\n]*force-policy=direct",
         )
+        self.assertEqual(1, outputs["quantumultx_allen.conf"].count(QX_PT_URL))
+        self.assertRegex(
+            outputs["quantumultx_allen.conf"],
+            r"Rules/QuantumultX/PT/Domain\.list[^\n]*force-policy=direct",
+        )
         self.assertRegex(
             outputs["loon_allen.lcf"], r"gongyiai\.list[^\n]*policy=DIRECT"
         )
         self.assertRegex(
             outputs["loon_allen.lcf"], r"Personal/Domain\.list[^\n]*policy=DIRECT"
         )
+        self.assertEqual(1, outputs["loon_allen.lcf"].count(LOON_PT_URL))
+        self.assertRegex(
+            outputs["loon_allen.lcf"],
+            r"Rules/Loon/PT/Domain\.list[^\n]*policy=DIRECT",
+        )
         mihomo = yaml.safe_load(outputs["mihomo_allen.yaml"])
         self.assertEqual(1, mihomo["rules"].count("RULE-SET,gongyiai,直连策略"))
         self.assertEqual(
             1, mihomo["rules"].count("RULE-SET,personal_domain,直连策略")
         )
+        self.assertEqual(1, mihomo["rules"].count("RULE-SET,pt_domain,直连策略"))
+        self.assertLess(
+            mihomo["rules"].index("RULE-SET,pt_domain,直连策略"),
+            mihomo["rules"].index("RULE-SET,pt_cn_domain,直连策略"),
+        )
+        self.assertEqual(MIHOMO_PT_URL, mihomo["rule-providers"]["pt_domain"]["url"])
+
+        local_rule_pattern = re.compile(
+            r"^\s*-?\s*(?:DOMAIN|DOMAIN-SUFFIX|HOST|HOST-SUFFIX)\s*,\s*([^,\s]+)",
+            re.IGNORECASE,
+        )
+        for name, text in outputs.items():
+            active_values = {
+                match.group(1).casefold()
+                for line in text.splitlines()
+                if not line.lstrip().startswith(("#", ";", "//"))
+                if (match := local_rule_pattern.match(line)) is not None
+            }
+            with self.subTest(name=name, check="duplicate PT local rules"):
+                self.assertEqual(set(), DUPLICATE_PT_VALUES & active_values)
 
     def test_committed_outputs_exclude_private_custom_rule_keywords(self):
         private_keywords = {"oracle3", "allen0039"}

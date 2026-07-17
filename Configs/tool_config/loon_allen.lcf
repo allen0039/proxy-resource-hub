@@ -148,7 +148,6 @@ DOMAIN-SUFFIX,cloudflare.com,香港节点
 # Direct / LAN / self-hosted
 # 直连区：个人内网、自托管、国内服务和明确不需要代理的域名。
 DOMAIN-KEYWORD,volcengine,DIRECT
-DOMAIN-SUFFIX,open.cd,DIRECT
 DOMAIN-SUFFIX,snssdk.com,DIRECT
 DOMAIN-SUFFIX,amemv.com,DIRECT
 
@@ -184,17 +183,12 @@ DOMAIN-KEYWORD,mmtv,日本节点
 DOMAIN-KEYWORD,javdb,新加坡节点
 DOMAIN-KEYWORD,javlibrary,新加坡节点
 DOMAIN-KEYWORD,avbase,新加坡节点
-#DOMAIN-SUFFIX,pterclub.com,DIRECT
 
 # Surge Mac 规范补充：仅保留未被 Loon 远程规则等价覆盖的本地意图。
-DOMAIN-SUFFIX,piggo.me,DIRECT
 DOMAIN-KEYWORD,m-team,DIRECT
 DOMAIN-SUFFIX,synology.cn,DIRECT
 DOMAIN,qbittorrent-nox,DIRECT
 DOMAIN-SUFFIX,hhanclub.top,美国节点
-DOMAIN-SUFFIX,pt.keepfrds.com,美国节点
-DOMAIN-SUFFIX,ourbits.club,美国节点
-DOMAIN-SUFFIX,sunnypt.top,美国节点
 DOMAIN-SUFFIX,docker.com,美国节点
 DOMAIN-SUFFIX,docker.io,美国节点
 DOMAIN-SUFFIX,dockerhub.com,美国节点
@@ -232,10 +226,6 @@ DOMAIN-SUFFIX,macwk.cn,美国节点
 DOMAIN-SUFFIX,appstorrent.ru,美国节点
 DOMAIN-KEYWORD,kejilion,香港节点
 DOMAIN-SUFFIX,nfbyte.com,香港节点
-DOMAIN-SUFFIX,ultrahd.net,香港节点
-DOMAIN-SUFFIX,audiences.me,香港节点
-DOMAIN-SUFFIX,pterclub.com,香港节点
-DOMAIN-SUFFIX,springsunday.net,香港节点
 DOMAIN-SUFFIX,rei.com,美国节点
 DOMAIN-SUFFIX,compliance.chippercash.com,美国节点
 DOMAIN-SUFFIX,dmm.co.jp,日本节点
@@ -268,6 +258,7 @@ https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/rule/Quant
 https://github.com/Moli-X/Tool/raw/X/Loon/Rules/Google.list, policy=Google, tag=谷歌分流, enabled=true
 https://raw.githubusercontent.com/allen0039/proxy-resource-hub/main/Rules/Loon/AI/gongyiai.list, policy=DIRECT, tag=公益AI, enabled=true
 https://raw.githubusercontent.com/allen0039/proxy-resource-hub/main/Rules/Loon/Personal/Domain.list, policy=DIRECT, tag=个人域名, enabled=true
+https://raw.githubusercontent.com/allen0039/proxy-resource-hub/main/Rules/Loon/PT/Domain.list, policy=DIRECT, tag=PT站点, enabled=true
 https://kelee.one/Tool/Loon/Lsr/AI.lsr, policy=OpenAI, tag=AI, enabled=true
 https://rule.kelee.one/Loon/Speedtest.lsr, policy=Speedtest, tag=Speedtest, enabled=true
 https://raw.githubusercontent.com/ACL4SSR/ACL4SSR/master/Clash/LocalAreaNetwork.list, policy=DIRECT, tag=局域网, enabled=true
