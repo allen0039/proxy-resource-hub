@@ -217,29 +217,23 @@ proxy-groups:
 # 🚦 规则匹配 (已补全特殊站点)
 # ----------------------------------------------------------
 rules:
-  # 1. 基础分流
-  - DOMAIN-KEYWORD,m-team,直连策略
-  - DOMAIN-SUFFIX,synology.cn,直连策略
-  - DOMAIN-SUFFIX,hhanclub.top,美国节点
-  - DOMAIN-SUFFIX,pterclub.net,美国节点
+  # === 本地自定义规则 ===
+  # 1. 局域网与管理规则 (最高优先级)
+  # 使用内置 DIRECT，不经过可切换策略组，确保下载器流量不会进入代理。
+  - SRC-IP-CIDR,192.168.50.150/32,DIRECT
+  - SRC-IP-CIDR,192.168.50.151/32,DIRECT
+  - SRC-IP-CIDR,192.168.50.152/32,DIRECT
 
-  - DOMAIN-SUFFIX,docker.com,美国节点
-  - DOMAIN-SUFFIX,openwrt.ai,美国节点
-  - DOMAIN-KEYWORD,googleapis,美国节点
-  - DOMAIN-KEYWORD,themoviedb,美国节点
-  - DOMAIN-KEYWORD,tmdb,美国节点
-  - DOMAIN-SUFFIX,v4.plex.tv,直连策略
-  # Surge Mac 规范补充：位于所有广域 RULE-SET 之前。
+  # 2. Apple 与系统服务
   - DOMAIN-SUFFIX,push.apple.com,香港节点
   - DOMAIN-SUFFIX,apple-relay.apple.com,Apple
+
+  # 3. 直连、PT 与下载服务
+  # 已纳入远程 PT 订阅的站点不在本地重复维护。
+  - DOMAIN-SUFFIX,synology.cn,直连策略
   - DOMAIN,qbittorrent-nox,直连策略
-  - DOMAIN-SUFFIX,github.io,GitHub
-  - DOMAIN-SUFFIX,githubassets.com,GitHub
-  - DOMAIN-SUFFIX,githubusercontent.com,GitHub
-  - DOMAIN-SUFFIX,cloudflare.com,香港节点
-  - DOMAIN-SUFFIX,docker.io,美国节点
-  - DOMAIN-SUFFIX,dockerhub.com,美国节点
-  - DOMAIN-SUFFIX,lsposed.org,美国节点
+  - DOMAIN-SUFFIX,hhanclub.top,美国节点
+  - DOMAIN-SUFFIX,pterclub.net,美国节点
   - DOMAIN-SUFFIX,digitalocean.com,直连策略
   - DOMAIN-SUFFIX,dyndns.com,直连策略
   - DOMAIN-SUFFIX,whatismyip.akamai.com,直连策略
@@ -254,11 +248,35 @@ rules:
   - DOMAIN-SUFFIX,sdkapp.uve.weibo.com,直连策略
   - DOMAIN-SUFFIX,ucweb.com,直连策略
   - DOMAIN-SUFFIX,amemv.com,直连策略
+  - DOMAIN-SUFFIX,v4.plex.tv,直连策略
+
+  # 4. 技术开发与工具
+  - DOMAIN-SUFFIX,github.io,GitHub
+  - DOMAIN-SUFFIX,githubassets.com,GitHub
+  - DOMAIN-SUFFIX,githubusercontent.com,GitHub
+  - DOMAIN-SUFFIX,cloudflare.com,香港节点
+  - DOMAIN-SUFFIX,docker.com,美国节点
+  - DOMAIN-SUFFIX,docker.io,美国节点
+  - DOMAIN-SUFFIX,dockerhub.com,美国节点
+  - DOMAIN-SUFFIX,openwrt.ai,美国节点
+  - DOMAIN-SUFFIX,lsposed.org,美国节点
+
+  # 5. AI 与媒体服务
   - DOMAIN-KEYWORD,deepseek,OpenAI
   - DOMAIN-KEYWORD,open-meteo,OpenAI
   - DOMAIN-KEYWORD,grok,OpenAI
   - DOMAIN-SUFFIX,clawhub.ai,OpenAI
+  - DOMAIN-KEYWORD,googleapis,美国节点
+  - DOMAIN-KEYWORD,themoviedb,美国节点
+  - DOMAIN-KEYWORD,tmdb,美国节点
   - DOMAIN-KEYWORD,dashboardicons,美国节点
+  - DOMAIN-SUFFIX,ytimg.com,YouTube
+  - DOMAIN-SUFFIX,ggpht.com,YouTube
+  - DOMAIN-SUFFIX,googleusercontent.com,Google
+  - DOMAIN-SUFFIX,gstatic.com,Google
+  - DOMAIN-SUFFIX,safebrowsing.google.com,Google
+
+  # 6. 特殊站点与区域分流
   - DOMAIN-SUFFIX,hytron.io,香港节点
   - DOMAIN-SUFFIX,linux.do,美国节点
   - DOMAIN-KEYWORD,uspatriottactical,美国节点
@@ -267,6 +285,9 @@ rules:
   - DOMAIN-SUFFIX,rundongex.com,美国节点
   - DOMAIN-SUFFIX,servercontrolpanel.de,美国节点
   - DOMAIN-SUFFIX,mgboard.net,美国节点
+  - DOMAIN-KEYWORD,sehuatang,美国节点
+  - DOMAIN-KEYWORD,greasyfork,美国节点
+  - DOMAIN-KEYWORD,qichiyu,美国节点
   - DOMAIN-SUFFIX,mjji.de,美国节点
   - DOMAIN-KEYWORD,hd-torrents,美国节点
   - DOMAIN-SUFFIX,embyapp.top,美国节点
@@ -277,28 +298,12 @@ rules:
   - DOMAIN-KEYWORD,kejilion,香港节点
   - DOMAIN-SUFFIX,nfbyte.com,香港节点
   - DOMAIN-SUFFIX,rei.com,美国节点
-  - DOMAIN-SUFFIX,compliance.chippercash.com,美国节点
   - DOMAIN-KEYWORD,onitsukatiger,日本节点
   - DOMAIN-SUFFIX,montbell.com,香港节点
+  - DOMAIN-SUFFIX,compliance.chippercash.com,美国节点
   - DOMAIN-SUFFIX,dmm.co.jp,日本节点
-  - DOMAIN-KEYWORD,javrate,日本节点
-  - DOMAIN,lcs-cops.adobe.io,直连策略
-  - DOMAIN-SUFFIX,ic.adobe.io,REJECT
-  - DOMAIN-SUFFIX,hstatic.io,REJECT
-  - DOMAIN-SUFFIX,adobestats.io,REJECT
-  - DOMAIN-SUFFIX,adobe.io,REJECT
-  - DOMAIN,ntb.lanjie100.com,REJECT
-  - DOMAIN,msmp.abchina.com.cn,REJECT
-  - DOMAIN-SUFFIX,ytimg.com,YouTube
-  - DOMAIN-SUFFIX,ggpht.com,YouTube
-  - DOMAIN-SUFFIX,googleusercontent.com,Google
-  - DOMAIN-SUFFIX,gstatic.com,Google
-  - DOMAIN-SUFFIX,safebrowsing.google.com,Google
-  # 2. 特殊站点补全 (之前漏掉的部分)
-  - DOMAIN-KEYWORD,sehuatang,美国节点
-  - DOMAIN-KEYWORD,greasyfork,美国节点
-  - DOMAIN-KEYWORD,qichiyu,美国节点
   - DOMAIN-KEYWORD,dmm,日本节点
+  - DOMAIN-KEYWORD,javrate,日本节点
   - DOMAIN-KEYWORD,jav321,日本节点
   - DOMAIN-KEYWORD,freejavbt,日本节点
   - DOMAIN-KEYWORD,javbus,日本节点
@@ -310,13 +315,24 @@ rules:
   - DOMAIN-KEYWORD,missav,美国节点
   - DOMAIN-KEYWORD,ftvgirls,美国节点
 
-  # 3. 游戏分流 (MetaCubeX)
+  # 7. 拦截与修正规则
+  # 精确放行必须位于 adobe.io 后缀拒绝规则之前。
+  - DOMAIN,lcs-cops.adobe.io,直连策略
+  - DOMAIN-SUFFIX,ic.adobe.io,REJECT
+  - DOMAIN-SUFFIX,hstatic.io,REJECT
+  - DOMAIN-SUFFIX,adobestats.io,REJECT
+  - DOMAIN-SUFFIX,adobe.io,REJECT
+  - DOMAIN,ntb.lanjie100.com,REJECT
+  - DOMAIN,msmp.abchina.com.cn,REJECT
+
+  # 8. 游戏与远程规则集
+  # 游戏分流 (MetaCubeX)
   - RULE-SET,steam_cn_domain,直连策略
   - RULE-SET,steamcdn_domain,直连策略
   - RULE-SET,steamcdn_ip,直连策略,no-resolve
   - RULE-SET,steam_domain,游戏平台
   - RULE-SET,games_domain,游戏平台
-  # 4. 其它规则集
+  # 其它远程规则集
   - RULE-SET,private_domain,直连策略
   - RULE-SET,wechat_domain,直连策略
   - RULE-SET,wechat_asn,直连策略,no-resolve
