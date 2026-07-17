@@ -156,7 +156,6 @@ DOMAIN-SUFFIX,amemv.com,DIRECT
 # 个人代理站点区：适合放 PT、面板、论坛、境外服务等临时或长期指定出口的站点。
 DOMAIN-SUFFIX,hytron.io,香港节点
 DOMAIN-SUFFIX,linux.do,美国节点
-DOMAIN-KEYWORD,oracle3,美国节点
 DOMAIN-KEYWORD,uspatriottactical,美国节点
 DOMAIN-KEYWORD,hdhive,美国节点
 DOMAIN-SUFFIX,rundongex.com,美国节点
@@ -208,7 +207,6 @@ DOMAIN-SUFFIX,xmwsyy.com,DIRECT
 DOMAIN-SUFFIX,ui.com,DIRECT
 DOMAIN-SUFFIX,imgse.com,DIRECT
 DOMAIN-SUFFIX,tagweb.vip,DIRECT
-DOMAIN-KEYWORD,allen0039,DIRECT
 DOMAIN-KEYWORD,yqc-premium,DIRECT
 DOMAIN-SUFFIX,ad.12306.cn,DIRECT
 DOMAIN-SUFFIX,gg.caixin.com,DIRECT

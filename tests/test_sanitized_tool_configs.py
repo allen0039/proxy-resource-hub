@@ -255,6 +255,21 @@ rule-providers:
             1, mihomo["rules"].count("RULE-SET,personal_domain,直连策略")
         )
 
+    def test_committed_outputs_exclude_private_custom_rule_keywords(self):
+        private_keywords = {"oracle3", "allen0039"}
+        rule_pattern = re.compile(
+            r"^\s*-?\s*(?:DOMAIN|DOMAIN-SUFFIX|DOMAIN-KEYWORD|"
+            r"HOST|HOST-SUFFIX|HOST-KEYWORD)\s*,\s*([^,\s]+)",
+            re.IGNORECASE,
+        )
+
+        for name in CONFIG_NAMES:
+            text = (OUTPUT_DIR / name).read_text(encoding="utf-8")
+            for line in text.splitlines():
+                match = rule_pattern.match(line)
+                if match is not None:
+                    self.assertNotIn(match.group(1).casefold(), private_keywords)
+
 
 if __name__ == "__main__":
     unittest.main()
