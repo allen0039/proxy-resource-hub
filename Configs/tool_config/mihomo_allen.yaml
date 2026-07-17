@@ -244,7 +244,6 @@ rules:
   - DOMAIN-SUFFIX,ui.com,直连策略
   - DOMAIN-SUFFIX,imgse.com,直连策略
   - DOMAIN-SUFFIX,tagweb.vip,直连策略
-  - DOMAIN-KEYWORD,allen0039,直连策略
   - DOMAIN-KEYWORD,yqc-premium,直连策略
   - DOMAIN-SUFFIX,ad.12306.cn,直连策略
   - DOMAIN-SUFFIX,gg.caixin.com,直连策略
@@ -258,7 +257,6 @@ rules:
   - DOMAIN-KEYWORD,dashboardicons,美国节点
   - DOMAIN-SUFFIX,hytron.io,香港节点
   - DOMAIN-SUFFIX,linux.do,美国节点
-  - DOMAIN-KEYWORD,oracle3,美国节点
   - DOMAIN-KEYWORD,uspatriottactical,美国节点
   - DOMAIN-SUFFIX,hdhive.online,香港节点
   - DOMAIN-KEYWORD,hdhive,美国节点
