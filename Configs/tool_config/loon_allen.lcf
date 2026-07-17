@@ -137,65 +137,27 @@ All Server = NameRegex, FilterKey = "^(?=.*(.*))(?!.*((?i)邀请|返利|循环|�
 # 本地规则区：优先级高于远程规则，适合放个人域名、特殊站点和需要立即覆盖的规则。
 # 格式：规则类型,匹配内容,策略组[,no-resolve]
 # 注意：同一域名不要重复写多条不同策略；Loon 会按从上到下先匹配先生效。
-# Apple / APNs
-# Apple Push Notification service (APNs)
+# === 本地自定义规则 ===
+# 1. 局域网与管理规则 (最高优先级)
+SRC-IP-CIDR,192.0.2.11/32,DIRECT
+SRC-IP-CIDR,192.0.2.12/32,DIRECT
+SRC-IP-CIDR,192.0.2.13/32,DIRECT
+
+# 2. Apple 与系统服务
 DOMAIN-SUFFIX,push.apple.com,香港节点
-DOMAIN-SUFFIX,cloudflare.com,香港节点
-# Apple 关键词直连曾经容易覆盖其它 Apple 分流，暂时注释保留。
+# Apple 关键词规则容易覆盖其它 Apple 分流，继续禁用。
 # DOMAIN-KEYWORD,apple,DIRECT
 
-# Direct / LAN / self-hosted
-# 直连区：个人内网、自托管、国内服务和明确不需要代理的域名。
-DOMAIN-KEYWORD,volcengine,DIRECT
-DOMAIN-SUFFIX,snssdk.com,DIRECT
-DOMAIN-SUFFIX,amemv.com,DIRECT
-
-# Custom proxy sites
-# 个人代理站点区：适合放 PT、面板、论坛、境外服务等临时或长期指定出口的站点。
-DOMAIN-SUFFIX,hytron.io,香港节点
-DOMAIN-SUFFIX,linux.do,美国节点
-DOMAIN-KEYWORD,uspatriottactical,美国节点
-DOMAIN-KEYWORD,hdhive,美国节点
-DOMAIN-SUFFIX,rundongex.com,美国节点
-DOMAIN-SUFFIX,servercontrolpanel.de,美国节点
-DOMAIN-SUFFIX,mgboard.net,美国节点
-DOMAIN-KEYWORD,sehuatang,美国节点
-DOMAIN-SUFFIX,pterclub.net,美国节点
-DOMAIN-SUFFIX,mjji.de,美国节点
-DOMAIN-SUFFIX,embyapp.top,美国节点
-
-# Shopping / brands
-# 购物/品牌区：品牌官网、海淘站点等按地区指定出口。
-# Onitsuka Tiger 日本购物/品牌站点
-DOMAIN-KEYWORD,onitsukatiger,日本节点
-DOMAIN-SUFFIX,montbell.com,香港节点
-
-# Adult / special media
-# 成人与特殊媒体区：按站点常见地区可用性分流。
-DOMAIN-KEYWORD,javrate,日本节点
-DOMAIN-KEYWORD,dmm,日本节点
-DOMAIN-KEYWORD,jav321,日本节点
-DOMAIN-KEYWORD,freejavbt,日本节点
-DOMAIN-KEYWORD,javbus,日本节点
-DOMAIN-KEYWORD,mgstage,日本节点
-DOMAIN-KEYWORD,mmtv,日本节点
-DOMAIN-KEYWORD,javdb,新加坡节点
-DOMAIN-KEYWORD,javlibrary,新加坡节点
-DOMAIN-KEYWORD,avbase,新加坡节点
-
-# Surge Mac 规范补充：仅保留未被 Loon 远程规则等价覆盖的本地意图。
-DOMAIN-KEYWORD,m-team,DIRECT
+# 3. 直连、PT 与下载服务
+# 已纳入远程 PT 订阅的站点不在本地重复维护。
 DOMAIN-SUFFIX,synology.cn,DIRECT
 DOMAIN,qbittorrent-nox,DIRECT
 DOMAIN-SUFFIX,hhanclub.top,美国节点
-DOMAIN-SUFFIX,docker.com,美国节点
-DOMAIN-SUFFIX,docker.io,美国节点
-DOMAIN-SUFFIX,dockerhub.com,美国节点
-DOMAIN-SUFFIX,openwrt.ai,美国节点
-DOMAIN-SUFFIX,lsposed.org,美国节点
+DOMAIN-SUFFIX,pterclub.net,美国节点
 DOMAIN-SUFFIX,digitalocean.com,DIRECT
 DOMAIN-SUFFIX,dyndns.com,DIRECT
 DOMAIN-SUFFIX,whatismyip.akamai.com,DIRECT
+DOMAIN-KEYWORD,volcengine,DIRECT
 DOMAIN-SUFFIX,xmwsyy.com,DIRECT
 DOMAIN-SUFFIX,ui.com,DIRECT
 DOMAIN-SUFFIX,imgse.com,DIRECT
@@ -205,6 +167,19 @@ DOMAIN-SUFFIX,ad.12306.cn,DIRECT
 DOMAIN-SUFFIX,gg.caixin.com,DIRECT
 DOMAIN-SUFFIX,sdkapp.uve.weibo.com,DIRECT
 DOMAIN-SUFFIX,ucweb.com,DIRECT
+DOMAIN-SUFFIX,snssdk.com,DIRECT
+DOMAIN-SUFFIX,amemv.com,DIRECT
+DOMAIN-SUFFIX,v4.plex.tv,DIRECT
+
+# 4. 技术开发与工具
+DOMAIN-SUFFIX,cloudflare.com,香港节点
+DOMAIN-SUFFIX,docker.com,美国节点
+DOMAIN-SUFFIX,docker.io,美国节点
+DOMAIN-SUFFIX,dockerhub.com,美国节点
+DOMAIN-SUFFIX,openwrt.ai,美国节点
+DOMAIN-SUFFIX,lsposed.org,美国节点
+
+# 5. AI 与媒体服务
 DOMAIN-SUFFIX,copilot.microsoft.com,OpenAI
 DOMAIN-KEYWORD,deepseek,OpenAI
 DOMAIN-KEYWORD,open-meteo,OpenAI
@@ -213,12 +188,26 @@ DOMAIN-SUFFIX,clawhub.ai,OpenAI
 DOMAIN-KEYWORD,googleapis,美国节点
 DOMAIN-KEYWORD,themoviedb,美国节点
 DOMAIN-KEYWORD,tmdb,美国节点
-DOMAIN-SUFFIX,v4.plex.tv,DIRECT
 DOMAIN-KEYWORD,dashboardicons,美国节点
+DOMAIN-SUFFIX,ggpht.com,YouTube
+DOMAIN-SUFFIX,googleusercontent.com,Google
+DOMAIN-SUFFIX,safebrowsing.google.com,Google
+
+# 6. 特殊站点与区域分流
+DOMAIN-SUFFIX,hytron.io,香港节点
+DOMAIN-SUFFIX,linux.do,美国节点
+DOMAIN-KEYWORD,uspatriottactical,美国节点
+DOMAIN-SUFFIX,hdhive.online,香港节点
+DOMAIN-KEYWORD,hdhive,美国节点
+DOMAIN-SUFFIX,rundongex.com,美国节点
+DOMAIN-SUFFIX,servercontrolpanel.de,美国节点
+DOMAIN-SUFFIX,mgboard.net,美国节点
+DOMAIN-KEYWORD,sehuatang,美国节点
 DOMAIN-KEYWORD,greasyfork,美国节点
 DOMAIN-KEYWORD,qichiyu,美国节点
-DOMAIN-SUFFIX,hdhive.online,香港节点
+DOMAIN-SUFFIX,mjji.de,美国节点
 DOMAIN-KEYWORD,hd-torrents,美国节点
+DOMAIN-SUFFIX,embyapp.top,美国节点
 DOMAIN-SUFFIX,vps.town,美国节点
 DOMAIN-SUFFIX,2fa.fun,美国节点
 DOMAIN-SUFFIX,macwk.cn,美国节点
@@ -226,27 +215,36 @@ DOMAIN-SUFFIX,appstorrent.ru,美国节点
 DOMAIN-KEYWORD,kejilion,香港节点
 DOMAIN-SUFFIX,nfbyte.com,香港节点
 DOMAIN-SUFFIX,rei.com,美国节点
+DOMAIN-KEYWORD,onitsukatiger,日本节点
+DOMAIN-SUFFIX,montbell.com,香港节点
 DOMAIN-SUFFIX,compliance.chippercash.com,美国节点
 DOMAIN-SUFFIX,dmm.co.jp,日本节点
+DOMAIN-KEYWORD,dmm,日本节点
+DOMAIN-KEYWORD,javrate,日本节点
+DOMAIN-KEYWORD,jav321,日本节点
+DOMAIN-KEYWORD,freejavbt,日本节点
+DOMAIN-KEYWORD,javbus,日本节点
+DOMAIN-KEYWORD,mgstage,日本节点
+DOMAIN-KEYWORD,mmtv,日本节点
+DOMAIN-KEYWORD,javdb,新加坡节点
+DOMAIN-KEYWORD,javlibrary,新加坡节点
+DOMAIN-KEYWORD,avbase,新加坡节点
 DOMAIN-KEYWORD,missav,美国节点
 DOMAIN-KEYWORD,ftvgirls,美国节点
+
+# 7. 拦截与修正规则
+# 精确放行必须位于 adobe.io 后缀拒绝规则之前。
 DOMAIN,lcs-cops.adobe.io,DIRECT
 DOMAIN-SUFFIX,ic.adobe.io,REJECT
 DOMAIN-SUFFIX,hstatic.io,REJECT
 DOMAIN-SUFFIX,adobestats.io,REJECT
 DOMAIN-SUFFIX,adobe.io,REJECT
 DOMAIN,ntb.lanjie100.com,REJECT
-DOMAIN-SUFFIX,ggpht.com,YouTube
-DOMAIN-SUFFIX,googleusercontent.com,Google
-DOMAIN-SUFFIX,safebrowsing.google.com,Google
-
-# Reject / fixes
-# 修正/拦截区：放需要拒绝或规避异常连接的精确规则。
 DOMAIN,msmp.abchina.com.cn,REJECT
 IP-CIDR,17.0.0.0/8,美国节点,no-resolve
 IP-CIDR,95.161.76.100/31,REJECT-NO-DROP,no-resolve
 
-# Final
+# 8. 最终规则
 # 漏网兜底：没有命中任何本地或远程规则的流量会进入 Final 策略组。
 FINAL,Final
 [Remote Rule]
