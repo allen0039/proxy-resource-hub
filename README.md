@@ -116,6 +116,55 @@ https://raw.githubusercontent.com/allen0039/proxy-resource-hub/main/Rules/Quantu
 https://raw.githubusercontent.com/allen0039/proxy-resource-hub/main/Rules/Loon/Personal/Domain.list, policy=DIRECT, tag=个人网站, enabled=true
 ```
 
+## PT 站点（默认直连）
+
+PT 站点域名统一在 `Rules/Source/PT/Domain.txt` 中维护，四端订阅包含 36 个经确认的站点域名。书签中明确排除的站点和 `PT 工具` 文件夹链接不属于本规则集。
+
+### Mihomo
+
+- [PT 站点](https://raw.githubusercontent.com/allen0039/proxy-resource-hub/main/Rules/Mihomo/PT/Domain.list)
+
+```yaml
+rule-providers:
+  pt_domain:
+    type: http
+    behavior: classical
+    format: text
+    url: https://raw.githubusercontent.com/allen0039/proxy-resource-hub/main/Rules/Mihomo/PT/Domain.list
+    path: ./ruleset/PT-Domain.list
+    interval: 86400
+
+rules:
+  - RULE-SET,pt_domain,DIRECT
+```
+
+### Surge
+
+- [PT 站点](https://raw.githubusercontent.com/allen0039/proxy-resource-hub/main/Rules/Surge/PT/Domain.list)
+
+```ini
+[Rule]
+RULE-SET,https://raw.githubusercontent.com/allen0039/proxy-resource-hub/main/Rules/Surge/PT/Domain.list,DIRECT
+```
+
+### Quantumult X
+
+- [PT 站点](https://raw.githubusercontent.com/allen0039/proxy-resource-hub/main/Rules/QuantumultX/PT/Domain.list)
+
+```ini
+[filter_remote]
+https://raw.githubusercontent.com/allen0039/proxy-resource-hub/main/Rules/QuantumultX/PT/Domain.list, tag=PT站点, force-policy=direct, update-interval=86400, enabled=true
+```
+
+### Loon
+
+- [PT 站点](https://raw.githubusercontent.com/allen0039/proxy-resource-hub/main/Rules/Loon/PT/Domain.list)
+
+```ini
+[Remote Rule]
+https://raw.githubusercontent.com/allen0039/proxy-resource-hub/main/Rules/Loon/PT/Domain.list, policy=DIRECT, tag=PT站点, enabled=true
+```
+
 ## 兼容地址
 
 原有地址继续保留，并由同一个生成器维护：
@@ -131,18 +180,23 @@ https://raw.githubusercontent.com/allen0039/proxy-resource-hub/main/Rules/Loon/P
 Rules/
 ├── Source/                  # 唯一手工维护入口
 │   ├── AI/
-│   └── Personal/
+│   ├── Personal/
+│   └── PT/
 ├── Mihomo/
 │   ├── AI/
-│   └── Personal/
+│   ├── Personal/
+│   └── PT/
 ├── Surge/
 │   ├── AI/
-│   └── Personal/
+│   ├── Personal/
+│   └── PT/
 ├── QuantumultX/
 │   ├── AI/
-│   └── Personal/
+│   ├── Personal/
+│   └── PT/
 ├── Loon/
 │   ├── AI/
-│   └── Personal/
+│   ├── Personal/
+│   └── PT/
 └── AI/                      # 旧订阅地址兼容层
 ```
