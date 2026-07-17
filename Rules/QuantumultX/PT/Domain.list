@@ -1,0 +1,39 @@
+# Generated from Rules/Source/PT/Domain.txt by tools/generate_rules.py. Do not edit.
+
+# Allen PT sites (default: DIRECT)
+host-suffix, agsvpt.com, proxy
+host-suffix, audiences.me, proxy
+host-suffix, btschool.club, proxy
+host-suffix, crabpt.vip, proxy
+host-suffix, cyanbug.net, proxy
+host-suffix, discfan.net, proxy
+host-suffix, hdarea.club, proxy
+host-suffix, hddolby.com, proxy
+host-suffix, hdfans.org, proxy
+host-suffix, hdhome.org, proxy
+host-suffix, hdkyl.in, proxy
+host-suffix, hdsky.me, proxy
+host-suffix, hhanclub.net, proxy
+host-suffix, keepfrds.com, proxy
+host-suffix, lemonhd.club, proxy
+host-suffix, m-team.cc, proxy
+host-suffix, momentpt.top, proxy
+host-suffix, nicept.net, proxy
+host-suffix, open.cd, proxy
+host-suffix, ourbits.club, proxy
+host-suffix, piggo.me, proxy
+host-suffix, ptchdbits.co, proxy
+host-suffix, pterclub.com, proxy
+host-suffix, ptlgs.org, proxy
+host-suffix, ptsbao.club, proxy
+host-suffix, ptskit.com, proxy
+host-suffix, pttime.org, proxy
+host-suffix, qingwapt.com, proxy
+host-suffix, soulvoice.club, proxy
+host-suffix, springsunday.net, proxy
+host-suffix, sunnypt.top, proxy
+host-suffix, totheglory.im, proxy
+host-suffix, ubits.club, proxy
+host-suffix, ultrahd.net, proxy
+host-suffix, zhuque.in, proxy
+host-suffix, zmpt.cc, proxy

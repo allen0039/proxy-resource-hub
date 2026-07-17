@@ -10,6 +10,7 @@ RULESET_SPECS = (
     ("AI", "ai", True),
     ("AI", "gongyiai", True),
     ("Personal", "Domain", False),
+    ("PT", "Domain", False),
 )
 CLASSICAL_TARGETS = ("Mihomo", "Surge", "Loon")
 DOMAIN_RE = re.compile(

@@ -6,6 +6,58 @@ from pathlib import Path
 
 ROOT = Path(__file__).resolve().parents[1]
 GENERATOR_PATH = ROOT / "tools" / "generate_rules.py"
+PT_DOMAINS = (
+    "agsvpt.com",
+    "audiences.me",
+    "btschool.club",
+    "crabpt.vip",
+    "cyanbug.net",
+    "discfan.net",
+    "hdarea.club",
+    "hddolby.com",
+    "hdfans.org",
+    "hdhome.org",
+    "hdkyl.in",
+    "hdsky.me",
+    "hhanclub.net",
+    "keepfrds.com",
+    "lemonhd.club",
+    "m-team.cc",
+    "momentpt.top",
+    "nicept.net",
+    "open.cd",
+    "ourbits.club",
+    "piggo.me",
+    "ptchdbits.co",
+    "pterclub.com",
+    "ptlgs.org",
+    "ptsbao.club",
+    "ptskit.com",
+    "pttime.org",
+    "qingwapt.com",
+    "soulvoice.club",
+    "springsunday.net",
+    "sunnypt.top",
+    "totheglory.im",
+    "ubits.club",
+    "ultrahd.net",
+    "zhuque.in",
+    "zmpt.cc",
+)
+PT_EXCLUSIONS = {
+    "pting.club",
+    "invites.fun",
+    "dian115.com",
+    "hdhive.com",
+    "milkie.cc",
+    "hd-torrents.org",
+    "cdn.jsdelivr.net",
+    "mediaarea.net",
+    "github.com",
+    "pixhost.to",
+    "ptyqm.com",
+    "rutracker.org",
+}
 
 
 def load_generator():
@@ -28,7 +80,7 @@ class RuleGeneratorTests(unittest.TestCase):
         generator = load_generator()
         outputs = generator.build_outputs(ROOT)
 
-        self.assertEqual(14, len(outputs))
+        self.assertEqual(18, len(outputs))
         for client in ("Mihomo", "Surge", "QuantumultX", "Loon"):
             for ruleset in ("ai", "gongyiai"):
                 expected = ROOT / "Rules" / client / "AI" / f"{ruleset}.list"
@@ -73,6 +125,43 @@ class RuleGeneratorTests(unittest.TestCase):
                 )
             self.assertEqual(expected_lines, rule_lines)
 
+    def test_pt_outputs_are_generated_for_every_client(self):
+        generator = load_generator()
+        outputs = generator.build_outputs(ROOT)
+        source = ROOT / "Rules" / "Source" / "PT" / "Domain.txt"
+        self.assertTrue(source.exists(), "PT source file is missing")
+        source_domains = tuple(
+            line
+            for line in source.read_text(encoding="utf-8").splitlines()
+            if line and not line.startswith("#")
+        )
+
+        self.assertEqual(36, len(PT_DOMAINS))
+        self.assertEqual(tuple(sorted(PT_DOMAINS)), PT_DOMAINS)
+        self.assertEqual(PT_DOMAINS, source_domains)
+        self.assertTrue(PT_EXCLUSIONS.isdisjoint(source_domains))
+
+        for client in ("Mihomo", "Surge", "QuantumultX", "Loon"):
+            path = ROOT / "Rules" / client / "PT" / "Domain.list"
+            self.assertIn(path, outputs)
+            rule_lines = tuple(
+                line
+                for line in outputs[path].splitlines()
+                if line and not line.startswith("#")
+            )
+            if client == "QuantumultX":
+                expected_lines = tuple(
+                    f"host-suffix, {domain}, proxy" for domain in PT_DOMAINS
+                )
+            else:
+                expected_lines = tuple(
+                    f"DOMAIN-SUFFIX,{domain}" for domain in PT_DOMAINS
+                )
+            self.assertEqual(expected_lines, rule_lines)
+            self.assertFalse(
+                any(excluded in outputs[path] for excluded in PT_EXCLUSIONS)
+            )
+
     def test_check_mode_detects_a_stale_output(self):
         generator = load_generator()
         with tempfile.TemporaryDirectory() as tmp:
@@ -86,6 +175,11 @@ class RuleGeneratorTests(unittest.TestCase):
             personal_dir = root / "Rules" / "Source" / "Personal"
             personal_dir.mkdir(parents=True)
             (personal_dir / "Domain.txt").write_text(
+                "example.com\n", encoding="utf-8"
+            )
+            pt_dir = root / "Rules" / "Source" / "PT"
+            pt_dir.mkdir(parents=True)
+            (pt_dir / "Domain.txt").write_text(
                 "example.com\n", encoding="utf-8"
             )
             generator.sync_outputs(root, check=False)
