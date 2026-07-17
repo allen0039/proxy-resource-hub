@@ -232,8 +232,6 @@ rules:
   # 已纳入远程 PT 订阅的站点不在本地重复维护。
   - DOMAIN-SUFFIX,synology.cn,直连策略
   - DOMAIN,qbittorrent-nox,直连策略
-  - DOMAIN-SUFFIX,hhanclub.top,美国节点
-  - DOMAIN-SUFFIX,pterclub.net,美国节点
   - DOMAIN-SUFFIX,digitalocean.com,直连策略
   - DOMAIN-SUFFIX,dyndns.com,直连策略
   - DOMAIN-SUFFIX,whatismyip.akamai.com,直连策略
