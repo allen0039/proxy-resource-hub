@@ -209,14 +209,10 @@ proxy-groups:
 # ----------------------------------------------------------
 rules:
   # 1. 基础分流
-  - DOMAIN-SUFFIX,piggo.me,直连策略
   - DOMAIN-KEYWORD,m-team,直连策略
   - DOMAIN-SUFFIX,synology.cn,直连策略
   - DOMAIN-SUFFIX,hhanclub.top,美国节点
   - DOMAIN-SUFFIX,pterclub.net,美国节点
-  - DOMAIN-SUFFIX,pt.keepfrds.com,美国节点
-  - DOMAIN-SUFFIX,ourbits.club,美国节点
-  - DOMAIN-SUFFIX,sunnypt.top,美国节点
 
   - DOMAIN-SUFFIX,docker.com,美国节点
   - DOMAIN-SUFFIX,openwrt.ai,美国节点
@@ -239,7 +235,6 @@ rules:
   - DOMAIN-SUFFIX,dyndns.com,直连策略
   - DOMAIN-SUFFIX,whatismyip.akamai.com,直连策略
   - DOMAIN-KEYWORD,volcengine,直连策略
-  - DOMAIN-SUFFIX,open.cd,直连策略
   - DOMAIN-SUFFIX,xmwsyy.com,直连策略
   - DOMAIN-SUFFIX,ui.com,直连策略
   - DOMAIN-SUFFIX,imgse.com,直连策略
@@ -272,10 +267,6 @@ rules:
   - DOMAIN-SUFFIX,appstorrent.ru,美国节点
   - DOMAIN-KEYWORD,kejilion,香港节点
   - DOMAIN-SUFFIX,nfbyte.com,香港节点
-  - DOMAIN-SUFFIX,ultrahd.net,香港节点
-  - DOMAIN-SUFFIX,audiences.me,香港节点
-  - DOMAIN-SUFFIX,pterclub.com,香港节点
-  - DOMAIN-SUFFIX,springsunday.net,香港节点
   - DOMAIN-SUFFIX,rei.com,美国节点
   - DOMAIN-SUFFIX,compliance.chippercash.com,美国节点
   - DOMAIN-KEYWORD,onitsukatiger,日本节点
@@ -327,6 +318,7 @@ rules:
   - RULE-SET,tencent_domain,直连策略
   - RULE-SET,xiaomi_domain,直连策略
   - RULE-SET,115_domain,直连策略
+  - RULE-SET,pt_domain,直连策略
   - RULE-SET,pt_cn_domain,直连策略
   - RULE-SET,public-tracker_domain,直连策略
   - RULE-SET,apple_cn_domain,直连策略
@@ -383,6 +375,7 @@ rule-providers:
   tencent_domain: { <<: *domain, url: "https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/refs/heads/meta/geo/geosite/tencent.mrs"}
   xiaomi_domain: { <<: *domain, url: "https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/refs/heads/meta/geo/geosite/xiaomi.mrs"}
   115_domain: { <<: *domain, url: "https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/refs/heads/meta/geo/geosite/115.mrs"}
+  pt_domain: { <<: *class, url: "https://raw.githubusercontent.com/allen0039/proxy-resource-hub/main/Rules/Mihomo/PT/Domain.list" }
   pt_cn_domain: { <<: *domain, url: "https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/refs/heads/meta/geo/geosite/category-pt.mrs"}
   public-tracker_domain: { <<: *domain, url: "https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/refs/heads/meta/geo/geosite/category-public-tracker.mrs"}
   Cloudflare_domain: { <<: *domain, url: "https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/refs/heads/meta/geo/geosite/cloudflare.mrs"}

@@ -9,7 +9,7 @@
 - `loon_allen.lcf`：Loon
 
 这些文件保留策略组、公开规则订阅、本地域名规则、注释及客户端结构；
-`gongyiai` 和 `Domain` 远程规则继续使用直连策略。
+`gongyiai`、个人 `Domain` 和 `PT/Domain` 远程规则继续使用直连策略。
 
 ## 使用前必须配置
 
