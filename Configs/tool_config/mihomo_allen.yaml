@@ -204,7 +204,7 @@ proxy-groups:
   - {name: Apple, <<: *Direct_first}
   - {name: Final, <<: *Proxy_first}
   - {name: TikTok, <<: *Proxy_first}
-  - {name: Speedtest, <<: *Proxy_first}
+  - {name: 测速, <<: *Proxy_first}
   - {name: CDN, type: select, proxies: [香港优选, 香港节点, 新加坡优选, 新加坡节点, 美国优选, 美国节点, 日本节点, 台湾节点, 韩国节点, 英国节点, Proxy, 直连]}
   - {name: OneDrive, type: select, proxies: [美国优选, 美国节点, 香港优选, 香港节点, 新加坡优选, 新加坡节点, 日本节点, 台湾节点, 韩国节点, 英国节点, Proxy, 直连, Microsoft]}
   - {name: 特殊媒体, <<: *Proxy_first}
@@ -376,7 +376,7 @@ rules:
   - RULE-SET,onedrive_domain,OneDrive
   - RULE-SET,microsoft_domain,Microsoft
   - RULE-SET,tiktok_domain,TikTok
-  - RULE-SET,speedtest_domain,Speedtest
+  - RULE-SET,speedtest_domain,测速
   - RULE-SET,telegram_domain,Telegram
   - RULE-SET,netflix_domain,Netflix
   - RULE-SET,disney_domain,迪士尼+
