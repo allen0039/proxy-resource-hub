@@ -102,6 +102,31 @@ ca-p12 = FAKE_P12_BASE64
         self.assertIn("Configure MITM certificate and passphrase locally", result)
         sanitizer.validate_client_structure("surge_mac_allen.conf", result)
 
+    def test_surge_distinguishes_policy_path_docs_from_subscriptions(self):
+        sanitizer = load_sanitizer()
+        source = f"""[General]
+loglevel = notify
+
+[Proxy Group]
+# 订阅使用说明：policy-path 是订阅地址，只替换等号后的 URL。
+Primary = select, policy-path={PRIVATE_URL}, DIRECT
+# Backup = select, policy-path=https://private.invalid/backup, DIRECT
+
+[Rule]
+FINAL,Primary
+
+[MITM]
+hostname = example.org
+"""
+
+        result = sanitizer.sanitize_surge(source, "surge-mac")
+
+        self.assertIn("policy-path 是订阅地址", result)
+        self.assertIn("https://example.com/surge-mac/subscription-1.conf", result)
+        self.assertIn("https://example.com/surge-mac/subscription-2.conf", result)
+        self.assertNotIn("private.invalid", result)
+        sanitizer.validate_client_structure("surge_mac_allen.conf", result)
+
     def test_quantumultx_replaces_remote_servers_and_removes_local_nodes(self):
         sanitizer = load_sanitizer()
         source = f"""[policy]
