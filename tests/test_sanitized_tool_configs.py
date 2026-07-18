@@ -62,6 +62,12 @@ def load_sanitizer():
 
 
 class SanitizedToolConfigTests(unittest.TestCase):
+    def test_generator_uses_current_mihomo_source_filename(self):
+        sanitizer = load_sanitizer()
+
+        self.assertIn("mihomo_byallen.yaml", sanitizer.OUTPUT_NAMES)
+        self.assertNotIn("mihomo_byallen-nokey.yaml", sanitizer.OUTPUT_NAMES)
+
     def test_normalize_text_removes_trailing_whitespace(self):
         sanitizer = load_sanitizer()
 

@@ -1,0 +1,44 @@
+name: Update SKK rules
+
+on:
+  schedule:
+    # 04:17 Asia/Shanghai (UTC+8). An off-hour minute reduces scheduler delay.
+    - cron: "17 20 * * *"
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+concurrency:
+  group: update-skk-rules
+  cancel-in-progress: false
+
+jobs:
+  update:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v7
+      - uses: actions/setup-python@v6
+        with:
+          python-version: "3.x"
+      - name: Update generated SKK rules
+        run: python3 tools/update_skk_rules.py
+      - name: Run tests
+        run: |
+          python3 -m pip install -r requirements-test.txt
+          python3 -m unittest discover -s tests -v
+      - name: Commit changed public rule files
+        run: |
+          git add -- \
+            Rules/QuantumultX/SKK/CDN.list \
+            Rules/QuantumultX/SKK/Download.list \
+            Rules/Loon/SKK/CDN.list \
+            Rules/Loon/SKK/Download.list
+          if git diff --cached --quiet; then
+            echo "SKK rules are already current."
+            exit 0
+          fi
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git commit -m "Update SKK CDN and Download rules"
+          git push

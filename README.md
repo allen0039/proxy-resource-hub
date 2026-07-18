@@ -12,7 +12,7 @@ python3 tools/generate_rules.py --check
 python3 -m unittest discover -s tests -v
 ```
 
-更新规则时，修改源文件并运行第一条命令，然后将源文件和生成结果放在同一个提交中。GitHub Actions 只验证生成结果是否同步，不会自动修改仓库。
+更新规则时，修改源文件并运行第一条命令，然后将源文件和生成结果放在同一个提交中。`validate-rules.yml` 只验证这些手工源文件的生成结果；SKK CDN/Download 由独立的每日工作流自动更新。
 
 ## 订阅地址
 
@@ -66,6 +66,36 @@ https://raw.githubusercontent.com/allen0039/proxy-resource-hub/main/Rules/Quantu
 [Remote Rule]
 https://raw.githubusercontent.com/allen0039/proxy-resource-hub/main/Rules/Loon/AI/gongyiai.list, AI
 ```
+
+## SKK CDN/Download 自动转换
+
+`.github/workflows/update-skk-rules.yml` 每天北京时间 04:17 获取 SKK 官方
+`domainset` 与 `non_ip`，校验来源和最低条目数后转换。只有以下四个公开规则文件会被自动提交，`Configs/` 不在自动提交范围内。
+
+### Quantumult X
+
+- [CDN](https://raw.githubusercontent.com/allen0039/proxy-resource-hub/main/Rules/QuantumultX/SKK/CDN.list)
+- [Download](https://raw.githubusercontent.com/allen0039/proxy-resource-hub/main/Rules/QuantumultX/SKK/Download.list)
+
+```ini
+[filter_remote]
+https://raw.githubusercontent.com/allen0039/proxy-resource-hub/main/Rules/QuantumultX/SKK/CDN.list, tag=CDN, force-policy=CDN, update-interval=86400, opt-parser=false, enabled=true
+```
+
+### Loon
+
+- [CDN](https://raw.githubusercontent.com/allen0039/proxy-resource-hub/main/Rules/Loon/SKK/CDN.list)
+- [Download](https://raw.githubusercontent.com/allen0039/proxy-resource-hub/main/Rules/Loon/SKK/Download.list)
+
+```ini
+[Remote Rule]
+https://raw.githubusercontent.com/allen0039/proxy-resource-hub/main/Rules/Loon/SKK/CDN.list, policy=CDN, tag=CDN, enabled=true
+```
+
+Surge 和 Mihomo 已有 SKK 官方原生格式，建议直接使用官方地址，避免额外转换。Download 订阅会继续自动维护，但当前五份本地配置没有启用 Download 策略组。
+
+转换产物继承 SKK 的 `AGPL-3.0-only` 许可证，来源和许可证范围见
+[`Rules/SKK/README.md`](Rules/SKK/README.md)。
 
 ## 个人网站（默认直连）
 
