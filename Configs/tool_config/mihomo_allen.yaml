@@ -279,7 +279,7 @@ rules:
   - DOMAIN-SUFFIX,lsposed.org,美国节点
 
   # 5. AI 与媒体服务
-  - DOMAIN-SUFFIX,mfallen.de,日本优选
+  - DOMAIN-SUFFIX,mfallen.de,直连策略
   - DOMAIN-KEYWORD,deepseek,OpenAI
   - DOMAIN-KEYWORD,open-meteo,OpenAI
   - DOMAIN-KEYWORD,grok,OpenAI

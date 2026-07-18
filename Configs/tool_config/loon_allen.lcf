@@ -191,7 +191,7 @@ DOMAIN-SUFFIX,openwrt.ai,美国节点
 DOMAIN-SUFFIX,lsposed.org,美国节点
 
 # 5. AI 与媒体服务
-DOMAIN-SUFFIX,mfallen.de,日本优选
+DOMAIN-SUFFIX,mfallen.de,DIRECT
 DOMAIN-SUFFIX,copilot.microsoft.com,OpenAI
 DOMAIN-KEYWORD,deepseek,OpenAI
 DOMAIN-KEYWORD,open-meteo,OpenAI
