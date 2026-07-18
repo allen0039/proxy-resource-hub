@@ -3,9 +3,9 @@
 # Derived from https://github.com/SukkaW/Surge
 # Source: https://ruleset.skk.moe/List/domainset/cdn.conf
 # Source: https://ruleset.skk.moe/List/non_ip/cdn.conf
-# Upstream Last Updated: 2026-07-16T17:03:52.554Z (domainset)
+# Upstream Last Updated: 2026-07-18T20:11:19.214Z (domainset)
 # Upstream Last Updated: 2026-06-30T21:42:09.831Z (non_ip)
-# Rule count: 4633
+# Rule count: 4635
 
 DOMAIN,7h1s_rul35et_i5_mad3_by_5ukk4w-ruleset.skk.moe
 DOMAIN,0x0.st
@@ -284,6 +284,7 @@ DOMAIN-SUFFIX,imaged.top
 DOMAIN-SUFFIX,imagee.top
 DOMAIN-SUFFIX,imagef.top
 DOMAIN-SUFFIX,imageg.top
+DOMAIN,img.aso.fr
 DOMAIN-SUFFIX,img.gmo.jp
 DOMAIN,img.reg.ru
 DOMAIN,img.xjh.me
@@ -1812,6 +1813,7 @@ DOMAIN,cdn.playwire.com
 DOMAIN,cdn.roboflow.com
 DOMAIN,cdn.roseperl.com
 DOMAIN,cdn.scaleflex.it
+DOMAIN,cdn.seedance2.ai
 DOMAIN-SUFFIX,cdn.signalfx.com
 DOMAIN,cdn.simplesat.io
 DOMAIN,cdn.skymavis.com

@@ -3,9 +3,9 @@
 # Derived from https://github.com/SukkaW/Surge
 # Source: https://ruleset.skk.moe/List/domainset/cdn.conf
 # Source: https://ruleset.skk.moe/List/non_ip/cdn.conf
-# Upstream Last Updated: 2026-07-16T17:03:52.554Z (domainset)
+# Upstream Last Updated: 2026-07-18T20:11:19.214Z (domainset)
 # Upstream Last Updated: 2026-06-30T21:42:09.831Z (non_ip)
-# Rule count: 4633
+# Rule count: 4635
 
 host, 7h1s_rul35et_i5_mad3_by_5ukk4w-ruleset.skk.moe, proxy
 host, 0x0.st, proxy
@@ -284,6 +284,7 @@ host-suffix, imaged.top, proxy
 host-suffix, imagee.top, proxy
 host-suffix, imagef.top, proxy
 host-suffix, imageg.top, proxy
+host, img.aso.fr, proxy
 host-suffix, img.gmo.jp, proxy
 host, img.reg.ru, proxy
 host, img.xjh.me, proxy
@@ -1812,6 +1813,7 @@ host, cdn.playwire.com, proxy
 host, cdn.roboflow.com, proxy
 host, cdn.roseperl.com, proxy
 host, cdn.scaleflex.it, proxy
+host, cdn.seedance2.ai, proxy
 host-suffix, cdn.signalfx.com, proxy
 host, cdn.simplesat.io, proxy
 host, cdn.skymavis.com, proxy
