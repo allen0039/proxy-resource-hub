@@ -109,7 +109,7 @@ Microsoft = select,美国优选,美国节点,香港优选,香港节点,新加坡
 Apple = select,DIRECT,Proxy,香港节点,新加坡节点,日本节点,台湾节点,韩国节点,美国节点,img-url = https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/Apple.png
 Final = select,美国优选,美国节点,香港优选,香港节点,新加坡优选,新加坡节点,日本节点,台湾节点,韩国节点,英国节点,Proxy,DIRECT,img-url = https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/Final.png
 TikTok = select,美国优选,美国节点,香港优选,香港节点,新加坡优选,新加坡节点,日本节点,台湾节点,韩国节点,英国节点,Proxy,DIRECT,img-url = https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/TikTok.png
-Speedtest = select,美国优选,美国节点,香港优选,香港节点,新加坡优选,新加坡节点,日本节点,台湾节点,韩国节点,英国节点,Proxy,DIRECT,img-url = https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/Speedtest.png
+测速 = select,美国优选,美国节点,香港优选,香港节点,新加坡优选,新加坡节点,日本节点,台湾节点,韩国节点,英国节点,Proxy,DIRECT,img-url = https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/Speedtest.png
 CDN = select,香港优选,香港节点,新加坡优选,新加坡节点,美国优选,美国节点,日本节点,台湾节点,韩国节点,英国节点,Proxy,DIRECT,img-url = https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/Cloudflare.png
 OneDrive = select,美国优选,美国节点,香港优选,香港节点,新加坡优选,新加坡节点,日本节点,台湾节点,韩国节点,英国节点,Proxy,DIRECT,Microsoft,img-url = https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/OneDrive.png
 
@@ -269,7 +269,7 @@ https://raw.githubusercontent.com/allen0039/proxy-resource-hub/main/Rules/Loon/A
 https://raw.githubusercontent.com/allen0039/proxy-resource-hub/main/Rules/Loon/Personal/Domain.list, policy=DIRECT, tag=个人域名, enabled=true
 https://raw.githubusercontent.com/allen0039/proxy-resource-hub/main/Rules/Loon/PT/Domain.list, policy=DIRECT, tag=PT站点, enabled=true
 https://kelee.one/Tool/Loon/Lsr/AI.lsr, policy=OpenAI, tag=AI, enabled=true
-https://rule.kelee.one/Loon/Speedtest.lsr, policy=Speedtest, tag=Speedtest, enabled=true
+https://rule.kelee.one/Loon/Speedtest.lsr, policy=测速, tag=测速, enabled=true
 https://raw.githubusercontent.com/ACL4SSR/ACL4SSR/master/Clash/LocalAreaNetwork.list, policy=DIRECT, tag=局域网, enabled=true
 https://raw.githubusercontent.com/Tartarus2014/Loon-Script/master/Rule/Reject/Advertising.lsr, policy=REJECT, tag=去广告, enabled=false
 https://raw.githubusercontent.com/fmz200/wool_scripts/main/Loon/rule/rejectAd.list, policy=广告拦截, tag=广告拦截合集-规则@奶思, enabled=false
