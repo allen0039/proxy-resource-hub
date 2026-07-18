@@ -23,6 +23,14 @@ Urltest_Base: &Urltest_Base {type: url-test, include-all: true, url: 'https://ww
 # ----------------------------------------------------------
 # 🔗 代理集 (机场/订阅源)
 # ----------------------------------------------------------
+# 订阅使用说明：
+# 1. proxy-providers 下每个顶层名称是一份订阅；url 属于私密信息，公开分享前必须脱敏。
+# 2. 当前仅启用 subscription_1；整段带 # 的 provider 是停用模板，删除该段每行的 # 后才会加载。
+# 3. interval 单位为秒，控制订阅自动刷新；修改 URL 后可在面板的代理提供者页面手动更新。
+# 4. filter 按节点名称排除公告、流量和到期信息，不改变订阅源；节点为空时先检查该正则。
+# 5. health-check 定期检测节点可用性，不能替代订阅更新；url 应使用稳定且响应快速的检测地址。
+# 6. proxy 只决定下载订阅时使用的出口，当前设为直连，不代表订阅内节点流量全部直连。
+# 7. 未设置 override.skip-cert-verify，TLS 节点默认校验证书；不要为兼容单个异常节点全局跳过校验。
 proxy-providers:
   subscription_1:
     url: "https://example.com/mihomo/subscription-1.yaml"
@@ -85,7 +93,6 @@ unified-delay: true
 tcp-concurrent: true
 log-level: warning
 find-process-mode: 'off'
-global-client-fingerprint: chrome
 profile:
   store-selected: true
   store-fake-ip: true
@@ -174,6 +181,9 @@ dns:
 # ----------------------------------------------------------
 # 🚩 出站策略组
 # ----------------------------------------------------------
+# 功能说明：业务组供规则引用，地区组按节点名筛选，优选组自动测速，故转组在节点故障时切换。
+# include-all 会读取所有已启用 provider 的节点；重命名策略组后必须同步修改 rules 中的策略名称。
+# Proxy 和 Final 是通用入口，直连策略用于可手动切换的直连业务，内置直连用于必须直连的管理流量。
 proxy-groups:
   - {name: Proxy, type: select, proxies: [美国优选, 香港优选, 新加坡优选, 美国节点, 香港节点, 新加坡节点, 日本优选, 日本节点, 台湾节点, 韩国节点, 英国节点, 自动选择, 全部节点, 美国故转, 香港故转, 新加坡故转, 日本故转, 直连]}
   - {name: Google, <<: *Proxy_first}
@@ -222,6 +232,9 @@ proxy-groups:
 # ----------------------------------------------------------
 # 🚦 规则匹配 (已补全特殊站点)
 # ----------------------------------------------------------
+# 功能说明：rules 从上到下首次命中即停止；精确例外、直连订阅和业务规则应位于通用规则之前。
+# RULE-SET 的第二项必须对应 rule-providers 中的名称，第三项必须对应现有策略组或内置策略。
+# qB 下载器使用内置 DIRECT 且保持在最前，MATCH,Final 必须作为最后一条兜底规则。
 rules:
   # === 本地自定义规则 ===
   # 1. 局域网与管理规则 (最高优先级)
@@ -391,6 +404,9 @@ rules:
 # ----------------------------------------------------------
 # 📡 规则集供应器
 # ----------------------------------------------------------
+# 功能说明：rule-anchor 统一定义下载周期、匹配行为和文件格式，rule-providers 保存实际规则地址。
+# domain/ip/classical 三种 behavior 不能混用；新增 provider 后必须在 rules 中引用，否则只会下载而不生效。
+# 规则 URL 使用 HTTPS 并按 interval 自动更新；自有 PT、个人域名和公益 AI 订阅优先于第三方大类规则。
 rule-anchor:
   ip: &ip {type: http, interval: 86400, behavior: ipcidr, format: mrs}
   domain: &domain {type: http, interval: 86400, behavior: domain, format: mrs}

@@ -21,6 +21,7 @@ OUTPUT_NAMES = {
 CONFIG_NAMES = set(OUTPUT_NAMES.values())
 
 URL_RE = re.compile(r"https?://[^,\s\"']+")
+POLICY_PATH_RE = re.compile(r"(policy-path\s*=\s*)([^,\s]+)")
 UUID_RE = re.compile(
     r"(?i)\b[0-9a-f]{8}-[0-9a-f]{4}-[1-5][0-9a-f]{3}-"
     r"[89ab][0-9a-f]{3}-[0-9a-f]{12}\b"
@@ -106,11 +107,10 @@ def sanitize_surge(text: str, slug: str) -> str:
             output.append(line)
             continue
 
-        if "policy-path" in line:
+        if POLICY_PATH_RE.search(line):
             subscription_index += 1
             replacement = example_url(slug, "subscription", subscription_index)
-            line, count = re.subn(
-                r"(policy-path\s*=\s*)([^,\s]+)",
+            line, count = POLICY_PATH_RE.subn(
                 lambda match: match.group(1) + replacement,
                 line,
                 count=1,
@@ -388,8 +388,8 @@ def _surge_policy_path_urls(
     filename: str, lines: list[tuple[int, str]]
 ) -> None:
     for number, line in lines:
-        match = re.search(r"policy-path\s*=\s*([^,\s]+)", line)
-        if match is None or urlsplit(match.group(1)).hostname != "example.com":
+        match = POLICY_PATH_RE.search(line)
+        if match is None or urlsplit(match.group(2)).hostname != "example.com":
             raise SanitizationError(
                 f"{filename}:{number}: non-placeholder policy-path remains"
             )
@@ -402,7 +402,7 @@ def _validate_ini_client(filename: str, text: str) -> None:
         policy_paths = [
             (number, line)
             for number, line in sections["proxy group"]
-            if "policy-path" in line
+            if POLICY_PATH_RE.search(line)
         ]
         _surge_policy_path_urls(filename, policy_paths)
         forbidden = {"ca-passphrase", "ca-p12"}
