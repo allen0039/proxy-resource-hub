@@ -70,7 +70,13 @@ resource-parser = https://raw.githubusercontent.com/sub-store-org/Sub-Store/rele
 [Remote Proxy]
 # 远程订阅区：每行格式为“订阅名 = 订阅URL,参数...”
 # 订阅 URL 属于私密配置；公开分享版本必须使用占位符。
-# enabled=true 表示启用该订阅；enabled=false 表示保留但不拉取。
+# 订阅使用说明：
+# 1. 等号后的第一个字段是订阅 URL；替换时保留订阅名和后续参数，避免策略组引用失效。
+# 2. enabled=true 表示启用并更新，enabled=false 表示保留但停用；当前仅启用 Allen合集订阅。
+# 3. udp 控制节点 UDP 能力，block-quic 用于阻止 QUIC 绕过预期分流，fast-open 控制连接建立方式。
+# 4. skip-cert-verify=false 表示校验 TLS 节点证书；只有明确需要兼容异常证书时才对对应订阅调整。
+# 5. 修改后在 Loon 的远程资源页面更新订阅；地区组无节点时检查 [Remote Filter] 和节点名称。
+# 6. 新增订阅时使用唯一名称；若重命名，需同步修改引用该名称的策略组或筛选配置。
 Allen合集订阅 = https://example.com/loon/subscription-1.conf,udp=true,block-quic=true,fast-open=default,vmess-aead=true,skip-cert-verify=false,enabled=true,flexible-sni=false,img-url=https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/Bamboo.png
 白菜灵车 = https://example.com/loon/subscription-2.conf,udp=true,block-quic=true,fast-open=default,vmess-aead=true,skip-cert-verify=false,enabled=false,flexible-sni=false,img-url=https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/Bamboo.png
 Allen自建 = https://example.com/loon/subscription-3.conf,udp=true,block-quic=false,fast-open=default,vmess-aead=true,skip-cert-verify=false,enabled=false,flexible-sni=false,img-url=https://raw.githubusercontent.com/Orz-3/mini/master/Alpha/Vpn.png
@@ -255,6 +261,8 @@ FINAL,Final
 # 远程规则区：用于维护大类规则集，按 policy 指向对应策略组。
 # 修改业务出口时优先改 policy；临时停用某个规则集可改 enabled=false。
 # 注意顺序：本地 [Rule] 在前，远程规则在后；同类规则尽量避免在两边重复。
+# 使用说明：新增规则集前先创建同名 policy 策略组；更新失败时检查 URL、资源格式和当前网络出口。
+# enabled=false 适合保留备用规则，删除前先确认没有依赖；PT、个人域名和公益 AI 以自有订阅为准。
 https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/rule/QuantumultX/Google/Google.list, policy=DIRECT, tag=Google.list, enabled=false
 https://github.com/Moli-X/Tool/raw/X/Loon/Rules/Google.list, policy=Google, tag=谷歌分流, enabled=true
 https://raw.githubusercontent.com/allen0039/proxy-resource-hub/main/Rules/Loon/AI/gongyiai.list, policy=DIRECT, tag=公益AI, enabled=true
@@ -308,6 +316,7 @@ https://raw.githubusercontent.com/VirgilClyne/GetSomeFries/main/ruleset/ASN.Chin
 # enabled=true 会启用插件；enabled=false 保留配置但不启用。
 # 带 policy 的插件会把相关请求交给指定策略组；启用 MitM 类插件前确认 [Mitm] 证书已安装并信任。
 # 插件越多越可能影响性能和兼容性，排查异常时优先临时关闭最近新增的插件。
+# 同类去广告插件不要重复启用；插件更新失败不代表规则失效，应先确认资源站是否限制当前出口。
 https://yqc-premium.pages.dev/Loon/sfw.plugin, enabled=false
 https://raw.githubusercontent.com/app2smile/rules/master/plugin/qidian.plugin, enabled=true
 https://whatshub.top/plugin/youtube.plugin, enabled=false
@@ -350,6 +359,8 @@ https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/rewrite/Lo
 # MitM 证书区：用于 HTTPS 解密、脚本和部分去广告插件。
 # 高敏感：ca-p12 与 ca-passphrase 不应公开分享；发布配置前务必脱敏或删除。
 # hostname 为空表示当前未在这里显式声明 MitM 域名，具体域名可能由插件提供。
+# skip-server-cert-verify=false 会校验上游证书；遇到单个插件异常时不要直接全局关闭校验。
+# 更换证书后需在系统中重新安装并信任，旧证书和口令应一并移除。
 # Configure MITM certificate and passphrase locally.
 hostname =
 skip-server-cert-verify = false
