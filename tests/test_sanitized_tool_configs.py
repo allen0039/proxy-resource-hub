@@ -335,6 +335,42 @@ rule-providers:
                 if match is not None:
                     self.assertNotIn(match.group(1).casefold(), private_keywords)
 
+    def test_committed_outputs_preserve_routing_optimizations(self):
+        outputs = {
+            name: (OUTPUT_DIR / name).read_text(encoding="utf-8")
+            for name in CONFIG_NAMES
+        }
+        cloudflare_rules = {
+            "surge_mac_allen.conf": "DOMAIN-SUFFIX,cloudflare.com,CDN",
+            "surge_iphone_allen.conf": "DOMAIN-SUFFIX,cloudflare.com,CDN",
+            "quantumultx_allen.conf": "host-suffix, cloudflare.com, CDN",
+            "loon_allen.lcf": "DOMAIN-SUFFIX,cloudflare.com,CDN",
+            "mihomo_allen.yaml": "DOMAIN-SUFFIX,cloudflare.com,CDN",
+        }
+        for name, rule in cloudflare_rules.items():
+            with self.subTest(name=name, check="Cloudflare CDN"):
+                self.assertEqual(outputs[name].count(rule), 1)
+
+        mihomo = yaml.safe_load(outputs["mihomo_allen.yaml"])
+        self.assertNotIn("gfw_domain", mihomo["rule-providers"])
+        self.assertFalse(
+            any(rule.startswith("RULE-SET,gfw_domain,") for rule in mihomo["rules"])
+        )
+        self.assertEqual(
+            mihomo["rules"].count("RULE-SET,geolocation-!cn,Proxy"), 1
+        )
+        self.assertEqual(
+            mihomo["rules"].count("RULE-SET,Cloudflare_domain,CDN"), 1
+        )
+
+        qx = outputs["quantumultx_allen.conf"]
+        header = qx.split("[general]", maxsplit=1)[0]
+        self.assertNotIn("1234567", header)
+        self.assertIn("脱敏工具", header)
+        self.assertNotRegex(qx, r"server-tag-regex=[^\n,]*(?:^|\|)(?:新|日|台|United)(?:\||,)")
+        self.assertIn("United States", qx)
+        self.assertIn("Singapore", qx)
+
 
 if __name__ == "__main__":
     unittest.main()

@@ -258,7 +258,7 @@ rules:
   - DOMAIN-SUFFIX,github.io,GitHub
   - DOMAIN-SUFFIX,githubassets.com,GitHub
   - DOMAIN-SUFFIX,githubusercontent.com,GitHub
-  - DOMAIN-SUFFIX,cloudflare.com,香港节点
+  - DOMAIN-SUFFIX,cloudflare.com,CDN
   - DOMAIN-SUFFIX,docker.com,美国节点
   - DOMAIN-SUFFIX,docker.io,美国节点
   - DOMAIN-SUFFIX,dockerhub.com,美国节点
@@ -334,7 +334,6 @@ rules:
   - RULE-SET,steam_cn_domain,直连策略
   - RULE-SET,steamcdn_domain,直连策略
   - RULE-SET,steamcdn_ip,直连策略,no-resolve
-  - RULE-SET,steam_domain,游戏平台
   - RULE-SET,games_domain,游戏平台
   # 其它远程规则集
   - RULE-SET,private_domain,直连策略
@@ -352,16 +351,14 @@ rules:
   - RULE-SET,public-tracker_domain,直连策略
   - RULE-SET,apple_cn_domain,直连策略
   - RULE-SET,apple_domain,Apple
-  - RULE-SET,Cloudflare_domain,香港节点
+  - RULE-SET,Cloudflare_domain,CDN
   - RULE-SET,ai_custom,OpenAI
   - RULE-SET,gongyiai,直连策略
   - RULE-SET,personal_domain,直连策略
-  - RULE-SET,openai_domain,OpenAI
   - RULE-SET,ai,OpenAI
   - RULE-SET,github_domain,GitHub
   - RULE-SET,gitbook_domain,GitHub
   - RULE-SET,youtube_domain,YouTube
-  - RULE-SET,fcm_domain,Google
   - RULE-SET,google_domain,Google
   - RULE-SET,onedrive_domain,OneDrive
   - RULE-SET,microsoft_domain,Microsoft
@@ -382,7 +379,6 @@ rules:
   - RULE-SET,cdn_skk,CDN
   - RULE-SET,global_media_domain,国外媒体
   - RULE-SET,porn_domain,特殊媒体
-  - RULE-SET,gfw_domain,Proxy
   - RULE-SET,geolocation-!cn,Proxy
   - RULE-SET,cn_domain,直连策略
   - RULE-SET,google_ip,Google,no-resolve
@@ -417,15 +413,12 @@ rule-providers:
   ai_custom: { <<: *class, url: "https://raw.githubusercontent.com/allen0039/mihomo/main/Rules/AI/ai.list" }
   gongyiai: { <<: *class, url: "https://raw.githubusercontent.com/allen0039/proxy-resource-hub/main/Rules/Mihomo/AI/gongyiai.list" }
   personal_domain: { <<: *class, url: "https://raw.githubusercontent.com/allen0039/proxy-resource-hub/main/Rules/Mihomo/Personal/Domain.list" }
-  openai_domain: { <<: *domain, url: "https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/refs/heads/meta/geo/geosite/openai.mrs"}
   ai: {  <<: *domain, url: "https://github.com/MetaCubeX/meta-rules-dat/raw/refs/heads/meta/geo/geosite/category-ai-!cn.mrs" }
   steam_cn_domain: { <<: *domain, url: "https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/refs/heads/meta/geo/geosite/steam%40cn.mrs"}
   steamcdn_domain: { <<: *domain, url: "https://raw.githubusercontent.com/Lanlan13-14/Rules/refs/heads/main/rules/Domain/Steam-domain.mrs"}
-  steam_domain: { <<: *domain, url: "https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/meta/geo/geosite/steam.mrs"}
   games_domain: { <<: *domain, url: "https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/meta/geo/geosite/category-games.mrs"}
   youtube_domain: { <<: *domain, url: "https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/meta/geo/geosite/youtube.mrs"}
   google_domain: { <<: *domain, url: "https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/meta/geo/geosite/google.mrs"}
-  fcm_domain: { <<: *domain, url: "https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/refs/heads/meta/geo/geosite/googlefcm.mrs"}
   github_domain: { <<: *domain, url: "https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/meta/geo/geosite/github.mrs"}
   gitbook_domain: { <<: *domain, url: "https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/refs/heads/meta/geo/geosite/gitbook.mrs"}
   telegram_domain: { <<: *domain, url: "https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/meta/geo/geosite/telegram.mrs"}
@@ -447,7 +440,6 @@ rule-providers:
   apple_domain: { <<: *domain, url: "https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/meta/geo/geosite/apple.mrs"}
   speedtest_domain: { <<: *domain, url: "https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/meta/geo/geosite/ookla-speedtest.mrs"}
   tiktok_domain: { <<: *domain, url: "https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/meta/geo/geosite/tiktok.mrs"}
-  gfw_domain: { <<: *domain, url: "https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/meta/geo/geosite/gfw.mrs"}
   geolocation-!cn: { <<: *domain, url: "https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/meta/geo/geosite/geolocation-!cn.mrs"}
   cn_domain: { <<: *domain, url: "https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/meta/geo/geosite/cn.mrs"}
   private_ip: { <<: *ip, url: "https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/refs/heads/meta/geo/geoip/private.mrs"}
