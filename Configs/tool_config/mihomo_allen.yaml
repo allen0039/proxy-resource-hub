@@ -10,7 +10,7 @@
 # ----------------------------------------------------------
 # Proxy_first：默认代理优先的业务分流模板。适合 YouTube、Google、GitHub、Telegram、流媒体等海外服务。
 # 先交给 美国优选 统一调度，也保留各地区节点和直连作为手动切换选项。
-Proxy_first: &Proxy_first {type: select, proxies: [美国优选, 美国节点, 香港优选, 香港节点, 新加坡优选, 新加坡节点, 日本节点, 台湾节点, Proxy, 韩国节点, 直连]}
+Proxy_first: &Proxy_first {type: select, proxies: [美国优选, 美国节点, 香港优选, 香港节点, 新加坡优选, 新加坡节点, 日本节点, 台湾节点, 韩国节点, 英国节点, Proxy, 直连]}
 
 # Direct_first：默认直连优先的业务分流模板。适合 Apple、国内服务、局域网友好型服务。
 # 如直连异常，可以手动切到 Proxy 或指定地区节点。
@@ -175,26 +175,31 @@ dns:
 # 🚩 出站策略组
 # ----------------------------------------------------------
 proxy-groups:
-  - {name: Proxy, type: select, proxies: [美国优选, 美国节点, 香港优选, 香港节点, 新加坡优选, 新加坡节点, 日本优选, 日本节点, 台湾节点, 韩国节点, 自动选择, 全部节点, 美国故转, 香港故转, 新加坡故转, 日本故转, 直连]}
-  - {name: YouTube, <<: *Proxy_first}
+  - {name: Proxy, type: select, proxies: [美国优选, 香港优选, 新加坡优选, 美国节点, 香港节点, 新加坡节点, 日本优选, 日本节点, 台湾节点, 韩国节点, 英国节点, 自动选择, 全部节点, 美国故转, 香港故转, 新加坡故转, 日本故转, 直连]}
   - {name: Google, <<: *Proxy_first}
   - {name: OpenAI, <<: *Proxy_first}
-  - {name: GitHub, <<: *Proxy_first}
-  - {name: TikTok, <<: *Proxy_first}
+  - {name: YouTube, <<: *Proxy_first}
   - {name: Telegram, <<: *Proxy_first}
   - {name: Netflix, <<: *Proxy_first}
-  - {name: Emby, <<: *Proxy_first}
-  - {name: OneDrive, <<: *Proxy_first}
-  - {name: Microsoft, <<: *Proxy_first}
+  - {name: Emby, type: select, proxies: [直连, 美国优选, 美国节点, 香港优选, 香港节点, 新加坡优选, 新加坡节点, 日本节点, 台湾节点, 韩国节点, 英国节点, Proxy]}
+  - {name: 迪士尼+, <<: *Proxy_first}
   - {name: 哔哩哔哩, type: select, proxies: [台湾节点, 香港节点, 新加坡节点, 全部节点, Proxy, 直连]}
-  - {name: 特殊媒体, <<: *Proxy_first}
-  - {name: Speedtest, <<: *Proxy_first}
+  - {name: 国外媒体, <<: *Proxy_first}
+  - {name: 国内媒体, <<: *Direct_first}
+  - {name: GitHub, <<: *Proxy_first}
   - {name: PayPal, <<: *Proxy_first}
-  - {name: Amazon, <<: *Proxy_first}
-  - {name: Apple, <<: *Direct_first}
+  - {name: Spotify, <<: *Proxy_first}
+  - {name: Microsoft, <<: *Proxy_first}
   - {name: 游戏平台, <<: *Proxy_first}
-  - {name: 直连策略, type: select, proxies: [直连, Proxy]}
+  - {name: Apple, <<: *Direct_first}
   - {name: Final, <<: *Proxy_first}
+  - {name: TikTok, <<: *Proxy_first}
+  - {name: Speedtest, <<: *Proxy_first}
+  - {name: CDN, type: select, proxies: [香港优选, 香港节点, 新加坡优选, 新加坡节点, 美国优选, 美国节点, 日本节点, 台湾节点, 韩国节点, 英国节点, Proxy, 直连]}
+  - {name: OneDrive, type: select, proxies: [美国优选, 美国节点, 香港优选, 香港节点, 新加坡优选, 新加坡节点, 日本节点, 台湾节点, 韩国节点, 英国节点, Proxy, 直连, Microsoft]}
+  - {name: 特殊媒体, <<: *Proxy_first}
+  - {name: Amazon, <<: *Proxy_first}
+  - {name: 直连策略, type: select, proxies: [直连, Proxy]}
 
   - {name: 香港节点, type: select, include-all: true, filter: '(?i)(🇭🇰|香港|\b(HK|HKG|Hong)(\d+)?\b)', exclude-filter: '(?i)(回国|校园|游戏|🎮|\bGAME\b)'}
   - {name: 台湾节点, type: select, include-all: true, filter: '(?i)(🇹🇼|台湾|\b(TW|TWN|Tai|Taiwan)(\d+)?\b)', exclude-filter: '(?i)(回国|校园|游戏|🎮|\bGAME\b)'}
@@ -202,6 +207,7 @@ proxy-groups:
   - {name: 韩国节点, type: select, include-all: true, filter: '(?i)(🇰🇷|韩国|韓|首尔|\b(KR|KOR|Korea)(\d+)?\b)', exclude-filter: '(?i)(回国|校园|游戏|🎮|\bGAME\b)'}
   - {name: 新加坡节点, type: select, include-all: true, filter: '(?i)(🇸🇬|新加坡|狮城|\b(SG|SGP|Singapore)(\d+)?\b)', exclude-filter: '(?i)(回国|校园|游戏|🎮|\bGAME\b)'}
   - {name: 美国节点, type: select, include-all: true, filter: '(?i)(🇺🇸|🇺🇲|美国|波特兰|达拉斯|俄勒冈|凤凰城|费利蒙|硅谷|拉斯维加斯|洛杉矶|圣何塞|圣克拉拉|西雅图|芝加哥|\b(US|USA|United States)(\d+)?\b)', exclude-filter: '(?i)(回国|校园|游戏|🎮|\bGAME\b)'}
+  - {name: 英国节点, type: select, include-all: true, filter: '(?i)(🇬🇧|英国|伦敦|\b(UK|GB|GBR|United Kingdom)(\d+)?\b)', exclude-filter: '(?i)(回国|校园|游戏|🎮|\bGAME\b)'}
   - {name: 香港故转, type: fallback, include-all: true, url: 'https://www.gstatic.com/generate_204', tolerance: 20, interval: 300, filter: '(?i)(🇭🇰|香港|\b(HK|HKG|Hong)(\d+)?\b)', exclude-filter: '(?i)(回国|校园|游戏|🎮|\bGAME\b)'}
   - {name: 日本故转, type: fallback, include-all: true, url: 'https://www.gstatic.com/generate_204', tolerance: 20, interval: 300, filter: '(?i)(🇯🇵|日本|川日|东京|大阪|泉日|埼玉|\b(JP|JPN|Japan)(\d+)?\b)', exclude-filter: '(?i)(回国|校园|游戏|🎮|\bGAME\b)'}
   - {name: 新加坡故转, type: fallback, include-all: true, url: 'https://www.gstatic.com/generate_204', tolerance: 20, interval: 300, filter: '(?i)(🇸🇬|新加坡|狮城|\b(SG|SGP|Singapore)(\d+)?\b)', exclude-filter: '(?i)(回国|校园|游戏|🎮|\bGAME\b)'}
@@ -228,7 +234,7 @@ rules:
   - DOMAIN-SUFFIX,push.apple.com,香港节点
   - DOMAIN-SUFFIX,apple-relay.apple.com,Apple
 
-  # 3. 直连、PT 与下载服务
+  # 3. 直连与 PT 服务
   # 已纳入远程 PT 订阅的站点不在本地重复维护。
   - DOMAIN-SUFFIX,synology.cn,直连策略
   - DOMAIN,qbittorrent-nox,直连策略
@@ -363,12 +369,18 @@ rules:
   - RULE-SET,speedtest_domain,Speedtest
   - RULE-SET,telegram_domain,Telegram
   - RULE-SET,netflix_domain,Netflix
+  - RULE-SET,disney_domain,迪士尼+
   - RULE-SET,paypal_domain,PayPal
+  - RULE-SET,spotify_domain,Spotify
   - RULE-SET,Amazon_domain,Amazon
   - RULE-SET,Amazon_ip,Amazon,no-resolve
   - RULE-SET,emby_domain,Emby
   - RULE-SET,emby_ip,Emby,no-resolve
   - RULE-SET,biliintl_domain,哔哩哔哩
+  - RULE-SET,cn_media_domain,国内媒体
+  - RULE-SET,cdn_domain,CDN
+  - RULE-SET,cdn_skk,CDN
+  - RULE-SET,global_media_domain,国外媒体
   - RULE-SET,porn_domain,特殊媒体
   - RULE-SET,gfw_domain,Proxy
   - RULE-SET,geolocation-!cn,Proxy
@@ -418,11 +430,17 @@ rule-providers:
   gitbook_domain: { <<: *domain, url: "https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/refs/heads/meta/geo/geosite/gitbook.mrs"}
   telegram_domain: { <<: *domain, url: "https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/meta/geo/geosite/telegram.mrs"}
   netflix_domain: { <<: *domain, url: "https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/meta/geo/geosite/netflix.mrs"}
+  disney_domain: { <<: *domain, url: "https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/meta/geo/geosite/disney.mrs"}
   Amazon_domain: { <<: *domain, url: "https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/refs/heads/meta/geo/geosite/amazon.mrs"}
   emby_domain: { <<: *domain, url: "https://raw.githubusercontent.com/Lanlan13-14/Rules/refs/heads/main/rules/Domain/emby.mrs"}
   biliintl_domain: { <<: *domain, url: "https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/refs/heads/meta/geo/geosite/bilibili%40!cn.mrs"}
+  cn_media_domain: { <<: *domain, url: "https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/meta/geo/geosite/category-entertainment-cn.mrs"}
+  global_media_domain: { <<: *domain, url: "https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/meta/geo/geosite/category-entertainment.mrs"}
+  cdn_domain: { <<: *domain, url: "https://ruleset.skk.moe/Clash/domainset/cdn.txt" }
+  cdn_skk: { <<: *class, url: "https://ruleset.skk.moe/Clash/non_ip/cdn.txt" }
   porn_domain: { <<: *domain, url: "https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/refs/heads/meta/geo/geosite/category-porn.mrs"}
   paypal_domain: { <<: *domain, url: "https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/meta/geo/geosite/paypal.mrs"}
+  spotify_domain: { <<: *domain, url: "https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/meta/geo/geosite/spotify.mrs"}
   onedrive_domain: { <<: *domain, url: "https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/meta/geo/geosite/onedrive.mrs"}
   microsoft_domain: { <<: *domain, url: "https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/meta/geo/geosite/microsoft.mrs"}
   apple_cn_domain: { <<: *domain, url: "https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/meta/geo/geosite/apple-cn.mrs"}

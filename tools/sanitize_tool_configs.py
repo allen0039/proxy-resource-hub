@@ -12,7 +12,7 @@ import yaml
 
 ROOT = Path(__file__).resolve().parents[1]
 OUTPUT_NAMES = {
-    "mihomo_byallen-nokey.yaml": "mihomo_allen.yaml",
+    "mihomo_byallen.yaml": "mihomo_allen.yaml",
     "surge-Mac.conf": "surge_mac_allen.conf",
     "Surge-iPhone.conf": "surge_iphone_allen.conf",
     "quantumult_byallen.conf": "quantumultx_allen.conf",
@@ -546,7 +546,7 @@ def generate(source_dir: Path, output_dir: Path) -> dict[str, str]:
         "Surge-iPhone.conf": lambda text: sanitize_surge(text, "surge-iphone"),
         "quantumult_byallen.conf": sanitize_quantumultx,
         "allenloon.lcf": sanitize_loon,
-        "mihomo_byallen-nokey.yaml": sanitize_mihomo,
+        "mihomo_byallen.yaml": sanitize_mihomo,
     }
     outputs: dict[str, str] = {}
     for source_name, output_name in OUTPUT_NAMES.items():
