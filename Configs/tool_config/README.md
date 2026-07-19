@@ -5,6 +5,31 @@
 > [!IMPORTANT]
 > 这些是公开脱敏模板，里面没有真实节点。必须先下载到本地，把 `https://example.com/...` 替换成自己的机场订阅，才能正常使用。
 
+## 先安装客户端
+
+### Apple 客户端
+
+| 客户端 | 官方下载 | 说明 |
+| --- | --- | --- |
+| Surge for iPhone / iPad | [App Store](https://apps.apple.com/us/app/surge-5/id1442620678) | 对应 `surge_iphone_allen.conf` |
+| Surge for Mac | [Surge 官方下载页](https://nssurge.com/download) | 对应 `surge_mac_allen.conf`；Mac 版不通过 Mac App Store 提供 |
+| Quantumult X | [App Store](https://apps.apple.com/us/app/quantumult-x/id1443988620) | 对应 `quantumultx_allen.conf` |
+| Loon | [App Store](https://apps.apple.com/us/app/loon/id1373567447) | 对应 `loon_allen.lcf` |
+
+App Store 链接指向应用官方商店页面。部分应用可能未在所有国家或地区上架，需要使用已上架该应用的 Apple ID 地区。
+
+### Mihomo 客户端推荐
+
+`mihomo_allen.yaml` 是 Mihomo 配置文件，可以导入以下常用开源客户端：
+
+| 项目 | 支持平台 | 官方下载 |
+| --- | --- | --- |
+| Clash Verge Rev | Windows、macOS、Linux | [GitHub Releases](https://github.com/clash-verge-rev/clash-verge-rev/releases) |
+| FlClash | Android、Windows、macOS、Linux | [GitHub Releases](https://github.com/chen08209/FlClash/releases) |
+| Clash Nyanpasu | Windows、macOS、Linux | [GitHub Releases](https://github.com/libnyanpasu/clash-nyanpasu/releases/latest) |
+
+桌面端新手优先考虑 Clash Verge Rev；需要 Android 或多平台统一使用时可选择 FlClash。请只从项目官方 Releases 下载稳定版，不要使用来历不明的二次打包安装包。
+
 ## 只看这四步
 
 1. 在下面表格中找到自己的客户端。
