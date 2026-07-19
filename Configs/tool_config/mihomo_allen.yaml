@@ -149,48 +149,48 @@ dns:
 # Proxy 和 Final 是通用入口；内置直连用于必须直连的管理流量。
 proxy-groups:
   - {name: Proxy, type: select, proxies: [香港优选, 日本优选, 新加坡优选, 美国优选, 香港节点, 台湾节点, 日本节点, 新加坡节点, 美国节点, 韩国节点, 英国节点, 自动选择, 全部节点, 直连], icon: 'https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/Proxy.png'}
-  - {name: Google, <<: *Proxy_first}
-  - {name: OpenAI, <<: *Proxy_first}
-  - {name: YouTube, <<: *Proxy_first}
-  - {name: Telegram, <<: *Proxy_first}
-  - {name: Netflix, <<: *Proxy_first}
-  - {name: Emby, type: select, proxies: [直连, 香港优选, 日本优选, 新加坡优选, 美国优选, 香港节点, 台湾节点, 日本节点, 新加坡节点, 美国节点, 韩国节点, 英国节点, Proxy]}
-  - {name: 迪士尼+, <<: *Proxy_first}
-  - {name: 哔哩哔哩, type: select, proxies: [香港节点, 台湾节点, 新加坡节点, 全部节点, Proxy, 直连]}
-  - {name: 国外媒体, <<: *Proxy_first}
-  - {name: 国内媒体, <<: *Direct_first}
-  - {name: GitHub, <<: *Proxy_first}
-  - {name: PayPal, <<: *Proxy_first}
-  - {name: Spotify, <<: *Proxy_first}
-  - {name: Microsoft, <<: *Proxy_first}
-  - {name: 游戏平台, <<: *Proxy_first}
-  - {name: Apple, <<: *Direct_first}
-  - {name: Final, <<: *Proxy_first}
-  - {name: TikTok, <<: *Proxy_first}
-  - {name: 测速, <<: *Proxy_first}
-  - {name: CDN, type: select, proxies: [香港优选, 日本优选, 新加坡优选, 美国优选, 香港节点, 台湾节点, 日本节点, 新加坡节点, 美国节点, 韩国节点, 英国节点, Proxy, 直连]}
-  - {name: OneDrive, type: select, proxies: [香港优选, 日本优选, 新加坡优选, 美国优选, 香港节点, 台湾节点, 日本节点, 新加坡节点, 美国节点, 韩国节点, 英国节点, Proxy, 直连, Microsoft]}
-  - {name: 特殊媒体, <<: *Proxy_first}
-  - {name: Amazon, <<: *Proxy_first}
-  - {name: 直连策略, type: select, proxies: [直连, Proxy]}
+  - {name: Google, <<: *Proxy_first, icon: 'https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/Google_Search.png'}
+  - {name: OpenAI, <<: *Proxy_first, icon: 'https://raw.githubusercontent.com/erdongchanyo/icon/main/Policy-Filter/OpenAI.png'}
+  - {name: YouTube, <<: *Proxy_first, icon: 'https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/YouTube.png'}
+  - {name: Telegram, <<: *Proxy_first, icon: 'https://raw.githubusercontent.com/Orz-3/mini/master/Color/Telegram.png'}
+  - {name: Netflix, <<: *Proxy_first, icon: 'https://raw.githubusercontent.com/erdongchanyo/icon/main/Policy-Filter/Netflix.png'}
+  - {name: Emby, type: select, proxies: [直连, 香港优选, 日本优选, 新加坡优选, 美国优选, 香港节点, 台湾节点, 日本节点, 新加坡节点, 美国节点, 韩国节点, 英国节点, Proxy], icon: 'https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/Emby.png'}
+  - {name: 迪士尼+, <<: *Proxy_first, icon: 'https://raw.githubusercontent.com/erdongchanyo/icon/main/Policy-Filter/Disney+.png'}
+  - {name: 哔哩哔哩, type: select, proxies: [香港节点, 台湾节点, 新加坡节点, 全部节点, Proxy, 直连], icon: 'https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/bilibili.png'}
+  - {name: 国外媒体, <<: *Proxy_first, icon: 'https://raw.githubusercontent.com/Orz-3/mini/master/Color/Streaming.png'}
+  - {name: 国内媒体, <<: *Direct_first, icon: 'https://raw.githubusercontent.com/Orz-3/mini/master/Color/StreamingSE.png'}
+  - {name: GitHub, <<: *Proxy_first, icon: 'https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/GitHub.png'}
+  - {name: PayPal, <<: *Proxy_first, icon: 'https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/PayPal.png'}
+  - {name: Spotify, <<: *Proxy_first, icon: 'https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/Spotify.png'}
+  - {name: Microsoft, <<: *Proxy_first, icon: 'https://raw.githubusercontent.com/erdongchanyo/icon/main/Policy-Filter/Microsoft.png'}
+  - {name: 游戏平台, <<: *Proxy_first, icon: 'https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/Game.png'}
+  - {name: Apple, <<: *Direct_first, icon: 'https://raw.githubusercontent.com/Orz-3/mini/master/Color/Apple.png'}
+  - {name: Final, <<: *Proxy_first, icon: 'https://raw.githubusercontent.com/Orz-3/mini/master/Color/Final.png'}
+  - {name: TikTok, <<: *Proxy_first, icon: 'https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/TikTok.png'}
+  - {name: 测速, <<: *Proxy_first, icon: 'https://raw.githubusercontent.com/erdongchanyo/icon/main/Policy-Filter/Speedtest.png'}
+  - {name: CDN, type: select, proxies: [香港优选, 日本优选, 新加坡优选, 美国优选, 香港节点, 台湾节点, 日本节点, 新加坡节点, 美国节点, 韩国节点, 英国节点, Proxy, 直连], icon: 'https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/Cloudflare.png'}
+  - {name: OneDrive, type: select, proxies: [香港优选, 日本优选, 新加坡优选, 美国优选, 香港节点, 台湾节点, 日本节点, 新加坡节点, 美国节点, 韩国节点, 英国节点, Proxy, 直连, Microsoft], icon: 'https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/OneDrive.png'}
+  - {name: 特殊媒体, <<: *Proxy_first, icon: 'https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/Streaming.png'}
+  - {name: Amazon, <<: *Proxy_first, icon: 'https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/Amazon.png'}
+  - {name: 直连策略, type: select, proxies: [直连, Proxy], icon: 'https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/Direct.png'}
 
-  - {name: 香港优选, <<: *Urltest_Base, filter: '(?i)(🇭🇰|香港|\b(HK|HKG|Hong)(\d+)?\b)', exclude-filter: '(?i)(回国|校园|游戏|🎮|\bGAME\b)'}
-  - {name: 日本优选, <<: *Urltest_Base, filter: '(?i)(🇯🇵|日本|川日|东京|大阪|泉日|埼玉|\b(JP|JPN|Japan)(\d+)?\b)', exclude-filter: '(?i)(回国|校园|游戏|🎮|\bGAME\b)'}
-  - {name: 新加坡优选, <<: *Urltest_Base, filter: '(?i)(🇸🇬|新加坡|狮城|\b(SG|SGP|Singapore)(\d+)?\b)', exclude-filter: '(?i)(回国|校园|游戏|🎮|\bGAME\b)'}
-  - {name: 美国优选, <<: *Urltest_Base, filter: '(?i)(🇺🇸|🇺🇲|美国|波特兰|达拉斯|俄勒冈|凤凰城|费利蒙|硅谷|拉斯维加斯|洛杉矶|圣何塞|圣克拉拉|西雅图|芝加哥|\b(US|USA|United States)(\d+)?\b)', exclude-filter: '(?i)(回国|校园|游戏|🎮|\bGAME\b)'}
-  - {name: 香港节点, type: select, include-all: true, filter: '(?i)(🇭🇰|香港|\b(HK|HKG|Hong)(\d+)?\b)', exclude-filter: '(?i)(回国|校园|游戏|🎮|\bGAME\b)'}
-  - {name: 台湾节点, type: select, include-all: true, filter: '(?i)(🇹🇼|台湾|\b(TW|TWN|Tai|Taiwan)(\d+)?\b)', exclude-filter: '(?i)(回国|校园|游戏|🎮|\bGAME\b)'}
-  - {name: 日本节点, type: select, include-all: true, filter: '(?i)(🇯🇵|日本|川日|东京|大阪|泉日|埼玉|\b(JP|JPN|Japan)(\d+)?\b)', exclude-filter: '(?i)(回国|校园|游戏|🎮|\bGAME\b)'}
-  - {name: 新加坡节点, type: select, include-all: true, filter: '(?i)(🇸🇬|新加坡|狮城|\b(SG|SGP|Singapore)(\d+)?\b)', exclude-filter: '(?i)(回国|校园|游戏|🎮|\bGAME\b)'}
-  - {name: 美国节点, type: select, include-all: true, filter: '(?i)(🇺🇸|🇺🇲|美国|波特兰|达拉斯|俄勒冈|凤凰城|费利蒙|硅谷|拉斯维加斯|洛杉矶|圣何塞|圣克拉拉|西雅图|芝加哥|\b(US|USA|United States)(\d+)?\b)', exclude-filter: '(?i)(回国|校园|游戏|🎮|\bGAME\b)'}
-#  - {name: 香港故转, type: fallback, include-all: true, url: 'https://www.gstatic.com/generate_204', tolerance: 20, interval: 300, filter: '(?i)(🇭🇰|香港|\b(HK|HKG|Hong)(\d+)?\b)', exclude-filter: '(?i)(回国|校园|游戏|🎮|\bGAME\b)'}
-#  - {name: 日本故转, type: fallback, include-all: true, url: 'https://www.gstatic.com/generate_204', tolerance: 20, interval: 300, filter: '(?i)(🇯🇵|日本|川日|东京|大阪|泉日|埼玉|\b(JP|JPN|Japan)(\d+)?\b)', exclude-filter: '(?i)(回国|校园|游戏|🎮|\bGAME\b)'}
-#  - {name: 新加坡故转, type: fallback, include-all: true, url: 'https://www.gstatic.com/generate_204', tolerance: 20, interval: 300, filter: '(?i)(🇸🇬|新加坡|狮城|\b(SG|SGP|Singapore)(\d+)?\b)', exclude-filter: '(?i)(回国|校园|游戏|🎮|\bGAME\b)'}
-#  - {name: 美国故转, type: fallback, include-all: true, url: 'https://www.gstatic.com/generate_204', tolerance: 20, interval: 300, filter: '(?i)(🇺🇸|🇺🇲|美国|波特兰|达拉斯|俄勒冈|凤凰城|费利蒙|硅谷|拉斯维加斯|洛杉矶|圣何塞|圣克拉拉|西雅图|芝加哥|\b(US|USA|United States)(\d+)?\b)', exclude-filter: '(?i)(回国|校园|游戏|🎮|\bGAME\b)'}
-  - {name: 韩国节点, type: select, include-all: true, filter: '(?i)(🇰🇷|韩国|韓|首尔|\b(KR|KOR|Korea)(\d+)?\b)', exclude-filter: '(?i)(回国|校园|游戏|🎮|\bGAME\b)'}
-  - {name: 英国节点, type: select, include-all: true, filter: '(?i)(🇬🇧|英国|伦敦|\b(UK|GB|GBR|United Kingdom)(\d+)?\b)', exclude-filter: '(?i)(回国|校园|游戏|🎮|\bGAME\b)'}
-  - {name: 自动选择, type: url-test, include-all: true, url: 'https://www.gstatic.com/generate_204', tolerance: 20, interval: 300, exclude-filter: '(?i)(直连|邀请|返利|循环|官网|客服|网站|网址|获取|订阅|流量|到期|机场|下次|版本|官址|备用|过期|已用|联系|邮箱|工单|群|贩卖|倒卖|防止|国内|🎮|\b(GAME|USE|USED|TOTAL|EXPIRE|EMAIL|Panel)\b|\d{4}-\d{2}-\d{2}|\dG)'}
-  - {name: 全部节点, type: select, include-all: true, exclude-filter: '(?i)(直连|邀请|返利|循环|官网|客服|网站|网址|获取|订阅|流量|到期|机场|下次|版本|官址|备用|过期|已用|联系|邮箱|工单|群|贩卖|倒卖|防止|国内|🎮|\b(GAME|USE|USED|TOTAL|EXPIRE|EMAIL|Panel)\b|\d{4}-\d{2}-\d{2}|\dG)'}
+  - {name: 香港优选, <<: *Urltest_Base, filter: '(?i)(🇭🇰|香港|\b(HK|HKG|Hong)(\d+)?\b)', exclude-filter: '(?i)(回国|校园|游戏|🎮|\bGAME\b)', icon: 'https://raw.githubusercontent.com/Orz-3/mini/master/Color/HK.png'}
+  - {name: 日本优选, <<: *Urltest_Base, filter: '(?i)(🇯🇵|日本|川日|东京|大阪|泉日|埼玉|\b(JP|JPN|Japan)(\d+)?\b)', exclude-filter: '(?i)(回国|校园|游戏|🎮|\bGAME\b)', icon: 'https://raw.githubusercontent.com/Orz-3/mini/master/Color/JP.png'}
+  - {name: 新加坡优选, <<: *Urltest_Base, filter: '(?i)(🇸🇬|新加坡|狮城|\b(SG|SGP|Singapore)(\d+)?\b)', exclude-filter: '(?i)(回国|校园|游戏|🎮|\bGAME\b)', icon: 'https://raw.githubusercontent.com/Orz-3/mini/master/Color/SG.png'}
+  - {name: 美国优选, <<: *Urltest_Base, filter: '(?i)(🇺🇸|🇺🇲|美国|波特兰|达拉斯|俄勒冈|凤凰城|费利蒙|硅谷|拉斯维加斯|洛杉矶|圣何塞|圣克拉拉|西雅图|芝加哥|\b(US|USA|United States)(\d+)?\b)', exclude-filter: '(?i)(回国|校园|游戏|🎮|\bGAME\b)', icon: 'https://raw.githubusercontent.com/Orz-3/mini/master/Color/US.png'}
+  - {name: 香港节点, type: select, include-all: true, filter: '(?i)(🇭🇰|香港|\b(HK|HKG|Hong)(\d+)?\b)', exclude-filter: '(?i)(回国|校园|游戏|🎮|\bGAME\b)', icon: 'https://raw.githubusercontent.com/Orz-3/mini/master/Color/HK.png'}
+  - {name: 台湾节点, type: select, include-all: true, filter: '(?i)(🇹🇼|台湾|\b(TW|TWN|Tai|Taiwan)(\d+)?\b)', exclude-filter: '(?i)(回国|校园|游戏|🎮|\bGAME\b)', icon: 'https://raw.githubusercontent.com/Orz-3/mini/master/Color/TW.png'}
+  - {name: 日本节点, type: select, include-all: true, filter: '(?i)(🇯🇵|日本|川日|东京|大阪|泉日|埼玉|\b(JP|JPN|Japan)(\d+)?\b)', exclude-filter: '(?i)(回国|校园|游戏|🎮|\bGAME\b)', icon: 'https://raw.githubusercontent.com/Orz-3/mini/master/Color/JP.png'}
+  - {name: 新加坡节点, type: select, include-all: true, filter: '(?i)(🇸🇬|新加坡|狮城|\b(SG|SGP|Singapore)(\d+)?\b)', exclude-filter: '(?i)(回国|校园|游戏|🎮|\bGAME\b)', icon: 'https://raw.githubusercontent.com/Orz-3/mini/master/Color/SG.png'}
+  - {name: 美国节点, type: select, include-all: true, filter: '(?i)(🇺🇸|🇺🇲|美国|波特兰|达拉斯|俄勒冈|凤凰城|费利蒙|硅谷|拉斯维加斯|洛杉矶|圣何塞|圣克拉拉|西雅图|芝加哥|\b(US|USA|United States)(\d+)?\b)', exclude-filter: '(?i)(回国|校园|游戏|🎮|\bGAME\b)', icon: 'https://raw.githubusercontent.com/Orz-3/mini/master/Color/US.png'}
+#  - {name: 香港故转, type: fallback, include-all: true, url: 'https://www.gstatic.com/generate_204', tolerance: 20, interval: 300, filter: '(?i)(🇭🇰|香港|\b(HK|HKG|Hong)(\d+)?\b)', exclude-filter: '(?i)(回国|校园|游戏|🎮|\bGAME\b)', icon: 'https://raw.githubusercontent.com/Orz-3/mini/master/Color/HK.png'}
+#  - {name: 日本故转, type: fallback, include-all: true, url: 'https://www.gstatic.com/generate_204', tolerance: 20, interval: 300, filter: '(?i)(🇯🇵|日本|川日|东京|大阪|泉日|埼玉|\b(JP|JPN|Japan)(\d+)?\b)', exclude-filter: '(?i)(回国|校园|游戏|🎮|\bGAME\b)', icon: 'https://raw.githubusercontent.com/Orz-3/mini/master/Color/JP.png'}
+#  - {name: 新加坡故转, type: fallback, include-all: true, url: 'https://www.gstatic.com/generate_204', tolerance: 20, interval: 300, filter: '(?i)(🇸🇬|新加坡|狮城|\b(SG|SGP|Singapore)(\d+)?\b)', exclude-filter: '(?i)(回国|校园|游戏|🎮|\bGAME\b)', icon: 'https://raw.githubusercontent.com/Orz-3/mini/master/Color/SG.png'}
+#  - {name: 美国故转, type: fallback, include-all: true, url: 'https://www.gstatic.com/generate_204', tolerance: 20, interval: 300, filter: '(?i)(🇺🇸|🇺🇲|美国|波特兰|达拉斯|俄勒冈|凤凰城|费利蒙|硅谷|拉斯维加斯|洛杉矶|圣何塞|圣克拉拉|西雅图|芝加哥|\b(US|USA|United States)(\d+)?\b)', exclude-filter: '(?i)(回国|校园|游戏|🎮|\bGAME\b)', icon: 'https://raw.githubusercontent.com/Orz-3/mini/master/Color/US.png'}
+  - {name: 韩国节点, type: select, include-all: true, filter: '(?i)(🇰🇷|韩国|韓|首尔|\b(KR|KOR|Korea)(\d+)?\b)', exclude-filter: '(?i)(回国|校园|游戏|🎮|\bGAME\b)', icon: 'https://raw.githubusercontent.com/Orz-3/mini/master/Color/KR.png'}
+  - {name: 英国节点, type: select, include-all: true, filter: '(?i)(🇬🇧|英国|伦敦|\b(UK|GB|GBR|United Kingdom)(\d+)?\b)', exclude-filter: '(?i)(回国|校园|游戏|🎮|\bGAME\b)', icon: 'https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/United_Kingdom.png'}
+  - {name: 自动选择, type: url-test, include-all: true, url: 'https://www.gstatic.com/generate_204', tolerance: 20, interval: 300, exclude-filter: '(?i)(直连|邀请|返利|循环|官网|客服|网站|网址|获取|订阅|流量|到期|机场|下次|版本|官址|备用|过期|已用|联系|邮箱|工单|群|贩卖|倒卖|防止|国内|🎮|\b(GAME|USE|USED|TOTAL|EXPIRE|EMAIL|Panel)\b|\d{4}-\d{2}-\d{2}|\dG)', icon: 'https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/Auto.png'}
+  - {name: 全部节点, type: select, include-all: true, exclude-filter: '(?i)(直连|邀请|返利|循环|官网|客服|网站|网址|获取|订阅|流量|到期|机场|下次|版本|官址|备用|过期|已用|联系|邮箱|工单|群|贩卖|倒卖|防止|国内|🎮|\b(GAME|USE|USED|TOTAL|EXPIRE|EMAIL|Panel)\b|\d{4}-\d{2}-\d{2}|\dG)', icon: 'https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/Server.png'}
 
 # 规则：从上到下首次匹配；RULE-SET 名称需对应 rule-providers。
 # qB 下载器直连规则必须在最前，MATCH,Final 必须在最后。
