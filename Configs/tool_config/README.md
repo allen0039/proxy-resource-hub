@@ -12,7 +12,7 @@
 | 客户端 | 官方下载 | 说明 |
 | --- | --- | --- |
 | Surge for iPhone / iPad | [App Store](https://apps.apple.com/us/app/surge-5/id1442620678) | 对应 `surge_iphone_allen.conf` |
-| Surge for Mac | [Surge 官方下载页](https://nssurge.com/download) | 对应 `surge_mac_allen.conf`；Mac 版不通过 Mac App Store 提供 |
+| Surge for Mac | [Surge 官方网站](https://nssurge.com/) | 对应 `surge_mac_allen.conf`；Mac 版不通过 Mac App Store 提供 |
 | Quantumult X | [App Store](https://apps.apple.com/us/app/quantumult-x/id1443988620) | 对应 `quantumultx_allen.conf` |
 | Loon | [App Store](https://apps.apple.com/us/app/loon/id1373567447) | 对应 `loon_allen.lcf` |
 
