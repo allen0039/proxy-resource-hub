@@ -152,9 +152,7 @@ All Server = NameRegex, FilterKey = "^(?=.*(.*))(?!.*((?i)邀请|返利|循环|�
 # 注意：同一域名不要重复写多条不同策略；Loon 会按从上到下先匹配先生效。
 # === 本地自定义规则 ===
 # 1. 局域网与管理规则 (最高优先级)
-SRC-IP-CIDR,192.0.2.11/32,DIRECT
-SRC-IP-CIDR,192.0.2.12/32,DIRECT
-SRC-IP-CIDR,192.0.2.13/32,DIRECT
+# Loon 不支持按源 IP 地址分流；qB 下载器直连由网关 Mihomo 处理。
 
 # 2. Apple 与系统服务
 DOMAIN-SUFFIX,push.apple.com,香港节点
