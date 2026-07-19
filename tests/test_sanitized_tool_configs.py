@@ -130,7 +130,7 @@ hostname = example.org
     def test_quantumultx_replaces_remote_servers_and_removes_local_nodes(self):
         sanitizer = load_sanitizer()
         source = f"""[policy]
-static=Proxy, direct
+static=Main, proxy, direct
 
 [server_remote]
 {PRIVATE_URL}, tag=One, enabled=true, resource-parser=https://public.example/parser.js
@@ -142,10 +142,10 @@ shadowsocks=private.invalid:443, password=FAKE_PASSWORD
 ;vmess=private.invalid:443, password=FAKE-COMMENTED-UUID
 
 [filter_remote]
-{PUBLIC_RULE_URL}, tag=Rules, force-policy=Proxy, enabled=true
+{PUBLIC_RULE_URL}, tag=Rules, force-policy=Main, enabled=true
 
 [filter_local]
-final, Proxy
+final, Main
 
 [mitm]
 hostname = example.org
@@ -395,6 +395,33 @@ rule-providers:
         self.assertNotRegex(qx, r"server-tag-regex=[^\n,]*(?:^|\|)(?:新|日|台|United)(?:\||,)")
         self.assertIn("United States", qx)
         self.assertIn("Singapore", qx)
+
+    def test_committed_quantumultx_uses_builtin_proxy_policy(self):
+        qx = (OUTPUT_DIR / "quantumultx_allen.conf").read_text(encoding="utf-8")
+        policy = qx.split("[policy]", maxsplit=1)[1].split(
+            "[server_remote]", maxsplit=1
+        )[0]
+        self.assertNotRegex(policy, r"(?m)^static=Proxy,")
+        self.assertNotRegex(policy, r"(?:^|,\s*)Proxy(?:,|$)")
+        self.assertNotRegex(qx, r"(?:^|,\s*)force-policy=Proxy(?:,|$)")
+
+    def test_committed_quantumultx_excludes_unsupported_source_ip_rules(self):
+        qx = (OUTPUT_DIR / "quantumultx_allen.conf").read_text(encoding="utf-8")
+        local_rules = qx.split("[filter_local]", maxsplit=1)[1].split(
+            "[rewrite_local]", maxsplit=1
+        )[0]
+        self.assertNotRegex(local_rules, r"(?im)^\s*src-ip-cidr,")
+
+    def test_committed_non_gateway_configs_exclude_active_source_ip_rules(self):
+        iphone = (OUTPUT_DIR / "surge_iphone_allen.conf").read_text(
+            encoding="utf-8"
+        )
+        loon = (OUTPUT_DIR / "loon_allen.lcf").read_text(encoding="utf-8")
+        self.assertNotRegex(iphone, r"(?im)^\s*src-ip,")
+        self.assertNotRegex(loon, r"(?im)^\s*src-ip-cidr,")
+
+        for ip in ("192.168.50.150", "192.168.50.151", "192.168.50.152"):
+            self.assertIn(f"# SRC-IP,{ip},DIRECT", iphone)
 
 
 if __name__ == "__main__":
