@@ -413,15 +413,18 @@ rule-providers:
         self.assertNotRegex(local_rules, r"(?im)^\s*src-ip-cidr,")
 
     def test_committed_non_gateway_configs_exclude_active_source_ip_rules(self):
-        iphone = (OUTPUT_DIR / "surge_iphone_allen.conf").read_text(
-            encoding="utf-8"
-        )
-        loon = (OUTPUT_DIR / "loon_allen.lcf").read_text(encoding="utf-8")
-        self.assertNotRegex(iphone, r"(?im)^\s*src-ip,")
-        self.assertNotRegex(loon, r"(?im)^\s*src-ip-cidr,")
-
-        for ip in ("192.168.50.150", "192.168.50.151", "192.168.50.152"):
-            self.assertIn(f"# SRC-IP,{ip},DIRECT", iphone)
+        configs = {
+            "surge_iphone_allen.conf": r"(?im)^\s*#?\s*src-ip,",
+            "quantumultx_allen.conf": r"(?im)^\s*#?\s*src-ip-cidr,",
+            "loon_allen.lcf": r"(?im)^\s*#?\s*src-ip-cidr,",
+        }
+        for name, pattern in configs.items():
+            text = (OUTPUT_DIR / name).read_text(encoding="utf-8")
+            with self.subTest(name=name):
+                self.assertNotRegex(text, pattern)
+                self.assertNotIn(
+                    "# 1. 局域网与管理规则 (最高优先级)", text
+                )
 
 
 if __name__ == "__main__":
