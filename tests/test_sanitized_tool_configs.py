@@ -377,6 +377,13 @@ rule-providers:
                 self.assertEqual(outputs[name].count(rule), 1)
 
         mihomo = yaml.safe_load(outputs["mihomo_allen.yaml"])
+        missing_icons = [
+            group.get("name")
+            for group in mihomo["proxy-groups"]
+            if not isinstance(group.get("icon"), str)
+            or not group["icon"].startswith("https://")
+        ]
+        self.assertEqual([], missing_icons)
         self.assertNotIn("gfw_domain", mihomo["rule-providers"])
         self.assertFalse(
             any(rule.startswith("RULE-SET,gfw_domain,") for rule in mihomo["rules"])
