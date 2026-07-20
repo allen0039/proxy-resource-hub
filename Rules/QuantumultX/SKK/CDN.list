@@ -3,9 +3,9 @@
 # Derived from https://github.com/SukkaW/Surge
 # Source: https://ruleset.skk.moe/List/domainset/cdn.conf
 # Source: https://ruleset.skk.moe/List/non_ip/cdn.conf
-# Upstream Last Updated: 2026-07-18T20:11:19.214Z (domainset)
+# Upstream Last Updated: 2026-07-20T12:50:36.398Z (domainset)
 # Upstream Last Updated: 2026-06-30T21:42:09.831Z (non_ip)
-# Rule count: 4635
+# Rule count: 4636
 
 host, 7h1s_rul35et_i5_mad3_by_5ukk4w-ruleset.skk.moe, proxy
 host, 0x0.st, proxy
@@ -2515,6 +2515,7 @@ host, cdnapi.kaltura.com, proxy
 host, cdni.iconscout.com, proxy
 host, cdnstatic.w1mp.com, proxy
 host-suffix, cms-cdn.linear.app, proxy
+host, code.trygravity.ai, proxy
 host-suffix, colliderimages.com, proxy
 host, content.arduino.cc, proxy
 host, content.gapinc.com, proxy
