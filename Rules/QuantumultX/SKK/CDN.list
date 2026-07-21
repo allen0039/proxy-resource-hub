@@ -3,9 +3,9 @@
 # Derived from https://github.com/SukkaW/Surge
 # Source: https://ruleset.skk.moe/List/domainset/cdn.conf
 # Source: https://ruleset.skk.moe/List/non_ip/cdn.conf
-# Upstream Last Updated: 2026-07-20T12:50:36.398Z (domainset)
+# Upstream Last Updated: 2026-07-21T16:18:25.336Z (domainset)
 # Upstream Last Updated: 2026-06-30T21:42:09.831Z (non_ip)
-# Rule count: 4636
+# Rule count: 4639
 
 host, 7h1s_rul35et_i5_mad3_by_5ukk4w-ruleset.skk.moe, proxy
 host, 0x0.st, proxy
@@ -987,6 +987,7 @@ host, js.prosopo.io, proxy
 host, js.pusher.com, proxy
 host, js.stripe.com, proxy
 host, js.upscope.io, proxy
+host, kh.google.com, proxy
 host-suffix, kinja-img.com, proxy
 host-suffix, klarnacdn.net, proxy
 host-suffix, line-scdn.net, proxy
@@ -2053,6 +2054,7 @@ host-suffix, tiles.freemap.sk, proxy
 host-suffix, tiles.mapbox.com, proxy
 host, tiles.planet.com, proxy
 host, tiles.strava.com, proxy
+host, tiles.zoom.earth, proxy
 host, time.windows.com, proxy
 host, townsquare.media, proxy
 host-suffix, trackerslist.com, proxy
@@ -3485,6 +3487,7 @@ host, sig.grumpybumpers.com, proxy
 host, siloh-ns1.plutotv.net, proxy
 host, speedmedia2.jfrog.com, proxy
 host-suffix, ssl-images-amazon.com, proxy
+host, st3.depositphotos.com, proxy
 host, start-page.buffer.com, proxy
 host, static-1.bitchute.com, proxy
 host, static-2.bitchute.com, proxy
