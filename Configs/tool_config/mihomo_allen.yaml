@@ -1,7 +1,7 @@
 # Mihomo 配置 - Allen
 
 # 策略模板：代理优先、直连优先和地区自动测速。
-Proxy_first: &Proxy_first {type: select, proxies: [香港优选, 日本优选, 新加坡优选, 美国优选, 香港节点, 台湾节点, 日本节点, 新加坡节点, 美国节点, 韩国节点, 英国节点, Proxy, 直连]}
+Proxy_first: &Proxy_first {type: select, proxies: [香港优选, 日本优选, 新加坡优选, 美国优选, 香港节点, 台湾节点, 日本节点, 新加坡节点, 美国节点, 韩国节点, 英国节点, 其他地区, Proxy, 直连]}
 
 Direct_first: &Direct_first {type: select, proxies: [直连, Proxy, 香港节点, 台湾节点, 日本节点, 新加坡节点, 美国节点, 韩国节点]}
 
@@ -148,13 +148,13 @@ dns:
 # 策略组：业务组供规则引用，地区组从已启用订阅筛选节点。
 # Proxy 和 Final 是通用入口；内置直连用于必须直连的管理流量。
 proxy-groups:
-  - {name: Proxy, type: select, proxies: [香港优选, 日本优选, 新加坡优选, 美国优选, 香港节点, 台湾节点, 日本节点, 新加坡节点, 美国节点, 韩国节点, 英国节点, 自动选择, 全部节点, 直连], icon: 'https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/Proxy.png'}
+  - {name: Proxy, type: select, proxies: [香港优选, 日本优选, 新加坡优选, 美国优选, 香港节点, 台湾节点, 日本节点, 新加坡节点, 美国节点, 韩国节点, 英国节点, 其他地区, 自动选择, 全部节点, 直连], icon: 'https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/Proxy.png'}
   - {name: Google, <<: *Proxy_first, icon: 'https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/Google_Search.png'}
   - {name: OpenAI, <<: *Proxy_first, icon: 'https://raw.githubusercontent.com/erdongchanyo/icon/main/Policy-Filter/OpenAI.png'}
   - {name: YouTube, <<: *Proxy_first, icon: 'https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/YouTube.png'}
   - {name: Telegram, <<: *Proxy_first, icon: 'https://raw.githubusercontent.com/Orz-3/mini/master/Color/Telegram.png'}
   - {name: Netflix, <<: *Proxy_first, icon: 'https://raw.githubusercontent.com/erdongchanyo/icon/main/Policy-Filter/Netflix.png'}
-  - {name: Emby, type: select, proxies: [直连, 香港优选, 日本优选, 新加坡优选, 美国优选, 香港节点, 台湾节点, 日本节点, 新加坡节点, 美国节点, 韩国节点, 英国节点, Proxy], icon: 'https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/Emby.png'}
+  - {name: Emby, type: select, proxies: [直连, 香港优选, 日本优选, 新加坡优选, 美国优选, 香港节点, 台湾节点, 日本节点, 新加坡节点, 美国节点, 韩国节点, 英国节点, 其他地区, Proxy], icon: 'https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/Emby.png'}
   - {name: 迪士尼+, <<: *Proxy_first, icon: 'https://raw.githubusercontent.com/erdongchanyo/icon/main/Policy-Filter/Disney+.png'}
   - {name: 哔哩哔哩, type: select, proxies: [香港节点, 台湾节点, 新加坡节点, 全部节点, Proxy, 直连], icon: 'https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/bilibili.png'}
   - {name: 国外媒体, <<: *Proxy_first, icon: 'https://raw.githubusercontent.com/Orz-3/mini/master/Color/Streaming.png'}
@@ -168,8 +168,8 @@ proxy-groups:
   - {name: Final, <<: *Proxy_first, icon: 'https://raw.githubusercontent.com/Orz-3/mini/master/Color/Final.png'}
   - {name: TikTok, <<: *Proxy_first, icon: 'https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/TikTok.png'}
   - {name: 测速, <<: *Proxy_first, icon: 'https://raw.githubusercontent.com/erdongchanyo/icon/main/Policy-Filter/Speedtest.png'}
-  - {name: CDN, type: select, proxies: [香港优选, 日本优选, 新加坡优选, 美国优选, 香港节点, 台湾节点, 日本节点, 新加坡节点, 美国节点, 韩国节点, 英国节点, Proxy, 直连], icon: 'https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/Cloudflare.png'}
-  - {name: OneDrive, type: select, proxies: [香港优选, 日本优选, 新加坡优选, 美国优选, 香港节点, 台湾节点, 日本节点, 新加坡节点, 美国节点, 韩国节点, 英国节点, Proxy, 直连, Microsoft], icon: 'https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/OneDrive.png'}
+  - {name: CDN, type: select, proxies: [香港优选, 日本优选, 新加坡优选, 美国优选, 香港节点, 台湾节点, 日本节点, 新加坡节点, 美国节点, 韩国节点, 英国节点, 其他地区, Proxy, 直连], icon: 'https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/Cloudflare.png'}
+  - {name: OneDrive, type: select, proxies: [香港优选, 日本优选, 新加坡优选, 美国优选, 香港节点, 台湾节点, 日本节点, 新加坡节点, 美国节点, 韩国节点, 英国节点, 其他地区, Proxy, 直连, Microsoft], icon: 'https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/OneDrive.png'}
   - {name: 特殊媒体, <<: *Proxy_first, icon: 'https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/Streaming.png'}
   - {name: Amazon, <<: *Proxy_first, icon: 'https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/Amazon.png'}
   - {name: 直连策略, type: select, proxies: [直连, Proxy], icon: 'https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/Direct.png'}
@@ -189,6 +189,7 @@ proxy-groups:
 #  - {name: 美国故转, type: fallback, include-all: true, url: 'https://www.gstatic.com/generate_204', tolerance: 20, interval: 300, filter: '(?i)(🇺🇸|🇺🇲|美国|波特兰|达拉斯|俄勒冈|凤凰城|费利蒙|硅谷|拉斯维加斯|洛杉矶|圣何塞|圣克拉拉|西雅图|芝加哥|\b(US|USA|United States)(\d+)?\b)', exclude-filter: '(?i)(回国|校园|游戏|🎮|\bGAME\b)', icon: 'https://raw.githubusercontent.com/Orz-3/mini/master/Color/US.png'}
   - {name: 韩国节点, type: select, include-all: true, filter: '(?i)(🇰🇷|韩国|韓|首尔|\b(KR|KOR|Korea)(\d+)?\b)', exclude-filter: '(?i)(回国|校园|游戏|🎮|\bGAME\b)', icon: 'https://raw.githubusercontent.com/Orz-3/mini/master/Color/KR.png'}
   - {name: 英国节点, type: select, include-all: true, filter: '(?i)(🇬🇧|英国|伦敦|\b(UK|GB|GBR|United Kingdom)(\d+)?\b)', exclude-filter: '(?i)(回国|校园|游戏|🎮|\bGAME\b)', icon: 'https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/United_Kingdom.png'}
+  - {name: 其他地区, type: select, include-all: true, empty-fallback: REJECT, exclude-filter: '(?i)(🇭🇰|香港|(^|[^A-Za-z0-9])(HK|HKG|Hong([ _-]?Kong)?)([ _-]?\d+)?($|[^A-Za-z0-9])|🇹🇼|台湾|台北|(^|[^A-Za-z0-9])(TW|TWN|Tai|Taiwan)([ _-]?\d+)?($|[^A-Za-z0-9])|🇯🇵|日本|川日|东京|大阪|泉日|沪日|深日|埼玉|(^|[^A-Za-z0-9])(JP|JPN|Japan)([ _-]?\d+)?($|[^A-Za-z0-9])|🇸🇬|新加坡|狮城|(^|[^A-Za-z0-9])(SG|SGP|Singapore)([ _-]?\d+)?($|[^A-Za-z0-9])|🇺🇸|🇺🇲|美国|波特兰|达拉斯|俄勒冈|凤凰城|费利蒙|硅谷|拉斯维加斯|洛杉矶|圣何塞|圣克拉拉|西雅图|芝加哥|(^|[^A-Za-z0-9])(US|USA|United[ _-]?States|States)([ _-]?\d+)?($|[^A-Za-z0-9])|🇰🇷|韩国|韓|韓國|首尔|首爾|(^|[^A-Za-z0-9])(KR|KOR|Korea)([ _-]?\d+)?($|[^A-Za-z0-9])|🇬🇧|英国|伦敦|(^|[^A-Za-z0-9])(UK|GB|GBR|United[ _-]?Kingdom)([ _-]?\d+)?($|[^A-Za-z0-9])|直连|回国|校园|游戏|🎮|邀请|返利|循环|官网|客服|网站|网址|获取|订阅|流量|到期|机场|下次|版本|官址|备用|过期|已用|联系|邮箱|工单|交流群|官方群|用户群|群组|社群|群聊|贩卖|倒卖|防止|国内|(^|[^A-Za-z0-9])(GAME|USE|USED|TOTAL|EXPIRE|EMAIL|Panel)($|[^A-Za-z0-9])|\d{4}-\d{2}-\d{2})', icon: 'https://raw.githubusercontent.com/Orz-3/mini/master/Color/Static.png'}
   - {name: 自动选择, type: url-test, include-all: true, url: 'https://www.gstatic.com/generate_204', tolerance: 20, interval: 300, exclude-filter: '(?i)(直连|邀请|返利|循环|官网|客服|网站|网址|获取|订阅|流量|到期|机场|下次|版本|官址|备用|过期|已用|联系|邮箱|工单|群|贩卖|倒卖|防止|国内|🎮|\b(GAME|USE|USED|TOTAL|EXPIRE|EMAIL|Panel)\b|\d{4}-\d{2}-\d{2}|\dG)', icon: 'https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/Auto.png'}
   - {name: 全部节点, type: select, include-all: true, exclude-filter: '(?i)(直连|邀请|返利|循环|官网|客服|网站|网址|获取|订阅|流量|到期|机场|下次|版本|官址|备用|过期|已用|联系|邮箱|工单|群|贩卖|倒卖|防止|国内|🎮|\b(GAME|USE|USED|TOTAL|EXPIRE|EMAIL|Panel)\b|\d{4}-\d{2}-\d{2}|\dG)', icon: 'https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/Server.png'}
 
@@ -243,7 +244,7 @@ rules:
   - DOMAIN-KEYWORD,open-meteo,OpenAI
   - DOMAIN-KEYWORD,grok,OpenAI
   - DOMAIN-SUFFIX,clawhub.ai,OpenAI
-  - DOMAIN-KEYWORD,googleapis,美国节点
+  # Google APIs 交由后面的 ai 与 google_domain 规则集分流，避免绕过 Google 策略组。
   - DOMAIN-KEYWORD,themoviedb,美国节点
   - DOMAIN-KEYWORD,tmdb,美国节点
   - DOMAIN-KEYWORD,dashboardicons,美国节点
