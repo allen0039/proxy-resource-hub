@@ -412,6 +412,43 @@ rule-providers:
         self.assertNotRegex(policy, r"(?:^|,\s*)Proxy(?:,|$)")
         self.assertNotRegex(qx, r"(?:^|,\s*)force-policy=Proxy(?:,|$)")
 
+    def test_committed_surge_configs_share_independent_apns_routing(self):
+        configs = {
+            name: (OUTPUT_DIR / name).read_text(encoding="utf-8")
+            for name in ("surge_mac_allen.conf", "surge_iphone_allen.conf")
+        }
+        group = (
+            "Apple Push = fallback, 日本节点, 美国节点, 香港节点, 新加坡节点, "
+            "DIRECT, url=http://cp.cloudflare.com/generate_204, interval=300, "
+            "icon-url=https://fastly.jsdelivr.net/gh/fmz200/wool_scripts@main/"
+            "icons/apps/Apple_Messages.png"
+        )
+        local_rule = "DOMAIN-SUFFIX,push.apple.com,Apple Push"
+        remote_rule = (
+            "RULE-SET,https://raw.githubusercontent.com/QuixoticHeart/rule-set/"
+            "refs/heads/ruleset/loon/apns.list,Apple Push"
+        )
+
+        for name, text in configs.items():
+            with self.subTest(name=name):
+                self.assertEqual(text.count(group), 1)
+                self.assertEqual(text.count(local_rule), 1)
+                self.assertEqual(text.count(remote_rule), 1)
+                self.assertLess(text.index(local_rule), text.index(remote_rule))
+                self.assertNotIn("DOMAIN-SUFFIX,push.apple.com,香港节点", text)
+                self.assertNotIn("IP-CIDR,17.0.0.0/8,Apple Push", text)
+
+        self.assertNotIn("include-all-networks = true", configs["surge_mac_allen.conf"])
+        self.assertNotIn("include-apns = true", configs["surge_mac_allen.conf"])
+        self.assertEqual(
+            configs["surge_iphone_allen.conf"].count("include-all-networks = true"),
+            1,
+        )
+        self.assertEqual(
+            configs["surge_iphone_allen.conf"].count("include-apns = true"),
+            1,
+        )
+
     def test_committed_quantumultx_excludes_unsupported_source_ip_rules(self):
         qx = (OUTPUT_DIR / "quantumultx_allen.conf").read_text(encoding="utf-8")
         local_rules = qx.split("[filter_local]", maxsplit=1)[1].split(
