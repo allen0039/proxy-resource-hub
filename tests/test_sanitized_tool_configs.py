@@ -412,13 +412,13 @@ rule-providers:
         self.assertNotRegex(policy, r"(?:^|,\s*)Proxy(?:,|$)")
         self.assertNotRegex(qx, r"(?:^|,\s*)force-policy=Proxy(?:,|$)")
 
-    def test_committed_surge_configs_share_independent_apns_routing(self):
+    def test_committed_configs_share_optimized_apns_routing(self):
         configs = {
             name: (OUTPUT_DIR / name).read_text(encoding="utf-8")
             for name in ("surge_mac_allen.conf", "surge_iphone_allen.conf")
         }
         group = (
-            "Apple Push = fallback, 日本节点, 美国节点, 香港节点, 新加坡节点, "
+            "Apple Push = fallback, 日本优选, 美国优选, 香港优选, 新加坡优选, "
             "DIRECT, url=http://cp.cloudflare.com/generate_204, interval=300, "
             "icon-url=https://fastly.jsdelivr.net/gh/fmz200/wool_scripts@main/"
             "icons/apps/Apple_Messages.png"
@@ -446,6 +446,24 @@ rule-providers:
         )
         self.assertEqual(
             configs["surge_iphone_allen.conf"].count("include-apns = true"),
+            1,
+        )
+
+        loon = (OUTPUT_DIR / "loon_allen.lcf").read_text(encoding="utf-8")
+        self.assertEqual(
+            loon.count(
+                "Apple Push = fallback,日本优选,美国优选,香港优选,新加坡优选,"
+                "DIRECT,"
+            ),
+            1,
+        )
+
+        qx = (OUTPUT_DIR / "quantumultx_allen.conf").read_text(encoding="utf-8")
+        self.assertEqual(
+            qx.count(
+                "static=Apple Push, 日本优选, 美国优选, 香港优选, 新加坡优选, "
+                "direct,"
+            ),
             1,
         )
 
