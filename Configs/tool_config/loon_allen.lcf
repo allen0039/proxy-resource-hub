@@ -63,7 +63,7 @@ Spotify = select,香港优选,日本优选,新加坡优选,美国优选,香港�
 Microsoft = select,香港优选,日本优选,新加坡优选,美国优选,香港节点,台湾节点,日本节点,新加坡节点,美国节点,韩国节点,英国节点,其他地区,Proxy,DIRECT,img-url = https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/Microsoft.png
 游戏平台 = select,香港优选,日本优选,新加坡优选,美国优选,香港节点,台湾节点,日本节点,新加坡节点,美国节点,韩国节点,英国节点,其他地区,Proxy,DIRECT,img-url = https://github.com/shindgewongxj/WHATSINStash/raw/main/icon/applegamecenter.png
 Apple = select,DIRECT,Proxy,香港节点,台湾节点,日本节点,新加坡节点,美国节点,韩国节点,img-url = https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/Apple.png
-Apple Push = fallback,日本优选,美国优选,香港优选,新加坡优选,DIRECT,url = http://cp.cloudflare.com/generate_204,interval = 300,max-timeout = 3000,img-url = https://fastly.jsdelivr.net/gh/fmz200/wool_scripts@main/icons/apps/Apple_Messages.png
+Apple Push = fallback,日本节点,美国节点,香港节点,新加坡节点,日本优选,美国优选,香港优选,新加坡优选,DIRECT,url = http://cp.cloudflare.com/generate_204,interval = 300,max-timeout = 3000,img-url = https://fastly.jsdelivr.net/gh/fmz200/wool_scripts@main/icons/apps/Apple_Messages.png
 Final = select,香港优选,日本优选,新加坡优选,美国优选,香港节点,台湾节点,日本节点,新加坡节点,美国节点,韩国节点,英国节点,其他地区,Proxy,DIRECT,img-url = https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/Final.png
 TikTok = select,香港优选,日本优选,新加坡优选,美国优选,香港节点,台湾节点,日本节点,新加坡节点,美国节点,韩国节点,英国节点,其他地区,Proxy,DIRECT,img-url = https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/TikTok.png
 测速 = select,香港优选,日本优选,新加坡优选,美国优选,香港节点,台湾节点,日本节点,新加坡节点,美国节点,韩国节点,英国节点,其他地区,Proxy,DIRECT,img-url = https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/Speedtest.png
