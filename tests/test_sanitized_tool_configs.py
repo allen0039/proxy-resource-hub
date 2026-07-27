@@ -475,13 +475,21 @@ rule-providers:
             name: (OUTPUT_DIR / name).read_text(encoding="utf-8")
             for name in ("surge_mac_allen.conf", "surge_iphone_allen.conf")
         }
-        group = (
-            "Apple Push = fallback, 日本节点, 美国节点, 香港节点, 新加坡节点, "
-            "日本优选, 美国优选, 香港优选, 新加坡优选, DIRECT, "
-            "url=http://cp.cloudflare.com/generate_204, interval=300, "
-            "icon-url=https://fastly.jsdelivr.net/gh/fmz200/wool_scripts@main/"
-            "icons/apps/Apple_Messages.png"
-        )
+        groups = {
+            "surge_mac_allen.conf": (
+                "Apple Push = fallback, 日本节点, 美国节点, 香港节点, 新加坡节点, "
+                "日本优选, 美国优选, 香港优选, 新加坡优选, DIRECT, "
+                "url=http://cp.cloudflare.com/generate_204, interval=300, "
+                "icon-url=https://fastly.jsdelivr.net/gh/fmz200/wool_scripts@main/"
+                "icons/apps/Apple_Messages.png"
+            ),
+            "surge_iphone_allen.conf": (
+                "Apple Push = fallback, 日本节点, 香港节点, 美国节点, DIRECT, "
+                "url=http://cp.cloudflare.com/generate_204, interval=300, "
+                "icon-url=https://fastly.jsdelivr.net/gh/fmz200/wool_scripts@main/"
+                "icons/apps/Apple_Messages.png"
+            ),
+        }
         local_rule = "DOMAIN-SUFFIX,push.apple.com,Apple Push"
         remote_rule = (
             "RULE-SET,https://raw.githubusercontent.com/QuixoticHeart/rule-set/"
@@ -490,7 +498,7 @@ rule-providers:
 
         for name, text in configs.items():
             with self.subTest(name=name):
-                self.assertEqual(text.count(group), 1)
+                self.assertEqual(text.count(groups[name]), 1)
                 self.assertEqual(text.count(local_rule), 1)
                 self.assertEqual(text.count(remote_rule), 1)
                 self.assertLess(text.index(local_rule), text.index(remote_rule))
@@ -511,8 +519,7 @@ rule-providers:
         loon = (OUTPUT_DIR / "loon_allen.lcf").read_text(encoding="utf-8")
         self.assertEqual(
             loon.count(
-                "Apple Push = fallback,日本节点,美国节点,香港节点,新加坡节点,"
-                "日本优选,美国优选,香港优选,新加坡优选,DIRECT,"
+                "Apple Push = fallback,日本节点,香港节点,美国节点,DIRECT,"
             ),
             1,
         )
@@ -520,11 +527,28 @@ rule-providers:
         qx = (OUTPUT_DIR / "quantumultx_allen.conf").read_text(encoding="utf-8")
         self.assertEqual(
             qx.count(
-                "static=Apple Push, 日本节点, 美国节点, 香港节点, 新加坡节点, "
-                "日本优选, 美国优选, 香港优选, 新加坡优选, direct,"
+                "static=Apple Push, 日本节点, 香港节点, 美国节点, direct,"
             ),
             1,
         )
+        for group_name in (
+            "香港节点",
+            "台湾节点",
+            "日本节点",
+            "新加坡节点",
+            "美国节点",
+            "韩国节点",
+            "英国节点",
+        ):
+            self.assertRegex(qx, rf"(?m)^static={group_name},")
+            self.assertNotRegex(
+                qx,
+                rf"(?m)^(?:available|url-latency-benchmark)={group_name},",
+            )
+        for group_name in ("香港优选", "日本优选", "新加坡优选", "美国优选"):
+            self.assertRegex(
+                qx, rf"(?m)^url-latency-benchmark={group_name},"
+            )
 
     def test_committed_quantumultx_excludes_unsupported_source_ip_rules(self):
         qx = (OUTPUT_DIR / "quantumultx_allen.conf").read_text(encoding="utf-8")
