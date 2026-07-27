@@ -99,7 +99,7 @@ ca-p12 = FAKE_P12_BASE64
         self.assertIn("https://example.com/surge-mac/subscription-1.conf", result)
         self.assertIn(PUBLIC_RULE_URL, result)
         self.assertIn("https://public.example/icon.png", result)
-        self.assertIn("Configure MITM certificate and passphrase locally", result)
+        self.assertIn("请在本机配置并信任 MitM 证书与口令", result)
         sanitizer.validate_client_structure("surge_mac_allen.conf", result)
 
     def test_surge_distinguishes_policy_path_docs_from_subscriptions(self):
@@ -161,10 +161,26 @@ p12 = FAKE_P12_BASE64
         self.assertNotIn("FAKE_P12_BASE64", result)
         self.assertIn("https://example.com/quantumultx/subscription-1.conf", result)
         self.assertIn("https://example.com/quantumultx/subscription-2.conf", result)
-        self.assertIn("Configure local proxy nodes privately", result)
+        self.assertIn("请在本机配置代理节点", result)
         self.assertIn(PUBLIC_RULE_URL, result)
         self.assertIn("https://public.example/parser.js", result)
         sanitizer.validate_client_structure("quantumultx_allen.conf", result)
+
+    def test_quantumultx_replaces_internal_preamble_with_public_title(self):
+        sanitizer = load_sanitizer()
+        source = f"""# Allen 维护 - Quantumult X 配置
+# 维护说明
+# - 公开版本请使用脱敏工具生成。
+# - enabled=true 为启用，false 为保留但禁用。
+
+[server_remote]
+{PRIVATE_URL}, tag=One, enabled=true
+"""
+
+        result = sanitizer.sanitize_quantumultx(source)
+        header = result.split("[server_remote]", maxsplit=1)[0]
+
+        self.assertEqual("# Allen 维护 - Quantumult X 配置\n\n", header)
 
     def test_loon_replaces_remote_proxies_and_mitm_material(self):
         sanitizer = load_sanitizer()
@@ -200,7 +216,7 @@ ca-passphrase = FAKE_PASSWORD
         self.assertNotIn("FAKE_P12_BASE64", result)
         self.assertIn("https://example.com/loon/subscription-1.conf", result)
         self.assertIn("https://example.com/loon/subscription-2.conf", result)
-        self.assertIn("Configure local proxy nodes privately", result)
+        self.assertIn("请在本机配置代理节点", result)
         self.assertIn(PUBLIC_RULE_URL, result)
         self.assertIn("https://public.example/icon.png", result)
         sanitizer.validate_client_structure("loon_allen.lcf", result)
@@ -360,6 +376,46 @@ rule-providers:
                 if match is not None:
                     self.assertNotIn(match.group(1).casefold(), private_keywords)
 
+    def test_committed_outputs_use_public_titles_and_user_facing_notes(self):
+        outputs = {
+            name: (OUTPUT_DIR / name).read_text(encoding="utf-8")
+            for name in CONFIG_NAMES
+        }
+        titles = {
+            "surge_iphone_allen.conf": "# Allen 维护 - Surge iPhone 配置",
+            "surge_mac_allen.conf": "# Allen 维护 - Surge Mac 配置",
+            "loon_allen.lcf": "# Allen 维护 - Loon 配置",
+            "quantumultx_allen.conf": "# Allen 维护 - Quantumult X 配置",
+            "mihomo_allen.yaml": "# Allen 维护 - Mihomo 配置",
+        }
+
+        for name, title in titles.items():
+            with self.subTest(name=name, check="title"):
+                self.assertEqual(title, outputs[name].splitlines()[0])
+            with self.subTest(name=name, check="internal publishing notes"):
+                self.assertNotIn("公开前必须脱敏", outputs[name])
+                self.assertNotIn("使用脱敏工具生成", outputs[name])
+                self.assertNotIn("Configure MITM certificate", outputs[name])
+                self.assertNotIn("Configure local proxy nodes", outputs[name])
+
+        self.assertIn(
+            "将 policy-path 替换为自己的订阅地址",
+            outputs["surge_iphone_allen.conf"],
+        )
+        self.assertIn(
+            "将 policy-path 替换为自己的订阅地址",
+            outputs["surge_mac_allen.conf"],
+        )
+        self.assertIn(
+            "请将 URL 替换为自己的订阅地址", outputs["loon_allen.lcf"]
+        )
+        self.assertIn(
+            "请替换为自己的地址", outputs["quantumultx_allen.conf"]
+        )
+        self.assertIn(
+            "请将 url 替换为自己的订阅地址", outputs["mihomo_allen.yaml"]
+        )
+
     def test_committed_outputs_preserve_routing_optimizations(self):
         outputs = {
             name: (OUTPUT_DIR / name).read_text(encoding="utf-8")
@@ -398,7 +454,9 @@ rule-providers:
         qx = outputs["quantumultx_allen.conf"]
         header = qx.split("[general]", maxsplit=1)[0]
         self.assertNotIn("1234567", header)
-        self.assertIn("脱敏工具", header)
+        self.assertNotIn("维护说明", header)
+        self.assertNotIn("脱敏工具", header)
+        self.assertNotIn("enabled=true 为启用", header)
         self.assertNotRegex(qx, r"server-tag-regex=[^\n,]*(?:^|\|)(?:新|日|台|United)(?:\||,)")
         self.assertIn("United States", qx)
         self.assertIn("Singapore", qx)
