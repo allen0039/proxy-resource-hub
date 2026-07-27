@@ -73,8 +73,8 @@ App Store 链接指向应用官方商店页面。部分应用可能未在所有�
 ### 第三步：处理密码和证书
 
 - Mihomo：将 `secret: CHANGE_ME` 改成自己的强口令。
-- 看到 `Configure local proxy nodes privately.`：这是单节点预留位置，不使用单节点可以不处理。
-- 看到 `Configure MITM certificate and passphrase locally.`：证书已经被脱敏删除，需要在设备本地重新生成或导入。
+- 看到 `请在本机配置代理节点。`：这是单节点预留位置，不使用单节点可以不处理。
+- 看到 `请在本机配置并信任 MitM 证书与口令。`：使用相关功能前，请在设备本机生成或导入证书与口令。
 
 如果只需要基础分流，可以先不启用 MITM。依赖 HTTPS 解密的重写、脚本或插件会暂时不可用，但普通规则分流不受影响。
 

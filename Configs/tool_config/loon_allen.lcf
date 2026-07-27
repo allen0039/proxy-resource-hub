@@ -1,4 +1,5 @@
-# Allen 基于 Tartarus 的 Loon 全局配置修改
+# Allen 维护 - Loon 配置
+# 基于 Tartarus 的 Loon 全局配置修改
 # Allen：https://github.com/allen0039
 # Tartarus：https://github.com/Tartarus2014
 # Loon 官方文档：https://nsloon.app/docs/intro
@@ -36,8 +37,8 @@ resource-parser = https://raw.githubusercontent.com/sub-store-org/Sub-Store/rele
 
 [Remote Proxy]
 # 订阅使用说明：
-# 1. [Remote Proxy] 每行格式为“订阅名 = URL,参数”；URL 属于私密信息，公开前必须脱敏。
-# 2. enabled=true 启用订阅，enabled=false 仅保留；当前只启用 Allen合集订阅。
+# 1. [Remote Proxy] 每行格式为“订阅名 = URL,参数”，请将 URL 替换为自己的订阅地址。
+# 2. enabled=true 加载该订阅，enabled=false 暂不加载；当前只启用 Allen合集订阅。
 # 3. skip-cert-verify=false 保持证书校验；地区组为空时检查 [Remote Filter] 与节点名称。
 Allen合集订阅 = https://example.com/loon/subscription-1.conf,udp=true,block-quic=true,fast-open=default,vmess-aead=true,skip-cert-verify=false,enabled=true,flexible-sni=false,img-url=https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/Bamboo.png
 白菜灵车 = https://example.com/loon/subscription-2.conf,udp=true,block-quic=true,fast-open=default,vmess-aead=true,skip-cert-verify=false,enabled=false,flexible-sni=false,img-url=https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/Bamboo.png
@@ -285,8 +286,8 @@ https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/rewrite/Lo
 
 
 [Mitm]
-# ca-p12 与 ca-passphrase 属于私密信息，公开前必须脱敏。
+# 使用 MitM 功能前，请在本机配置并信任证书。
 # skip-server-cert-verify=false 保持上游证书校验。
-# Configure MITM certificate and passphrase locally.
+# 请在本机配置并信任 MitM 证书与口令。
 hostname =
 skip-server-cert-verify = false

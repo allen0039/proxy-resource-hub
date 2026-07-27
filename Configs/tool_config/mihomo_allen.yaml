@@ -1,4 +1,4 @@
-# Mihomo 配置 - Allen
+# Allen 维护 - Mihomo 配置
 
 # 策略模板：代理优先、直连优先和地区自动测速。
 Proxy_first: &Proxy_first {type: select, proxies: [香港优选, 日本优选, 新加坡优选, 美国优选, 香港节点, 台湾节点, 日本节点, 新加坡节点, 美国节点, 韩国节点, 英国节点, 其他地区, Proxy, 直连]}
@@ -9,7 +9,7 @@ Urltest_Base: &Urltest_Base {type: url-test, include-all: true, url: 'https://ww
 
 # 代理订阅
 # 订阅使用说明：
-# 1. proxy-providers 下每个名称是一份订阅；URL 属于私密信息，公开前必须脱敏。
+# 1. proxy-providers 下每个名称对应一份订阅，请将 url 替换为自己的订阅地址。
 # 2. 当前只启用 subscription_1；filter 筛选节点名称，health-check 检测节点可用性。
 # 3. interval 控制更新周期，proxy 仅指定订阅下载出口；未设置 skip-cert-verify，默认校验证书。
 proxy-providers:

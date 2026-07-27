@@ -122,14 +122,14 @@ def sanitize_surge(text: str, slug: str) -> str:
         if current == "mitm" and key in {"ca-passphrase", "ca-p12"}:
             mitm_marker = _append_placeholder_once(
                 output,
-                "# Configure MITM certificate and passphrase locally.",
+                "# 请在本机配置并信任 MitM 证书与口令。",
                 mitm_marker,
             )
             continue
         if current == "proxy" and line.strip():
             proxy_marker = _append_placeholder_once(
                 output,
-                "# Configure local proxy nodes privately.",
+                "# 请在本机配置代理节点。",
                 proxy_marker,
             )
             continue
@@ -150,11 +150,17 @@ def sanitize_quantumultx(text: str) -> str:
     subscription_index = 0
     node_marker = False
     mitm_marker = False
+    seen_section = False
 
     for line in lines:
         if (name := section_name(line)) is not None:
+            if not seen_section:
+                output = ["# Allen 维护 - Quantumult X 配置", ""]
+                seen_section = True
             current = name
             output.append(line)
+            continue
+        if not seen_section:
             continue
 
         content = _active_content(line)
@@ -177,7 +183,7 @@ def sanitize_quantumultx(text: str) -> str:
         if current == "server_local" and line.strip():
             node_marker = _append_placeholder_once(
                 output,
-                "# Configure local proxy nodes privately.",
+                "# 请在本机配置代理节点。",
                 node_marker,
             )
             continue
@@ -189,7 +195,7 @@ def sanitize_quantumultx(text: str) -> str:
         }:
             mitm_marker = _append_placeholder_once(
                 output,
-                "# Configure MITM certificate and passphrase locally.",
+                "# 请在本机配置并信任 MitM 证书与口令。",
                 mitm_marker,
             )
             continue
@@ -232,7 +238,7 @@ def sanitize_loon(text: str) -> str:
         if current == "proxy" and line.strip():
             node_marker = _append_placeholder_once(
                 output,
-                "# Configure local proxy nodes privately.",
+                "# 请在本机配置代理节点。",
                 node_marker,
             )
             continue
@@ -244,7 +250,7 @@ def sanitize_loon(text: str) -> str:
         }:
             mitm_marker = _append_placeholder_once(
                 output,
-                "# Configure MITM certificate and passphrase locally.",
+                "# 请在本机配置并信任 MitM 证书与口令。",
                 mitm_marker,
             )
             continue
@@ -415,7 +421,7 @@ def _validate_ini_client(filename: str, text: str) -> None:
         _sensitive_section_urls(filename, sections["server_remote"])
         if any(
             line.strip()
-            and line.strip() != "# Configure local proxy nodes privately."
+            and line.strip() != "# 请在本机配置代理节点。"
             for _, line in sections["server_local"]
         ):
             raise SanitizationError(f"{filename}: active local proxy node remains")
@@ -429,7 +435,7 @@ def _validate_ini_client(filename: str, text: str) -> None:
         _sensitive_section_urls(filename, sections["remote proxy"])
         if "proxy" in sections and any(
             line.strip()
-            and line.strip() != "# Configure local proxy nodes privately."
+            and line.strip() != "# 请在本机配置代理节点。"
             for _, line in sections["proxy"]
         ):
             raise SanitizationError(f"{filename}: active local proxy node remains")
