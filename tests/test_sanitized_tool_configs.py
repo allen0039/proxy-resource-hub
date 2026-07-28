@@ -416,6 +416,59 @@ rule-providers:
             "请将 url 替换为自己的订阅地址", outputs["mihomo_allen.yaml"]
         )
 
+    def test_committed_node_subscriptions_refresh_every_six_hours(self):
+        outputs = {
+            name: (OUTPUT_DIR / name).read_text(encoding="utf-8")
+            for name in CONFIG_NAMES
+        }
+
+        for name in ("surge_mac_allen.conf", "surge_iphone_allen.conf"):
+            subscriptions = [
+                line
+                for line in outputs[name].splitlines()
+                if "policy-path=" in line
+            ]
+            with self.subTest(name=name):
+                self.assertEqual(5, len(subscriptions))
+                self.assertTrue(
+                    all("update-interval=21600" in line for line in subscriptions)
+                )
+
+        qx_server_remote = outputs["quantumultx_allen.conf"].split(
+            "[server_remote]", maxsplit=1
+        )[1].split("[server_local]", maxsplit=1)[0]
+        qx_subscriptions = [
+            line
+            for line in qx_server_remote.splitlines()
+            if line.startswith("https://")
+        ]
+        self.assertEqual(4, len(qx_subscriptions))
+        self.assertTrue(
+            all("update-interval=21600" in line for line in qx_subscriptions)
+        )
+
+        mihomo = yaml.safe_load(outputs["mihomo_allen.yaml"])
+        self.assertEqual(
+            {21600},
+            {
+                provider["interval"]
+                for provider in mihomo["proxy-providers"].values()
+            },
+        )
+        self.assertEqual(
+            3,
+            outputs["mihomo_allen.yaml"].count("#    interval: 21600"),
+        )
+
+        loon_remote_proxy = outputs["loon_allen.lcf"].split(
+            "[Remote Proxy]", maxsplit=1
+        )[1].split("[Proxy Group]", maxsplit=1)[0]
+        self.assertNotIn("update-interval=", loon_remote_proxy)
+        self.assertIn(
+            "请在 App 的节点订阅设置中选择每 6 小时更新",
+            loon_remote_proxy,
+        )
+
     def test_committed_outputs_preserve_routing_optimizations(self):
         outputs = {
             name: (OUTPUT_DIR / name).read_text(encoding="utf-8")
