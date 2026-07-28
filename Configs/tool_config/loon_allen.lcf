@@ -47,45 +47,96 @@ Allen自建 = https://example.com/loon/subscription-3.conf,udp=true,block-quic=f
 
 [Proxy Group]
 # 业务组供规则引用，地区组由 [Remote Filter] 筛选订阅节点。
-Proxy = select,香港优选,日本优选,新加坡优选,美国优选,香港节点,台湾节点,日本节点,新加坡节点,美国节点,韩国节点,英国节点,其他地区,DIRECT,全部节点,img-url = https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/Proxy.png
+# ================================
+# 1. 核心策略
+# ================================
+Proxy = select,香港优选,日本优选,新加坡优选,美国优选,香港节点,台湾节点,日本节点,新加坡节点,美国节点,韩国节点,英国节点,其他地区,全部节点,DIRECT,img-url = https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/Proxy.png
+Final = select,香港优选,日本优选,新加坡优选,美国优选,香港节点,台湾节点,日本节点,新加坡节点,美国节点,韩国节点,英国节点,其他地区,Proxy,DIRECT,img-url = https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/Final.png
+
+# ================================
+# 2. AI、搜索与开发
+# ================================
 Google = select,香港优选,日本优选,新加坡优选,美国优选,香港节点,台湾节点,日本节点,新加坡节点,美国节点,韩国节点,英国节点,其他地区,Proxy,DIRECT,img-url = https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/Google_Search.png
-OpenAI = select,香港优选,日本优选,新加坡优选,美国优选,香港节点,台湾节点,日本节点,新加坡节点,美国节点,韩国节点,英国节点,其他地区,Proxy,DIRECT,全部节点,img-url = https://raw.githubusercontent.com/chxm1023/Script_X/main/icon/ChatGPT/ChatGPT4.png
-YouTube = select,香港优选,日本优选,新加坡优选,美国优选,香港节点,台湾节点,日本节点,新加坡节点,美国节点,韩国节点,英国节点,其他地区,Proxy,DIRECT,img-url = https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/YouTube.png
+OpenAI = select,香港优选,日本优选,新加坡优选,美国优选,香港节点,台湾节点,日本节点,新加坡节点,美国节点,韩国节点,英国节点,其他地区,Proxy,DIRECT,img-url = https://raw.githubusercontent.com/chxm1023/Script_X/main/icon/ChatGPT/ChatGPT4.png
+
+# ================================
+# 3. 社交与通信
+# ================================
 Telegram = select,香港优选,日本优选,新加坡优选,美国优选,香港节点,台湾节点,日本节点,新加坡节点,美国节点,韩国节点,英国节点,其他地区,Proxy,DIRECT,img-url = https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/Telegram.png
+TikTok = select,香港优选,日本优选,新加坡优选,美国优选,香港节点,台湾节点,日本节点,新加坡节点,美国节点,韩国节点,英国节点,其他地区,Proxy,DIRECT,img-url = https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/TikTok.png
+# 国外社交统一接管 X/Twitter 与 Meta 社交服务；Telegram 保持独立策略。
+国外社交 = select,香港优选,日本优选,新加坡优选,美国优选,香港节点,台湾节点,日本节点,新加坡节点,美国节点,韩国节点,英国节点,其他地区,Proxy,DIRECT,img-url = https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/Twitter.png
+
+# ================================
+# 4. 国外流媒体
+# ================================
+YouTube = select,香港优选,日本优选,新加坡优选,美国优选,香港节点,台湾节点,日本节点,新加坡节点,美国节点,韩国节点,英国节点,其他地区,Proxy,DIRECT,img-url = https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/YouTube.png
 Netflix = select,香港优选,日本优选,新加坡优选,美国优选,香港节点,台湾节点,日本节点,新加坡节点,美国节点,韩国节点,英国节点,其他地区,Proxy,DIRECT,img-url = https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/Netflix.png
-Emby = select,DIRECT,香港优选,日本优选,新加坡优选,美国优选,香港节点,台湾节点,日本节点,新加坡节点,美国节点,韩国节点,英国节点,其他地区,Proxy,img-url = https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/Emby.png
 迪士尼+ = select,香港优选,日本优选,新加坡优选,美国优选,香港节点,台湾节点,日本节点,新加坡节点,美国节点,韩国节点,英国节点,其他地区,Proxy,DIRECT,img-url = https://raw.githubusercontent.com/erdongchanyo/icon/main/Policy-Filter/Disney+.png
-哔哩哔哩 = select,香港节点,台湾节点,新加坡节点,Proxy,DIRECT,img-url = https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/bilibili.png
-国外媒体 = select,香港优选,日本优选,新加坡优选,美国优选,香港节点,台湾节点,日本节点,新加坡节点,美国节点,韩国节点,英国节点,其他地区,Proxy,DIRECT,img-url = https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/Streaming.png
-国内媒体 = select,DIRECT,Proxy,香港节点,台湾节点,日本节点,新加坡节点,美国节点,韩国节点,img-url = https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/StreamingSE.png
-GitHub = select,香港优选,日本优选,新加坡优选,美国优选,香港节点,台湾节点,日本节点,新加坡节点,美国节点,韩国节点,英国节点,其他地区,Proxy,DIRECT,img-url = https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/GitHub.png
-PayPal = select,香港优选,日本优选,新加坡优选,美国优选,香港节点,台湾节点,日本节点,新加坡节点,美国节点,韩国节点,英国节点,其他地区,Proxy,DIRECT,img-url = https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/PayPal.png
+HBO = select,香港优选,日本优选,新加坡优选,美国优选,香港节点,台湾节点,日本节点,新加坡节点,美国节点,韩国节点,英国节点,其他地区,Proxy,DIRECT,img-url = https://raw.githubusercontent.com/erdongchanyo/icon/main/Policy-Filter/HBO.png
+Emby = select,DIRECT,香港优选,日本优选,新加坡优选,美国优选,香港节点,台湾节点,日本节点,新加坡节点,美国节点,韩国节点,英国节点,其他地区,Proxy,img-url = https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/Emby.png
 Spotify = select,香港优选,日本优选,新加坡优选,美国优选,香港节点,台湾节点,日本节点,新加坡节点,美国节点,韩国节点,英国节点,其他地区,Proxy,DIRECT,img-url = https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/Spotify.png
-Microsoft = select,香港优选,日本优选,新加坡优选,美国优选,香港节点,台湾节点,日本节点,新加坡节点,美国节点,韩国节点,英国节点,其他地区,Proxy,DIRECT,img-url = https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/Microsoft.png
-游戏平台 = select,香港优选,日本优选,新加坡优选,美国优选,香港节点,台湾节点,日本节点,新加坡节点,美国节点,韩国节点,英国节点,其他地区,Proxy,DIRECT,img-url = https://github.com/shindgewongxj/WHATSINStash/raw/main/icon/applegamecenter.png
+巴哈姆特 = select,台湾节点,香港节点,DIRECT,img-url = https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/Bahamut.png
+
+# ================================
+# 5. 综合媒体
+# ================================
+哔哩哔哩 = select,DIRECT,香港节点,台湾节点,新加坡节点,Proxy,img-url = https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/bilibili.png
+国外媒体 = select,香港优选,日本优选,新加坡优选,美国优选,香港节点,台湾节点,日本节点,新加坡节点,美国节点,韩国节点,英国节点,其他地区,Proxy,DIRECT,img-url = https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/Streaming.png
+# 特殊媒体独立选择出口；保持手动策略，不新增测速任务。
+特殊媒体 = select,香港优选,日本优选,新加坡优选,美国优选,香港节点,台湾节点,日本节点,新加坡节点,美国节点,韩国节点,英国节点,其他地区,Proxy,DIRECT,img-url = https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/Streaming.png
+国内媒体 = select,DIRECT,Proxy,香港节点,台湾节点,日本节点,新加坡节点,美国节点,韩国节点,img-url = https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/StreamingSE.png
+
+# ================================
+# 6. 购物与支付
+# ================================
+# 海淘只提供手动地区节点，减少自动切换出口触发购物网站账号风控。
+海淘 = select,美国节点,日本节点,香港节点,英国节点,新加坡节点,韩国节点,台湾节点,其他地区,DIRECT,img-url = https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/Amazon.png
+PayPal = select,香港优选,日本优选,新加坡优选,美国优选,香港节点,台湾节点,日本节点,新加坡节点,美国节点,韩国节点,英国节点,其他地区,Proxy,DIRECT,img-url = https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/PayPal.png
+
+# ================================
+# 7. 系统与云服务
+# ================================
 Apple = select,DIRECT,Proxy,香港节点,台湾节点,日本节点,新加坡节点,美国节点,韩国节点,img-url = https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/Apple.png
 Apple Push = fallback,日本节点,香港节点,美国节点,DIRECT,url = http://cp.cloudflare.com/generate_204,interval = 300,max-timeout = 3000,img-url = https://fastly.jsdelivr.net/gh/fmz200/wool_scripts@main/icons/apps/Apple_Messages.png
-Final = select,香港优选,日本优选,新加坡优选,美国优选,香港节点,台湾节点,日本节点,新加坡节点,美国节点,韩国节点,英国节点,其他地区,Proxy,DIRECT,img-url = https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/Final.png
-TikTok = select,香港优选,日本优选,新加坡优选,美国优选,香港节点,台湾节点,日本节点,新加坡节点,美国节点,韩国节点,英国节点,其他地区,Proxy,DIRECT,img-url = https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/TikTok.png
-测速 = select,香港优选,日本优选,新加坡优选,美国优选,香港节点,台湾节点,日本节点,新加坡节点,美国节点,韩国节点,英国节点,其他地区,Proxy,DIRECT,img-url = https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/Speedtest.png
-CDN = select,香港优选,日本优选,新加坡优选,美国优选,香港节点,台湾节点,日本节点,新加坡节点,美国节点,韩国节点,英国节点,其他地区,Proxy,DIRECT,img-url = https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/Cloudflare.png
+Microsoft = select,香港优选,日本优选,新加坡优选,美国优选,香港节点,台湾节点,日本节点,新加坡节点,美国节点,韩国节点,英国节点,其他地区,Proxy,DIRECT,img-url = https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/Microsoft.png
 OneDrive = select,香港优选,日本优选,新加坡优选,美国优选,香港节点,台湾节点,日本节点,新加坡节点,美国节点,韩国节点,英国节点,其他地区,Proxy,DIRECT,Microsoft,img-url = https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/OneDrive.png
+GitHub = select,香港优选,日本优选,新加坡优选,美国优选,香港节点,台湾节点,日本节点,新加坡节点,美国节点,韩国节点,英国节点,其他地区,Proxy,DIRECT,img-url = https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/GitHub.png
 
-全部节点 = select,All Server,url = http://cp.cloudflare.com/generate_204,img-url = https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/Server.png
-巴哈姆特 = select,DIRECT,香港节点,台湾节点,日本节点,新加坡节点,美国节点,img-url = https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/Bahamut.png
+# ================================
+# 8. 游戏与网络工具
+# ================================
+游戏平台 = select,香港优选,日本优选,新加坡优选,美国优选,香港节点,台湾节点,日本节点,新加坡节点,美国节点,韩国节点,英国节点,其他地区,Proxy,DIRECT,img-url = https://github.com/shindgewongxj/WHATSINStash/raw/main/icon/applegamecenter.png
+CDN = select,香港优选,日本优选,新加坡优选,美国优选,香港节点,台湾节点,日本节点,新加坡节点,美国节点,韩国节点,英国节点,其他地区,Proxy,DIRECT,img-url = https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/Cloudflare.png
+测速 = select,香港优选,日本优选,新加坡优选,美国优选,香港节点,台湾节点,日本节点,新加坡节点,美国节点,韩国节点,英国节点,其他地区,Proxy,DIRECT,img-url = https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/Speedtest.png
+
+# ================================
+# 9. 自动优选节点
+# 只有这些组自动测速
+# ================================
 香港优选 = url-test,香港,url = http://www.qualcomm.cn/generate_204,interval = 300,tolerance = 50,img-url = https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/Hong_Kong.png
 日本优选 = url-test,日本,url = http://www.qualcomm.cn/generate_204,interval = 300,tolerance = 50,img-url = https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/Japan.png
 新加坡优选 = url-test,新加坡,url = http://www.qualcomm.cn/generate_204,interval = 300,tolerance = 50,img-url = https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/Singapore.png
 美国优选 = url-test,美国,url = http://www.qualcomm.cn/generate_204,interval = 300,tolerance = 50,img-url = https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/United_States.png
+
+# ================================
+# 10. 手动地区节点
+# ================================
 香港节点 = select,香港,url = http://www.qualcomm.cn/generate_204,img-url = https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/Hong_Kong.png
-台湾节点 = url-test,台湾,url = http://www.qualcomm.cn/generate_204,interval = 60,tolerance = 50,img-url = https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/Taiwan.png
+台湾节点 = select,台湾,url = http://www.qualcomm.cn/generate_204,img-url = https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/Taiwan.png
 日本节点 = select,日本,url = http://www.qualcomm.cn/generate_204,img-url = https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/Japan.png
 新加坡节点 = select,新加坡,url = http://www.qualcomm.cn/generate_204,img-url = https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/Singapore.png
 美国节点 = select,美国,url = http://www.qualcomm.cn/generate_204,img-url = https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/United_States.png
-韩国节点 = url-test,韩国,url = http://www.qualcomm.cn/generate_204,interval = 60,tolerance = 50,img-url = https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/Korea.png
+韩国节点 = select,韩国,url = http://www.qualcomm.cn/generate_204,img-url = https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/Korea.png
 英国节点 = select,英国,url = http://www.qualcomm.cn/generate_204,img-url = https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/United_Kingdom.png
 其他地区 = select,其他,url = http://www.qualcomm.cn/generate_204,img-url = https://raw.githubusercontent.com/Orz-3/mini/master/Color/Static.png
-广告拦截 = select,REJECT,DIRECT,Proxy,url = http://cp.cloudflare.com/generate_204,img-url = https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/Advertising.png
+全部节点 = select,All Server,url = http://cp.cloudflare.com/generate_204,img-url = https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/Server.png
+
+# ================================
+# 11. 订阅来源
+# 不属于业务策略，仅供节点组引用
+# 定义位于 [Remote Proxy] 与 [Remote Filter]
+# ================================
 
 [Remote Filter]
 # 根据节点名称筛选地区，并排除回国、校园和游戏节点。
@@ -170,7 +221,6 @@ DOMAIN-SUFFIX,macwk.cn,美国节点
 DOMAIN-SUFFIX,appstorrent.ru,美国节点
 DOMAIN-KEYWORD,kejilion,香港节点
 DOMAIN-SUFFIX,nfbyte.com,香港节点
-DOMAIN-SUFFIX,rei.com,美国节点
 DOMAIN-KEYWORD,onitsukatiger,日本节点
 DOMAIN-SUFFIX,montbell.com,香港节点
 DOMAIN-SUFFIX,compliance.chippercash.com,美国节点
@@ -206,6 +256,8 @@ FINAL,Final
 # 本地规则优先，PT、个人域名和公益 AI 以自有订阅为准。
 https://raw.githubusercontent.com/QuixoticHeart/rule-set/refs/heads/ruleset/loon/apns.list, policy=Apple Push, tag=Apple Push, enabled=true
 https://kelee.one/Tool/Loon/Lsr/AI.lsr, policy=OpenAI, tag=AI, enabled=true
+# YouTube 必须置于 Google 之前，避免 Google 规则中的 YouTube 域名提前命中。
+https://raw.githubusercontent.com/Tartarus2014/Loon-Script/master/Rule/Media/YouTube.lsr, policy=YouTube, tag=YouTube, enabled=true
 https://github.com/Moli-X/Tool/raw/X/Loon/Rules/Google.list, policy=Google, tag=谷歌分流, enabled=true
 https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/rule/QuantumultX/Google/Google.list, policy=DIRECT, tag=Google.list, enabled=false
 https://raw.githubusercontent.com/allen0039/proxy-resource-hub/main/Rules/Loon/AI/gongyiai.list, policy=DIRECT, tag=公益AI, enabled=true
@@ -214,32 +266,44 @@ https://raw.githubusercontent.com/allen0039/proxy-resource-hub/main/Rules/Loon/P
 https://rule.kelee.one/Loon/Speedtest.lsr, policy=测速, tag=测速, enabled=true
 https://raw.githubusercontent.com/ACL4SSR/ACL4SSR/master/Clash/LocalAreaNetwork.list, policy=DIRECT, tag=局域网, enabled=true
 https://raw.githubusercontent.com/Tartarus2014/Loon-Script/master/Rule/Reject/Advertising.lsr, policy=REJECT, tag=去广告, enabled=false
-https://raw.githubusercontent.com/fmz200/wool_scripts/main/Loon/rule/rejectAd.list, policy=广告拦截, tag=广告拦截合集-规则@奶思, enabled=false
+https://raw.githubusercontent.com/fmz200/wool_scripts/main/Loon/rule/rejectAd.list, policy=REJECT, tag=广告拦截合集-规则@奶思, enabled=false
 https://raw.githubusercontent.com/Tartarus2014/Loon-Script/master/Rule/Apple/TestFlight.lsr, policy=Proxy, tag=TestFlight, enabled=false
 https://raw.githubusercontent.com/Tartarus2014/Loon-Script/master/Rule/Apple/Apple.lsr, policy=Apple, tag=Apple, enabled=true
 https://raw.githubusercontent.com/Tartarus2014/Loon-Script/master/Rule/Other/Github.lsr, policy=GitHub, tag=Github, enabled=true
 https://github.com/Moli-X/Resources/raw/main/Loon/Update.list, policy=REJECT, tag=屏蔽系统更新, enabled=false
-https://raw.githubusercontent.com/Tartarus2014/Loon-Script/master/Rule/Media/YouTube.lsr, policy=YouTube, tag=YouTube, enabled=true
 https://raw.githubusercontent.com/Tartarus2014/Loon-Script/master/Rule/Media/Netflix.lsr, policy=Netflix, tag=Netflix, enabled=true
-https://raw.githubusercontent.com/Tartarus2014/Loon-Script/master/Rule/Media/Bahamut.lsr, policy=巴哈姆特, tag=巴哈姆特, enabled=true
+https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/rule/Loon/Bahamut/Bahamut.list, policy=巴哈姆特, tag=巴哈姆特, enabled=true
 https://raw.githubusercontent.com/Tartarus2014/Loon-Script/master/Rule/Media/CN.lsr, policy=国内媒体, tag=国内媒体, enabled=true
 https://raw.githubusercontent.com/Tartarus2014/Loon-Script/master/Rule/Other/Telegram.lsr, policy=Telegram, tag=Telegram, enabled=true
+# 国外社交：X/Twitter、Facebook/Messenger、Instagram、Threads、WhatsApp；Telegram 不在此组。
+https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/rule/Loon/Twitter/Twitter.list, policy=国外社交, tag=X-Twitter, enabled=true
+https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/rule/Loon/Facebook/Facebook.list, policy=国外社交, tag=Facebook-Messenger, enabled=true
+https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/rule/Loon/Instagram/Instagram.list, policy=国外社交, tag=Instagram, enabled=true
+https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/rule/Loon/Threads/Threads.list, policy=国外社交, tag=Threads, enabled=true
+https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/rule/Loon/Whatsapp/Whatsapp.list, policy=国外社交, tag=WhatsApp, enabled=true
 https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/rule/Loon/Emby/Emby.list, policy=Emby, tag=Emby, enabled=true
 https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/rule/Loon/Disney/Disney.list, policy=迪士尼+, tag=迪士尼+, enabled=true
+https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/rule/Loon/HBO/HBO.list, policy=HBO, tag=HBO, enabled=true
 https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/rule/Loon/BiliBili/BiliBili.list, policy=哔哩哔哩, tag=哔哩哔哩, enabled=true
+# 特殊媒体置于通用境外规则之前，确保优先进入独立策略组。
+https://raw.githubusercontent.com/ACL4SSR/ACL4SSR/master/Clash/Ruleset/Porn.list, policy=特殊媒体, tag=特殊媒体, enabled=true
 https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/rule/Loon/PayPal/PayPal.list, policy=PayPal, tag=PayPal, enabled=true
 https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/rule/Loon/Spotify/Spotify.list, policy=Spotify, tag=Spotify, enabled=true
-https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/rule/Loon/Microsoft/Microsoft.list, policy=Microsoft, tag=Microsoft, enabled=true
 https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/rule/Loon/TikTok/TikTok.list, policy=TikTok, tag=TikTok, enabled=true
 https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/rule/Loon/OneDrive/OneDrive.list, policy=OneDrive, tag=OneDrive, enabled=true
+# OneDrive 与游戏平台等具体业务优先，Microsoft 通用规则随后兜底。
+https://rule.kelee.one/Loon/Steam.lsr, policy=游戏平台, tag=Steam, enabled=true
+https://rule.kelee.one/Loon/Game.lsr, policy=游戏平台, tag=Game, enabled=true
+https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/rule/Loon/Microsoft/Microsoft.list, policy=Microsoft, tag=Microsoft, enabled=true
+# 通用 CDN 与国外媒体必须位于具体业务规则之后。
 https://raw.githubusercontent.com/allen0039/proxy-resource-hub/main/Rules/Loon/SKK/CDN.list, policy=CDN, tag=CDN, enabled=true
 https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/rule/Loon/GlobalMedia/GlobalMedia.list, policy=国外媒体, tag=国外媒体, enabled=true
+# 海淘购物：国外媒体优先匹配，避免 Amazon Prime Video 被购物规则接管。
+https://raw.githubusercontent.com/allen0039/proxy-resource-hub/main/Rules/Loon/shop/shopping.list, policy=海淘, tag=海淘, enabled=true
 https://gist.github.com/MrRegret/5bb2df7c332157fd35b514af8e635b10/raw, policy=Proxy, tag=forward分流, enabled=false
 https://raw.githubusercontent.com/Tartarus2014/Loon-Script/master/Rule/Direct.lsr, policy=DIRECT, tag=全球直连, enabled=true
 https://yqc-premium.pages.dev/Rules/DIRECT.list, policy=DIRECT, tag=直连策略[浥轻尘会员专属], enabled=true
 https://raw.githubusercontent.com/Tartarus2014/Loon-Script/master/Rule/GEOIP.lsr, policy=DIRECT, tag=GEOIP_CN, enabled=true
-https://rule.kelee.one/Loon/Steam.lsr, policy=游戏平台, tag=Steam, enabled=true
-https://rule.kelee.one/Loon/Game.lsr, policy=游戏平台, tag=Game, enabled=true
 https://raw.githubusercontent.com/ACL4SSR/ACL4SSR/master/Clash/ProxyLite.list, policy=Proxy, tag=全球规则, enabled=false
 https://raw.githubusercontent.com/ACL4SSR/ACL4SSR/master/Clash/ProxyGFWlist.list, policy=Proxy, tag=全球规则, enabled=true
 https://raw.githubusercontent.com/VirgilClyne/GetSomeFries/main/ruleset/ASN.China.list, policy=DIRECT, tag=ASN.China, enabled=false
