@@ -336,14 +336,14 @@ rule-providers:
             r"Rules/Loon/PT/Domain\.list[^\n]*policy=DIRECT",
         )
         mihomo = yaml.safe_load(outputs["mihomo_allen.yaml"])
-        self.assertEqual(1, mihomo["rules"].count("RULE-SET,gongyiai,直连策略"))
+        self.assertEqual(1, mihomo["rules"].count("RULE-SET,gongyiai,DIRECT"))
         self.assertEqual(
-            1, mihomo["rules"].count("RULE-SET,personal_domain,直连策略")
+            1, mihomo["rules"].count("RULE-SET,personal_domain,DIRECT")
         )
-        self.assertEqual(1, mihomo["rules"].count("RULE-SET,pt_domain,直连策略"))
+        self.assertEqual(1, mihomo["rules"].count("RULE-SET,pt_domain,DIRECT"))
         self.assertLess(
-            mihomo["rules"].index("RULE-SET,pt_domain,直连策略"),
-            mihomo["rules"].index("RULE-SET,pt_cn_domain,直连策略"),
+            mihomo["rules"].index("RULE-SET,pt_domain,DIRECT"),
+            mihomo["rules"].index("RULE-SET,pt_cn_domain,DIRECT"),
         )
         self.assertEqual(MIHOMO_PT_URL, mihomo["rule-providers"]["pt_domain"]["url"])
 
@@ -475,21 +475,12 @@ rule-providers:
             name: (OUTPUT_DIR / name).read_text(encoding="utf-8")
             for name in ("surge_mac_allen.conf", "surge_iphone_allen.conf")
         }
-        groups = {
-            "surge_mac_allen.conf": (
-                "Apple Push = fallback, 日本节点, 美国节点, 香港节点, 新加坡节点, "
-                "日本优选, 美国优选, 香港优选, 新加坡优选, DIRECT, "
-                "url=http://cp.cloudflare.com/generate_204, interval=300, "
-                "icon-url=https://fastly.jsdelivr.net/gh/fmz200/wool_scripts@main/"
-                "icons/apps/Apple_Messages.png"
-            ),
-            "surge_iphone_allen.conf": (
-                "Apple Push = fallback, 日本节点, 香港节点, 美国节点, DIRECT, "
-                "url=http://cp.cloudflare.com/generate_204, interval=300, "
-                "icon-url=https://fastly.jsdelivr.net/gh/fmz200/wool_scripts@main/"
-                "icons/apps/Apple_Messages.png"
-            ),
-        }
+        apple_push_group = (
+            "Apple Push = fallback, 日本节点, 香港节点, 美国节点, DIRECT, "
+            "url=http://cp.cloudflare.com/generate_204, interval=300, "
+            "icon-url=https://fastly.jsdelivr.net/gh/fmz200/wool_scripts@main/"
+            "icons/apps/Apple_Messages.png"
+        )
         local_rule = "DOMAIN-SUFFIX,push.apple.com,Apple Push"
         remote_rule = (
             "RULE-SET,https://raw.githubusercontent.com/QuixoticHeart/rule-set/"
@@ -498,7 +489,7 @@ rule-providers:
 
         for name, text in configs.items():
             with self.subTest(name=name):
-                self.assertEqual(text.count(groups[name]), 1)
+                self.assertEqual(text.count(apple_push_group), 1)
                 self.assertEqual(text.count(local_rule), 1)
                 self.assertEqual(text.count(remote_rule), 1)
                 self.assertLess(text.index(local_rule), text.index(remote_rule))
