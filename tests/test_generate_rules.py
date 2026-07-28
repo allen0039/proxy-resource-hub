@@ -58,6 +58,40 @@ PT_EXCLUSIONS = {
     "ptyqm.com",
     "rutracker.org",
 }
+SHOP_REQUIRED_DOMAINS = {
+    "amazon.com",
+    "amazon.co.jp",
+    "amazon.co.uk",
+    "amazonpay.com",
+    "amazonimages.com",
+    "images-amazon.com",
+    "ssl-images-amazon.com",
+    "ebay.com",
+    "ebaycdn.net",
+    "ebayimg.com",
+    "ebaystatic.com",
+    "rei.com",
+    "backcountry.com",
+    "steepandcheap.com",
+    "competitivecyclist.com",
+    "arcteryx.com",
+    "patagonia.com",
+    "thenorthface.com",
+    "campsaver.com",
+    "gearx.com",
+    "evo.com",
+    "sierra.com",
+}
+SHOP_EXCLUSIONS = {
+    "amazonaws.com",
+    "cloudfront.net",
+    "primevideo.com",
+    "amazonvideo.com",
+    "media-amazon.com",
+    "audible.com",
+    "kindle.com",
+    "imdb.com",
+}
 
 
 def load_generator():
@@ -80,7 +114,7 @@ class RuleGeneratorTests(unittest.TestCase):
         generator = load_generator()
         outputs = generator.build_outputs(ROOT)
 
-        self.assertEqual(18, len(outputs))
+        self.assertEqual(23, len(outputs))
         for client in ("Mihomo", "Surge", "QuantumultX", "Loon"):
             for ruleset in ("ai", "gongyiai"):
                 expected = ROOT / "Rules" / client / "AI" / f"{ruleset}.list"
@@ -88,6 +122,8 @@ class RuleGeneratorTests(unittest.TestCase):
         for ruleset in ("ai", "gongyiai"):
             legacy = ROOT / "Rules" / "AI" / f"{ruleset}.list"
             self.assertIn(legacy, outputs)
+        compatibility = ROOT / "Rules" / "shop" / "shopping.list"
+        self.assertIn(compatibility, outputs)
 
     def test_personal_sites_outputs_are_generated_for_every_client(self):
         generator = load_generator()
@@ -162,6 +198,37 @@ class RuleGeneratorTests(unittest.TestCase):
                 any(excluded in outputs[path] for excluded in PT_EXCLUSIONS)
             )
 
+    def test_shop_outputs_are_generated_for_every_client(self):
+        generator = load_generator()
+        outputs = generator.build_outputs(ROOT)
+        source = ROOT / "Rules" / "Source" / "shop" / "shopping.txt"
+        self.assertTrue(source.exists(), "shop source file is missing")
+        source_domains = {
+            line
+            for line in source.read_text(encoding="utf-8").splitlines()
+            if line and not line.startswith("#")
+        }
+
+        self.assertTrue(SHOP_REQUIRED_DOMAINS.issubset(source_domains))
+        self.assertTrue(SHOP_EXCLUSIONS.isdisjoint(source_domains))
+
+        for client in ("Mihomo", "Surge", "QuantumultX", "Loon"):
+            path = ROOT / "Rules" / client / "shop" / "shopping.list"
+            self.assertIn(path, outputs)
+            content = outputs[path]
+            self.assertTrue(all(domain in content for domain in SHOP_REQUIRED_DOMAINS))
+            self.assertFalse(any(domain in content for domain in SHOP_EXCLUSIONS))
+
+        compatibility = ROOT / "Rules" / "shop" / "shopping.list"
+        self.assertIn(compatibility, outputs)
+        self.assertTrue(
+            all(
+                line.startswith("DOMAIN-SUFFIX,")
+                for line in outputs[compatibility].splitlines()
+                if line and not line.startswith("#")
+            )
+        )
+
     def test_check_mode_detects_a_stale_output(self):
         generator = load_generator()
         with tempfile.TemporaryDirectory() as tmp:
@@ -180,6 +247,11 @@ class RuleGeneratorTests(unittest.TestCase):
             pt_dir = root / "Rules" / "Source" / "PT"
             pt_dir.mkdir(parents=True)
             (pt_dir / "Domain.txt").write_text(
+                "example.com\n", encoding="utf-8"
+            )
+            shop_dir = root / "Rules" / "Source" / "shop"
+            shop_dir.mkdir(parents=True)
+            (shop_dir / "shopping.txt").write_text(
                 "example.com\n", encoding="utf-8"
             )
             generator.sync_outputs(root, check=False)

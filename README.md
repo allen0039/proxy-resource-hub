@@ -2,7 +2,7 @@
 
 [![Validate rules](https://github.com/allen0039/proxy-resource-hub/actions/workflows/validate-rules.yml/badge.svg)](https://github.com/allen0039/proxy-resource-hub/actions/workflows/validate-rules.yml)
 
-面向 Mihomo、Surge、Quantumult X 和 Loon 的代理配置与分流规则仓库。仓库提供五份脱敏配置模板，以及 AI、个人域名、PT 站点和 SKK CDN/Download 规则订阅。
+面向 Mihomo、Surge、Quantumult X 和 Loon 的代理配置与分流规则仓库。仓库提供五份脱敏配置模板，以及 AI、个人域名、PT 站点、海淘购物和 SKK CDN/Download 规则订阅。
 
 > [!IMPORTANT]
 > `Configs/tool_config/` 中的文件是公开脱敏模板，不是开箱即用的节点订阅。使用前必须在自己的私人副本中替换 `https://example.com/...`、`CHANGE_ME`、本地节点和 MITM 证书。不要把填写后的私人配置提交到公开仓库。
@@ -36,6 +36,7 @@
 | 公益 AI | 指定公益 AI 站点 | 直连 |
 | 个人域名 | 个人维护的域名 | 直连 |
 | PT 站点 | 经确认的 PT 站点域名 | 直连 |
+| 海淘购物 | Amazon、eBay、REI、Backcountry 与户外品牌商城 | `海淘购物` 或自定义手动策略 |
 | SKK CDN | CDN 与静态资源域名 | `CDN` |
 | SKK Download | 下载域名规则 | 仅自动维护，五份模板当前未启用 |
 
@@ -193,6 +194,7 @@ Surge Mac 和 Mihomo 支持 qB 下载器来源 IP 直连保护。使用时应把
 | 公益 AI | [订阅](https://raw.githubusercontent.com/allen0039/proxy-resource-hub/main/Rules/Mihomo/AI/gongyiai.list) | [订阅](https://raw.githubusercontent.com/allen0039/proxy-resource-hub/main/Rules/Surge/AI/gongyiai.list) | [订阅](https://raw.githubusercontent.com/allen0039/proxy-resource-hub/main/Rules/QuantumultX/AI/gongyiai.list) | [订阅](https://raw.githubusercontent.com/allen0039/proxy-resource-hub/main/Rules/Loon/AI/gongyiai.list) |
 | 个人域名 | [订阅](https://raw.githubusercontent.com/allen0039/proxy-resource-hub/main/Rules/Mihomo/Personal/Domain.list) | [订阅](https://raw.githubusercontent.com/allen0039/proxy-resource-hub/main/Rules/Surge/Personal/Domain.list) | [订阅](https://raw.githubusercontent.com/allen0039/proxy-resource-hub/main/Rules/QuantumultX/Personal/Domain.list) | [订阅](https://raw.githubusercontent.com/allen0039/proxy-resource-hub/main/Rules/Loon/Personal/Domain.list) |
 | PT 站点 | [订阅](https://raw.githubusercontent.com/allen0039/proxy-resource-hub/main/Rules/Mihomo/PT/Domain.list) | [订阅](https://raw.githubusercontent.com/allen0039/proxy-resource-hub/main/Rules/Surge/PT/Domain.list) | [订阅](https://raw.githubusercontent.com/allen0039/proxy-resource-hub/main/Rules/QuantumultX/PT/Domain.list) | [订阅](https://raw.githubusercontent.com/allen0039/proxy-resource-hub/main/Rules/Loon/PT/Domain.list) |
+| 海淘购物 | [订阅](https://raw.githubusercontent.com/allen0039/proxy-resource-hub/main/Rules/Mihomo/shop/shopping.list) | [订阅](https://raw.githubusercontent.com/allen0039/proxy-resource-hub/main/Rules/Surge/shop/shopping.list) | [订阅](https://raw.githubusercontent.com/allen0039/proxy-resource-hub/main/Rules/QuantumultX/shop/shopping.list) | [订阅](https://raw.githubusercontent.com/allen0039/proxy-resource-hub/main/Rules/Loon/shop/shopping.list) |
 | SKK CDN | 使用 SKK 原生格式 | 使用 SKK 原生格式 | [订阅](https://raw.githubusercontent.com/allen0039/proxy-resource-hub/main/Rules/QuantumultX/SKK/CDN.list) | [订阅](https://raw.githubusercontent.com/allen0039/proxy-resource-hub/main/Rules/Loon/SKK/CDN.list) |
 | SKK Download | 使用 SKK 原生格式 | 使用 SKK 原生格式 | [订阅](https://raw.githubusercontent.com/allen0039/proxy-resource-hub/main/Rules/QuantumultX/SKK/Download.list) | [订阅](https://raw.githubusercontent.com/allen0039/proxy-resource-hub/main/Rules/Loon/SKK/Download.list) |
 
@@ -245,8 +247,9 @@ https://raw.githubusercontent.com/allen0039/proxy-resource-hub/main/Rules/Loon/P
 
 - [Rules/AI/ai.list](https://raw.githubusercontent.com/allen0039/proxy-resource-hub/main/Rules/AI/ai.list)
 - [Rules/AI/gongyiai.list](https://raw.githubusercontent.com/allen0039/proxy-resource-hub/main/Rules/AI/gongyiai.list)
+- [Rules/shop/shopping.list](https://raw.githubusercontent.com/allen0039/proxy-resource-hub/main/Rules/shop/shopping.list)
 
-兼容文件使用 `DOMAIN-SUFFIX,<domain>` 格式，可用于 Mihomo classical、Surge RULE-SET 和 Loon。Quantumult X 应使用专属目录中的规则。
+兼容文件使用 `DOMAIN-SUFFIX,<domain>` 格式，可用于 Mihomo classical、Surge RULE-SET 和 Loon。Quantumult X 应使用专属目录中的规则。海淘规则明确排除 AWS、CloudFront、Prime Video、Kindle、Audible 和 IMDb；Prime Video 规则应置于海淘规则之前。
 
 ## 维护与自动更新
 
