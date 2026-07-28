@@ -7,10 +7,11 @@ from pathlib import Path
 
 ROOT = Path(__file__).resolve().parents[1]
 RULESET_SPECS = (
-    ("AI", "ai", True),
-    ("AI", "gongyiai", True),
-    ("Personal", "Domain", False),
-    ("PT", "Domain", False),
+    ("AI", "ai", "AI"),
+    ("AI", "gongyiai", "AI"),
+    ("Personal", "Domain", None),
+    ("PT", "Domain", None),
+    ("shop", "shopping", "shop"),
 )
 CLASSICAL_TARGETS = ("Mihomo", "Surge", "Loon")
 DOMAIN_RE = re.compile(
@@ -52,7 +53,7 @@ def render(lines: list[str], style: str, source_label: str) -> str:
 
 def build_outputs(root: Path) -> dict[Path, str]:
     outputs: dict[Path, str] = {}
-    for directory, name, legacy_output in RULESET_SPECS:
+    for directory, name, compatibility_directory in RULESET_SPECS:
         source = root / "Rules" / "Source" / directory / f"{name}.txt"
         source_label = source.relative_to(root).as_posix()
         lines = parse_source(source)
@@ -62,8 +63,10 @@ def build_outputs(root: Path) -> dict[Path, str]:
         outputs[
             root / "Rules" / "QuantumultX" / directory / f"{name}.list"
         ] = render(lines, "quantumultx", source_label)
-        if legacy_output:
-            outputs[root / "Rules" / "AI" / f"{name}.list"] = classical
+        if compatibility_directory:
+            outputs[
+                root / "Rules" / compatibility_directory / f"{name}.list"
+            ] = classical
     return outputs
 
 
