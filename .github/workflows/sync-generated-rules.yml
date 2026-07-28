@@ -4,10 +4,6 @@ on:
   push:
     branches:
       - main
-    paths:
-      - "Rules/Source/**"
-      - "tools/generate_rules.py"
-      - ".github/workflows/sync-generated-rules.yml"
   workflow_dispatch:
 
 permissions:
