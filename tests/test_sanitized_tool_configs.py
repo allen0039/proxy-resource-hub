@@ -877,6 +877,13 @@ rule-providers:
             sorted(mihomo["rules"].index(marker) for marker in mihomo_markers),
         )
 
+    def test_committed_loon_excludes_fktg_plugin(self):
+        loon = (OUTPUT_DIR / "loon_allen.lcf").read_text(encoding="utf-8")
+        plugin = loon.split("\n[Plugin]\n", maxsplit=1)[1].split(
+            "\n[Mitm]\n", maxsplit=1
+        )[0]
+        self.assertNotIn("FKTG.sgmodule", plugin)
+
     def test_committed_non_gateway_configs_exclude_active_source_ip_rules(self):
         configs = {
             "surge_iphone_allen.conf": r"(?im)^\s*#?\s*src-ip,",
