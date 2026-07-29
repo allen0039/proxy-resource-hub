@@ -168,7 +168,7 @@ Allen合集订阅 = https://example.com/your-private-subscription.conf,udp=true,
 - 通用入口：`Proxy`、`Final`、直连策略。
 - 地区优选：香港、日本、新加坡、美国自动测速。
 - 地区节点：香港、台湾、日本、新加坡、美国、韩国、英国。
-- 业务分流：Google、OpenAI、YouTube、Telegram、Netflix、Emby、GitHub、Microsoft、Apple、TikTok、测速、CDN 等。
+- 业务分流：Google、AI、YouTube、Telegram、Netflix、Emby、GitHub、Microsoft、Apple、TikTok、测速、CDN 等。
 - 默认直连：PT 站点、个人域名、公益 AI 和部分国内服务。
 - 远程资源：AI、PT、个人域名、CDN、媒体、游戏平台和常用服务规则。
 
