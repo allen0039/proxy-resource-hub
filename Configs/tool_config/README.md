@@ -59,16 +59,16 @@ App Store 链接指向应用官方商店页面。部分应用可能未在所有�
 
 ### 第二步：填写机场订阅
 
-每份模板默认只启用 `Allen合集订阅`，其他订阅只是禁用备用项。先替换第一条即可。
+每份模板默认只启用第一份订阅；Mihomo 脱敏模板名为 `subscription_1`，其他四份模板名为 `拼好鸡`。先替换第一条即可。
 
 | 客户端 | 搜索位置 | 需要修改的内容 |
 | --- | --- | --- |
-| Mihomo | `proxy-providers` | 替换 `Allen合集订阅` 下的 `url` |
-| Surge | `[Proxy Group]` | 替换 `Allen合集订阅` 行中的 `policy-path` |
+| Mihomo | `proxy-providers` | 替换 `subscription_1` 下的 `url` |
+| Surge | `[Proxy Group]` | 替换 `拼好鸡` 行中的 `policy-path` |
 | Quantumult X | `[server_remote]` | 替换第一条 `enabled=true` 的 URL |
-| Loon | `[Remote Proxy]` | 替换 `Allen合集订阅 =` 后面的 URL |
+| Loon | `[Remote Proxy]` | 替换 `拼好鸡 =` 后面的 URL |
 
-只替换 URL，不要随意修改 `Allen合集订阅` 这个名称。地区策略组依赖该名称读取节点。
+只替换 URL，不要随意修改主订阅名称。地区策略组依赖该名称读取节点。
 
 ### 第三步：处理密码和证书
 
@@ -94,7 +94,7 @@ App Store 链接指向应用官方商店页面。部分应用可能未在所有�
 
 ```yaml
 proxy-providers:
-  Allen合集订阅:
+  subscription_1:
     url: "https://example.com/your-private-subscription.yaml"
 
 secret: CHANGE_ME
@@ -114,13 +114,13 @@ secret: CHANGE_ME
 需要修改：
 
 ```ini
-Allen合集订阅 = select, policy-path=https://example.com/your-private-subscription.conf, update-interval=86400
+拼好鸡 = select, policy-path=https://example.com/your-private-subscription.conf, update-interval=86400
 ```
 
 操作要点：
 
 1. 只替换 `policy-path=` 后面的 URL。
-2. 保留 `Allen合集订阅` 名称和后续参数。
+2. 保留 `拼好鸡` 名称和后续参数。
 3. 备用订阅行以 `#` 开头；替换 URL 并删除 `#` 后才会启用。
 4. MITM 证书需要在 Surge 和系统中本地配置并信任。
 
@@ -132,7 +132,7 @@ Mac 和 iPhone 必须选择对应文件。Surge Mac 模板包含 qB 下载器来
 
 ```ini
 [server_remote]
-https://example.com/your-private-subscription.conf, tag=Allen合集订阅, update-interval=172800, opt-parser=false, enabled=true
+https://example.com/your-private-subscription.conf, tag=拼好鸡, update-interval=172800, opt-parser=false, enabled=true
 
 [server_local]
 # 需要单节点时写在这里
@@ -152,7 +152,7 @@ https://example.com/your-private-subscription.conf, tag=Allen合集订阅, updat
 
 ```ini
 [Remote Proxy]
-Allen合集订阅 = https://example.com/your-private-subscription.conf,udp=true,skip-cert-verify=false,enabled=true
+拼好鸡 = https://example.com/your-private-subscription.conf,udp=true,skip-cert-verify=false,enabled=true
 ```
 
 操作要点：
@@ -180,7 +180,7 @@ Loon 的 AI、测速、Steam 和 Game 补充规则使用 Blackmatrix 的 Loon �
 
 ## 新手不要随便改这些内容
 
-- 不要重命名 `Allen合集订阅`、`Proxy`、`Final` 和地区策略组。
+- 不要重命名 `拼好鸡`、`subscription_1`、`Proxy`、`Final` 和地区策略组。
 - 不要打乱规则顺序，规则从上到下首次匹配生效。
 - 不要随意修改地区筛选正则，否则可能出现节点串组或节点为空。
 - 不要全局关闭证书校验。

@@ -764,6 +764,26 @@ rule-providers:
         self.assertIn("tag=ProxyLite", loon_remote)
         self.assertIn("tag=GFWList", loon_remote)
 
+    def test_committed_outputs_use_renamed_primary_subscription(self):
+        named_outputs = (
+            "surge_mac_allen.conf",
+            "surge_iphone_allen.conf",
+            "quantumultx_allen.conf",
+            "loon_allen.lcf",
+        )
+        for filename in named_outputs:
+            text = (OUTPUT_DIR / filename).read_text(encoding="utf-8")
+            with self.subTest(filename=filename):
+                self.assertIn("拼好鸡", text)
+                self.assertNotIn("Allen合集订阅", text)
+
+        mihomo_text = (OUTPUT_DIR / "mihomo_allen.yaml").read_text(
+            encoding="utf-8"
+        )
+        mihomo = yaml.safe_load(mihomo_text)
+        self.assertEqual(["subscription_1"], list(mihomo["proxy-providers"]))
+        self.assertNotIn("Allen合集订阅", mihomo_text)
+
     def test_committed_outputs_use_owned_ai_priority_layer(self):
         outputs = {
             name: (OUTPUT_DIR / name).read_text(encoding="utf-8")
