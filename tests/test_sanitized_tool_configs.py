@@ -245,10 +245,10 @@ proxy-groups:
     use: [PersonalName]
     proxies: [LocalNode]
 rules:
-  - RULE-SET,gongyiai,DIRECT
+  - RULE-SET,direct-ai,DIRECT
   - MATCH,Proxy
 rule-providers:
-  gongyiai:
+  direct-ai:
     type: http
     behavior: classical
     format: text
@@ -305,7 +305,7 @@ rule-providers:
         self.assertNotIn("BEGIN CERTIFICATE", combined)
 
         for name in ("surge_mac_allen.conf", "surge_iphone_allen.conf"):
-            self.assertRegex(outputs[name], r"gongyiai\.list,DIRECT(?:,|\n)")
+            self.assertRegex(outputs[name], r"direct-ai\.list,DIRECT(?:,|\n)")
             self.assertRegex(
                 outputs[name], r"Personal/Domain\.list,DIRECT(?:,|\n)"
             )
@@ -313,7 +313,7 @@ rule-providers:
             self.assertIn(f"RULE-SET,{SURGE_PT_URL},DIRECT", outputs[name])
         self.assertRegex(
             outputs["quantumultx_allen.conf"],
-            r"gongyiai\.list[^\n]*force-policy=direct",
+            r"direct-ai\.list[^\n]*force-policy=direct",
         )
         self.assertRegex(
             outputs["quantumultx_allen.conf"],
@@ -325,7 +325,7 @@ rule-providers:
             r"Rules/QuantumultX/PT/Domain\.list[^\n]*force-policy=direct",
         )
         self.assertRegex(
-            outputs["loon_allen.lcf"], r"gongyiai\.list[^\n]*policy=DIRECT"
+            outputs["loon_allen.lcf"], r"direct-ai\.list[^\n]*policy=DIRECT"
         )
         self.assertRegex(
             outputs["loon_allen.lcf"], r"Personal/Domain\.list[^\n]*policy=DIRECT"
@@ -336,7 +336,9 @@ rule-providers:
             r"Rules/Loon/PT/Domain\.list[^\n]*policy=DIRECT",
         )
         mihomo = yaml.safe_load(outputs["mihomo_allen.yaml"])
-        self.assertEqual(1, mihomo["rules"].count("RULE-SET,gongyiai,DIRECT"))
+        self.assertEqual(1, mihomo["rules"].count("RULE-SET,direct-ai,DIRECT"))
+        self.assertIn("direct-ai", mihomo["rule-providers"])
+        self.assertNotIn("gongyiai", combined)
         self.assertEqual(
             1, mihomo["rules"].count("RULE-SET,personal_domain,DIRECT")
         )

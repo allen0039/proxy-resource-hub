@@ -375,7 +375,7 @@ rules:
   - RULE-SET,apple_domain,Apple
   - RULE-SET,Cloudflare_domain,CDN
   - RULE-SET,ai_custom,OpenAI
-  - RULE-SET,gongyiai,DIRECT
+  - RULE-SET,direct-ai,DIRECT
   - RULE-SET,personal_domain,DIRECT
   - RULE-SET,ai,OpenAI
   - RULE-SET,github_domain,GitHub
@@ -441,7 +441,7 @@ rule-providers:
   public-tracker_domain: { <<: *domain, url: "https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/refs/heads/meta/geo/geosite/category-public-tracker.mrs"}
   Cloudflare_domain: { <<: *domain, url: "https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/refs/heads/meta/geo/geosite/cloudflare.mrs"}
   ai_custom: { <<: *class, url: "https://raw.githubusercontent.com/allen0039/mihomo/main/Rules/AI/ai.list" }
-  gongyiai: { <<: *class, url: "https://raw.githubusercontent.com/allen0039/proxy-resource-hub/main/Rules/Mihomo/AI/gongyiai.list" }
+  direct-ai: { <<: *class, url: "https://raw.githubusercontent.com/allen0039/proxy-resource-hub/main/Rules/Mihomo/AI/direct-ai.list" }
   personal_domain: { <<: *class, url: "https://raw.githubusercontent.com/allen0039/proxy-resource-hub/main/Rules/Mihomo/Personal/Domain.list" }
   ai: {  <<: *domain, url: "https://github.com/MetaCubeX/meta-rules-dat/raw/refs/heads/meta/geo/geosite/category-ai-!cn.mrs" }
   steam_cn_domain: { <<: *domain, url: "https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/refs/heads/meta/geo/geosite/steam%40cn.mrs"}
