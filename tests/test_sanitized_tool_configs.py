@@ -455,11 +455,11 @@ rule-providers:
                 self.assertNotIn("Configure MITM certificate", outputs[name])
                 self.assertNotIn("Configure local proxy nodes", outputs[name])
 
-        self.assertIn(
+        self.assertNotIn(
             "将 policy-path 替换为自己的订阅地址",
             outputs["surge_iphone_allen.conf"],
         )
-        self.assertIn(
+        self.assertNotIn(
             "将 policy-path 替换为自己的订阅地址",
             outputs["surge_mac_allen.conf"],
         )
@@ -471,6 +471,54 @@ rule-providers:
         )
         self.assertIn(
             "请将 url 替换为自己的订阅地址", outputs["mihomo_allen.yaml"]
+        )
+
+    def test_committed_policy_sections_have_no_explanatory_comments(self):
+        outputs = {
+            name: (OUTPUT_DIR / name).read_text(encoding="utf-8")
+            for name in CONFIG_NAMES
+        }
+        section_specs = {
+            "surge_mac_allen.conf": (
+                "[Proxy Group]",
+                "[Rule]",
+                r"^#\s*[^=#][^=]*\s=\s*select\b",
+            ),
+            "surge_iphone_allen.conf": (
+                "[Proxy Group]",
+                "[Rule]",
+                r"^#\s*[^=#][^=]*\s=\s*select\b",
+            ),
+            "quantumultx_allen.conf": ("[policy]", "[server_remote]", None),
+            "loon_allen.lcf": ("[Proxy Group]", "[Remote Filter]", None),
+        }
+
+        for name, (start, end, allowed_pattern) in section_specs.items():
+            lines = outputs[name].splitlines()
+            body = lines[lines.index(start) + 1 : lines.index(end)]
+            comments = [
+                line.strip()
+                for line in body
+                if line.lstrip().startswith(("#", ";"))
+            ]
+            with self.subTest(name=name):
+                if allowed_pattern is None:
+                    self.assertEqual([], comments)
+                else:
+                    self.assertTrue(
+                        all(re.match(allowed_pattern, line) for line in comments)
+                    )
+
+        mihomo_groups = outputs["mihomo_allen.yaml"].split(
+            "proxy-groups:", maxsplit=1
+        )[1].split("\nrules:", maxsplit=1)[0]
+        mihomo_comments = [
+            line.strip()
+            for line in mihomo_groups.splitlines()
+            if line.lstrip().startswith("#")
+        ]
+        self.assertTrue(
+            all(re.match(r"^#\s*-\s*\{name:", line) for line in mihomo_comments)
         )
 
     def test_committed_node_subscriptions_refresh_every_six_hours(self):
@@ -919,6 +967,27 @@ rule-providers:
             )
         )
 
+    def test_committed_mihomo_does_not_use_yaml_merge_keys(self):
+        text = (OUTPUT_DIR / "mihomo_allen.yaml").read_text(encoding="utf-8")
+        unmerged = yaml.load(text, Loader=yaml.BaseLoader)
+
+        self.assertNotIn("<<:", text)
+        self.assertNotRegex(
+            text,
+            r"(?m)^\s+\S+:\s+\{[^\n]*\bformat:\s+\S+,[^\n]*\bformat:",
+        )
+        self.assertTrue(
+            all("type" in group for group in unmerged["proxy-groups"])
+        )
+        self.assertTrue(
+            all(
+                provider.get("type") == "http"
+                and provider.get("behavior") in {"domain", "ipcidr", "classical"}
+                and provider.get("format") in {"mrs", "text"}
+                for provider in unmerged["rule-providers"].values()
+            )
+        )
+
     def test_mihomo_validator_rejects_legacy_custom_direct(self):
         sanitizer = load_sanitizer()
         text = (OUTPUT_DIR / "mihomo_allen.yaml").read_text(encoding="utf-8")
@@ -926,6 +995,18 @@ rule-providers:
             "\n# 全局配置\n",
             "\nproxies:\n  - {name: 直连, type: direct}\n\n# 全局配置\n",
             1,
+        )
+
+        with self.assertRaises(sanitizer.SanitizationError):
+            sanitizer._validate_mihomo("mihomo_allen.yaml", legacy)
+
+    def test_mihomo_validator_rejects_yaml_merge_keys(self):
+        sanitizer = load_sanitizer()
+        text = (OUTPUT_DIR / "mihomo_allen.yaml").read_text(encoding="utf-8")
+        legacy = (
+            "MergeBase: &MergeBase {enabled: true}\n"
+            "Merged: {<<: *MergeBase}\n"
+            f"{text}"
         )
 
         with self.assertRaises(sanitizer.SanitizationError):
