@@ -482,6 +482,10 @@ def _validate_mihomo(filename: str, text: str) -> None:
             raise SanitizationError(
                 f"{filename}: non-placeholder provider URL remains"
             )
+        if "proxy" in provider and provider["proxy"] != "DIRECT":
+            raise SanitizationError(
+                f"{filename}: provider download policy must use built-in DIRECT"
+            )
     if parsed.get("secret") != "CHANGE_ME":
         raise SanitizationError(f"{filename}: controller secret is not sanitized")
 
@@ -493,6 +497,10 @@ def _validate_mihomo(filename: str, text: str) -> None:
     proxy_names = {
         proxy.get("name") for proxy in proxies if isinstance(proxy, dict)
     }
+    if "直连" in proxy_names:
+        raise SanitizationError(
+            f"{filename}: legacy custom direct proxy remains"
+        )
     allowed_members = set(group_names) | proxy_names | {
         "DIRECT",
         "REJECT",
@@ -504,6 +512,10 @@ def _validate_mihomo(filename: str, text: str) -> None:
         if not set(uses) <= set(providers):
             raise SanitizationError(f"{filename}: group provider reference is missing")
         explicit = group.get("proxies", []) or []
+        if "直连" in explicit:
+            raise SanitizationError(
+                f"{filename}: legacy custom direct group reference remains"
+            )
         if not set(explicit) <= allowed_members:
             raise SanitizationError(f"{filename}: explicit group member is missing")
 
