@@ -114,21 +114,18 @@ class RuleGeneratorTests(unittest.TestCase):
         generator = load_generator()
         outputs = generator.build_outputs(ROOT)
 
-        self.assertEqual(23, len(outputs))
+        self.assertEqual(21, len(outputs))
         for client in ("Mihomo", "Surge", "QuantumultX", "Loon"):
             for ruleset in ("ai", "direct-ai"):
                 expected = ROOT / "Rules" / client / "AI" / f"{ruleset}.list"
                 self.assertIn(expected, outputs)
-            self.assertNotIn(
-                ROOT / "Rules" / client / "AI" / "gongyiai.list",
-                outputs,
-            )
         for ruleset in ("ai", "direct-ai"):
-            legacy = ROOT / "Rules" / "AI" / f"{ruleset}.list"
-            self.assertIn(legacy, outputs)
-        self.assertNotIn(ROOT / "Rules" / "AI" / "gongyiai.list", outputs)
+            retired = ROOT / "Rules" / "AI" / f"{ruleset}.list"
+            self.assertNotIn(retired, outputs)
+            self.assertFalse(retired.exists())
         compatibility = ROOT / "Rules" / "shop" / "shopping.list"
         self.assertIn(compatibility, outputs)
+        self.assertTrue(compatibility.exists())
 
     def test_personal_sites_outputs_are_generated_for_every_client(self):
         generator = load_generator()

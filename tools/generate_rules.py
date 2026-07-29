@@ -7,8 +7,8 @@ from pathlib import Path
 
 ROOT = Path(__file__).resolve().parents[1]
 RULESET_SPECS = (
-    ("AI", "ai", "AI"),
-    ("AI", "direct-ai", "AI"),
+    ("AI", "ai", None),
+    ("AI", "direct-ai", None),
     ("Personal", "Domain", None),
     ("PT", "Domain", None),
     ("shop", "shopping", "shop"),
