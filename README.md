@@ -59,7 +59,7 @@
 | `Configure local proxy nodes privately.` | 按客户端语法添加单节点；不需要时保留注释即可 |
 | `Configure MITM certificate and passphrase locally.` | 在设备本地生成或导入 MITM 证书和口令 |
 
-默认只启用第一份订阅 `Allen合集订阅`，其他订阅保留为禁用状态。替换订阅 URL 时不要随意修改订阅名称，否则地区策略组可能无法读取节点。
+默认只启用第一份订阅；Mihomo 脱敏模板名为 `subscription_1`，其他四份模板名为 `拼好鸡`。替换订阅 URL 时不要随意修改名称，否则地区策略组可能无法读取节点。
 
 ### 3. 导入客户端
 
@@ -91,7 +91,7 @@
 
 ```yaml
 proxy-providers:
-  Allen合集订阅:
+  subscription_1:
     url: "https://example.com/your-private-subscription.yaml"
     type: http
     interval: 46400
@@ -108,7 +108,7 @@ secret: CHANGE_ME
 
 ### Surge for Mac / iPhone
 
-1. 在 `[Proxy Group]` 找到 `Allen合集订阅`。
+1. 在 `[Proxy Group]` 找到 `拼好鸡`。
 2. 只替换 `policy-path=` 后面的 URL，保留策略组名称和其他参数。
 3. 需要启用备用订阅时，替换对应 URL 后删除该行开头的 `#`。
 4. 如需手写节点，添加 `[Proxy]` 区段并使用 Surge 节点语法。
@@ -116,10 +116,10 @@ secret: CHANGE_ME
 
 ```ini
 [Proxy Group]
-Allen合集订阅 = select, policy-path=https://example.com/your-private-subscription.conf, update-interval=86400, include-all-proxies=0
+拼好鸡 = select, policy-path=https://example.com/your-private-subscription.conf, update-interval=86400, include-all-proxies=0
 ```
 
-地区组通过 `include-other-group=Allen合集订阅` 读取节点。若重命名订阅组，需要同步修改所有 `include-other-group` 引用。
+地区组通过 `include-other-group=拼好鸡` 读取节点。若重命名订阅组，需要同步修改所有 `include-other-group` 引用。
 
 Surge Mac 模板保留 qB 下载器来源 IP 直连规则；Surge iPhone 不包含该类规则，避免客户端兼容问题。
 
@@ -133,7 +133,7 @@ Surge Mac 模板保留 qB 下载器来源 IP 直连规则；Surge iPhone 不包�
 
 ```ini
 [server_remote]
-https://example.com/your-private-subscription.conf, tag=Allen合集订阅, update-interval=172800, opt-parser=false, enabled=true
+https://example.com/your-private-subscription.conf, tag=拼好鸡, update-interval=172800, opt-parser=false, enabled=true
 
 [server_local]
 # 在这里按 Quantumult X 节点语法逐行添加单节点
@@ -149,7 +149,7 @@ https://example.com/your-private-subscription.conf, tag=Allen合集订阅, updat
 
 ```ini
 [Remote Proxy]
-Allen合集订阅 = https://example.com/your-private-subscription.conf,udp=true,skip-cert-verify=false,enabled=true
+拼好鸡 = https://example.com/your-private-subscription.conf,udp=true,skip-cert-verify=false,enabled=true
 ```
 
 Loon 的远程规则位于 `[Remote Rule]`，插件位于 `[Plugin]`。启用需要 HTTPS 解密的插件前，必须先正确配置 `[Mitm]`。
