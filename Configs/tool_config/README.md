@@ -83,7 +83,7 @@ App Store 链接指向应用官方商店页面。部分应用可能未在所有�
 1. 把修改后的私人配置导入客户端。
 2. 更新节点订阅、远程规则和插件资源。
 3. 打开 `香港优选`、`日本优选`、`新加坡优选`、`美国优选`，确认能够看到节点。
-4. 在 `Proxy` 和 `Final` 中选择默认出口。
+4. 在通用代理入口和 `Final` 中选择默认出口；Quantumult X 的通用入口是内置小写 `proxy`。
 5. 先测试网页、DNS 和直连站点，再按需开启 MITM、重写、脚本或插件。
 
 ## 各客户端具体改法
@@ -165,7 +165,7 @@ https://example.com/your-private-subscription.conf, tag=拼好鸡, update-interv
 
 ## 这套配置包含什么
 
-- 通用入口：`Proxy`、`Final`、直连策略；Quantumult X 使用独立静态策略组。
+- 通用入口：Surge、Loon 和 Mihomo 使用 `Proxy`；Quantumult X 使用内置小写 `proxy`；各客户端同时保留 `Final` 和直连策略。
 - 地区优选：香港、日本、新加坡、美国自动测速。
 - 地区节点：香港、台湾、日本、新加坡、美国、韩国、英国。
 - 业务分流：Google、AI、YouTube、Telegram、Netflix、Emby、GitHub、Microsoft、Apple、TikTok、测速、CDN 等。
@@ -180,7 +180,7 @@ Loon 的 AI、测速、Steam 和 Game 补充规则使用 Blackmatrix 的 Loon �
 
 ## 新手不要随便改这些内容
 
-- 不要重命名 `拼好鸡`、`subscription_1`、`Proxy`、`Final` 和地区策略组。
+- 不要重命名 `拼好鸡`、`subscription_1`、`Proxy`、Quantumult X 的内置 `proxy`、`Final` 和地区策略组。
 - 不要打乱规则顺序，规则从上到下首次匹配生效。
 - 不要随意修改地区筛选正则，否则可能出现节点串组或节点为空。
 - 不要全局关闭证书校验。
