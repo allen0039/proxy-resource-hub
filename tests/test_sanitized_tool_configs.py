@@ -884,6 +884,53 @@ rule-providers:
         )[0]
         self.assertNotIn("FKTG.sgmodule", plugin)
 
+    def test_committed_mihomo_uses_builtin_direct(self):
+        mihomo = yaml.safe_load(
+            (OUTPUT_DIR / "mihomo_allen.yaml").read_text(encoding="utf-8")
+        )
+        local_proxies = mihomo.get("proxies") or []
+        providers = (mihomo.get("proxy-providers") or {}).values()
+        groups = mihomo.get("proxy-groups") or []
+
+        self.assertNotIn(
+            "直连",
+            {
+                proxy.get("name")
+                for proxy in local_proxies
+                if isinstance(proxy, dict)
+            },
+        )
+        self.assertTrue(providers)
+        self.assertTrue(
+            all(provider.get("proxy") == "DIRECT" for provider in providers)
+        )
+        self.assertFalse(
+            any(
+                "直连" in group.get("proxies", [])
+                for group in groups
+                if isinstance(group, dict)
+            )
+        )
+        self.assertTrue(
+            any(
+                "DIRECT" in group.get("proxies", [])
+                for group in groups
+                if isinstance(group, dict)
+            )
+        )
+
+    def test_mihomo_validator_rejects_legacy_custom_direct(self):
+        sanitizer = load_sanitizer()
+        text = (OUTPUT_DIR / "mihomo_allen.yaml").read_text(encoding="utf-8")
+        legacy = text.replace(
+            "\n# 全局配置\n",
+            "\nproxies:\n  - {name: 直连, type: direct}\n\n# 全局配置\n",
+            1,
+        )
+
+        with self.assertRaises(sanitizer.SanitizationError):
+            sanitizer._validate_mihomo("mihomo_allen.yaml", legacy)
+
     def test_committed_non_gateway_configs_exclude_active_source_ip_rules(self):
         configs = {
             "surge_iphone_allen.conf": r"(?im)^\s*#?\s*src-ip,",
