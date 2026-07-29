@@ -107,7 +107,7 @@ secret: CHANGE_ME
 3. 保持 YAML 缩进，不要使用 Tab。
 4. 加载配置后，在面板中更新 Proxy Provider。
 
-单节点写在 `proxies`，订阅节点由 `proxy-providers` 提供。模板中的 `proxy: DIRECT` 使用 Mihomo 内置直连出口，只表示直连下载订阅，不代表节点流量全部直连；无需额外定义名为“直连”的本地节点。
+单节点写在 `proxies`，订阅节点由 `proxy-providers` 提供。模板中的 `proxy: DIRECT` 使用 Mihomo 内置直连出口，只表示直连下载订阅，不代表节点流量全部直连；无需额外定义名为“直连”的本地节点。策略组和规则 Provider 均显式声明完整字段，不使用可能被订阅转换工具忽略的 YAML 合并锚点。
 
 ### Surge for Mac / iPhone
 

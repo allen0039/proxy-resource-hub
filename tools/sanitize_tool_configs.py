@@ -451,6 +451,15 @@ def _validate_ini_client(filename: str, text: str) -> None:
 
 
 def _validate_mihomo(filename: str, text: str) -> None:
+    if "<<:" in text:
+        raise SanitizationError(
+            f"{filename}: YAML merge keys are not converter-compatible"
+        )
+    if re.search(
+        r"(?m)^\s+\S+:\s+\{[^\n]*\bformat:\s+\S+,[^\n]*\bformat:",
+        text,
+    ):
+        raise SanitizationError(f"{filename}: duplicate provider format key remains")
     try:
         parsed = yaml.safe_load(text)
     except yaml.YAMLError as error:
