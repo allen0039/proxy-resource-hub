@@ -363,6 +363,47 @@ rule-providers:
             with self.subTest(name=name, check="duplicate PT local rules"):
                 self.assertEqual(set(), DUPLICATE_PT_VALUES & active_values)
 
+    def test_committed_configs_use_ai_policy_group(self):
+        configs = {
+            name: (OUTPUT_DIR / name).read_text(encoding="utf-8")
+            for name in CONFIG_NAMES
+        }
+
+        for name in ("surge_mac_allen.conf", "surge_iphone_allen.conf"):
+            with self.subTest(name=name):
+                self.assertEqual(
+                    1, len(re.findall(r"(?m)^AI = select,", configs[name]))
+                )
+                self.assertNotRegex(configs[name], r"(?m)^OpenAI = ")
+                self.assertNotRegex(
+                    configs[name], r"(?m)^[^#\n]*,OpenAI(?:,|$)"
+                )
+
+        qx = configs["quantumultx_allen.conf"]
+        self.assertEqual(1, len(re.findall(r"(?m)^static=AI,", qx)))
+        self.assertNotRegex(qx, r"(?m)^static=OpenAI,")
+        self.assertNotIn("force-policy=OpenAI", qx)
+        self.assertIn("/OpenAI/OpenAI.list, tag=AI, force-policy=AI,", qx)
+
+        loon = configs["loon_allen.lcf"]
+        self.assertEqual(1, len(re.findall(r"(?m)^AI = select,", loon)))
+        self.assertNotRegex(loon, r"(?m)^OpenAI = ")
+        self.assertNotIn("policy=OpenAI", loon)
+        self.assertIn("policy=AI, tag=AI", loon)
+
+        mihomo = yaml.safe_load(configs["mihomo_allen.yaml"])
+        groups = [group["name"] for group in mihomo["proxy-groups"]]
+        self.assertEqual(1, groups.count("AI"))
+        self.assertNotIn("OpenAI", groups)
+        targets = {
+            parts[2]
+            for rule in mihomo["rules"]
+            if isinstance(rule, str)
+            and len(parts := [part.strip() for part in rule.split(",")]) >= 3
+        }
+        self.assertIn("AI", targets)
+        self.assertNotIn("OpenAI", targets)
+
     def test_committed_outputs_exclude_private_custom_rule_keywords(self):
         private_keywords = {"oracle3", "allen0039"}
         rule_pattern = re.compile(

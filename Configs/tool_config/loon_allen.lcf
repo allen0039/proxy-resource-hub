@@ -58,7 +58,7 @@ Final = select,香港优选,日本优选,新加坡优选,美国优选,香港节�
 # 2. AI、搜索与开发
 # ================================
 Google = select,香港优选,日本优选,新加坡优选,美国优选,香港节点,台湾节点,日本节点,新加坡节点,美国节点,韩国节点,英国节点,其他地区,Proxy,DIRECT,img-url = https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/Google_Search.png
-OpenAI = select,香港优选,日本优选,新加坡优选,美国优选,香港节点,台湾节点,日本节点,新加坡节点,美国节点,韩国节点,英国节点,其他地区,Proxy,DIRECT,img-url = https://raw.githubusercontent.com/chxm1023/Script_X/main/icon/ChatGPT/ChatGPT4.png
+AI = select,香港优选,日本优选,新加坡优选,美国优选,香港节点,台湾节点,日本节点,新加坡节点,美国节点,韩国节点,英国节点,其他地区,Proxy,DIRECT,img-url = https://raw.githubusercontent.com/chxm1023/Script_X/main/icon/ChatGPT/ChatGPT4.png
 
 # ================================
 # 3. 社交与通信
@@ -188,11 +188,11 @@ DOMAIN-SUFFIX,lsposed.org,美国节点
 
 # 4. AI 与媒体服务
 DOMAIN-SUFFIX,mfallen.de,DIRECT
-DOMAIN-SUFFIX,copilot.microsoft.com,OpenAI
-DOMAIN-KEYWORD,deepseek,OpenAI
-DOMAIN-KEYWORD,open-meteo,OpenAI
-DOMAIN-KEYWORD,grok,OpenAI
-DOMAIN-SUFFIX,clawhub.ai,OpenAI
+DOMAIN-SUFFIX,copilot.microsoft.com,AI
+DOMAIN-KEYWORD,deepseek,AI
+DOMAIN-KEYWORD,open-meteo,AI
+DOMAIN-KEYWORD,grok,AI
+DOMAIN-SUFFIX,clawhub.ai,AI
 # Google APIs 交由下方 AI 与 Google 规则集分流，避免绕过 Google 策略组。
 DOMAIN-KEYWORD,themoviedb,美国节点
 DOMAIN-KEYWORD,tmdb,美国节点
@@ -256,7 +256,7 @@ FINAL,Final
 # policy 指定出口，enabled=false 可保留备用规则；新增策略名时需先在 [Proxy Group] 定义。
 # 本地规则优先，PT、个人域名和公益 AI 以自有订阅为准。
 https://raw.githubusercontent.com/QuixoticHeart/rule-set/refs/heads/ruleset/loon/apns.list, policy=Apple Push, tag=Apple Push, enabled=true
-https://kelee.one/Tool/Loon/Lsr/AI.lsr, policy=OpenAI, tag=AI, enabled=true
+https://kelee.one/Tool/Loon/Lsr/AI.lsr, policy=AI, tag=AI, enabled=true
 # YouTube 必须置于 Google 之前，避免 Google 规则中的 YouTube 域名提前命中。
 https://raw.githubusercontent.com/Tartarus2014/Loon-Script/master/Rule/Media/YouTube.lsr, policy=YouTube, tag=YouTube, enabled=true
 https://github.com/Moli-X/Tool/raw/X/Loon/Rules/Google.list, policy=Google, tag=谷歌分流, enabled=true

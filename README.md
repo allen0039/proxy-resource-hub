@@ -32,7 +32,7 @@
 
 | 规则 | 用途 | 模板默认策略 |
 | --- | --- | --- |
-| AI 服务 | OpenAI、Claude、Gemini 等 AI 服务 | `OpenAI` 或自定义 AI 策略 |
+| AI 服务 | OpenAI、Claude、Gemini 等 AI 服务 | `AI` 或自定义 AI 策略 |
 | 公益 AI | 指定公益 AI 站点 | 直连 |
 | 个人域名 | 个人维护的域名 | 直连 |
 | PT 站点 | 经确认的 PT 站点域名 | 直连 |
@@ -174,7 +174,7 @@ Loon 的远程规则位于 `[Remote Rule]`，插件位于 `[Plugin]`。启用需
 
 ### 业务策略
 
-模板包含 Google、OpenAI、YouTube、Telegram、Netflix、Emby、Disney+、GitHub、PayPal、Spotify、Microsoft、游戏平台、Apple、TikTok、测速、CDN、OneDrive 等独立策略组。修改某类业务的出口时，优先调整对应策略组，不要直接修改远程规则内容。
+模板包含 Google、AI、YouTube、Telegram、Netflix、Emby、Disney+、GitHub、PayPal、Spotify、Microsoft、游戏平台、Apple、TikTok、测速、CDN、OneDrive 等独立策略组。修改某类业务的出口时，优先调整对应策略组，不要直接修改远程规则内容。
 
 `CDN` 作为独立策略组保留，便于处理 Cloudflare 和 SKK CDN 规则。`Download` 规则仍由 GitHub Actions 自动生成，但当前模板不启用 Download 策略组，以避免国外下载域名被过度分流。
 

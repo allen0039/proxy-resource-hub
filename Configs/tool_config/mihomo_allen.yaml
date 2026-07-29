@@ -158,7 +158,7 @@ proxy-groups:
   # 2. AI、搜索与开发
   # ================================
   - {name: Google, <<: *Proxy_first, icon: 'https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/Google_Search.png'}
-  - {name: OpenAI, <<: *Proxy_first, icon: 'https://raw.githubusercontent.com/erdongchanyo/icon/main/Policy-Filter/OpenAI.png'}
+  - {name: AI, <<: *Proxy_first, icon: 'https://raw.githubusercontent.com/erdongchanyo/icon/main/Policy-Filter/OpenAI.png'}
 
   # ================================
   # 3. 社交与通信
@@ -289,10 +289,10 @@ rules:
 
   # 5. AI 与媒体服务
   - DOMAIN-SUFFIX,mfallen.de,DIRECT
-  - DOMAIN-KEYWORD,deepseek,OpenAI
-  - DOMAIN-KEYWORD,open-meteo,OpenAI
-  - DOMAIN-KEYWORD,grok,OpenAI
-  - DOMAIN-SUFFIX,clawhub.ai,OpenAI
+  - DOMAIN-KEYWORD,deepseek,AI
+  - DOMAIN-KEYWORD,open-meteo,AI
+  - DOMAIN-KEYWORD,grok,AI
+  - DOMAIN-SUFFIX,clawhub.ai,AI
   # Google APIs 交由后面的 ai 与 google_domain 规则集分流，避免绕过 Google 策略组。
   - DOMAIN-KEYWORD,themoviedb,美国节点
   - DOMAIN-KEYWORD,tmdb,美国节点
@@ -374,10 +374,10 @@ rules:
   - RULE-SET,apple_cn_domain,DIRECT
   - RULE-SET,apple_domain,Apple
   - RULE-SET,Cloudflare_domain,CDN
-  - RULE-SET,ai_custom,OpenAI
+  - RULE-SET,ai_custom,AI
   - RULE-SET,direct-ai,DIRECT
   - RULE-SET,personal_domain,DIRECT
-  - RULE-SET,ai,OpenAI
+  - RULE-SET,ai,AI
   - RULE-SET,github_domain,GitHub
   - RULE-SET,gitbook_domain,GitHub
   - RULE-SET,youtube_domain,YouTube
