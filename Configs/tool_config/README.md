@@ -83,7 +83,7 @@ App Store 链接指向应用官方商店页面。部分应用可能未在所有�
 1. 把修改后的私人配置导入客户端。
 2. 更新节点订阅、远程规则和插件资源。
 3. 打开 `香港优选`、`日本优选`、`新加坡优选`、`美国优选`，确认能够看到节点。
-4. 在 `Proxy` 和 `Final` 中选择默认出口。
+4. 在 `代理` 和 `Final` 中选择默认出口。
 5. 先测试网页、DNS 和直连站点，再按需开启 MITM、重写、脚本或插件。
 
 ## 各客户端具体改法
@@ -165,18 +165,22 @@ Allen合集订阅 = https://example.com/your-private-subscription.conf,udp=true,
 
 ## 这套配置包含什么
 
-- 通用入口：`Proxy`、`Final`、直连策略。
+- 通用入口：`代理`、`Final`、直连策略。
 - 地区优选：香港、日本、新加坡、美国自动测速。
 - 地区节点：香港、台湾、日本、新加坡、美国、韩国、英国。
 - 业务分流：Google、AI、YouTube、Telegram、Netflix、Emby、GitHub、Microsoft、Apple、TikTok、测速、CDN 等。
 - 默认直连：PT 站点、个人域名、公益 AI 和部分国内服务。
 - 远程资源：AI、PT、个人域名、CDN、媒体、游戏平台和常用服务规则。
 
+`api.github.com` 由本地精确规则固定交给 GitHub 策略。宽泛的 GitHub、Cloudflare 和 Google 静态资源本地规则仅注释保留；AI 专属端点由仓库自有 AI 订阅优先接管，既有第三方 AI 订阅继续作为补充。
+
+Loon 的 AI、测速、Steam 和 Game 补充规则使用 Blackmatrix 的 Loon 原生列表。无法通过当前网络更新的 Kelee 插件保留为 `enabled=false`，避免导入后持续产生资源更新错误。
+
 `Download` 规则仍在仓库中自动维护，但这五份模板没有启用 Download 策略组，避免国外下载域名被过度分流。
 
 ## 新手不要随便改这些内容
 
-- 不要重命名 `Allen合集订阅`、`Proxy`、`Final` 和地区策略组。
+- 不要重命名 `Allen合集订阅`、`代理`、`Final` 和地区策略组。
 - 不要打乱规则顺序，规则从上到下首次匹配生效。
 - 不要随意修改地区筛选正则，否则可能出现节点串组或节点为空。
 - 不要全局关闭证书校验。

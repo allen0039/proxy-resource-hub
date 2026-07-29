@@ -1,9 +1,9 @@
 # Allen 维护 - Mihomo 配置
 
 # 策略模板：代理优先、直连优先和地区自动测速。
-Proxy_first: &Proxy_first {type: select, proxies: [香港优选, 日本优选, 新加坡优选, 美国优选, 香港节点, 台湾节点, 日本节点, 新加坡节点, 美国节点, 韩国节点, 英国节点, 其他地区, Proxy, 直连]}
+Proxy_first: &Proxy_first {type: select, proxies: [香港优选, 日本优选, 新加坡优选, 美国优选, 香港节点, 台湾节点, 日本节点, 新加坡节点, 美国节点, 韩国节点, 英国节点, 其他地区, 代理, 直连]}
 
-Direct_first: &Direct_first {type: select, proxies: [直连, Proxy, 香港节点, 台湾节点, 日本节点, 新加坡节点, 美国节点, 韩国节点]}
+Direct_first: &Direct_first {type: select, proxies: [直连, 代理, 香港节点, 台湾节点, 日本节点, 新加坡节点, 美国节点, 韩国节点]}
 
 Urltest_Base: &Urltest_Base {type: url-test, include-all: true, url: 'https://www.gstatic.com/generate_204', tolerance: 20, interval: 300}
 
@@ -146,19 +146,19 @@ dns:
   nameserver: [https://dns.google/dns-query, https://dns.cloudflare.com/dns-query]
 
 # 策略组：业务组供规则引用，地区组从已启用订阅筛选节点。
-# Proxy 和 Final 是通用入口；内置直连用于必须直连的管理流量。
+# 代理 和 Final 是通用入口；内置直连用于必须直连的管理流量。
 proxy-groups:
   # ================================
   # 1. 核心策略
   # ================================
-  - {name: Proxy, type: select, proxies: [香港优选, 日本优选, 新加坡优选, 美国优选, 香港节点, 台湾节点, 日本节点, 新加坡节点, 美国节点, 韩国节点, 英国节点, 其他地区, 全部节点, 直连], icon: 'https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/Proxy.png'}
+  - {name: 代理, type: select, proxies: [香港优选, 日本优选, 新加坡优选, 美国优选, 香港节点, 台湾节点, 日本节点, 新加坡节点, 美国节点, 韩国节点, 英国节点, 其他地区, 全部节点, 直连], icon: 'https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/Proxy.png'}
   - {name: Final, <<: *Proxy_first, icon: 'https://raw.githubusercontent.com/Orz-3/mini/master/Color/Final.png'}
 
   # ================================
   # 2. AI、搜索与开发
   # ================================
   - {name: Google, <<: *Proxy_first, icon: 'https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/Google_Search.png'}
-  - {name: AI, <<: *Proxy_first, icon: 'https://raw.githubusercontent.com/erdongchanyo/icon/main/Policy-Filter/OpenAI.png'}
+  - {name: AI, type: select, proxies: [美国优选, 日本优选, 新加坡优选, 美国节点, 日本节点, 新加坡节点, 台湾节点, 韩国节点, 英国节点, 其他地区, 香港优选, 香港节点, 代理, 直连], icon: 'https://raw.githubusercontent.com/erdongchanyo/icon/main/Policy-Filter/OpenAI.png'}
 
   # ================================
   # 3. 社交与通信
@@ -175,14 +175,14 @@ proxy-groups:
   - {name: Netflix, <<: *Proxy_first, icon: 'https://raw.githubusercontent.com/erdongchanyo/icon/main/Policy-Filter/Netflix.png'}
   - {name: 迪士尼+, <<: *Proxy_first, icon: 'https://raw.githubusercontent.com/erdongchanyo/icon/main/Policy-Filter/Disney+.png'}
   - {name: HBO, <<: *Proxy_first, icon: 'https://raw.githubusercontent.com/erdongchanyo/icon/main/Policy-Filter/HBO.png'}
-  - {name: Emby, type: select, proxies: [直连, 香港优选, 日本优选, 新加坡优选, 美国优选, 香港节点, 台湾节点, 日本节点, 新加坡节点, 美国节点, 韩国节点, 英国节点, 其他地区, Proxy], icon: 'https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/Emby.png'}
+  - {name: Emby, type: select, proxies: [直连, 香港优选, 日本优选, 新加坡优选, 美国优选, 香港节点, 台湾节点, 日本节点, 新加坡节点, 美国节点, 韩国节点, 英国节点, 其他地区, 代理], icon: 'https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/Emby.png'}
   - {name: Spotify, <<: *Proxy_first, icon: 'https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/Spotify.png'}
   - {name: 巴哈姆特, type: select, proxies: [台湾节点, 香港节点, 直连], icon: 'https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/Bahamut.png'}
 
   # ================================
   # 5. 综合媒体
   # ================================
-  - {name: 哔哩哔哩, type: select, proxies: [直连, 香港节点, 台湾节点, 新加坡节点, Proxy], icon: 'https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/bilibili.png'}
+  - {name: 哔哩哔哩, type: select, proxies: [直连, 香港节点, 台湾节点, 新加坡节点, 代理], icon: 'https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/bilibili.png'}
   - {name: 国外媒体, <<: *Proxy_first, icon: 'https://raw.githubusercontent.com/Orz-3/mini/master/Color/Streaming.png'}
   - {name: 特殊媒体, <<: *Proxy_first, icon: 'https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/Streaming.png'}
   - {name: 国内媒体, <<: *Direct_first, icon: 'https://raw.githubusercontent.com/Orz-3/mini/master/Color/StreamingSE.png'}
@@ -200,14 +200,14 @@ proxy-groups:
   # ================================
   - {name: Apple, <<: *Direct_first, icon: 'https://raw.githubusercontent.com/Orz-3/mini/master/Color/Apple.png'}
   - {name: Microsoft, <<: *Proxy_first, icon: 'https://raw.githubusercontent.com/erdongchanyo/icon/main/Policy-Filter/Microsoft.png'}
-  - {name: OneDrive, type: select, proxies: [香港优选, 日本优选, 新加坡优选, 美国优选, 香港节点, 台湾节点, 日本节点, 新加坡节点, 美国节点, 韩国节点, 英国节点, 其他地区, Proxy, 直连, Microsoft], icon: 'https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/OneDrive.png'}
+  - {name: OneDrive, type: select, proxies: [香港优选, 日本优选, 新加坡优选, 美国优选, 香港节点, 台湾节点, 日本节点, 新加坡节点, 美国节点, 韩国节点, 英国节点, 其他地区, 代理, 直连, Microsoft], icon: 'https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/OneDrive.png'}
   - {name: GitHub, <<: *Proxy_first, icon: 'https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/GitHub.png'}
 
   # ================================
   # 8. 游戏与网络工具
   # ================================
   - {name: 游戏平台, <<: *Proxy_first, icon: 'https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/Game.png'}
-  - {name: CDN, type: select, proxies: [香港优选, 日本优选, 新加坡优选, 美国优选, 香港节点, 台湾节点, 日本节点, 新加坡节点, 美国节点, 韩国节点, 英国节点, 其他地区, Proxy, 直连], icon: 'https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/Cloudflare.png'}
+  - {name: CDN, type: select, proxies: [香港优选, 日本优选, 新加坡优选, 美国优选, 香港节点, 台湾节点, 日本节点, 新加坡节点, 美国节点, 韩国节点, 英国节点, 其他地区, 代理, 直连], icon: 'https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/Cloudflare.png'}
   - {name: 测速, <<: *Proxy_first, icon: 'https://raw.githubusercontent.com/erdongchanyo/icon/main/Policy-Filter/Speedtest.png'}
 
   # ================================
@@ -279,8 +279,9 @@ rules:
   # 4. 技术开发与工具
   - DOMAIN-SUFFIX,github.io,GitHub
   - DOMAIN-SUFFIX,githubassets.com,GitHub
-  - DOMAIN-SUFFIX,githubusercontent.com,GitHub
-  - DOMAIN-SUFFIX,cloudflare.com,CDN
+  - DOMAIN,api.github.com,GitHub
+  # - DOMAIN-SUFFIX,githubusercontent.com,GitHub
+  # - DOMAIN-SUFFIX,cloudflare.com,CDN
   - DOMAIN-SUFFIX,docker.com,美国节点
   - DOMAIN-SUFFIX,docker.io,美国节点
   - DOMAIN-SUFFIX,dockerhub.com,美国节点
@@ -299,8 +300,9 @@ rules:
   - DOMAIN-KEYWORD,dashboardicons,美国节点
   - DOMAIN-SUFFIX,ytimg.com,YouTube
   - DOMAIN-SUFFIX,ggpht.com,YouTube
-  - DOMAIN-SUFFIX,googleusercontent.com,Google
-  - DOMAIN-SUFFIX,gstatic.com,Google
+  # - DOMAIN-SUFFIX,googleusercontent.com,Google
+  # - DOMAIN-SUFFIX,gstatic.com,Google
+  # - DOMAIN-KEYWORD,googleapis,Google
   - DOMAIN-SUFFIX,safebrowsing.google.com,Google
 
   # 6. 特殊站点与区域分流
@@ -327,7 +329,6 @@ rules:
   - DOMAIN-KEYWORD,onitsukatiger,日本节点
   - DOMAIN-SUFFIX,montbell.com,香港节点
   - DOMAIN-SUFFIX,compliance.chippercash.com,美国节点
-  - DOMAIN-SUFFIX,dmm.co.jp,日本节点
   - DOMAIN-KEYWORD,dmm,日本节点
   - DOMAIN-KEYWORD,javrate,日本节点
   - DOMAIN-KEYWORD,jav321,日本节点
@@ -373,10 +374,10 @@ rules:
   - RULE-SET,public-tracker_domain,DIRECT
   - RULE-SET,apple_cn_domain,DIRECT
   - RULE-SET,apple_domain,Apple
-  - RULE-SET,Cloudflare_domain,CDN
-  - RULE-SET,ai_custom,AI
   - RULE-SET,direct-ai,DIRECT
   - RULE-SET,personal_domain,DIRECT
+  - RULE-SET,ai_priority,AI
+  - RULE-SET,Cloudflare_domain,CDN
   - RULE-SET,ai,AI
   - RULE-SET,github_domain,GitHub
   - RULE-SET,gitbook_domain,GitHub
@@ -410,7 +411,7 @@ rules:
   - RULE-SET,global_media_domain,国外媒体
   # 国外媒体先于海淘匹配，避免 Amazon Prime Video 被购物规则接管。
   - RULE-SET,shopping_domain,海淘
-  - RULE-SET,geolocation-!cn,Proxy
+  - RULE-SET,geolocation-!cn,代理
   - RULE-SET,cn_domain,DIRECT
   - RULE-SET,google_ip,Google,no-resolve
   - RULE-SET,netflix_ip,Netflix,no-resolve
@@ -440,9 +441,9 @@ rule-providers:
   pt_cn_domain: { <<: *domain, url: "https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/refs/heads/meta/geo/geosite/category-pt.mrs"}
   public-tracker_domain: { <<: *domain, url: "https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/refs/heads/meta/geo/geosite/category-public-tracker.mrs"}
   Cloudflare_domain: { <<: *domain, url: "https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/refs/heads/meta/geo/geosite/cloudflare.mrs"}
-  ai_custom: { <<: *class, url: "https://raw.githubusercontent.com/allen0039/mihomo/main/Rules/AI/ai.list" }
   direct-ai: { <<: *class, url: "https://raw.githubusercontent.com/allen0039/proxy-resource-hub/main/Rules/Mihomo/AI/direct-ai.list" }
   personal_domain: { <<: *class, url: "https://raw.githubusercontent.com/allen0039/proxy-resource-hub/main/Rules/Mihomo/Personal/Domain.list" }
+  ai_priority: { <<: *class, url: "https://raw.githubusercontent.com/allen0039/proxy-resource-hub/main/Rules/Mihomo/AI/ai.list" }
   ai: {  <<: *domain, url: "https://github.com/MetaCubeX/meta-rules-dat/raw/refs/heads/meta/geo/geosite/category-ai-!cn.mrs" }
   steam_cn_domain: { <<: *domain, url: "https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/refs/heads/meta/geo/geosite/steam%40cn.mrs"}
   steamcdn_domain: { <<: *domain, url: "https://raw.githubusercontent.com/Lanlan13-14/Rules/refs/heads/main/rules/Domain/Steam-domain.mrs"}
