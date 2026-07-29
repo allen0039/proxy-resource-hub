@@ -92,6 +92,15 @@ SHOP_EXCLUSIONS = {
     "kindle.com",
     "imdb.com",
 }
+AI_PRIORITY_DOMAINS = (
+    "gateway.ai.cloudflare.com",
+    "gemini.gstatic.com",
+    "default.exp-tas.com",
+    "copilot-proxy.githubusercontent.com",
+    "origin-tracker.githubusercontent.com",
+    "copilot-telemetry.githubusercontent.com",
+    "githubcopilot.com",
+)
 
 
 def load_generator():
@@ -162,6 +171,27 @@ class RuleGeneratorTests(unittest.TestCase):
                     f"DOMAIN-SUFFIX,{domain}" for domain in expected_domains
                 )
             self.assertEqual(expected_lines, rule_lines)
+
+    def test_ai_priority_domains_are_generated_for_every_client(self):
+        generator = load_generator()
+        outputs = generator.build_outputs(ROOT)
+        source = ROOT / "Rules" / "Source" / "AI" / "ai.txt"
+        source_domains = {
+            line
+            for line in source.read_text(encoding="utf-8").splitlines()
+            if line and not line.startswith("#")
+        }
+        self.assertTrue(set(AI_PRIORITY_DOMAINS).issubset(source_domains))
+
+        for client in ("Mihomo", "Surge", "QuantumultX", "Loon"):
+            path = ROOT / "Rules" / client / "AI" / "ai.list"
+            content = outputs[path]
+            for domain in AI_PRIORITY_DOMAINS:
+                with self.subTest(client=client, domain=domain):
+                    if client == "QuantumultX":
+                        self.assertIn(f"host-suffix, {domain}, proxy", content)
+                    else:
+                        self.assertIn(f"DOMAIN-SUFFIX,{domain}", content)
 
     def test_pt_outputs_are_generated_for_every_client(self):
         generator = load_generator()

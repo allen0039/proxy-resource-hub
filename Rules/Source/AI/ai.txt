@@ -12,14 +12,23 @@ claude.ai
 
 # Google AI / Gemini
 gemini.google.com
+gemini.gstatic.com
 aistudio.google.com
 makersuite.google.com
 generativelanguage.googleapis.com
 
-# Microsoft Copilot
+# Cloudflare AI
+gateway.ai.cloudflare.com
+
+# Microsoft Copilot / GitHub Copilot
 copilot.microsoft.com
 copilot.cloud.microsoft
 edgeservices.bing.com
+default.exp-tas.com
+copilot-proxy.githubusercontent.com
+origin-tracker.githubusercontent.com
+copilot-telemetry.githubusercontent.com
+githubcopilot.com
 
 # Perplexity / Poe
 perplexity.ai

@@ -66,7 +66,7 @@
 1. 将修改后的私人配置导入对应客户端。
 2. 更新节点订阅、远程规则和插件资源。
 3. 检查 `香港优选`、`日本优选`、`新加坡优选`、`美国优选` 是否能读取节点。
-4. 在 `Proxy` 和 `Final` 中选择需要的默认出口。
+4. 在 `代理` 和 `Final` 中选择需要的默认出口。
 5. 确认网页访问、DNS、流媒体和直连站点工作正常后，再启用 MITM、脚本或插件。
 
 不同客户端版本的导入按钮名称可能略有差异，但配置区段和占位字段保持一致。
@@ -168,7 +168,7 @@ Loon 的远程规则位于 `[Remote Rule]`，插件位于 `[Plugin]`。启用需
 
 - `优选`：自动测速并选择地区内延迟较低的节点。
 - `节点`：手动选择指定地区节点；个别客户端中的台湾、韩国组可能使用自动测速。
-- `Proxy`：通用代理入口。
+- `代理`：通用代理入口。
 - `Final`：未匹配流量的最终出口。
 - `直连策略`、`DIRECT` 或 `direct`：不同客户端中的直连策略名称。
 
@@ -181,6 +181,10 @@ Loon 的远程规则位于 `[Remote Rule]`，插件位于 `[Plugin]`。启用需
 ### 本地规则优先级
 
 所有客户端都按从上到下首次匹配生效。本地精确规则位于远程大类规则之前，最终规则必须位于末尾。
+
+五份模板使用 `api.github.com` 本地精确规则固定走 `GitHub`。`githubusercontent.com`、`cloudflare.com`、`gstatic.com`、`googleusercontent.com` 和 `DOMAIN-KEYWORD,googleapis` 等宽泛本地规则仅以注释保留，避免覆盖 AI 专属端点；AI 服务先加载仓库自有 `AI/ai.list`，再加载第三方 AI 规则作为补充。
+
+Mihomo 将自有 AI 精确规则置于 Cloudflare 大类规则之前。Loon 的 AI、测速、Steam 和 Game 补充规则使用 Blackmatrix 的 Loon 原生列表；当前无法下载的 Kelee 插件只作停用备份保留。
 
 Surge Mac 和 Mihomo 支持 qB 下载器来源 IP 直连保护。使用时应把模板中的私有网段地址改成自己的下载器地址，并保持这些规则位于规则列表最前。Quantumult X、Loon 和 Surge iPhone 不包含这类来源 IP 规则。
 

@@ -14,14 +14,23 @@ host-suffix, claude.ai, proxy
 
 # Google AI / Gemini
 host-suffix, gemini.google.com, proxy
+host-suffix, gemini.gstatic.com, proxy
 host-suffix, aistudio.google.com, proxy
 host-suffix, makersuite.google.com, proxy
 host-suffix, generativelanguage.googleapis.com, proxy
 
-# Microsoft Copilot
+# Cloudflare AI
+host-suffix, gateway.ai.cloudflare.com, proxy
+
+# Microsoft Copilot / GitHub Copilot
 host-suffix, copilot.microsoft.com, proxy
 host-suffix, copilot.cloud.microsoft, proxy
 host-suffix, edgeservices.bing.com, proxy
+host-suffix, default.exp-tas.com, proxy
+host-suffix, copilot-proxy.githubusercontent.com, proxy
+host-suffix, origin-tracker.githubusercontent.com, proxy
+host-suffix, copilot-telemetry.githubusercontent.com, proxy
+host-suffix, githubcopilot.com, proxy
 
 # Perplexity / Poe
 host-suffix, perplexity.ai, proxy

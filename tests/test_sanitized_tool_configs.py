@@ -46,6 +46,20 @@ DUPLICATE_PT_VALUES = {
     "pterclub.com",
     "springsunday.net",
 }
+SUPPORTED_AI_REGION_ORDER = [
+    "美国优选",
+    "日本优选",
+    "新加坡优选",
+    "美国节点",
+    "日本节点",
+    "新加坡节点",
+    "台湾节点",
+    "韩国节点",
+    "英国节点",
+    "其他地区",
+    "香港优选",
+    "香港节点",
+]
 
 
 def load_sanitizer():
@@ -541,7 +555,7 @@ rule-providers:
             any(rule.startswith("RULE-SET,gfw_domain,") for rule in mihomo["rules"])
         )
         self.assertEqual(
-            mihomo["rules"].count("RULE-SET,geolocation-!cn,Proxy"), 1
+            mihomo["rules"].count("RULE-SET,geolocation-!cn,代理"), 1
         )
         self.assertEqual(
             mihomo["rules"].count("RULE-SET,Cloudflare_domain,CDN"), 1
@@ -557,14 +571,17 @@ rule-providers:
         self.assertIn("United States", qx)
         self.assertIn("Singapore", qx)
 
-    def test_committed_quantumultx_uses_builtin_proxy_policy(self):
+    def test_committed_quantumultx_uses_named_proxy_policy(self):
         qx = (OUTPUT_DIR / "quantumultx_allen.conf").read_text(encoding="utf-8")
         policy = qx.split("[policy]", maxsplit=1)[1].split(
             "[server_remote]", maxsplit=1
         )[0]
+        self.assertEqual(1, len(re.findall(r"(?m)^static=代理,", policy)))
         self.assertNotRegex(policy, r"(?m)^static=Proxy,")
         self.assertNotRegex(policy, r"(?:^|,\s*)Proxy(?:,|$)")
+        self.assertNotRegex(policy, r"(?:^|,\s*)proxy(?:,|$)")
         self.assertNotRegex(qx, r"(?:^|,\s*)force-policy=Proxy(?:,|$)")
+        self.assertNotRegex(qx, r"(?:^|,\s*)force-policy=proxy(?:,|$)")
 
     def test_committed_configs_share_optimized_apns_routing(self):
         configs = {
@@ -643,6 +660,194 @@ rule-providers:
             "[rewrite_local]", maxsplit=1
         )[0]
         self.assertNotRegex(local_rules, r"(?im)^\s*src-ip-cidr,")
+
+    def test_committed_outputs_preserve_requested_policy_fixes(self):
+        outputs = {
+            name: (OUTPUT_DIR / name).read_text(encoding="utf-8")
+            for name in CONFIG_NAMES
+        }
+        mihomo = yaml.safe_load(outputs["mihomo_allen.yaml"])
+
+        group_lines = {
+            "surge_mac_allen.conf": next(
+                line
+                for line in outputs["surge_mac_allen.conf"].splitlines()
+                if line.startswith("AI = select,")
+            ),
+            "surge_iphone_allen.conf": next(
+                line
+                for line in outputs["surge_iphone_allen.conf"].splitlines()
+                if line.startswith("AI = select,")
+            ),
+            "quantumultx_allen.conf": next(
+                line
+                for line in outputs["quantumultx_allen.conf"].splitlines()
+                if line.startswith("static=AI,")
+            ),
+            "loon_allen.lcf": next(
+                line
+                for line in outputs["loon_allen.lcf"].splitlines()
+                if line.startswith("AI = select,")
+            ),
+        }
+        mihomo_ai = next(
+            group
+            for group in mihomo["proxy-groups"]
+            if group.get("name") == "AI"
+        )
+        for name, line in group_lines.items():
+            with self.subTest(name=name, check="AI region order"):
+                self.assertEqual(
+                    SUPPORTED_AI_REGION_ORDER,
+                    [
+                        region
+                        for region in SUPPORTED_AI_REGION_ORDER
+                        if re.search(rf"(?:^|,\s*){re.escape(region)}(?:,|$)", line)
+                    ],
+                )
+                positions = [line.index(region) for region in SUPPORTED_AI_REGION_ORDER]
+                self.assertEqual(positions, sorted(positions))
+        self.assertEqual(
+            SUPPORTED_AI_REGION_ORDER,
+            [
+                member
+                for member in mihomo_ai["proxies"]
+                if member in SUPPORTED_AI_REGION_ORDER
+            ],
+        )
+
+        self.assertRegex(outputs["surge_mac_allen.conf"], r"(?m)^代理 = select,")
+        self.assertRegex(outputs["surge_iphone_allen.conf"], r"(?m)^代理 = select,")
+        self.assertRegex(outputs["quantumultx_allen.conf"], r"(?m)^static=代理,")
+        self.assertRegex(outputs["loon_allen.lcf"], r"(?m)^代理 = select,")
+        mihomo_groups = [group["name"] for group in mihomo["proxy-groups"]]
+        self.assertIn("代理", mihomo_groups)
+        self.assertNotIn("Proxy", mihomo_groups)
+        self.assertNotIn("ai_custom", mihomo["rule-providers"])
+        self.assertFalse(
+            any(rule.startswith("RULE-SET,ai_custom,") for rule in mihomo["rules"])
+        )
+
+        combined = "\n".join(outputs.values())
+        self.assertNotRegex(
+            combined,
+            r"(?im)^\s*-?\s*(?:DOMAIN-SUFFIX|HOST-SUFFIX)\s*,\s*dmm\.co\.jp\s*,",
+        )
+        self.assertEqual(
+            5,
+            len(
+                re.findall(
+                    r"(?im)^\s*-?\s*(?:DOMAIN-KEYWORD|HOST-KEYWORD)\s*,\s*dmm\s*,",
+                    combined,
+                )
+            ),
+        )
+
+        loon_remote = outputs["loon_allen.lcf"].split(
+            "[Remote Rule]", maxsplit=1
+        )[1].split("[Rule]", maxsplit=1)[0]
+        first_service = min(
+            loon_remote.index("policy=AI, tag=AI"),
+            loon_remote.index("policy=YouTube, tag=YouTube"),
+            loon_remote.index("policy=Google, tag=谷歌分流"),
+        )
+        for marker in (
+            "Rules/Loon/AI/direct-ai.list",
+            "Rules/Loon/Personal/Domain.list",
+            "Rules/Loon/PT/Domain.list",
+        ):
+            self.assertLess(loon_remote.index(marker), first_service)
+        self.assertIn("tag=ProxyLite", loon_remote)
+        self.assertIn("tag=GFWList", loon_remote)
+
+    def test_committed_outputs_use_owned_ai_priority_layer(self):
+        outputs = {
+            name: (OUTPUT_DIR / name).read_text(encoding="utf-8")
+            for name in CONFIG_NAMES
+        }
+        broad_values = (
+            "githubusercontent.com",
+            "cloudflare.com",
+            "gstatic.com",
+            "googleusercontent.com",
+            "googleapis",
+        )
+        for name, text in outputs.items():
+            with self.subTest(name=name, check="GitHub API override"):
+                self.assertRegex(
+                    text,
+                    r"(?im)^\s*-?\s*(?:DOMAIN|host)\s*,\s*api\.github\.com\s*,\s*GitHub",
+                )
+            for value in broad_values:
+                with self.subTest(name=name, value=value):
+                    self.assertNotRegex(
+                        text,
+                        rf"(?im)^\s*-?\s*(?:DOMAIN-SUFFIX|DOMAIN-KEYWORD|"
+                        rf"host-suffix|host-keyword)\s*,\s*{re.escape(value)}\s*,",
+                    )
+                    self.assertRegex(
+                        text,
+                        rf"(?im)^\s*#\s*-?\s*(?:DOMAIN-SUFFIX|DOMAIN-KEYWORD|"
+                        rf"host-suffix|host-keyword)\s*,\s*{re.escape(value)}\s*,",
+                    )
+
+        surge_markers = (
+            "Rules/Surge/AI/direct-ai.list",
+            "Rules/Surge/AI/ai.list",
+            "ruleset.skk.moe/List/non_ip/ai.conf",
+            "Rabbit-Spec/Surge/Master/Rules/AIGC.list",
+        )
+        for name in ("surge_mac_allen.conf", "surge_iphone_allen.conf"):
+            for marker in surge_markers:
+                self.assertIn(marker, outputs[name])
+            positions = [outputs[name].index(marker) for marker in surge_markers]
+            self.assertEqual(positions, sorted(positions))
+
+        qx = outputs["quantumultx_allen.conf"]
+        self.assertIn("Rules/QuantumultX/AI/ai.list", qx)
+        owned_qx = next(
+            line for line in qx.splitlines() if "Rules/QuantumultX/AI/ai.list" in line
+        )
+        self.assertIn("force-policy=AI", owned_qx)
+        self.assertIn("inserted-resource=true", owned_qx)
+
+        loon = outputs["loon_allen.lcf"]
+        self.assertIn("Rules/Loon/AI/ai.list", loon)
+        openai_index = loon.find("/rule/Loon/OpenAI/OpenAI.list")
+        self.assertNotEqual(-1, openai_index)
+        self.assertLess(
+            loon.index("Rules/Loon/AI/ai.list"),
+            openai_index,
+        )
+        for marker in (
+            "/rule/Loon/OpenAI/OpenAI.list",
+            "/rule/Loon/Speedtest/Speedtest.list",
+            "/rule/Loon/Steam/Steam.list",
+            "/rule/Loon/Game/Game.list",
+        ):
+            self.assertIn(marker, loon)
+        self.assertNotRegex(
+            loon,
+            r"(?im)^(?![#;]).*kelee\.one/.*enabled=true",
+        )
+        self.assertNotRegex(
+            loon,
+            r"(?im)^(?![#;]).*FKTG\.sgmodule.*enabled=true",
+        )
+
+        mihomo = yaml.safe_load(outputs["mihomo_allen.yaml"])
+        self.assertIn("ai_priority", mihomo["rule-providers"])
+        mihomo_markers = (
+            "RULE-SET,direct-ai,DIRECT",
+            "RULE-SET,personal_domain,DIRECT",
+            "RULE-SET,ai_priority,AI",
+            "RULE-SET,Cloudflare_domain,CDN",
+            "RULE-SET,ai,AI",
+        )
+        self.assertEqual(
+            [mihomo["rules"].index(marker) for marker in mihomo_markers],
+            sorted(mihomo["rules"].index(marker) for marker in mihomo_markers),
+        )
 
     def test_committed_non_gateway_configs_exclude_active_source_ip_rules(self):
         configs = {
