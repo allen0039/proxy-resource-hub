@@ -116,12 +116,17 @@ class RuleGeneratorTests(unittest.TestCase):
 
         self.assertEqual(23, len(outputs))
         for client in ("Mihomo", "Surge", "QuantumultX", "Loon"):
-            for ruleset in ("ai", "gongyiai"):
+            for ruleset in ("ai", "direct-ai"):
                 expected = ROOT / "Rules" / client / "AI" / f"{ruleset}.list"
                 self.assertIn(expected, outputs)
-        for ruleset in ("ai", "gongyiai"):
+            self.assertNotIn(
+                ROOT / "Rules" / client / "AI" / "gongyiai.list",
+                outputs,
+            )
+        for ruleset in ("ai", "direct-ai"):
             legacy = ROOT / "Rules" / "AI" / f"{ruleset}.list"
             self.assertIn(legacy, outputs)
+        self.assertNotIn(ROOT / "Rules" / "AI" / "gongyiai.list", outputs)
         compatibility = ROOT / "Rules" / "shop" / "shopping.list"
         self.assertIn(compatibility, outputs)
 
@@ -235,7 +240,7 @@ class RuleGeneratorTests(unittest.TestCase):
             root = Path(tmp)
             source_dir = root / "Rules" / "Source" / "AI"
             source_dir.mkdir(parents=True)
-            for name in ("ai", "gongyiai"):
+            for name in ("ai", "direct-ai"):
                 (source_dir / f"{name}.txt").write_text(
                     "example.com\n", encoding="utf-8"
                 )
