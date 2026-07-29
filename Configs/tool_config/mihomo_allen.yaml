@@ -1,9 +1,9 @@
 # Allen 维护 - Mihomo 配置
 
 # 策略模板：代理优先、直连优先和地区自动测速。
-Proxy_first: &Proxy_first {type: select, proxies: [香港优选, 日本优选, 新加坡优选, 美国优选, 香港节点, 台湾节点, 日本节点, 新加坡节点, 美国节点, 韩国节点, 英国节点, 其他地区, proxy, 直连]}
+Proxy_first: &Proxy_first {type: select, proxies: [香港优选, 日本优选, 新加坡优选, 美国优选, 香港节点, 台湾节点, 日本节点, 新加坡节点, 美国节点, 韩国节点, 英国节点, 其他地区, Proxy, 直连]}
 
-Direct_first: &Direct_first {type: select, proxies: [直连, proxy, 香港节点, 台湾节点, 日本节点, 新加坡节点, 美国节点, 韩国节点]}
+Direct_first: &Direct_first {type: select, proxies: [直连, Proxy, 香港节点, 台湾节点, 日本节点, 新加坡节点, 美国节点, 韩国节点]}
 
 Urltest_Base: &Urltest_Base {type: url-test, include-all: true, url: 'https://www.gstatic.com/generate_204', tolerance: 20, interval: 300}
 
@@ -146,19 +146,19 @@ dns:
   nameserver: [https://dns.google/dns-query, https://dns.cloudflare.com/dns-query]
 
 # 策略组：业务组供规则引用，地区组从已启用订阅筛选节点。
-# proxy 和 Final 是通用入口；内置直连用于必须直连的管理流量。
+# Proxy 和 Final 是通用入口；内置直连用于必须直连的管理流量。
 proxy-groups:
   # ================================
   # 1. 核心策略
   # ================================
-  - {name: proxy, type: select, proxies: [香港优选, 日本优选, 新加坡优选, 美国优选, 香港节点, 台湾节点, 日本节点, 新加坡节点, 美国节点, 韩国节点, 英国节点, 其他地区, 全部节点, 直连], icon: 'https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/Proxy.png'}
+  - {name: Proxy, type: select, proxies: [香港优选, 日本优选, 新加坡优选, 美国优选, 香港节点, 台湾节点, 日本节点, 新加坡节点, 美国节点, 韩国节点, 英国节点, 其他地区, 全部节点, 直连], icon: 'https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/Proxy.png'}
   - {name: Final, <<: *Proxy_first, icon: 'https://raw.githubusercontent.com/Orz-3/mini/master/Color/Final.png'}
 
   # ================================
   # 2. AI、搜索与开发
   # ================================
   - {name: Google, <<: *Proxy_first, icon: 'https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/Google_Search.png'}
-  - {name: AI, type: select, proxies: [美国优选, 日本优选, 新加坡优选, 美国节点, 日本节点, 新加坡节点, 台湾节点, 韩国节点, 英国节点, 其他地区, 香港优选, 香港节点, proxy, 直连], icon: 'https://raw.githubusercontent.com/erdongchanyo/icon/main/Policy-Filter/OpenAI.png'}
+  - {name: AI, type: select, proxies: [美国优选, 日本优选, 新加坡优选, 美国节点, 日本节点, 新加坡节点, 台湾节点, 韩国节点, 英国节点, 其他地区, 香港优选, 香港节点, Proxy, 直连], icon: 'https://raw.githubusercontent.com/erdongchanyo/icon/main/Policy-Filter/OpenAI.png'}
 
   # ================================
   # 3. 社交与通信
@@ -175,14 +175,14 @@ proxy-groups:
   - {name: Netflix, <<: *Proxy_first, icon: 'https://raw.githubusercontent.com/erdongchanyo/icon/main/Policy-Filter/Netflix.png'}
   - {name: 迪士尼+, <<: *Proxy_first, icon: 'https://raw.githubusercontent.com/erdongchanyo/icon/main/Policy-Filter/Disney+.png'}
   - {name: HBO, <<: *Proxy_first, icon: 'https://raw.githubusercontent.com/erdongchanyo/icon/main/Policy-Filter/HBO.png'}
-  - {name: Emby, type: select, proxies: [直连, 香港优选, 日本优选, 新加坡优选, 美国优选, 香港节点, 台湾节点, 日本节点, 新加坡节点, 美国节点, 韩国节点, 英国节点, 其他地区, proxy], icon: 'https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/Emby.png'}
+  - {name: Emby, type: select, proxies: [直连, 香港优选, 日本优选, 新加坡优选, 美国优选, 香港节点, 台湾节点, 日本节点, 新加坡节点, 美国节点, 韩国节点, 英国节点, 其他地区, Proxy], icon: 'https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/Emby.png'}
   - {name: Spotify, <<: *Proxy_first, icon: 'https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/Spotify.png'}
   - {name: 巴哈姆特, type: select, proxies: [台湾节点, 香港节点, 直连], icon: 'https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/Bahamut.png'}
 
   # ================================
   # 5. 综合媒体
   # ================================
-  - {name: 哔哩哔哩, type: select, proxies: [直连, 香港节点, 台湾节点, 新加坡节点, proxy], icon: 'https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/bilibili.png'}
+  - {name: 哔哩哔哩, type: select, proxies: [直连, 香港节点, 台湾节点, 新加坡节点, Proxy], icon: 'https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/bilibili.png'}
   - {name: 国外媒体, <<: *Proxy_first, icon: 'https://raw.githubusercontent.com/Orz-3/mini/master/Color/Streaming.png'}
   - {name: 特殊媒体, <<: *Proxy_first, icon: 'https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/Streaming.png'}
   - {name: 国内媒体, <<: *Direct_first, icon: 'https://raw.githubusercontent.com/Orz-3/mini/master/Color/StreamingSE.png'}
@@ -200,14 +200,14 @@ proxy-groups:
   # ================================
   - {name: Apple, <<: *Direct_first, icon: 'https://raw.githubusercontent.com/Orz-3/mini/master/Color/Apple.png'}
   - {name: Microsoft, <<: *Proxy_first, icon: 'https://raw.githubusercontent.com/erdongchanyo/icon/main/Policy-Filter/Microsoft.png'}
-  - {name: OneDrive, type: select, proxies: [香港优选, 日本优选, 新加坡优选, 美国优选, 香港节点, 台湾节点, 日本节点, 新加坡节点, 美国节点, 韩国节点, 英国节点, 其他地区, proxy, 直连, Microsoft], icon: 'https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/OneDrive.png'}
+  - {name: OneDrive, type: select, proxies: [香港优选, 日本优选, 新加坡优选, 美国优选, 香港节点, 台湾节点, 日本节点, 新加坡节点, 美国节点, 韩国节点, 英国节点, 其他地区, Proxy, 直连, Microsoft], icon: 'https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/OneDrive.png'}
   - {name: GitHub, <<: *Proxy_first, icon: 'https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/GitHub.png'}
 
   # ================================
   # 8. 游戏与网络工具
   # ================================
   - {name: 游戏平台, <<: *Proxy_first, icon: 'https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/Game.png'}
-  - {name: CDN, type: select, proxies: [香港优选, 日本优选, 新加坡优选, 美国优选, 香港节点, 台湾节点, 日本节点, 新加坡节点, 美国节点, 韩国节点, 英国节点, 其他地区, proxy, 直连], icon: 'https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/Cloudflare.png'}
+  - {name: CDN, type: select, proxies: [香港优选, 日本优选, 新加坡优选, 美国优选, 香港节点, 台湾节点, 日本节点, 新加坡节点, 美国节点, 韩国节点, 英国节点, 其他地区, Proxy, 直连], icon: 'https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/Cloudflare.png'}
   - {name: 测速, <<: *Proxy_first, icon: 'https://raw.githubusercontent.com/erdongchanyo/icon/main/Policy-Filter/Speedtest.png'}
 
   # ================================
@@ -411,7 +411,7 @@ rules:
   - RULE-SET,global_media_domain,国外媒体
   # 国外媒体先于海淘匹配，避免 Amazon Prime Video 被购物规则接管。
   - RULE-SET,shopping_domain,海淘
-  - RULE-SET,geolocation-!cn,proxy
+  - RULE-SET,geolocation-!cn,Proxy
   - RULE-SET,cn_domain,DIRECT
   - RULE-SET,google_ip,Google,no-resolve
   - RULE-SET,netflix_ip,Netflix,no-resolve
