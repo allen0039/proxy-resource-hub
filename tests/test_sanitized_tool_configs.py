@@ -555,7 +555,7 @@ rule-providers:
             any(rule.startswith("RULE-SET,gfw_domain,") for rule in mihomo["rules"])
         )
         self.assertEqual(
-            mihomo["rules"].count("RULE-SET,geolocation-!cn,proxy"), 1
+            mihomo["rules"].count("RULE-SET,geolocation-!cn,Proxy"), 1
         )
         self.assertEqual(
             mihomo["rules"].count("RULE-SET,Cloudflare_domain,CDN"), 1
@@ -571,18 +571,18 @@ rule-providers:
         self.assertIn("United States", qx)
         self.assertIn("Singapore", qx)
 
-    def test_committed_quantumultx_uses_builtin_lowercase_proxy(self):
+    def test_committed_quantumultx_uses_named_uppercase_proxy(self):
         qx = (OUTPUT_DIR / "quantumultx_allen.conf").read_text(encoding="utf-8")
         policy = qx.split("[policy]", maxsplit=1)[1].split(
             "[server_remote]", maxsplit=1
         )[0]
         self.assertNotRegex(policy, r"(?m)^static=代理,")
-        self.assertNotRegex(policy, r"(?m)^static=Proxy,")
+        self.assertEqual(1, len(re.findall(r"(?m)^static=Proxy,", policy)))
         self.assertNotRegex(policy, r"(?m)^static=proxy,")
-        self.assertNotRegex(policy, r"(?:^|,\s*)(?:Proxy|代理)(?:,|$)")
-        self.assertRegex(policy, r"(?:^|,\s*)proxy(?:,|$)")
-        self.assertNotRegex(qx, r"(?:^|,\s*)force-policy=(?:Proxy|代理)(?:,|$)")
-        self.assertRegex(qx, r"(?:^|,\s*)force-policy=proxy(?:,|$)")
+        self.assertNotRegex(policy, r"(?:^|,\s*)(?:proxy|代理)(?:,|$)")
+        self.assertRegex(policy, r"(?:^|,\s*)Proxy(?:,|$)")
+        self.assertNotRegex(qx, r"(?:^|,\s*)force-policy=(?:proxy|代理)(?:,|$)")
+        self.assertRegex(qx, r"(?:^|,\s*)force-policy=Proxy(?:,|$)")
 
     def test_committed_configs_share_optimized_apns_routing(self):
         configs = {
@@ -717,15 +717,16 @@ rule-providers:
             ],
         )
 
-        self.assertRegex(outputs["surge_mac_allen.conf"], r"(?m)^proxy = select,")
-        self.assertRegex(outputs["surge_iphone_allen.conf"], r"(?m)^proxy = select,")
+        self.assertRegex(outputs["surge_mac_allen.conf"], r"(?m)^Proxy = select,")
+        self.assertRegex(outputs["surge_iphone_allen.conf"], r"(?m)^Proxy = select,")
+        self.assertRegex(outputs["quantumultx_allen.conf"], r"(?m)^static=Proxy,")
         self.assertNotRegex(outputs["quantumultx_allen.conf"], r"(?m)^static=proxy,")
         self.assertNotRegex(outputs["quantumultx_allen.conf"], r"(?m)^static=代理,")
-        self.assertRegex(outputs["loon_allen.lcf"], r"(?m)^proxy = select,")
+        self.assertRegex(outputs["loon_allen.lcf"], r"(?m)^Proxy = select,")
         mihomo_groups = [group["name"] for group in mihomo["proxy-groups"]]
-        self.assertIn("proxy", mihomo_groups)
+        self.assertIn("Proxy", mihomo_groups)
         self.assertNotIn("代理", mihomo_groups)
-        self.assertNotIn("Proxy", mihomo_groups)
+        self.assertNotIn("proxy", mihomo_groups)
         self.assertNotIn("ai_custom", mihomo["rule-providers"])
         self.assertFalse(
             any(rule.startswith("RULE-SET,ai_custom,") for rule in mihomo["rules"])
