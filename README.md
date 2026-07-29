@@ -99,12 +99,12 @@ proxy-providers:
       enable: true
       url: https://www.gstatic.com/generate_204
       interval: 300
-    proxy: 直连
+    proxy: DIRECT
 
 secret: CHANGE_ME
 ```
 
-`proxy` 只表示下载订阅时使用的出口，不代表订阅内节点流量全部直连。模板默认校验节点 TLS 证书。
+`proxy` 只表示下载订阅时使用的出口，不代表订阅内节点流量全部直连。这里使用 Mihomo 内置的 `DIRECT`，无需再定义名为“直连”的本地节点，因此经过订阅转换工具处理后也不会产生缺失引用。模板默认校验节点 TLS 证书。
 
 ### Surge for Mac / iPhone
 
