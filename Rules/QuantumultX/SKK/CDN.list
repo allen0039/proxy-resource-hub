@@ -3,9 +3,9 @@
 # Derived from https://github.com/SukkaW/Surge
 # Source: https://ruleset.skk.moe/List/domainset/cdn.conf
 # Source: https://ruleset.skk.moe/List/non_ip/cdn.conf
-# Upstream Last Updated: 2026-07-21T16:18:25.336Z (domainset)
+# Upstream Last Updated: 2026-07-29T02:59:05.810Z (domainset)
 # Upstream Last Updated: 2026-06-30T21:42:09.831Z (non_ip)
-# Rule count: 4639
+# Rule count: 4647
 
 host, 7h1s_rul35et_i5_mad3_by_5ukk4w-ruleset.skk.moe, proxy
 host, 0x0.st, proxy
@@ -1909,6 +1909,10 @@ host, img.javstore.net, proxy
 host, img.jsdelivr.com, proxy
 host, img.kbhgames.com, proxy
 host, img.moviefap.com, proxy
+host, img.novipnoad.ca, proxy
+host, img.novipnoad.cc, proxy
+host, img.novipnoad.uk, proxy
+host, img.novipnoad.us, proxy
 host, img.olympics.com, proxy
 host-suffix, img.sooplive.com, proxy
 host, img.sparemin.com, proxy
@@ -2275,6 +2279,9 @@ host, images.svc.ui.com, proxy
 host, images.vexels.com, proxy
 host-suffix, img.haiwaikan.com, proxy
 host, img.imoutomoe.net, proxy
+host, img.novipnoad.com, proxy
+host, img.novipnoad.net, proxy
+host, img.novipnoad.xyz, proxy
 host, img.picacomic.com, proxy
 host, img.riskified.com, proxy
 host, img2.gelbooru.com, proxy
@@ -2987,6 +2994,7 @@ host, static.esimplus.net, proxy
 host, static.euronews.com, proxy
 host, static.formula1.com, proxy
 host, static.getbutton.io, proxy
+host, static.giffgaff.com, proxy
 host, static.gigabyte.com, proxy
 host, static.goaffpro.com, proxy
 host, static.mendeley.com, proxy
