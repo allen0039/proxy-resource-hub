@@ -1,4 +1,4 @@
-# Generated from Rules/Source/AI/gongyiai.txt by tools/generate_rules.py. Do not edit.
+# Generated from Rules/Source/AI/direct-ai.txt by tools/generate_rules.py. Do not edit.
 
 # Public-welfare AI services maintained by Allen
 host-suffix, abrdns.com, proxy
