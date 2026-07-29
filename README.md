@@ -243,13 +243,11 @@ https://raw.githubusercontent.com/allen0039/proxy-resource-hub/main/Rules/Loon/P
 
 ### 兼容地址
 
-以下旧地址继续由同一个生成器维护：
+以下兼容地址继续由同一个生成器维护：
 
-- [Rules/AI/ai.list](https://raw.githubusercontent.com/allen0039/proxy-resource-hub/main/Rules/AI/ai.list)
-- [Rules/AI/direct-ai.list](https://raw.githubusercontent.com/allen0039/proxy-resource-hub/main/Rules/AI/direct-ai.list)
 - [Rules/shop/shopping.list](https://raw.githubusercontent.com/allen0039/proxy-resource-hub/main/Rules/shop/shopping.list)
 
-兼容文件使用 `DOMAIN-SUFFIX,<domain>` 格式，可用于 Mihomo classical、Surge RULE-SET 和 Loon。Quantumult X 应使用专属目录中的规则。海淘规则明确排除 AWS、CloudFront、Prime Video、Kindle、Audible 和 IMDb；Prime Video 规则应置于海淘规则之前。
+该兼容文件使用 `DOMAIN-SUFFIX,<domain>` 格式，可用于 Mihomo classical、Surge RULE-SET 和 Loon。Quantumult X 应使用专属目录中的规则。海淘规则明确排除 AWS、CloudFront、Prime Video、Kindle、Audible 和 IMDb；Prime Video 规则应置于海淘规则之前。
 
 ## 维护与自动更新
 
@@ -308,7 +306,6 @@ Rules/
 ├── Surge/                   # Surge 规则
 ├── QuantumultX/             # Quantumult X 规则及 SKK 转换结果
 ├── Loon/                    # Loon 规则及 SKK 转换结果
-├── AI/                      # 旧订阅地址兼容层
 └── SKK/                     # SKK 来源与许可证说明
 tools/
 ├── generate_rules.py        # 生成跨客户端规则
