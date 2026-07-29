@@ -156,14 +156,16 @@ visual hierarchy.
 Run:
 
 ```bash
-rg -n "Rules/AI/" README.md Rules Configs tools .github || true
+rg -n "Rules/AI/" README.md Rules tools .github || true
+rg -n "proxy-resource-hub/main/Rules/AI/" Configs || true
 test -f Rules/shop/shopping.list
 test -f Rules/Source/AI/ai.txt
 test -f Rules/Source/AI/direct-ai.txt
 ```
 
 Expected: no active `Rules/AI/` reference is found; all three required retained
-files exist.
+files exist. A reference to `allen0039/mihomo/Rules/AI/ai.list` is outside this
+repository and must remain unchanged.
 
 - [ ] **Step 4: Run the complete repository suite**
 
