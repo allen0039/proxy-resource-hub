@@ -322,8 +322,6 @@ https://whatshub.top/plugin/youtube.plugin, enabled=false
 https://whatshub.top/plugin/photoshop.plugin, enabled=false
 https://whatshub.top/plugin/fanqienovel.plugin, enabled=true
 https://whatshub.top/plugin/lightroom.plugin, enabled=true
-# 上游已删除 FKTG；保留地址供追溯，不再加载。
-https://github.com/Repcz/Tool/raw/X/Surge/Module/Function/FKTG.sgmodule, enabled=false
 # Kelee 资源当前受 Cloudflare Challenge 阻挡；保留配置，恢复可用前不加载。
 https://kelee.one/Tool/Loon/Lpx/BlockAdvertisers.lpx, tag=广告平台拦截器, enabled=false
 https://kelee.one/Tool/Loon/Lpx/Remove_ads_by_keli.lpx, tag=可莉广告过滤器, enabled=false
