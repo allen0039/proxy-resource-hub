@@ -60,6 +60,14 @@ SUPPORTED_AI_REGION_ORDER = [
     "香港优选",
     "香港节点",
 ]
+DOCKER_ICON_URL = (
+    "https://raw.githubusercontent.com/walkxcode/dashboard-icons/"
+    "main/png/docker.png"
+)
+BROKEN_DOCKER_ICON_URL = (
+    "https://raw.githubusercontent.com/Koolson/Qure/master/"
+    "IconSet/Color/Docker.png"
+)
 
 
 def load_sanitizer():
@@ -618,6 +626,13 @@ rule-providers:
         self.assertNotRegex(qx, r"server-tag-regex=[^\n,]*(?:^|\|)(?:新|日|台|United)(?:\||,)")
         self.assertIn("United States", qx)
         self.assertIn("Singapore", qx)
+
+    def test_committed_docker_policy_uses_a_valid_icon_source(self):
+        for name in CONFIG_NAMES:
+            text = (OUTPUT_DIR / name).read_text(encoding="utf-8")
+            with self.subTest(name=name):
+                self.assertIn(DOCKER_ICON_URL, text)
+                self.assertNotIn(BROKEN_DOCKER_ICON_URL, text)
 
     def test_committed_quantumultx_uses_builtin_lowercase_proxy(self):
         qx = (OUTPUT_DIR / "quantumultx_allen.conf").read_text(encoding="utf-8")
