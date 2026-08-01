@@ -983,7 +983,7 @@ rule-providers:
             all(
                 provider.get("type") == "http"
                 and provider.get("behavior") in {"domain", "ipcidr", "classical"}
-                and provider.get("format") in {"mrs", "text"}
+                and provider.get("format") in {"mrs", "text", "yaml"}
                 for provider in unmerged["rule-providers"].values()
             )
         )
