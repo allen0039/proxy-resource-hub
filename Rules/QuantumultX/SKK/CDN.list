@@ -3,9 +3,9 @@
 # Derived from https://github.com/SukkaW/Surge
 # Source: https://ruleset.skk.moe/List/domainset/cdn.conf
 # Source: https://ruleset.skk.moe/List/non_ip/cdn.conf
-# Upstream Last Updated: 2026-08-01T12:14:54.344Z (domainset)
+# Upstream Last Updated: 2026-08-02T09:45:05.519Z (domainset)
 # Upstream Last Updated: 2026-07-31T17:36:02.313Z (non_ip)
-# Rule count: 4651
+# Rule count: 4653
 
 host, 7h15_ru1353t_1s_m4d3_by_5ukk4w.skk.moe, proxy
 host, 0x0.st, proxy
@@ -1948,6 +1948,7 @@ host, lm.visualon.info, proxy
 host, magic.scalar.com, proxy
 host-suffix, mangadex.network, proxy
 host, maps.gstatic.com, proxy
+host, maps.hereapi.com, proxy
 host, maps.wplace.live, proxy
 host, mcdns.vrporn.com, proxy
 host-suffix, media-amazon.com, proxy
@@ -4330,6 +4331,7 @@ host, checkout-sdk.bigcommerce.com, proxy
 host, cms-assets.webediamovies.pro, proxy
 host, code.buywithprime.amazon.com, proxy
 host, components.cyclingfactory.be, proxy
+host, connectcache20.azureedge.net, proxy
 host-suffix, csp-reporting.cloudflare.com, proxy
 host, doppler-config.cbsivideo.com, proxy
 host, fastly-cloud.typenetwork.com, proxy
