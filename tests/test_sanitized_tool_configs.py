@@ -634,31 +634,31 @@ rule-providers:
                 self.assertIn(DOCKER_ICON_URL, text)
                 self.assertNotIn(BROKEN_DOCKER_ICON_URL, text)
 
-    def test_committed_docker_domain_rules_use_docker_policy(self):
+    def test_committed_docker_domains_have_no_local_override(self):
         domains = ("docker.com", "docker.io", "dockerhub.com")
-        expected = {
+        local_rules = {
             "surge_mac_allen.conf": [
-                f"DOMAIN-SUFFIX,{domain},Docker" for domain in domains
+                f"DOMAIN-SUFFIX,{domain},{{policy}}" for domain in domains
             ],
             "surge_iphone_allen.conf": [
-                f"DOMAIN-SUFFIX,{domain},Docker" for domain in domains
+                f"DOMAIN-SUFFIX,{domain},{{policy}}" for domain in domains
             ],
             "quantumultx_allen.conf": [
-                f"host-suffix, {domain}, Docker" for domain in domains
+                f"host-suffix, {domain}, {{policy}}" for domain in domains
             ],
             "loon_allen.lcf": [
-                f"DOMAIN-SUFFIX,{domain},Docker" for domain in domains
+                f"DOMAIN-SUFFIX,{domain},{{policy}}" for domain in domains
             ],
             "mihomo_allen.yaml": [
-                f"- DOMAIN-SUFFIX,{domain},Docker" for domain in domains
+                f"- DOMAIN-SUFFIX,{domain},{{policy}}" for domain in domains
             ],
         }
-        for name, rules in expected.items():
+        for name, rules in local_rules.items():
             text = (OUTPUT_DIR / name).read_text(encoding="utf-8")
             with self.subTest(name=name):
-                for rule in rules:
-                    self.assertIn(rule, text)
-                    self.assertNotIn(rule.replace("Docker", "美国节点"), text)
+                for rule_template in rules:
+                    self.assertNotIn(rule_template.format(policy="Docker"), text)
+                    self.assertNotIn(rule_template.format(policy="美国节点"), text)
 
     def test_committed_quantumultx_uses_builtin_lowercase_proxy(self):
         qx = (OUTPUT_DIR / "quantumultx_allen.conf").read_text(encoding="utf-8")
