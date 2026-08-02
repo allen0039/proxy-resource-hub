@@ -61,6 +61,9 @@ SUPPORTED_AI_REGION_ORDER = [
     "香港节点",
 ]
 DOCKER_ICON_URL = (
+    "https://avatars.githubusercontent.com/u/5429470"
+)
+LEGACY_DOCKER_ICON_URL = (
     "https://raw.githubusercontent.com/walkxcode/dashboard-icons/"
     "main/png/docker.png"
 )
@@ -632,6 +635,7 @@ rule-providers:
             text = (OUTPUT_DIR / name).read_text(encoding="utf-8")
             with self.subTest(name=name):
                 self.assertIn(DOCKER_ICON_URL, text)
+                self.assertNotIn(LEGACY_DOCKER_ICON_URL, text)
                 self.assertNotIn(BROKEN_DOCKER_ICON_URL, text)
 
     def test_committed_docker_domains_have_no_local_override(self):
