@@ -62,7 +62,7 @@ SUPPORTED_AI_REGION_ORDER = [
 ]
 DOCKER_ICON_URL = (
     "https://raw.githubusercontent.com/allen0039/proxy-resource-hub/main/"
-    "assets/docker.png"
+    "assets/docker.png?v=b5317ee"
 )
 LEGACY_DOCKER_ICON_URL = (
     "https://raw.githubusercontent.com/walkxcode/dashboard-icons/"
