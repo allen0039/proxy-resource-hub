@@ -19,6 +19,9 @@ OUTPUT_NAMES = {
     "allenloon.lcf": "loon_allen.lcf",
 }
 CONFIG_NAMES = set(OUTPUT_NAMES.values())
+DEFAULT_SUBSCRIPTION_NAME = "拼好鸡"
+SUBSCRIPTION_URL_PLACEHOLDER = "获取到的订阅链接"
+SUBSCRIPTION_NAMES = ("拼好鸡", "机场", "自建", "备用", "优选")
 
 URL_RE = re.compile(r"https?://[^,\s\"']+")
 POLICY_PATH_RE = re.compile(r"(policy-path\s*=\s*)([^,\s]+)")
@@ -55,6 +58,18 @@ def example_url(
     client: str, category: str, index: int, suffix: str = "conf"
 ) -> str:
     return f"https://example.com/{client}/{category}-{index}.{suffix}"
+
+
+def subscription_name(index: int) -> str:
+    if index <= len(SUBSCRIPTION_NAMES):
+        return SUBSCRIPTION_NAMES[index - 1]
+    return f"备用订阅_{index}"
+
+
+def subscription_url_placeholder(
+    client: str, index: int, suffix: str = "conf"
+) -> str:
+    return SUBSCRIPTION_URL_PLACEHOLDER
 
 
 def _active_content(line: str) -> str:
@@ -109,7 +124,15 @@ def sanitize_surge(text: str, slug: str) -> str:
 
         if POLICY_PATH_RE.search(line):
             subscription_index += 1
-            replacement = example_url(slug, "subscription", subscription_index)
+            replacement = subscription_url_placeholder(slug, subscription_index)
+            line = re.sub(
+                r"^(\s*#?\s*)[^=]+(?=\s*=\s*select\s*,.*policy-path\s*=)",
+                lambda match: match.group(1)
+                + subscription_name(subscription_index)
+                + " ",
+                line,
+                count=1,
+            )
             line, count = POLICY_PATH_RE.subn(
                 lambda match: match.group(1) + replacement,
                 line,
@@ -167,14 +190,17 @@ def sanitize_quantumultx(text: str) -> str:
         if current == "server_remote":
             if URL_RE.search(line):
                 subscription_index += 1
-                output.append(
-                    _replace_first_url(
-                        line,
-                        example_url(
-                            "quantumultx", "subscription", subscription_index
-                        ),
-                    )
+                sanitized = _replace_first_url(
+                    line,
+                    subscription_url_placeholder("quantumultx", subscription_index),
                 )
+                sanitized = re.sub(
+                    r"(,\s*tag=)[^,]+",
+                    lambda match: match.group(1) + subscription_name(subscription_index),
+                    sanitized,
+                    count=1,
+                )
+                output.append(sanitized)
                 continue
             if content:
                 raise SanitizationError(
@@ -224,11 +250,14 @@ def sanitize_loon(text: str) -> str:
         if current == "remote proxy":
             if URL_RE.search(line):
                 subscription_index += 1
+                sanitized = _replace_first_url(
+                    line,
+                    subscription_url_placeholder("loon", subscription_index),
+                )
+                prefix, value = sanitized.split("=", 1)
+                leading = prefix[: len(prefix) - len(prefix.lstrip())]
                 output.append(
-                    _replace_first_url(
-                        line,
-                        example_url("loon", "subscription", subscription_index),
-                    )
+                    f"{leading}{subscription_name(subscription_index)} = {value.lstrip()}"
                 )
                 continue
             if content:
@@ -276,7 +305,7 @@ def _provider_names(text: str) -> list[str]:
 
 def _rename_provider_tokens(text: str, names: list[str]) -> str:
     for index, old_name in enumerate(names, 1):
-        new_name = f"subscription_{index}"
+        new_name = subscription_name(index)
         token = re.compile(
             rf"(?<![\w\u4e00-\u9fff]){re.escape(str(old_name))}"
             rf"(?![\w\u4e00-\u9fff])"
@@ -290,24 +319,30 @@ def _replace_mihomo_provider_urls(text: str) -> str:
     output: list[str] = []
     in_providers = False
     provider_index = 0
+    commented_provider_index = 1
 
     for line in lines:
         if line and not line.startswith((" ", "\t", "#")):
             in_providers = line.strip() == "proxy-providers:"
-        if in_providers and re.match(r"^  subscription_\d+:\s*$", line):
+        if in_providers and re.match(
+            r"^  (?:拼好鸡|机场|自建|备用|优选|备用订阅_\d+):\s*$", line
+        ):
             provider_index += 1
+        elif in_providers and re.match(r"^#  [^\s:][^:]*:\s*$", line):
+            commented_provider_index += 1
+            line = f"#  {subscription_name(commented_provider_index)}:"
         if in_providers and re.match(r"^    url:\s*", line):
             if provider_index == 0:
                 raise SanitizationError("mihomo: provider URL precedes provider name")
             line = (
                 "    url: \""
-                + example_url("mihomo", "subscription", provider_index, "yaml")
+                + subscription_url_placeholder("mihomo", provider_index, "yaml")
                 + "\""
             )
         elif in_providers and re.match(r"^#    url:\s*", line):
             line = (
                 "#    url: \""
-                + example_url("mihomo", "subscription-example", 1, "yaml")
+                + SUBSCRIPTION_URL_PLACEHOLDER
                 + "\""
             )
         output.append(line)
@@ -371,6 +406,13 @@ def _sections(text: str) -> dict[str, list[tuple[int, str]]]:
     return result
 
 
+def _is_subscription_placeholder(value: str) -> bool:
+    return (
+        value == SUBSCRIPTION_URL_PLACEHOLDER
+        or urlsplit(value).hostname == "example.com"
+    )
+
+
 def _require_sections(filename: str, text: str, expected: set[str]) -> None:
     missing = expected - set(_sections(text))
     if missing:
@@ -383,8 +425,13 @@ def _sensitive_section_urls(
     filename: str, lines: list[tuple[int, str]]
 ) -> None:
     for number, line in lines:
-        match = URL_RE.search(line)
-        if match and urlsplit(match.group(0)).hostname != "example.com":
+        content = _active_content(line)
+        if not content:
+            continue
+        endpoint = content.split(",", 1)[0].strip()
+        if "=" in endpoint:
+            endpoint = endpoint.split("=", 1)[1].strip()
+        if not _is_subscription_placeholder(endpoint):
             raise SanitizationError(
                 f"{filename}:{number}: non-placeholder subscription URL remains"
             )
@@ -395,7 +442,7 @@ def _surge_policy_path_urls(
 ) -> None:
     for number, line in lines:
         match = POLICY_PATH_RE.search(line)
-        if match is None or urlsplit(match.group(2)).hostname != "example.com":
+        if match is None or not _is_subscription_placeholder(match.group(2)):
             raise SanitizationError(
                 f"{filename}:{number}: non-placeholder policy-path remains"
             )
@@ -480,14 +527,14 @@ def _validate_mihomo(filename: str, text: str) -> None:
         raise SanitizationError(f"{filename}: rule-providers mapping is missing")
 
     expected_provider_names = {
-        f"subscription_{index}" for index in range(1, len(providers) + 1)
+        subscription_name(index) for index in range(1, len(providers) + 1)
     }
     if set(providers) != expected_provider_names:
         raise SanitizationError(f"{filename}: provider names are not generic")
     for provider in providers.values():
         if not isinstance(provider, dict):
             raise SanitizationError(f"{filename}: provider entry is not a mapping")
-        if urlsplit(str(provider.get("url", ""))).hostname != "example.com":
+        if not _is_subscription_placeholder(str(provider.get("url", ""))):
             raise SanitizationError(
                 f"{filename}: non-placeholder provider URL remains"
             )
