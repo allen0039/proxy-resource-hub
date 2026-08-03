@@ -101,6 +101,52 @@ AI_PRIORITY_DOMAINS = (
     "copilot-telemetry.githubusercontent.com",
     "githubcopilot.com",
 )
+REGIONAL_RULES = (
+    ("DOMAIN-SUFFIX", "hytron.io", "香港节点"),
+    ("DOMAIN-SUFFIX", "linux.do", "美国节点"),
+    ("DOMAIN-KEYWORD", "uspatriottactical", "美国节点"),
+    ("DOMAIN-KEYWORD", "hdhive", "美国节点"),
+    ("DOMAIN-SUFFIX", "rundongex.com", "美国节点"),
+    ("DOMAIN-SUFFIX", "servercontrolpanel.de", "美国节点"),
+    ("DOMAIN-SUFFIX", "mgboard.net", "美国节点"),
+    ("DOMAIN-KEYWORD", "sehuatang", "美国节点"),
+    ("DOMAIN-KEYWORD", "greasyfork", "美国节点"),
+    ("DOMAIN-KEYWORD", "qichiyu", "美国节点"),
+    ("DOMAIN-SUFFIX", "mjji.de", "美国节点"),
+    ("DOMAIN-KEYWORD", "hd-torrents", "美国节点"),
+    ("DOMAIN-SUFFIX", "embyapp.top", "美国节点"),
+    ("DOMAIN-SUFFIX", "vps.town", "美国节点"),
+    ("DOMAIN-SUFFIX", "2fa.fun", "美国节点"),
+    ("DOMAIN-SUFFIX", "macwk.cn", "美国节点"),
+    ("DOMAIN-SUFFIX", "appstorrent.ru", "美国节点"),
+    ("DOMAIN-KEYWORD", "kejilion", "香港节点"),
+    ("DOMAIN-SUFFIX", "nfbyte.com", "香港节点"),
+    ("DOMAIN-KEYWORD", "onitsukatiger", "日本节点"),
+    ("DOMAIN-SUFFIX", "montbell.com", "香港节点"),
+    ("DOMAIN-SUFFIX", "compliance.chippercash.com", "美国节点"),
+    ("DOMAIN-KEYWORD", "dmm", "日本节点"),
+    ("DOMAIN-KEYWORD", "javrate", "日本节点"),
+    ("DOMAIN-KEYWORD", "jav321", "日本节点"),
+    ("DOMAIN-KEYWORD", "freejavbt", "日本节点"),
+    ("DOMAIN-KEYWORD", "javbus", "日本节点"),
+    ("DOMAIN-KEYWORD", "mgstage", "日本节点"),
+    ("DOMAIN-KEYWORD", "mmtv", "日本节点"),
+    ("DOMAIN-KEYWORD", "javdb", "新加坡节点"),
+    ("DOMAIN-KEYWORD", "javlibrary", "新加坡节点"),
+    ("DOMAIN-KEYWORD", "avbase", "新加坡节点"),
+    ("DOMAIN-KEYWORD", "missav", "美国节点"),
+    ("DOMAIN-KEYWORD", "ftvgirls", "美国节点"),
+)
+REGIONAL_POLICY_FILES = {
+    "香港节点": "hk",
+    "香港优选": "hk-auto",
+    "美国节点": "us",
+    "美国优选": "us-auto",
+    "日本节点": "jp",
+    "日本优选": "jp-auto",
+    "新加坡节点": "sg",
+    "新加坡优选": "sg-auto",
+}
 
 
 def load_generator():
@@ -123,7 +169,7 @@ class RuleGeneratorTests(unittest.TestCase):
         generator = load_generator()
         outputs = generator.build_outputs(ROOT)
 
-        self.assertEqual(21, len(outputs))
+        self.assertEqual(53, len(outputs))
         for client in ("Mihomo", "Surge", "QuantumultX", "Loon"):
             for ruleset in ("ai", "direct-ai"):
                 expected = ROOT / "Rules" / client / "AI" / f"{ruleset}.list"
@@ -135,6 +181,88 @@ class RuleGeneratorTests(unittest.TestCase):
         compatibility = ROOT / "Rules" / "shop" / "shopping.list"
         self.assertIn(compatibility, outputs)
         self.assertTrue(compatibility.exists())
+
+    def test_regional_outputs_include_all_clients_and_policies(self):
+        generator = load_generator()
+        outputs = generator.build_outputs(ROOT)
+        source = ROOT / "Rules" / "Source" / "Regional" / "routing.list"
+
+        self.assertTrue(source.exists())
+        self.assertEqual(REGIONAL_RULES, tuple(generator.parse_regional_source(source)))
+        for client in ("Mihomo", "Surge", "QuantumultX", "Loon"):
+            for slug in REGIONAL_POLICY_FILES.values():
+                with self.subTest(client=client, slug=slug):
+                    self.assertIn(
+                        ROOT / "Rules" / client / "Regional" / f"{slug}.list",
+                        outputs,
+                    )
+
+    def test_regional_outputs_preserve_client_formats_and_empty_policies(self):
+        generator = load_generator()
+        outputs = generator.build_outputs(ROOT)
+
+        us = outputs[ROOT / "Rules" / "Surge" / "Regional" / "us.list"]
+        self.assertIn("DOMAIN-SUFFIX,linux.do", us)
+        self.assertIn("DOMAIN-KEYWORD,hdhive", us)
+        self.assertLess(us.index("DOMAIN-SUFFIX,linux.do"), us.index("DOMAIN-KEYWORD,hdhive"))
+        self.assertNotIn("hdhive.online", us)
+
+        qx = outputs[ROOT / "Rules" / "QuantumultX" / "Regional" / "jp.list"]
+        self.assertIn("host-keyword, dmm, proxy", qx)
+        self.assertIn("host-keyword, javbus, proxy", qx)
+
+        preferred = outputs[ROOT / "Rules" / "Mihomo" / "Regional" / "us-auto.list"]
+        self.assertEqual(
+            0,
+            len(
+                [
+                    line
+                    for line in preferred.splitlines()
+                    if line and not line.startswith("#")
+                ]
+            ),
+        )
+
+    def test_parse_regional_source_rejects_invalid_rows(self):
+        generator = load_generator()
+        invalid_cases = {
+            "DOMAIN,example.com,美国节点\n": "unsupported rule type",
+            "DOMAIN-SUFFIX,example.com,欧洲节点\n": "unknown policy",
+            "DOMAIN-SUFFIX,https://example.com/path,美国节点\n": "invalid domain",
+            "DOMAIN-SUFFIX,example.com,美国节点\nDOMAIN-SUFFIX,example.com,日本节点\n": "duplicate rule",
+            "DOMAIN-KEYWORD,hdhive,美国节点\nDOMAIN-SUFFIX,hdhive.online,香港节点\n": "overlapping keyword and suffix",
+            "DOMAIN-SUFFIX,example.com\n": "expected three non-empty fields",
+            "DOMAIN-SUFFIX,Example.com,美国节点\n": "invalid domain",
+            "DOMAIN-KEYWORD,Example,美国节点\n": "invalid keyword",
+            "DOMAIN-KEYWORD,example keyword,美国节点\n": "invalid keyword",
+            "DOMAIN-SUFFIX,example.com,美国节点\nDOMAIN-SUFFIX,example.com,美国节点\n": "duplicate rule",
+        }
+        with tempfile.TemporaryDirectory() as tmp:
+            path = Path(tmp) / "routing.list"
+            for content, reason in invalid_cases.items():
+                with self.subTest(reason=reason):
+                    path.write_text(content, encoding="utf-8")
+                    with self.assertRaisesRegex(ValueError, reason):
+                        generator.parse_regional_source(path)
+
+    def test_render_regional_uses_platform_specific_rule_types(self):
+        generator = load_generator()
+        rules = [
+            ("DOMAIN-SUFFIX", "linux.do", "美国节点"),
+            ("DOMAIN-KEYWORD", "hdhive", "美国节点"),
+        ]
+
+        classical = generator.render_regional(
+            rules, "classical", "Rules/Source/Regional/routing.list"
+        )
+        quantumultx = generator.render_regional(
+            rules, "quantumultx", "Rules/Source/Regional/routing.list"
+        )
+
+        self.assertIn("DOMAIN-SUFFIX,linux.do", classical)
+        self.assertIn("DOMAIN-KEYWORD,hdhive", classical)
+        self.assertIn("host-suffix, linux.do, proxy", quantumultx)
+        self.assertIn("host-keyword, hdhive, proxy", quantumultx)
 
     def test_personal_sites_outputs_are_generated_for_every_client(self):
         generator = load_generator()
@@ -298,6 +426,8 @@ class RuleGeneratorTests(unittest.TestCase):
 
         for path, content in outputs.items():
             rule_lines = [line for line in content.splitlines() if line and not line.startswith("#")]
+            if "Regional" in path.parts:
+                continue
             if "QuantumultX" in path.parts:
                 self.assertTrue(all(line.startswith("host-suffix, ") for line in rule_lines))
                 self.assertTrue(all(line.endswith(", proxy") for line in rule_lines))
