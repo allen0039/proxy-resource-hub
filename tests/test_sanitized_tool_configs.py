@@ -122,7 +122,8 @@ ca-p12 = FAKE_P12_BASE64
         self.assertNotIn("private.invalid", result)
         self.assertNotIn("FAKE_PASSWORD", result)
         self.assertNotIn("FAKE_P12_BASE64", result)
-        self.assertIn("https://example.com/surge-mac/subscription-1.conf", result)
+        self.assertIn("policy-path=获取到的订阅链接", result)
+        self.assertIn("拼好鸡 = select", result)
         self.assertIn(PUBLIC_RULE_URL, result)
         self.assertIn("https://public.example/icon.png", result)
         self.assertIn("请在本机配置并信任 MitM 证书与口令", result)
@@ -148,8 +149,9 @@ hostname = example.org
         result = sanitizer.sanitize_surge(source, "surge-mac")
 
         self.assertIn("policy-path 是订阅地址", result)
-        self.assertIn("https://example.com/surge-mac/subscription-1.conf", result)
-        self.assertIn("https://example.com/surge-mac/subscription-2.conf", result)
+        self.assertEqual(2, result.count("policy-path=获取到的订阅链接"))
+        self.assertIn("拼好鸡 = select", result)
+        self.assertIn("# 机场 = select", result)
         self.assertNotIn("private.invalid", result)
         sanitizer.validate_client_structure("surge_mac_allen.conf", result)
 
@@ -185,8 +187,9 @@ p12 = FAKE_P12_BASE64
         self.assertNotIn("FAKE_PASSWORD", result)
         self.assertNotIn("FAKE-COMMENTED-UUID", result)
         self.assertNotIn("FAKE_P12_BASE64", result)
-        self.assertIn("https://example.com/quantumultx/subscription-1.conf", result)
-        self.assertIn("https://example.com/quantumultx/subscription-2.conf", result)
+        self.assertEqual(3, result.count("获取到的订阅链接"))
+        self.assertIn("tag=拼好鸡", result)
+        self.assertIn("tag=机场", result)
         self.assertIn("请在本机配置代理节点", result)
         self.assertIn(PUBLIC_RULE_URL, result)
         self.assertIn("https://public.example/parser.js", result)
@@ -240,8 +243,9 @@ ca-passphrase = FAKE_PASSWORD
         self.assertNotIn("private.invalid", result)
         self.assertNotIn("FAKE_PASSWORD", result)
         self.assertNotIn("FAKE_P12_BASE64", result)
-        self.assertIn("https://example.com/loon/subscription-1.conf", result)
-        self.assertIn("https://example.com/loon/subscription-2.conf", result)
+        self.assertEqual(3, result.count("获取到的订阅链接"))
+        self.assertIn("拼好鸡 = 获取到的订阅链接", result)
+        self.assertIn("机场 = 获取到的订阅链接", result)
         self.assertIn("请在本机配置代理节点", result)
         self.assertIn(PUBLIC_RULE_URL, result)
         self.assertIn("https://public.example/icon.png", result)
@@ -289,8 +293,8 @@ rule-providers:
         self.assertNotIn("FAKE-UUID", result)
         self.assertNotIn("FAKE_SECRET", result)
         self.assertNotIn("PersonalName", result)
-        self.assertIn("subscription_1", parsed["proxy-providers"])
-        self.assertEqual(["subscription_1"], parsed["proxy-groups"][0]["use"])
+        self.assertIn("拼好鸡", parsed["proxy-providers"])
+        self.assertEqual(["拼好鸡"], parsed["proxy-groups"][0]["use"])
         self.assertEqual("CHANGE_ME", parsed["secret"])
         self.assertEqual("example.com", parsed["proxies"][0]["server"])
         self.assertIn(PUBLIC_RULE_URL, result)
@@ -475,15 +479,9 @@ rule-providers:
             "将 policy-path 替换为自己的订阅地址",
             outputs["surge_mac_allen.conf"],
         )
-        self.assertIn(
-            "请将 URL 替换为自己的订阅地址", outputs["loon_allen.lcf"]
-        )
-        self.assertIn(
-            "请替换为自己的地址", outputs["quantumultx_allen.conf"]
-        )
-        self.assertIn(
-            "请将 url 替换为自己的订阅地址", outputs["mihomo_allen.yaml"]
-        )
+        for name in CONFIG_NAMES:
+            with self.subTest(name=name, check="subscription placeholder"):
+                self.assertIn("获取到的订阅链接", outputs[name])
 
     def test_committed_policy_sections_have_no_explanatory_comments(self):
         outputs = {
@@ -557,7 +555,7 @@ rule-providers:
         qx_subscriptions = [
             line
             for line in qx_server_remote.splitlines()
-            if line.startswith("https://")
+            if line.startswith("获取到的订阅链接")
         ]
         self.assertEqual(4, len(qx_subscriptions))
         self.assertTrue(
@@ -882,7 +880,7 @@ rule-providers:
             encoding="utf-8"
         )
         mihomo = yaml.safe_load(mihomo_text)
-        self.assertEqual(["subscription_1"], list(mihomo["proxy-providers"]))
+        self.assertEqual(["拼好鸡"], list(mihomo["proxy-providers"]))
         self.assertNotIn("Allen合集订阅", mihomo_text)
 
     def test_committed_outputs_use_owned_ai_priority_layer(self):
