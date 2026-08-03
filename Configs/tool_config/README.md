@@ -3,7 +3,7 @@
 这里提供 Mihomo、Surge、Quantumult X 和 Loon 的五份完整配置模板。
 
 > [!IMPORTANT]
-> 这些是公开脱敏模板，里面没有真实节点。必须先下载到本地，把 `https://example.com/...` 替换成自己的机场订阅，才能正常使用。
+> 这些是公开脱敏模板，里面没有真实节点。必须先下载到本地，把 `获取到的订阅链接` 替换成自己的机场订阅，才能正常使用。
 
 ## 先安装客户端
 
@@ -34,7 +34,7 @@ App Store 链接指向应用官方商店页面。部分应用可能未在所有�
 
 1. 在下面表格中找到自己的客户端。
 2. 点击 `Raw 下载`，把配置保存到本地。
-3. 搜索 `https://example.com/`，替换第一条已启用订阅的 URL。
+3. 搜索 `获取到的订阅链接`，替换第一条已启用订阅的 URL。
 4. 导入客户端，更新订阅和远程资源。
 
 不要直接把本页或 Raw 地址当成远程配置订阅。公开模板需要填写私人信息，应该作为本地配置使用。
@@ -59,11 +59,11 @@ App Store 链接指向应用官方商店页面。部分应用可能未在所有�
 
 ### 第二步：填写机场订阅
 
-每份模板默认只启用第一份订阅；Mihomo 脱敏模板名为 `subscription_1`，其他四份模板名为 `拼好鸡`。先替换第一条即可。
+每份模板默认只启用第一份订阅，名称为 `拼好鸡`；其余保留订阅依次命名为 `机场`、`自建`、`备用`、`优选`。先替换第一条即可。
 
 | 客户端 | 搜索位置 | 需要修改的内容 |
 | --- | --- | --- |
-| Mihomo | `proxy-providers` | 替换 `subscription_1` 下的 `url` |
+| Mihomo | `proxy-providers` | 替换 `拼好鸡` 下的 `url` |
 | Surge | `[Proxy Group]` | 替换 `拼好鸡` 行中的 `policy-path` |
 | Quantumult X | `[server_remote]` | 替换第一条 `enabled=true` 的 URL |
 | Loon | `[Remote Proxy]` | 替换 `拼好鸡 =` 后面的 URL |
@@ -94,8 +94,8 @@ App Store 链接指向应用官方商店页面。部分应用可能未在所有�
 
 ```yaml
 proxy-providers:
-  subscription_1:
-    url: "https://example.com/your-private-subscription.yaml"
+  拼好鸡:
+    url: "获取到的订阅链接"
 
 secret: CHANGE_ME
 ```
@@ -114,7 +114,7 @@ secret: CHANGE_ME
 需要修改：
 
 ```ini
-拼好鸡 = select, policy-path=https://example.com/your-private-subscription.conf, update-interval=86400
+拼好鸡 = select, policy-path=获取到的订阅链接, update-interval=86400
 ```
 
 操作要点：
@@ -132,7 +132,7 @@ Mac 和 iPhone 必须选择对应文件。Surge Mac 模板包含 qB 下载器来
 
 ```ini
 [server_remote]
-https://example.com/your-private-subscription.conf, tag=拼好鸡, update-interval=172800, opt-parser=false, enabled=true
+获取到的订阅链接, tag=拼好鸡, update-interval=172800, opt-parser=false, enabled=true
 
 [server_local]
 # 需要单节点时写在这里
@@ -152,7 +152,7 @@ https://example.com/your-private-subscription.conf, tag=拼好鸡, update-interv
 
 ```ini
 [Remote Proxy]
-拼好鸡 = https://example.com/your-private-subscription.conf,udp=true,skip-cert-verify=false,enabled=true
+拼好鸡 = 获取到的订阅链接,udp=true,skip-cert-verify=false,enabled=true
 ```
 
 操作要点：
@@ -180,7 +180,7 @@ Loon 的 AI、测速、Steam 和 Game 补充规则使用 Blackmatrix 的 Loon �
 
 ## 新手不要随便改这些内容
 
-- 不要重命名 `拼好鸡`、`subscription_1`、`Proxy`、Quantumult X 的内置 `proxy`、`Final` 和地区策略组。
+- 不要重命名 `拼好鸡`、`机场`、`自建`、`备用`、`优选`、`Proxy`、Quantumult X 的内置 `proxy`、`Final` 和地区策略组。
 - 不要打乱规则顺序，规则从上到下首次匹配生效。
 - 不要随意修改地区筛选正则，否则可能出现节点串组或节点为空。
 - 不要全局关闭证书校验。

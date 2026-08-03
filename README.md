@@ -5,7 +5,7 @@
 面向 Mihomo、Surge、Quantumult X 和 Loon 的代理配置与分流规则仓库。仓库提供五份脱敏配置模板，以及 AI、个人域名、PT 站点、海淘购物和 SKK CDN/Download 规则订阅。
 
 > [!IMPORTANT]
-> `Configs/tool_config/` 中的文件是公开脱敏模板，不是开箱即用的节点订阅。使用前必须在自己的私人副本中替换 `https://example.com/...`、`CHANGE_ME`、本地节点和 MITM 证书。不要把填写后的私人配置提交到公开仓库。
+> `Configs/tool_config/` 中的文件是公开脱敏模板，不是开箱即用的节点订阅。使用前必须在自己的私人副本中替换 `获取到的订阅链接`、`CHANGE_ME`、本地节点和 MITM 证书。不要把填写后的私人配置提交到公开仓库。
 
 ## 内容导航
 
@@ -54,12 +54,12 @@
 
 | 占位内容 | 处理方式 |
 | --- | --- |
-| `https://example.com/...` | 替换为自己的节点订阅 URL |
+| `获取到的订阅链接` | 替换为自己的节点订阅 URL |
 | `CHANGE_ME` | 设置控制器口令、UUID、密码或其他密钥 |
 | `Configure local proxy nodes privately.` | 按客户端语法添加单节点；不需要时保留注释即可 |
 | `Configure MITM certificate and passphrase locally.` | 在设备本地生成或导入 MITM 证书和口令 |
 
-默认只启用第一份订阅；Mihomo 脱敏模板名为 `subscription_1`，其他四份模板名为 `拼好鸡`。替换订阅 URL 时不要随意修改名称，否则地区策略组可能无法读取节点。
+默认只启用第一份订阅，名称为 `拼好鸡`；其余保留订阅依次命名为 `机场`、`自建`、`备用`、`优选`。替换订阅 URL 时不要随意修改名称，否则地区策略组可能无法读取节点。
 
 ### 3. 导入客户端
 
@@ -91,8 +91,8 @@
 
 ```yaml
 proxy-providers:
-  subscription_1:
-    url: "https://example.com/your-private-subscription.yaml"
+  拼好鸡:
+    url: "获取到的订阅链接"
     type: http
     interval: 46400
     health-check:
@@ -116,7 +116,7 @@ secret: CHANGE_ME
 
 ```ini
 [Proxy Group]
-拼好鸡 = select, policy-path=https://example.com/your-private-subscription.conf, update-interval=86400, include-all-proxies=0
+拼好鸡 = select, policy-path=获取到的订阅链接, update-interval=86400, include-all-proxies=0
 ```
 
 地区组通过 `include-other-group=拼好鸡` 读取节点。若重命名订阅组，需要同步修改所有 `include-other-group` 引用。
@@ -133,7 +133,7 @@ Surge Mac 模板保留 qB 下载器来源 IP 直连规则；Surge iPhone 不包�
 
 ```ini
 [server_remote]
-https://example.com/your-private-subscription.conf, tag=拼好鸡, update-interval=172800, opt-parser=false, enabled=true
+获取到的订阅链接, tag=拼好鸡, update-interval=172800, opt-parser=false, enabled=true
 
 [server_local]
 # 在这里按 Quantumult X 节点语法逐行添加单节点
@@ -149,7 +149,7 @@ https://example.com/your-private-subscription.conf, tag=拼好鸡, update-interv
 
 ```ini
 [Remote Proxy]
-拼好鸡 = https://example.com/your-private-subscription.conf,udp=true,skip-cert-verify=false,enabled=true
+拼好鸡 = 获取到的订阅链接,udp=true,skip-cert-verify=false,enabled=true
 ```
 
 Loon 的远程规则位于 `[Remote Rule]`，插件位于 `[Plugin]`。启用需要 HTTPS 解密的插件前，必须先正确配置 `[Mitm]`。
