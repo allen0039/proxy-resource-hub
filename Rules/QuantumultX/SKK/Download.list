@@ -3,9 +3,9 @@
 # Derived from https://github.com/SukkaW/Surge
 # Source: https://ruleset.skk.moe/List/domainset/download.conf
 # Source: https://ruleset.skk.moe/List/non_ip/download.conf
-# Upstream Last Updated: 2026-07-31T17:36:02.648Z (domainset)
-# Upstream Last Updated: 2026-07-31T17:36:02.314Z (non_ip)
-# Rule count: 1975
+# Upstream Last Updated: 2026-08-03T13:00:57.303Z (domainset)
+# Upstream Last Updated: 2026-08-03T09:55:45.816Z (non_ip)
+# Rule count: 1978
 
 host, 7h15_ru1353t_1s_m4d3_by_5ukk4w.skk.moe, proxy
 host-suffix, gcr.io, proxy
@@ -248,6 +248,7 @@ host, disks.webvm.io, proxy
 host, dl.devmate.com, proxy
 host, dl.flathub.org, proxy
 host, dl.nssurge.com, proxy
+host, dl.pikpak.site, proxy
 host, dl2.osmand.net, proxy
 host, dl3.osmand.net, proxy
 host, dl4.osmand.net, proxy
@@ -1413,6 +1414,7 @@ host, mirrors.middlendian.com, proxy
 host, mirrors.nepalicloud.com, proxy
 host, mirrors.powernet.com.ru, proxy
 host, mirrors.rackhosting.com, proxy
+host, node-registry.bit.cloud, proxy
 host, omtmapupdate.garmin.com, proxy
 host, packages.virtfusion.net, proxy
 host, packagespc.xboxlive.com, proxy
@@ -1981,4 +1983,5 @@ host-wildcard, *.s3.*.backblazeb2.com, proxy
 host-wildcard, cdn-*.comaps.app, proxy
 host-wildcard, cdn-*.comaps.tech, proxy
 host-wildcard, cdn-*.organicmaps.app, proxy
+host-wildcard, dl-*.mypikpak.com, proxy
 url-regex, ^http://(.+)\.gvt\d\.com/edgedl, proxy
