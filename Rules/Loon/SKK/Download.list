@@ -3,9 +3,9 @@
 # Derived from https://github.com/SukkaW/Surge
 # Source: https://ruleset.skk.moe/List/domainset/download.conf
 # Source: https://ruleset.skk.moe/List/non_ip/download.conf
-# Upstream Last Updated: 2026-07-31T17:36:02.648Z (domainset)
-# Upstream Last Updated: 2026-07-31T17:36:02.314Z (non_ip)
-# Rule count: 1975
+# Upstream Last Updated: 2026-08-03T13:00:57.303Z (domainset)
+# Upstream Last Updated: 2026-08-03T09:55:45.816Z (non_ip)
+# Rule count: 1978
 
 DOMAIN,7h15_ru1353t_1s_m4d3_by_5ukk4w.skk.moe
 DOMAIN-SUFFIX,gcr.io
@@ -248,6 +248,7 @@ DOMAIN,disks.webvm.io
 DOMAIN,dl.devmate.com
 DOMAIN,dl.flathub.org
 DOMAIN,dl.nssurge.com
+DOMAIN,dl.pikpak.site
 DOMAIN,dl2.osmand.net
 DOMAIN,dl3.osmand.net
 DOMAIN,dl4.osmand.net
@@ -1413,6 +1414,7 @@ DOMAIN,mirrors.middlendian.com
 DOMAIN,mirrors.nepalicloud.com
 DOMAIN,mirrors.powernet.com.ru
 DOMAIN,mirrors.rackhosting.com
+DOMAIN,node-registry.bit.cloud
 DOMAIN,omtmapupdate.garmin.com
 DOMAIN,packages.virtfusion.net
 DOMAIN,packagespc.xboxlive.com
@@ -1981,4 +1983,5 @@ DOMAIN-WILDCARD,*.s3.*.backblazeb2.com
 DOMAIN-WILDCARD,cdn-*.comaps.app
 DOMAIN-WILDCARD,cdn-*.comaps.tech
 DOMAIN-WILDCARD,cdn-*.organicmaps.app
+DOMAIN-WILDCARD,dl-*.mypikpak.com
 URL-REGEX,^http://(.+)\.gvt\d\.com/edgedl
