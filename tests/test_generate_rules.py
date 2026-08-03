@@ -147,7 +147,7 @@ REGIONAL_POLICY_FILES = {
     "新加坡节点": "sg",
     "新加坡优选": "sg-auto",
 }
-REGIONAL_SOURCE_LABEL = "Rules/Source/Personal/allenrules.list"
+REGIONAL_SOURCE_LABEL = "Rules/Source/Regional/allenrules.list"
 REGIONAL_HEADER = (
     f"# Generated from {REGIONAL_SOURCE_LABEL} by tools/generate_rules.py. Do not edit."
 )
@@ -212,7 +212,7 @@ class RuleGeneratorTests(unittest.TestCase):
     def test_regional_outputs_include_all_clients_and_policies(self):
         generator = load_generator()
         outputs = generator.build_outputs(ROOT)
-        source = ROOT / "Rules" / "Source" / "Personal" / "allenrules.list"
+        source = ROOT / "Rules" / "Source" / "Regional" / "allenrules.list"
 
         self.assertTrue(source.exists())
         self.assertEqual(REGIONAL_RULES, tuple(generator.parse_regional_source(source)))
@@ -500,7 +500,9 @@ class RuleGeneratorTests(unittest.TestCase):
             (shop_dir / "shopping.txt").write_text(
                 "example.com\n", encoding="utf-8"
             )
-            (personal_dir / "allenrules.list").write_text(
+            regional_dir = root / "Rules" / "Source" / "Regional"
+            regional_dir.mkdir(parents=True)
+            (regional_dir / "allenrules.list").write_text(
                 "DOMAIN-SUFFIX,example.com,美国节点\n", encoding="utf-8"
             )
             generator.sync_outputs(root, check=False)
@@ -526,9 +528,9 @@ class RuleGeneratorTests(unittest.TestCase):
                     (source_dir / f"{name}.txt").write_text(
                         "example.com\n", encoding="utf-8"
                     )
-            regional_source = (
-                root / "Rules" / "Source" / "Personal" / "allenrules.list"
-            )
+            regional_dir = root / "Rules" / "Source" / "Regional"
+            regional_dir.mkdir(parents=True)
+            regional_source = regional_dir / "allenrules.list"
             regional_source.write_text(
                 "DOMAIN-SUFFIX,example.com,美国节点\n", encoding="utf-8"
             )

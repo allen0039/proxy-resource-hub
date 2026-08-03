@@ -135,7 +135,7 @@ def build_outputs(root: Path) -> dict[Path, str]:
                 root / "Rules" / compatibility_directory / f"{name}.list"
             ] = classical
 
-    source = root / "Rules" / "Source" / "Personal" / "allenrules.list"
+    source = root / "Rules" / "Source" / "Regional" / "allenrules.list"
     source_label = source.relative_to(root).as_posix()
     grouped: dict[str, list[tuple[str, str, str]]] = {}
     for rule in parse_regional_source(source):

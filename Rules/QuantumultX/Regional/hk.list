@@ -1,4 +1,4 @@
-# Generated from Rules/Source/Personal/allenrules.list by tools/generate_rules.py. Do not edit.
+# Generated from Rules/Source/Regional/allenrules.list by tools/generate_rules.py. Do not edit.
 
 host-suffix, hytron.io, proxy
 host-keyword, kejilion, proxy

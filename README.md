@@ -247,7 +247,7 @@ https://raw.githubusercontent.com/allen0039/proxy-resource-hub/main/Rules/Loon/P
 
 ### Regional 地区路由订阅
 
-地区路由规则统一从 `Rules/Source/Personal/allenrules.list` 维护；请只编辑该源文件，客户端目录中的列表由生成器更新。`节点` 和 `优选` 是逻辑策略组：前者用于手动选择地区节点，后者用于自动优选。此版本只发布远程规则订阅，不修改五份本地客户端配置。
+地区路由规则统一从 `Rules/Source/Regional/allenrules.list` 维护；请只编辑该源文件，客户端目录中的列表由生成器更新。`节点` 和 `优选` 是逻辑策略组：前者用于手动选择地区节点，后者用于自动优选。此版本只发布远程规则订阅，不修改五份本地客户端配置。
 
 | 策略组 | Mihomo | Surge | Quantumult X | Loon |
 | --- | --- | --- | --- | --- |
