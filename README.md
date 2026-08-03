@@ -245,6 +245,60 @@ https://raw.githubusercontent.com/allen0039/proxy-resource-hub/main/Rules/Quantu
 https://raw.githubusercontent.com/allen0039/proxy-resource-hub/main/Rules/Loon/PT/Domain.list, policy=DIRECT, tag=PT站点, enabled=true
 ```
 
+### Regional 地区路由订阅
+
+地区路由规则统一从 `Rules/Source/Regional/routing.list` 维护；请只编辑该源文件，客户端目录中的列表由生成器更新。`节点` 和 `优选` 是逻辑策略组：前者用于手动选择地区节点，后者用于自动优选。此版本只发布远程规则订阅，不修改五份本地客户端配置。
+
+| 策略组 | Mihomo | Surge | Quantumult X | Loon |
+| --- | --- | --- | --- | --- |
+| 香港节点 (`hk`) | [订阅](https://raw.githubusercontent.com/allen0039/proxy-resource-hub/main/Rules/Mihomo/Regional/hk.list) | [订阅](https://raw.githubusercontent.com/allen0039/proxy-resource-hub/main/Rules/Surge/Regional/hk.list) | [订阅](https://raw.githubusercontent.com/allen0039/proxy-resource-hub/main/Rules/QuantumultX/Regional/hk.list) | [订阅](https://raw.githubusercontent.com/allen0039/proxy-resource-hub/main/Rules/Loon/Regional/hk.list) |
+| 香港优选 (`hk-auto`) | [订阅](https://raw.githubusercontent.com/allen0039/proxy-resource-hub/main/Rules/Mihomo/Regional/hk-auto.list) | [订阅](https://raw.githubusercontent.com/allen0039/proxy-resource-hub/main/Rules/Surge/Regional/hk-auto.list) | [订阅](https://raw.githubusercontent.com/allen0039/proxy-resource-hub/main/Rules/QuantumultX/Regional/hk-auto.list) | [订阅](https://raw.githubusercontent.com/allen0039/proxy-resource-hub/main/Rules/Loon/Regional/hk-auto.list) |
+| 美国节点 (`us`) | [订阅](https://raw.githubusercontent.com/allen0039/proxy-resource-hub/main/Rules/Mihomo/Regional/us.list) | [订阅](https://raw.githubusercontent.com/allen0039/proxy-resource-hub/main/Rules/Surge/Regional/us.list) | [订阅](https://raw.githubusercontent.com/allen0039/proxy-resource-hub/main/Rules/QuantumultX/Regional/us.list) | [订阅](https://raw.githubusercontent.com/allen0039/proxy-resource-hub/main/Rules/Loon/Regional/us.list) |
+| 美国优选 (`us-auto`) | [订阅](https://raw.githubusercontent.com/allen0039/proxy-resource-hub/main/Rules/Mihomo/Regional/us-auto.list) | [订阅](https://raw.githubusercontent.com/allen0039/proxy-resource-hub/main/Rules/Surge/Regional/us-auto.list) | [订阅](https://raw.githubusercontent.com/allen0039/proxy-resource-hub/main/Rules/QuantumultX/Regional/us-auto.list) | [订阅](https://raw.githubusercontent.com/allen0039/proxy-resource-hub/main/Rules/Loon/Regional/us-auto.list) |
+| 日本节点 (`jp`) | [订阅](https://raw.githubusercontent.com/allen0039/proxy-resource-hub/main/Rules/Mihomo/Regional/jp.list) | [订阅](https://raw.githubusercontent.com/allen0039/proxy-resource-hub/main/Rules/Surge/Regional/jp.list) | [订阅](https://raw.githubusercontent.com/allen0039/proxy-resource-hub/main/Rules/QuantumultX/Regional/jp.list) | [订阅](https://raw.githubusercontent.com/allen0039/proxy-resource-hub/main/Rules/Loon/Regional/jp.list) |
+| 日本优选 (`jp-auto`) | [订阅](https://raw.githubusercontent.com/allen0039/proxy-resource-hub/main/Rules/Mihomo/Regional/jp-auto.list) | [订阅](https://raw.githubusercontent.com/allen0039/proxy-resource-hub/main/Rules/Surge/Regional/jp-auto.list) | [订阅](https://raw.githubusercontent.com/allen0039/proxy-resource-hub/main/Rules/QuantumultX/Regional/jp-auto.list) | [订阅](https://raw.githubusercontent.com/allen0039/proxy-resource-hub/main/Rules/Loon/Regional/jp-auto.list) |
+| 新加坡节点 (`sg`) | [订阅](https://raw.githubusercontent.com/allen0039/proxy-resource-hub/main/Rules/Mihomo/Regional/sg.list) | [订阅](https://raw.githubusercontent.com/allen0039/proxy-resource-hub/main/Rules/Surge/Regional/sg.list) | [订阅](https://raw.githubusercontent.com/allen0039/proxy-resource-hub/main/Rules/QuantumultX/Regional/sg.list) | [订阅](https://raw.githubusercontent.com/allen0039/proxy-resource-hub/main/Rules/Loon/Regional/sg.list) |
+| 新加坡优选 (`sg-auto`) | [订阅](https://raw.githubusercontent.com/allen0039/proxy-resource-hub/main/Rules/Mihomo/Regional/sg-auto.list) | [订阅](https://raw.githubusercontent.com/allen0039/proxy-resource-hub/main/Rules/Surge/Regional/sg-auto.list) | [订阅](https://raw.githubusercontent.com/allen0039/proxy-resource-hub/main/Rules/QuantumultX/Regional/sg-auto.list) | [订阅](https://raw.githubusercontent.com/allen0039/proxy-resource-hub/main/Rules/Loon/Regional/sg-auto.list) |
+
+以下示例把美国节点规则绑定到已有的 `美国节点` 策略组；可按相同方式替换 URL 和策略组名称。
+
+#### Mihomo
+
+```yaml
+rule-providers:
+  regional_us:
+    type: http
+    behavior: classical
+    format: text
+    url: https://raw.githubusercontent.com/allen0039/proxy-resource-hub/main/Rules/Mihomo/Regional/us.list
+    path: ./ruleset/Regional-us.list
+    interval: 86400
+
+rules:
+  - RULE-SET,regional_us,美国节点
+```
+
+#### Surge
+
+```ini
+[Rule]
+RULE-SET,https://raw.githubusercontent.com/allen0039/proxy-resource-hub/main/Rules/Surge/Regional/us.list,美国节点
+```
+
+#### Quantumult X
+
+```ini
+[filter_remote]
+https://raw.githubusercontent.com/allen0039/proxy-resource-hub/main/Rules/QuantumultX/Regional/us.list, tag=地区路由-美国节点, force-policy=美国节点, update-interval=86400, opt-parser=false, enabled=true
+```
+
+#### Loon
+
+```ini
+[Remote Rule]
+https://raw.githubusercontent.com/allen0039/proxy-resource-hub/main/Rules/Loon/Regional/us.list, policy=美国节点, tag=地区路由-美国节点, enabled=true
+```
+
 ### 兼容地址
 
 以下兼容地址继续由同一个生成器维护：
