@@ -147,6 +147,10 @@ REGIONAL_POLICY_FILES = {
     "新加坡节点": "sg",
     "新加坡优选": "sg-auto",
 }
+REGIONAL_SOURCE_LABEL = "Rules/Source/Regional/routing.list"
+REGIONAL_HEADER = (
+    f"# Generated from {REGIONAL_SOURCE_LABEL} by tools/generate_rules.py. Do not edit."
+)
 
 
 def load_generator():
@@ -197,31 +201,48 @@ class RuleGeneratorTests(unittest.TestCase):
                         outputs,
                     )
 
-    def test_regional_outputs_preserve_client_formats_and_empty_policies(self):
+    def test_regional_outputs_keep_each_policy_bucket_in_source_order(self):
         generator = load_generator()
         outputs = generator.build_outputs(ROOT)
 
-        us = outputs[ROOT / "Rules" / "Surge" / "Regional" / "us.list"]
-        self.assertIn("DOMAIN-SUFFIX,linux.do", us)
-        self.assertIn("DOMAIN-KEYWORD,hdhive", us)
-        self.assertLess(us.index("DOMAIN-SUFFIX,linux.do"), us.index("DOMAIN-KEYWORD,hdhive"))
-        self.assertNotIn("hdhive.online", us)
+        for policy, slug in REGIONAL_POLICY_FILES.items():
+            rules = [rule for rule in REGIONAL_RULES if rule[2] == policy]
+            for client in ("Mihomo", "Surge", "QuantumultX", "Loon"):
+                with self.subTest(policy=policy, client=client):
+                    content = outputs[
+                        ROOT / "Rules" / client / "Regional" / f"{slug}.list"
+                    ]
+                    if client == "QuantumultX":
+                        expected_lines = tuple(
+                            f"host-{'suffix' if rule_type == 'DOMAIN-SUFFIX' else 'keyword'}, "
+                            f"{value}, proxy"
+                            for rule_type, value, _ in rules
+                        )
+                    else:
+                        expected_lines = tuple(
+                            f"{rule_type},{value}"
+                            for rule_type, value, _ in rules
+                        )
+                    actual_lines = tuple(
+                        line
+                        for line in content.splitlines()
+                        if line and not line.startswith("#")
+                    )
+                    self.assertEqual(expected_lines, actual_lines)
 
-        qx = outputs[ROOT / "Rules" / "QuantumultX" / "Regional" / "jp.list"]
-        self.assertIn("host-keyword, dmm, proxy", qx)
-        self.assertIn("host-keyword, javbus, proxy", qx)
+    def test_regional_preferred_outputs_are_header_only_for_every_client(self):
+        generator = load_generator()
+        outputs = generator.build_outputs(ROOT)
 
-        preferred = outputs[ROOT / "Rules" / "Mihomo" / "Regional" / "us-auto.list"]
-        self.assertEqual(
-            0,
-            len(
-                [
-                    line
-                    for line in preferred.splitlines()
-                    if line and not line.startswith("#")
-                ]
-            ),
-        )
+        for slug in ("hk-auto", "us-auto", "jp-auto", "sg-auto"):
+            for client in ("Mihomo", "Surge", "QuantumultX", "Loon"):
+                with self.subTest(client=client, slug=slug):
+                    self.assertEqual(
+                        f"{REGIONAL_HEADER}\n",
+                        outputs[
+                            ROOT / "Rules" / client / "Regional" / f"{slug}.list"
+                        ],
+                    )
 
     def test_parse_regional_source_rejects_invalid_rows(self):
         generator = load_generator()
@@ -232,6 +253,8 @@ class RuleGeneratorTests(unittest.TestCase):
             "DOMAIN-SUFFIX,example.com,美国节点\nDOMAIN-SUFFIX,example.com,日本节点\n": "duplicate rule",
             "DOMAIN-KEYWORD,hdhive,美国节点\nDOMAIN-SUFFIX,hdhive.online,香港节点\n": "overlapping keyword and suffix",
             "DOMAIN-SUFFIX,example.com\n": "expected three non-empty fields",
+            "DOMAIN-SUFFIX,,美国节点\n": "expected three non-empty fields",
+            "DOMAIN-SUFFIX,example.com,\n": "expected three non-empty fields",
             "DOMAIN-SUFFIX,Example.com,美国节点\n": "invalid domain",
             "DOMAIN-KEYWORD,Example,美国节点\n": "invalid keyword",
             "DOMAIN-KEYWORD,example keyword,美国节点\n": "invalid keyword",
@@ -252,17 +275,30 @@ class RuleGeneratorTests(unittest.TestCase):
             ("DOMAIN-KEYWORD", "hdhive", "美国节点"),
         ]
 
-        classical = generator.render_regional(
-            rules, "classical", "Rules/Source/Regional/routing.list"
+        self.assertEqual(
+            "\n".join(
+                [
+                    REGIONAL_HEADER,
+                    "",
+                    "DOMAIN-SUFFIX,linux.do",
+                    "DOMAIN-KEYWORD,hdhive",
+                    "",
+                ]
+            ),
+            generator.render_regional(rules, "classical", REGIONAL_SOURCE_LABEL),
         )
-        quantumultx = generator.render_regional(
-            rules, "quantumultx", "Rules/Source/Regional/routing.list"
+        self.assertEqual(
+            "\n".join(
+                [
+                    REGIONAL_HEADER,
+                    "",
+                    "host-suffix, linux.do, proxy",
+                    "host-keyword, hdhive, proxy",
+                    "",
+                ]
+            ),
+            generator.render_regional(rules, "quantumultx", REGIONAL_SOURCE_LABEL),
         )
-
-        self.assertIn("DOMAIN-SUFFIX,linux.do", classical)
-        self.assertIn("DOMAIN-KEYWORD,hdhive", classical)
-        self.assertIn("host-suffix, linux.do, proxy", quantumultx)
-        self.assertIn("host-keyword, hdhive, proxy", quantumultx)
 
     def test_personal_sites_outputs_are_generated_for_every_client(self):
         generator = load_generator()
