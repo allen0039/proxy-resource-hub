@@ -37,14 +37,14 @@ resource-parser = https://raw.githubusercontent.com/sub-store-org/Sub-Store/rele
 
 [Remote Proxy]
 # 订阅使用说明：
-# 1. [Remote Proxy] 每行格式为“订阅名 = URL,参数”，请将 URL 替换为自己的订阅地址。
+# 1. [Remote Proxy] 每行格式为“订阅名 = URL,参数”，请将 URL 替换为获取到的订阅链接。
 # 2. enabled=true 加载该订阅，enabled=false 暂不加载；当前只启用 拼好鸡。
 # 3. skip-cert-verify=false 保持证书校验；地区组为空时检查 [Remote Filter] 与节点名称。
 # 4. Loon 配置文件不提供订阅刷新周期字段；请在 App 的节点订阅设置中选择每 6 小时更新。
-拼好鸡 = https://example.com/loon/subscription-1.conf,udp=true,block-quic=true,fast-open=default,vmess-aead=true,skip-cert-verify=false,enabled=true,flexible-sni=false,img-url=https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/Bamboo.png
-白菜灵车 = https://example.com/loon/subscription-2.conf,udp=true,block-quic=true,fast-open=default,vmess-aead=true,skip-cert-verify=false,enabled=false,flexible-sni=false,img-url=https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/Bamboo.png
-Allen自建 = https://example.com/loon/subscription-3.conf,udp=true,block-quic=false,fast-open=default,vmess-aead=true,skip-cert-verify=false,enabled=false,flexible-sni=false,img-url=https://raw.githubusercontent.com/Orz-3/mini/master/Alpha/Vpn.png
-三分 = https://example.com/loon/subscription-4.conf,udp=true,block-quic=true,fast-open=default,vmess-aead=true,skip-cert-verify=false,enabled=false,flexible-sni=false,img-url=https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/Filter.png
+拼好鸡 = 获取到的订阅链接,udp=true,block-quic=true,fast-open=default,vmess-aead=true,skip-cert-verify=false,enabled=true,flexible-sni=false,img-url=https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/Bamboo.png
+机场 = 获取到的订阅链接,udp=true,block-quic=true,fast-open=default,vmess-aead=true,skip-cert-verify=false,enabled=false,flexible-sni=false,img-url=https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/Bamboo.png
+自建 = 获取到的订阅链接,udp=true,block-quic=false,fast-open=default,vmess-aead=true,skip-cert-verify=false,enabled=false,flexible-sni=false,img-url=https://raw.githubusercontent.com/Orz-3/mini/master/Alpha/Vpn.png
+备用 = 获取到的订阅链接,udp=true,block-quic=true,fast-open=default,vmess-aead=true,skip-cert-verify=false,enabled=false,flexible-sni=false,img-url=https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/Filter.png
 
 [Proxy Group]
 Proxy = select,香港优选,日本优选,新加坡优选,美国优选,香港节点,台湾节点,日本节点,新加坡节点,美国节点,韩国节点,英国节点,其他地区,全部节点,DIRECT,img-url = https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/Proxy.png
