@@ -13,7 +13,7 @@
 源文件固定为：
 
 ```text
-Rules/Source/Regional/routing.list
+Rules/Source/Personal/allenrules.list
 ```
 
 每条有效规则使用三字段、逗号分隔格式：
