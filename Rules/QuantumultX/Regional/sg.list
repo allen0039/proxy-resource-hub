@@ -1,0 +1,5 @@
+# Generated from Rules/Source/Regional/routing.list by tools/generate_rules.py. Do not edit.
+
+host-keyword, javdb, proxy
+host-keyword, javlibrary, proxy
+host-keyword, avbase, proxy

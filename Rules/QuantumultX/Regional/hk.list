@@ -1,0 +1,6 @@
+# Generated from Rules/Source/Regional/routing.list by tools/generate_rules.py. Do not edit.
+
+host-suffix, hytron.io, proxy
+host-keyword, kejilion, proxy
+host-suffix, nfbyte.com, proxy
+host-suffix, montbell.com, proxy
