@@ -136,22 +136,21 @@ def build_outputs(root: Path) -> dict[Path, str]:
             ] = classical
 
     source = root / "Rules" / "Source" / "Regional" / "routing.list"
-    if source.exists():
-        source_label = source.relative_to(root).as_posix()
-        grouped: dict[str, list[tuple[str, str, str]]] = {}
-        for rule in parse_regional_source(source):
-            grouped.setdefault(rule[2], []).append(rule)
-        regional_styles = {
-            "Mihomo": "classical",
-            "Surge": "classical",
-            "QuantumultX": "quantumultx",
-            "Loon": "classical",
-        }
-        for client, style in regional_styles.items():
-            for policy, slug in REGIONAL_POLICY_FILES.items():
-                outputs[root / "Rules" / client / "Regional" / f"{slug}.list"] = (
-                    render_regional(grouped.get(policy, []), style, source_label)
-                )
+    source_label = source.relative_to(root).as_posix()
+    grouped: dict[str, list[tuple[str, str, str]]] = {}
+    for rule in parse_regional_source(source):
+        grouped.setdefault(rule[2], []).append(rule)
+    regional_styles = {
+        "Mihomo": "classical",
+        "Surge": "classical",
+        "QuantumultX": "quantumultx",
+        "Loon": "classical",
+    }
+    for client, style in regional_styles.items():
+        for policy, slug in REGIONAL_POLICY_FILES.items():
+            outputs[root / "Rules" / client / "Regional" / f"{slug}.list"] = (
+                render_regional(grouped.get(policy, []), style, source_label)
+            )
     return outputs
 
 
