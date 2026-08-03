@@ -500,11 +500,59 @@ class RuleGeneratorTests(unittest.TestCase):
             (shop_dir / "shopping.txt").write_text(
                 "example.com\n", encoding="utf-8"
             )
+            regional_dir = root / "Rules" / "Source" / "Regional"
+            regional_dir.mkdir(parents=True)
+            (regional_dir / "routing.list").write_text(
+                "DOMAIN-SUFFIX,example.com,美国节点\n", encoding="utf-8"
+            )
             generator.sync_outputs(root, check=False)
             stale_path = root / "Rules" / "Mihomo" / "AI" / "ai.list"
             stale_path.write_text("stale\n", encoding="utf-8")
 
             self.assertIn(stale_path, generator.sync_outputs(root, check=True))
+
+    def test_invalid_regional_source_does_not_partially_write_outputs(self):
+        generator = load_generator()
+        with tempfile.TemporaryDirectory() as tmp:
+            root = Path(tmp)
+            source_specs = (
+                ("AI", ("ai", "direct-ai")),
+                ("Personal", ("Domain",)),
+                ("PT", ("Domain",)),
+                ("shop", ("shopping",)),
+            )
+            for directory, names in source_specs:
+                source_dir = root / "Rules" / "Source" / directory
+                source_dir.mkdir(parents=True)
+                for name in names:
+                    (source_dir / f"{name}.txt").write_text(
+                        "example.com\n", encoding="utf-8"
+                    )
+            regional_dir = root / "Rules" / "Source" / "Regional"
+            regional_dir.mkdir(parents=True)
+            regional_source = regional_dir / "routing.list"
+            regional_source.write_text(
+                "DOMAIN-SUFFIX,example.com,美国节点\n", encoding="utf-8"
+            )
+
+            generator.sync_outputs(root, check=False)
+            output_paths = tuple(generator.build_outputs(root))
+            before = {
+                path: path.read_text(encoding="utf-8") for path in output_paths
+            }
+            regional_source.write_text(
+                "DOMAIN-SUFFIX,example.com,美国节点\n"
+                "DOMAIN-SUFFIX,example.com,日本节点\n",
+                encoding="utf-8",
+            )
+
+            with self.assertRaisesRegex(ValueError, "duplicate rule"):
+                generator.sync_outputs(root, check=False)
+
+            after = {
+                path: path.read_text(encoding="utf-8") for path in output_paths
+            }
+            self.assertEqual(before, after)
 
     def test_generated_rule_lines_have_platform_specific_fields(self):
         generator = load_generator()
