@@ -268,6 +268,33 @@ class RuleGeneratorTests(unittest.TestCase):
                     with self.assertRaisesRegex(ValueError, reason):
                         generator.parse_regional_source(path)
 
+    def test_parse_regional_source_skips_whitespace_only_lines(self):
+        generator = load_generator()
+        with tempfile.TemporaryDirectory() as tmp:
+            path = Path(tmp) / "routing.list"
+            path.write_text(
+                "   \t  \nDOMAIN-SUFFIX,example.com,美国节点\n", encoding="utf-8"
+            )
+
+            self.assertEqual(
+                [("DOMAIN-SUFFIX", "example.com", "美国节点")],
+                generator.parse_regional_source(path),
+            )
+
+    def test_parse_regional_source_skips_indented_comments(self):
+        generator = load_generator()
+        with tempfile.TemporaryDirectory() as tmp:
+            path = Path(tmp) / "routing.list"
+            path.write_text(
+                "  # policy note\nDOMAIN-SUFFIX,example.com,美国节点\n",
+                encoding="utf-8",
+            )
+
+            self.assertEqual(
+                [("DOMAIN-SUFFIX", "example.com", "美国节点")],
+                generator.parse_regional_source(path),
+            )
+
     def test_render_regional_uses_platform_specific_rule_types(self):
         generator = load_generator()
         rules = [

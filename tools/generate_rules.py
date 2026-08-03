@@ -50,7 +50,8 @@ def parse_regional_source(path: Path) -> list[tuple[str, str, str]]:
     rules: list[tuple[str, str, str]] = []
     seen: set[tuple[str, str]] = set()
     for number, line in enumerate(path.read_text(encoding="utf-8").splitlines(), 1):
-        if not line or line.startswith("#"):
+        stripped_line = line.strip()
+        if not stripped_line or stripped_line.startswith("#"):
             continue
         fields = [field.strip() for field in line.split(",")]
         if len(fields) != 3 or not all(fields):
