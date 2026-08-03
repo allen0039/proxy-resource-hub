@@ -151,6 +151,8 @@ REGIONAL_SOURCE_LABEL = "Rules/Source/Regional/routing.list"
 REGIONAL_HEADER = (
     f"# Generated from {REGIONAL_SOURCE_LABEL} by tools/generate_rules.py. Do not edit."
 )
+REGIONAL_CLIENTS = ("Mihomo", "Surge", "QuantumultX", "Loon")
+REGIONAL_SLUGS = tuple(REGIONAL_POLICY_FILES.values())
 
 
 def load_generator():
@@ -165,6 +167,27 @@ def load_generator():
 
 
 class RuleGeneratorTests(unittest.TestCase):
+    def test_regional_subscription_documentation_is_complete(self):
+        readme = (ROOT / "README.md").read_text(encoding="utf-8")
+        base_url = (
+            "https://raw.githubusercontent.com/allen0039/proxy-resource-hub/main/Rules"
+        )
+
+        self.assertIn(REGIONAL_SOURCE_LABEL, readme)
+        for client in REGIONAL_CLIENTS:
+            for slug in REGIONAL_SLUGS:
+                with self.subTest(client=client, slug=slug):
+                    self.assertIn(
+                        f"{base_url}/{client}/Regional/{slug}.list", readme
+                    )
+
+    def test_local_configuration_documentation_publishes_remote_rules_only(self):
+        config_readme = (ROOT / "Configs" / "tool_config" / "README.md").read_text(
+            encoding="utf-8"
+        )
+
+        self.assertIn("只发布远程规则订阅", config_readme)
+
     def test_all_generated_outputs_are_current(self):
         generator = load_generator()
         self.assertEqual([], generator.sync_outputs(ROOT, check=True))
