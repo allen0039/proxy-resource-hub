@@ -4,12 +4,12 @@
 
 # 代理订阅
 # 订阅使用说明：
-# 1. proxy-providers 下每个名称对应一份订阅，请将 url 替换为自己的订阅地址。
-# 2. 当前只启用 subscription_1；filter 筛选节点名称，health-check 检测节点可用性。
+# 1. proxy-providers 下每个名称对应一份订阅，请将 url 替换为获取到的订阅链接。
+# 2. 当前只启用 拼好鸡；filter 筛选节点名称，health-check 检测节点可用性。
 # 3. interval: 21600 表示每 6 小时更新；proxy 仅指定订阅下载出口；未设置 skip-cert-verify，默认校验证书。
 proxy-providers:
-  subscription_1:
-    url: "https://example.com/mihomo/subscription-1.yaml"
+  拼好鸡:
+    url: "获取到的订阅链接"
     type: http
     interval: 21600
     filter: '^(?!.*(拒绝|直连|群|邀请|返利|循环|官网|客服|网站|网址|获取|订阅|流量|到期|机场|下次|版本|官址|备用|过期|已用|联系|邮箱|工单|贩卖|通知|倒卖|防止|国内|地址|频道|无法|说明|提示|特别|访问|支持|教程|关注|更新|作者|加入|USE|USED|TOTAL|EXPIRE|EMAIL|Panel|Channel|Author|traffic))'
@@ -18,8 +18,8 @@ proxy-providers:
       url: https://www.gstatic.com/generate_204
       interval: 300
     proxy: DIRECT
-#  白菜:
-#    url: "https://example.com/mihomo/subscription-example-1.yaml"
+#  机场:
+#    url: "获取到的订阅链接"
 #    type: http
 #    interval: 21600
 #    filter: '^(?!.*(拒绝|直连|群|邀请|返利|循环|官网|客服|网站|网址|获取|订阅|流量|到期|机场|下次|版本|官址|备用|过期|已用|联系|邮箱|工单|贩卖|通知|倒卖|防止|国内|地址|频道|无法|说明|提示|特别|访问|支持|教程|关注|更新|作者|加入|USE|USED|TOTAL|EXPIRE|EMAIL|Panel|Channel|Author|traffic))'
@@ -29,7 +29,7 @@ proxy-providers:
 #      interval: 300
 #    proxy: DIRECT
 #  自建:
-#    url: "https://example.com/mihomo/subscription-example-1.yaml"
+#    url: "获取到的订阅链接"
 #    type: http
 #    interval: 21600
 #    health-check:
@@ -38,7 +38,7 @@ proxy-providers:
 #      interval: 300
 #    proxy: DIRECT
 #  备用:
-#    url: "https://example.com/mihomo/subscription-example-1.yaml"
+#    url: "获取到的订阅链接"
 #    type: http
 #    interval: 21600
 #    health-check:
