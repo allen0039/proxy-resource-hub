@@ -115,6 +115,23 @@ def custom_url(client: str, slug: str) -> str:
     return f"{CUSTOM_BASE_URL}Rules/{client}/{path}"
 
 
+def active_lines(section: str) -> list[str]:
+    return [
+        line
+        for line in section.splitlines()
+        if not line.lstrip().startswith(("#", ";", "//"))
+    ]
+
+
+def option_fields(line: str) -> list[tuple[str, str]]:
+    return [
+        (key.strip(), value.strip())
+        for field in line.split(",")[1:]
+        if "=" in field
+        for key, value in [field.split("=", maxsplit=1)]
+    ]
+
+
 def load_sanitizer():
     if not SANITIZER_PATH.exists():
         raise AssertionError("tool config sanitizer is not implemented")
@@ -1121,9 +1138,11 @@ rule-providers:
         slugs = list(CUSTOM_FEEDS)
 
         for slug in slugs:
-            path, policy = CUSTOM_FEEDS[slug]
-            provider = mihomo["rule-providers"][f"custom_{slug.replace('-', '_')}"]
+            _, policy = CUSTOM_FEEDS[slug]
+            provider_key = f"custom_{slug.replace('-', '_')}"
             with self.subTest(slug=slug, check="provider metadata"):
+                self.assertIn(provider_key, mihomo["rule-providers"])
+                provider = mihomo["rule-providers"][provider_key]
                 self.assertEqual("http", provider["type"])
                 self.assertEqual("classical", provider["behavior"])
                 self.assertEqual("text", provider["format"])
@@ -1149,54 +1168,76 @@ rule-providers:
 
     def test_surge_custom_routing_urls_and_policies_precede_skk_rules(self):
         for name in ("surge_mac_allen.conf", "surge_iphone_allen.conf"):
-            rules = active_section(
-                (OUTPUT_DIR / name).read_text(encoding="utf-8"),
-                "[Rule]",
-                "[Host]",
+            rules = active_lines(
+                active_section(
+                    (OUTPUT_DIR / name).read_text(encoding="utf-8"),
+                    "[Rule]",
+                    "[Host]",
+                )
+            )
+            skk_index = next(
+                index
+                for index, line in enumerate(rules)
+                if line.startswith("RULE-SET,https://ruleset.skk.moe/")
             )
             for slug, (_, policy) in CUSTOM_FEEDS.items():
                 url = custom_url("Surge", slug)
-                expected_line = f"RULE-SET,{url},{policy}"
+                matches = [line for line in rules if url in line]
                 with self.subTest(name=name, slug=slug):
-                    self.assertEqual(1, rules.count(url))
-                    self.assertIn(expected_line, rules)
-                    self.assertLess(
-                        rules.index(expected_line),
-                        rules.index("RULE-SET,https://ruleset.skk.moe/"),
-                    )
+                    self.assertEqual(1, len(matches))
+                    rule_parts = [part.strip() for part in matches[0].split(",")]
+                    self.assertEqual(["RULE-SET", url, policy], rule_parts[:3])
+                    self.assertLess(rules.index(matches[0]), skk_index)
 
     def test_quantumultx_and_loon_bind_custom_routing_feeds_before_telecom(self):
-        qx = active_section(
-            (OUTPUT_DIR / "quantumultx_allen.conf").read_text(encoding="utf-8"),
-            "[filter_remote]",
-            "[rewrite_remote]",
+        qx = active_lines(
+            active_section(
+                (OUTPUT_DIR / "quantumultx_allen.conf").read_text(encoding="utf-8"),
+                "[filter_remote]",
+                "[rewrite_remote]",
+            )
         )
-        loon = active_section(
-            (OUTPUT_DIR / "loon_allen.lcf").read_text(encoding="utf-8"),
-            "[Remote Rule]",
-            "[Plugin]",
+        loon = active_lines(
+            active_section(
+                (OUTPUT_DIR / "loon_allen.lcf").read_text(encoding="utf-8"),
+                "[Remote Rule]",
+                "[Plugin]",
+            )
+        )
+        qx_telecom_index = next(
+            index for index, line in enumerate(qx) if "ChinaTelecom" in line
+        )
+        loon_telecom_index = next(
+            index for index, line in enumerate(loon) if "ChinaTelecom" in line
         )
 
         for slug, (_, policy) in CUSTOM_FEEDS.items():
             qx_url = custom_url("QuantumultX", slug)
             loon_url = custom_url("Loon", slug)
             qx_policy = "direct" if slug == "direct" else policy
+            tag = "自定义-直连" if slug == "direct" else f"自定义-{policy}"
+            qx_matches = [line for line in qx if qx_url in line]
+            loon_matches = [line for line in loon if loon_url in line]
             with self.subTest(client="Quantumult X", slug=slug):
-                self.assertEqual(1, qx.count(qx_url))
-                line = next(line for line in qx.splitlines() if qx_url in line)
-                self.assertIn(f"tag=自定义-{CUSTOM_FEEDS[slug][1]}", line)
-                self.assertIn(f"force-policy={qx_policy}", line)
-                self.assertIn("update-interval=86400", line)
-                self.assertIn("opt-parser=false", line)
-                self.assertIn("enabled=true", line)
-                self.assertLess(qx.index(qx_url), qx.index("ChinaTelecom"))
+                self.assertEqual(1, len(qx_matches))
+                self.assertEqual(
+                    [
+                        ("tag", tag),
+                        ("force-policy", qx_policy),
+                        ("update-interval", "86400"),
+                        ("opt-parser", "false"),
+                        ("enabled", "true"),
+                    ],
+                    option_fields(qx_matches[0]),
+                )
+                self.assertLess(qx.index(qx_matches[0]), qx_telecom_index)
             with self.subTest(client="Loon", slug=slug):
-                self.assertEqual(1, loon.count(loon_url))
-                line = next(line for line in loon.splitlines() if loon_url in line)
-                self.assertIn(f"policy={policy}", line)
-                self.assertIn(f"tag=自定义-{CUSTOM_FEEDS[slug][1]}", line)
-                self.assertIn("enabled=true", line)
-                self.assertLess(loon.index(loon_url), loon.index("ChinaTelecom"))
+                self.assertEqual(1, len(loon_matches))
+                self.assertEqual(
+                    [("policy", policy), ("tag", tag), ("enabled", "true")],
+                    option_fields(loon_matches[0]),
+                )
+                self.assertLess(loon.index(loon_matches[0]), loon_telecom_index)
 
     def test_custom_routing_migrated_rules_are_not_active_locally(self):
         outputs = {
@@ -1227,8 +1268,7 @@ rule-providers:
         for name, section in active_local_sections.items():
             active_values = {
                 match.group(1).casefold()
-                for line in section.splitlines()
-                if not line.lstrip().startswith(("#", ";", "//"))
+                for line in active_lines(section)
                 if (match := local_rule_pattern.match(line)) is not None
             }
             with self.subTest(name=name, check="migrated rules"):
