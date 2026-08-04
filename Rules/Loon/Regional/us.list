@@ -1,5 +1,7 @@
-# Generated from Rules/Source/Regional/allenrules.list by tools/generate_rules.py. Do not edit.
+# Generated from Rules/Source/Custom/allenrules.list by tools/generate_rules.py. Do not edit.
 
+DOMAIN-SUFFIX,openwrt.ai
+DOMAIN-SUFFIX,lsposed.org
 DOMAIN-SUFFIX,linux.do
 DOMAIN-KEYWORD,uspatriottactical
 DOMAIN-KEYWORD,hdhive

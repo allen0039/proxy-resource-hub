@@ -1,0 +1,19 @@
+# Generated from Rules/Source/Custom/allenrules.list by tools/generate_rules.py. Do not edit.
+
+host-suffix, synology.cn, proxy
+host, qbittorrent-nox, proxy
+host-suffix, digitalocean.com, proxy
+host-suffix, dyndns.com, proxy
+host-suffix, whatismyip.akamai.com, proxy
+host-keyword, volcengine, proxy
+host-suffix, xmwsyy.com, proxy
+host-suffix, ui.com, proxy
+host-suffix, imgse.com, proxy
+host-suffix, tagweb.vip, proxy
+host-keyword, yqc-premium, proxy
+host-suffix, ad.12306.cn, proxy
+host-suffix, gg.caixin.com, proxy
+host-suffix, sdkapp.uve.weibo.com, proxy
+host-suffix, ucweb.com, proxy
+host-suffix, amemv.com, proxy
+host-suffix, v4.plex.tv, proxy

@@ -1,0 +1,19 @@
+# Generated from Rules/Source/Custom/allenrules.list by tools/generate_rules.py. Do not edit.
+
+DOMAIN-SUFFIX,synology.cn
+DOMAIN,qbittorrent-nox
+DOMAIN-SUFFIX,digitalocean.com
+DOMAIN-SUFFIX,dyndns.com
+DOMAIN-SUFFIX,whatismyip.akamai.com
+DOMAIN-KEYWORD,volcengine
+DOMAIN-SUFFIX,xmwsyy.com
+DOMAIN-SUFFIX,ui.com
+DOMAIN-SUFFIX,imgse.com
+DOMAIN-SUFFIX,tagweb.vip
+DOMAIN-KEYWORD,yqc-premium
+DOMAIN-SUFFIX,ad.12306.cn
+DOMAIN-SUFFIX,gg.caixin.com
+DOMAIN-SUFFIX,sdkapp.uve.weibo.com
+DOMAIN-SUFFIX,ucweb.com
+DOMAIN-SUFFIX,amemv.com
+DOMAIN-SUFFIX,v4.plex.tv

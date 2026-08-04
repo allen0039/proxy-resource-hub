@@ -103,7 +103,7 @@ def render(lines: list[str], style: str, source_label: str) -> str:
     return "\n".join(output).rstrip() + "\n"
 
 
-def render_regional(
+def render_custom_rules(
     rules: list[tuple[str, str, str]], style: str, source_label: str
 ) -> str:
     output = [
@@ -115,6 +115,7 @@ def render_regional(
             output.append(f"{rule_type},{value}")
         elif style == "quantumultx":
             qx_type = {
+                "DOMAIN": "host",
                 "DOMAIN-SUFFIX": "host-suffix",
                 "DOMAIN-KEYWORD": "host-keyword",
             }[rule_type]
@@ -146,18 +147,17 @@ def build_outputs(root: Path) -> dict[Path, str]:
     grouped: dict[str, list[tuple[str, str, str]]] = {}
     for rule in parse_custom_source(source):
         grouped.setdefault(rule[2], []).append(rule)
-    regional_styles = {
+    client_styles = {
         "Mihomo": "classical",
         "Surge": "classical",
         "QuantumultX": "quantumultx",
         "Loon": "classical",
     }
-    for client, style in regional_styles.items():
+    for client, style in client_styles.items():
         for policy, (directory, slug) in CUSTOM_POLICY_OUTPUTS.items():
-            if directory == "Regional":
-                outputs[root / "Rules" / client / directory / f"{slug}.list"] = (
-                    render_regional(grouped.get(policy, []), style, source_label)
-                )
+            outputs[root / "Rules" / client / directory / f"{slug}.list"] = (
+                render_custom_rules(grouped.get(policy, []), style, source_label)
+            )
     return outputs
 
 

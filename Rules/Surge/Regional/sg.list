@@ -1,4 +1,4 @@
-# Generated from Rules/Source/Regional/allenrules.list by tools/generate_rules.py. Do not edit.
+# Generated from Rules/Source/Custom/allenrules.list by tools/generate_rules.py. Do not edit.
 
 DOMAIN-KEYWORD,javdb
 DOMAIN-KEYWORD,javlibrary

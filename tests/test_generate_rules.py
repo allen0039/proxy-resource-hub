@@ -169,8 +169,21 @@ CUSTOM_SOURCE_LABEL = "Rules/Source/Custom/allenrules.list"
 CUSTOM_HEADER = (
     f"# Generated from {CUSTOM_SOURCE_LABEL} by tools/generate_rules.py. Do not edit."
 )
+QX_CUSTOM_TYPES = {
+    "DOMAIN": "host",
+    "DOMAIN-SUFFIX": "host-suffix",
+    "DOMAIN-KEYWORD": "host-keyword",
+}
 REGIONAL_CLIENTS = ("Mihomo", "Surge", "QuantumultX", "Loon")
 REGIONAL_SLUGS = tuple(REGIONAL_POLICY_FILES.values())
+
+
+def rule_lines(content: str) -> tuple[str, ...]:
+    return tuple(
+        line
+        for line in content.splitlines()
+        if line and not line.startswith("#")
+    )
 
 
 def load_generator():
@@ -214,7 +227,7 @@ class RuleGeneratorTests(unittest.TestCase):
         generator = load_generator()
         outputs = generator.build_outputs(ROOT)
 
-        self.assertEqual(53, len(outputs))
+        self.assertEqual(57, len(outputs))
         for client in ("Mihomo", "Surge", "QuantumultX", "Loon"):
             for ruleset in ("ai", "direct-ai"):
                 expected = ROOT / "Rules" / client / "AI" / f"{ruleset}.list"
@@ -226,6 +239,37 @@ class RuleGeneratorTests(unittest.TestCase):
         compatibility = ROOT / "Rules" / "shop" / "shopping.list"
         self.assertIn(compatibility, outputs)
         self.assertTrue(compatibility.exists())
+
+    def test_custom_direct_outputs_are_generated_for_every_client(self):
+        generator = load_generator()
+        outputs = generator.build_outputs(ROOT)
+        direct_rules = tuple(rule for rule in CUSTOM_RULES if rule[2] == "DIRECT")
+
+        for client in ("Mihomo", "Surge", "QuantumultX", "Loon"):
+            with self.subTest(client=client):
+                path = ROOT / "Rules" / client / "Custom" / "direct.list"
+                self.assertIn(path, outputs)
+                content = outputs[path]
+                self.assertTrue(content.startswith(CUSTOM_HEADER))
+                self.assertNotIn("SRC-IP-CIDR", content)
+                if client == "QuantumultX":
+                    expected_lines = tuple(
+                        f"{QX_CUSTOM_TYPES[rule_type]}, "
+                        f"{value}, proxy"
+                        for rule_type, value, _ in direct_rules
+                    )
+                    self.assertIn("host, qbittorrent-nox, proxy", content)
+                    self.assertIn("host-suffix, synology.cn, proxy", content)
+                    self.assertIn("host-keyword, volcengine, proxy", content)
+                else:
+                    expected_lines = tuple(
+                        f"{rule_type},{value}"
+                        for rule_type, value, _ in direct_rules
+                    )
+                    self.assertIn("DOMAIN,qbittorrent-nox", content)
+                    self.assertIn("DOMAIN-SUFFIX,synology.cn", content)
+                    self.assertIn("DOMAIN-KEYWORD,volcengine", content)
+                self.assertEqual(expected_lines, rule_lines(content))
 
     def test_regional_outputs_include_all_clients_and_policies(self):
         generator = load_generator()
@@ -253,9 +297,10 @@ class RuleGeneratorTests(unittest.TestCase):
                     content = outputs[
                         ROOT / "Rules" / client / "Regional" / f"{slug}.list"
                     ]
+                    self.assertTrue(content.startswith(CUSTOM_HEADER))
                     if client == "QuantumultX":
                         expected_lines = tuple(
-                            f"host-{'suffix' if rule_type == 'DOMAIN-SUFFIX' else 'keyword'}, "
+                            f"{QX_CUSTOM_TYPES[rule_type]}, "
                             f"{value}, proxy"
                             for rule_type, value, _ in rules
                         )
@@ -264,12 +309,7 @@ class RuleGeneratorTests(unittest.TestCase):
                             f"{rule_type},{value}"
                             for rule_type, value, _ in rules
                         )
-                    actual_lines = tuple(
-                        line
-                        for line in content.splitlines()
-                        if line and not line.startswith("#")
-                    )
-                    self.assertEqual(expected_lines, actual_lines)
+                    self.assertEqual(expected_lines, rule_lines(content))
 
     def test_regional_preferred_outputs_are_header_only_for_every_client(self):
         generator = load_generator()
@@ -378,9 +418,10 @@ class RuleGeneratorTests(unittest.TestCase):
                 generator.parse_custom_source(path),
             )
 
-    def test_render_regional_uses_platform_specific_rule_types(self):
+    def test_render_custom_rules_uses_platform_specific_rule_types(self):
         generator = load_generator()
         rules = [
+            ("DOMAIN", "qbittorrent-nox", "DIRECT"),
             ("DOMAIN-SUFFIX", "linux.do", "美国节点"),
             ("DOMAIN-KEYWORD", "hdhive", "美国节点"),
         ]
@@ -390,24 +431,26 @@ class RuleGeneratorTests(unittest.TestCase):
                 [
                     CUSTOM_HEADER,
                     "",
+                    "DOMAIN,qbittorrent-nox",
                     "DOMAIN-SUFFIX,linux.do",
                     "DOMAIN-KEYWORD,hdhive",
                     "",
                 ]
             ),
-            generator.render_regional(rules, "classical", CUSTOM_SOURCE_LABEL),
+            generator.render_custom_rules(rules, "classical", CUSTOM_SOURCE_LABEL),
         )
         self.assertEqual(
             "\n".join(
                 [
                     CUSTOM_HEADER,
                     "",
+                    "host, qbittorrent-nox, proxy",
                     "host-suffix, linux.do, proxy",
                     "host-keyword, hdhive, proxy",
                     "",
                 ]
             ),
-            generator.render_regional(rules, "quantumultx", CUSTOM_SOURCE_LABEL),
+            generator.render_custom_rules(rules, "quantumultx", CUSTOM_SOURCE_LABEL),
         )
 
     def test_personal_sites_outputs_are_generated_for_every_client(self):
@@ -620,7 +663,7 @@ class RuleGeneratorTests(unittest.TestCase):
 
         for path, content in outputs.items():
             rule_lines = [line for line in content.splitlines() if line and not line.startswith("#")]
-            if "Regional" in path.parts:
+            if "Regional" in path.parts or "Custom" in path.parts:
                 continue
             if "QuantumultX" in path.parts:
                 self.assertTrue(all(line.startswith("host-suffix, ") for line in rule_lines))
