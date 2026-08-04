@@ -4,7 +4,7 @@
 
 # 代理订阅
 # 订阅使用说明：
-# 1. proxy-providers 下每个名称对应一份订阅，请将 url 替换为获取到的订阅链接。
+# 1. proxy-providers 下每个名称对应一份订阅，请将 url 替换为自己的订阅地址。
 # 2. 当前只启用 拼好鸡；filter 筛选节点名称，health-check 检测节点可用性。
 # 3. interval: 21600 表示每 6 小时更新；proxy 仅指定订阅下载出口；未设置 skip-cert-verify，默认校验证书。
 proxy-providers:
@@ -200,6 +200,15 @@ rules:
   - SRC-IP-CIDR,192.168.50.150/32,DIRECT
   - SRC-IP-CIDR,192.168.50.151/32,DIRECT
   - SRC-IP-CIDR,192.168.50.152/32,DIRECT
+  - RULE-SET,custom_direct,DIRECT
+  - RULE-SET,custom_hk,香港节点
+  - RULE-SET,custom_hk_auto,香港优选
+  - RULE-SET,custom_us,美国节点
+  - RULE-SET,custom_us_auto,美国优选
+  - RULE-SET,custom_jp,日本节点
+  - RULE-SET,custom_jp_auto,日本优选
+  - RULE-SET,custom_sg,新加坡节点
+  - RULE-SET,custom_sg_auto,新加坡优选
 
   # 2. Apple 与系统服务
   - DOMAIN-SUFFIX,push.apple.com,香港节点
@@ -207,23 +216,6 @@ rules:
 
   # 3. 直连与 PT 服务
   # 已纳入远程 PT 订阅的站点不在本地重复维护；本节固定使用内置直连。
-  - DOMAIN-SUFFIX,synology.cn,DIRECT
-  - DOMAIN,qbittorrent-nox,DIRECT
-  - DOMAIN-SUFFIX,digitalocean.com,DIRECT
-  - DOMAIN-SUFFIX,dyndns.com,DIRECT
-  - DOMAIN-SUFFIX,whatismyip.akamai.com,DIRECT
-  - DOMAIN-KEYWORD,volcengine,DIRECT
-  - DOMAIN-SUFFIX,xmwsyy.com,DIRECT
-  - DOMAIN-SUFFIX,ui.com,DIRECT
-  - DOMAIN-SUFFIX,imgse.com,DIRECT
-  - DOMAIN-SUFFIX,tagweb.vip,DIRECT
-  - DOMAIN-KEYWORD,yqc-premium,DIRECT
-  - DOMAIN-SUFFIX,ad.12306.cn,DIRECT
-  - DOMAIN-SUFFIX,gg.caixin.com,DIRECT
-  - DOMAIN-SUFFIX,sdkapp.uve.weibo.com,DIRECT
-  - DOMAIN-SUFFIX,ucweb.com,DIRECT
-  - DOMAIN-SUFFIX,amemv.com,DIRECT
-  - DOMAIN-SUFFIX,v4.plex.tv,DIRECT
 
   # 4. 技术开发与工具
   - DOMAIN-SUFFIX,github.io,GitHub
@@ -231,8 +223,6 @@ rules:
   - DOMAIN,api.github.com,GitHub
   # - DOMAIN-SUFFIX,githubusercontent.com,GitHub
   # - DOMAIN-SUFFIX,cloudflare.com,CDN
-  - DOMAIN-SUFFIX,openwrt.ai,美国节点
-  - DOMAIN-SUFFIX,lsposed.org,美国节点
 
   # 5. AI 与媒体服务
   - DOMAIN-SUFFIX,mfallen.de,DIRECT
@@ -252,41 +242,7 @@ rules:
   - DOMAIN-SUFFIX,safebrowsing.google.com,Google
 
   # 6. 特殊站点与区域分流
-  - DOMAIN-SUFFIX,hytron.io,香港节点
-  - DOMAIN-SUFFIX,linux.do,美国节点
-  - DOMAIN-KEYWORD,uspatriottactical,美国节点
-  - DOMAIN-SUFFIX,hdhive.online,香港节点
-  - DOMAIN-KEYWORD,hdhive,美国节点
-  - DOMAIN-SUFFIX,rundongex.com,美国节点
-  - DOMAIN-SUFFIX,servercontrolpanel.de,美国节点
-  - DOMAIN-SUFFIX,mgboard.net,美国节点
-  - DOMAIN-KEYWORD,sehuatang,美国节点
-  - DOMAIN-KEYWORD,greasyfork,美国节点
-  - DOMAIN-KEYWORD,qichiyu,美国节点
-  - DOMAIN-SUFFIX,mjji.de,美国节点
-  - DOMAIN-KEYWORD,hd-torrents,美国节点
-  - DOMAIN-SUFFIX,embyapp.top,美国节点
-  - DOMAIN-SUFFIX,vps.town,美国节点
-  - DOMAIN-SUFFIX,2fa.fun,美国节点
-  - DOMAIN-SUFFIX,macwk.cn,美国节点
-  - DOMAIN-SUFFIX,appstorrent.ru,美国节点
-  - DOMAIN-KEYWORD,kejilion,香港节点
-  - DOMAIN-SUFFIX,nfbyte.com,香港节点
-  - DOMAIN-KEYWORD,onitsukatiger,日本节点
   - DOMAIN-SUFFIX,montbell.com,香港节点
-  - DOMAIN-SUFFIX,compliance.chippercash.com,美国节点
-  - DOMAIN-KEYWORD,dmm,日本节点
-  - DOMAIN-KEYWORD,javrate,日本节点
-  - DOMAIN-KEYWORD,jav321,日本节点
-  - DOMAIN-KEYWORD,freejavbt,日本节点
-  - DOMAIN-KEYWORD,javbus,日本节点
-  - DOMAIN-KEYWORD,mgstage,日本节点
-  - DOMAIN-KEYWORD,mmtv,日本节点
-  - DOMAIN-KEYWORD,javdb,新加坡节点
-  - DOMAIN-KEYWORD,javlibrary,新加坡节点
-  - DOMAIN-KEYWORD,avbase,新加坡节点
-  - DOMAIN-KEYWORD,missav,美国节点
-  - DOMAIN-KEYWORD,ftvgirls,美国节点
 
   # 7. 拦截与修正规则
   # 精确放行必须位于 adobe.io 后缀拒绝规则之前。
@@ -371,6 +327,15 @@ rules:
 # 规则集：每个 rule-provider 显式声明更新周期、behavior 和格式，避免转换器丢失 YAML 合并字段。
 # 新增 provider 后需在 rules 中引用；domain、ipcidr 与 classical 应匹配规则内容。
 rule-providers:
+  custom_direct: { type: http, interval: 86400, behavior: classical, format: text, url: "https://raw.githubusercontent.com/allen0039/proxy-resource-hub/main/Rules/Mihomo/Custom/direct.list" }
+  custom_hk: { type: http, interval: 86400, behavior: classical, format: text, url: "https://raw.githubusercontent.com/allen0039/proxy-resource-hub/main/Rules/Mihomo/Regional/hk.list" }
+  custom_hk_auto: { type: http, interval: 86400, behavior: classical, format: text, url: "https://raw.githubusercontent.com/allen0039/proxy-resource-hub/main/Rules/Mihomo/Regional/hk-auto.list" }
+  custom_us: { type: http, interval: 86400, behavior: classical, format: text, url: "https://raw.githubusercontent.com/allen0039/proxy-resource-hub/main/Rules/Mihomo/Regional/us.list" }
+  custom_us_auto: { type: http, interval: 86400, behavior: classical, format: text, url: "https://raw.githubusercontent.com/allen0039/proxy-resource-hub/main/Rules/Mihomo/Regional/us-auto.list" }
+  custom_jp: { type: http, interval: 86400, behavior: classical, format: text, url: "https://raw.githubusercontent.com/allen0039/proxy-resource-hub/main/Rules/Mihomo/Regional/jp.list" }
+  custom_jp_auto: { type: http, interval: 86400, behavior: classical, format: text, url: "https://raw.githubusercontent.com/allen0039/proxy-resource-hub/main/Rules/Mihomo/Regional/jp-auto.list" }
+  custom_sg: { type: http, interval: 86400, behavior: classical, format: text, url: "https://raw.githubusercontent.com/allen0039/proxy-resource-hub/main/Rules/Mihomo/Regional/sg.list" }
+  custom_sg_auto: { type: http, interval: 86400, behavior: classical, format: text, url: "https://raw.githubusercontent.com/allen0039/proxy-resource-hub/main/Rules/Mihomo/Regional/sg-auto.list" }
   private_domain: { type: http, interval: 86400, behavior: domain, format: mrs, url: "https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/meta/geo/geosite/private.mrs"}
   wechat_domain: { type: http, interval: 86400, behavior: domain, format: mrs, url: "https://raw.githubusercontent.com/Lanlan13-14/Rules/refs/heads/main/rules/Domain/WeChat.mrs"}
   bank_cn_domain: { type: http, interval: 86400, behavior: domain, format: mrs, url: "https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/refs/heads/meta/geo/geosite/category-bank-cn.mrs"}

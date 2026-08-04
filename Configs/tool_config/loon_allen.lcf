@@ -37,7 +37,7 @@ resource-parser = https://raw.githubusercontent.com/sub-store-org/Sub-Store/rele
 
 [Remote Proxy]
 # 订阅使用说明：
-# 1. [Remote Proxy] 每行格式为“订阅名 = URL,参数”，请将 URL 替换为获取到的订阅链接。
+# 1. [Remote Proxy] 每行格式为“订阅名 = URL,参数”，请将 URL 替换为自己的订阅地址。
 # 2. enabled=true 加载该订阅，enabled=false 暂不加载；当前只启用 拼好鸡。
 # 3. skip-cert-verify=false 保持证书校验；地区组为空时检查 [Remote Filter] 与节点名称。
 # 4. Loon 配置文件不提供订阅刷新周期字段；请在 App 的节点订阅设置中选择每 6 小时更新。
@@ -120,31 +120,12 @@ DOMAIN-SUFFIX,push.apple.com,Apple Push
 
 # 2. 直连与 PT 服务
 # 已纳入远程 PT 订阅的站点不在本地重复维护。
-DOMAIN-SUFFIX,synology.cn,DIRECT
-DOMAIN,qbittorrent-nox,DIRECT
-DOMAIN-SUFFIX,digitalocean.com,DIRECT
-DOMAIN-SUFFIX,dyndns.com,DIRECT
-DOMAIN-SUFFIX,whatismyip.akamai.com,DIRECT
-DOMAIN-KEYWORD,volcengine,DIRECT
-DOMAIN-SUFFIX,xmwsyy.com,DIRECT
-DOMAIN-SUFFIX,ui.com,DIRECT
-DOMAIN-SUFFIX,imgse.com,DIRECT
-DOMAIN-SUFFIX,tagweb.vip,DIRECT
-DOMAIN-KEYWORD,yqc-premium,DIRECT
-DOMAIN-SUFFIX,ad.12306.cn,DIRECT
-DOMAIN-SUFFIX,gg.caixin.com,DIRECT
-DOMAIN-SUFFIX,sdkapp.uve.weibo.com,DIRECT
-DOMAIN-SUFFIX,ucweb.com,DIRECT
 DOMAIN-SUFFIX,snssdk.com,DIRECT
-DOMAIN-SUFFIX,amemv.com,DIRECT
-DOMAIN-SUFFIX,v4.plex.tv,DIRECT
 
 # 3. 技术开发与工具
 DOMAIN,api.github.com,GitHub
 # DOMAIN-SUFFIX,githubusercontent.com,GitHub
 # DOMAIN-SUFFIX,cloudflare.com,CDN
-DOMAIN-SUFFIX,openwrt.ai,美国节点
-DOMAIN-SUFFIX,lsposed.org,美国节点
 
 # 4. AI 与媒体服务
 DOMAIN-SUFFIX,mfallen.de,DIRECT
@@ -164,41 +145,7 @@ DOMAIN-SUFFIX,ggpht.com,YouTube
 DOMAIN-SUFFIX,safebrowsing.google.com,Google
 
 # 5. 特殊站点与区域分流
-DOMAIN-SUFFIX,hytron.io,香港节点
-DOMAIN-SUFFIX,linux.do,美国节点
-DOMAIN-KEYWORD,uspatriottactical,美国节点
-DOMAIN-SUFFIX,hdhive.online,香港节点
-DOMAIN-KEYWORD,hdhive,美国节点
-DOMAIN-SUFFIX,rundongex.com,美国节点
-DOMAIN-SUFFIX,servercontrolpanel.de,美国节点
-DOMAIN-SUFFIX,mgboard.net,美国节点
-DOMAIN-KEYWORD,sehuatang,美国节点
-DOMAIN-KEYWORD,greasyfork,美国节点
-DOMAIN-KEYWORD,qichiyu,美国节点
-DOMAIN-SUFFIX,mjji.de,美国节点
-DOMAIN-KEYWORD,hd-torrents,美国节点
-DOMAIN-SUFFIX,embyapp.top,美国节点
-DOMAIN-SUFFIX,vps.town,美国节点
-DOMAIN-SUFFIX,2fa.fun,美国节点
-DOMAIN-SUFFIX,macwk.cn,美国节点
-DOMAIN-SUFFIX,appstorrent.ru,美国节点
-DOMAIN-KEYWORD,kejilion,香港节点
-DOMAIN-SUFFIX,nfbyte.com,香港节点
-DOMAIN-KEYWORD,onitsukatiger,日本节点
 DOMAIN-SUFFIX,montbell.com,香港节点
-DOMAIN-SUFFIX,compliance.chippercash.com,美国节点
-DOMAIN-KEYWORD,dmm,日本节点
-DOMAIN-KEYWORD,javrate,日本节点
-DOMAIN-KEYWORD,jav321,日本节点
-DOMAIN-KEYWORD,freejavbt,日本节点
-DOMAIN-KEYWORD,javbus,日本节点
-DOMAIN-KEYWORD,mgstage,日本节点
-DOMAIN-KEYWORD,mmtv,日本节点
-DOMAIN-KEYWORD,javdb,新加坡节点
-DOMAIN-KEYWORD,javlibrary,新加坡节点
-DOMAIN-KEYWORD,avbase,新加坡节点
-DOMAIN-KEYWORD,missav,美国节点
-DOMAIN-KEYWORD,ftvgirls,美国节点
 
 # 6. 拦截与修正规则
 # 精确放行必须位于 adobe.io 后缀拒绝规则之前。
@@ -214,6 +161,15 @@ IP-CIDR,95.161.76.100/31,REJECT-NO-DROP,no-resolve
 # 7. 最终规则
 FINAL,Final
 [Remote Rule]
+https://raw.githubusercontent.com/allen0039/proxy-resource-hub/main/Rules/Loon/Custom/direct.list, policy=DIRECT, tag=自定义-直连, enabled=true
+https://raw.githubusercontent.com/allen0039/proxy-resource-hub/main/Rules/Loon/Regional/hk.list, policy=香港节点, tag=自定义-香港节点, enabled=true
+https://raw.githubusercontent.com/allen0039/proxy-resource-hub/main/Rules/Loon/Regional/hk-auto.list, policy=香港优选, tag=自定义-香港优选, enabled=true
+https://raw.githubusercontent.com/allen0039/proxy-resource-hub/main/Rules/Loon/Regional/us.list, policy=美国节点, tag=自定义-美国节点, enabled=true
+https://raw.githubusercontent.com/allen0039/proxy-resource-hub/main/Rules/Loon/Regional/us-auto.list, policy=美国优选, tag=自定义-美国优选, enabled=true
+https://raw.githubusercontent.com/allen0039/proxy-resource-hub/main/Rules/Loon/Regional/jp.list, policy=日本节点, tag=自定义-日本节点, enabled=true
+https://raw.githubusercontent.com/allen0039/proxy-resource-hub/main/Rules/Loon/Regional/jp-auto.list, policy=日本优选, tag=自定义-日本优选, enabled=true
+https://raw.githubusercontent.com/allen0039/proxy-resource-hub/main/Rules/Loon/Regional/sg.list, policy=新加坡节点, tag=自定义-新加坡节点, enabled=true
+https://raw.githubusercontent.com/allen0039/proxy-resource-hub/main/Rules/Loon/Regional/sg-auto.list, policy=新加坡优选, tag=自定义-新加坡优选, enabled=true
 # policy 指定出口，enabled=false 可保留备用规则；新增策略名时需先在 [Proxy Group] 定义。
 # 本地规则优先，PT、个人域名和公益 AI 以自有订阅为准。
 https://raw.githubusercontent.com/QuixoticHeart/rule-set/refs/heads/ruleset/loon/apns.list, policy=Apple Push, tag=Apple Push, enabled=true

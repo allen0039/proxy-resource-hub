@@ -895,7 +895,7 @@ rule-providers:
             r"(?im)^\s*-?\s*(?:DOMAIN-SUFFIX|HOST-SUFFIX)\s*,\s*dmm\.co\.jp\s*,",
         )
         self.assertEqual(
-            5,
+            0,
             len(
                 re.findall(
                     r"(?im)^\s*-?\s*(?:DOMAIN-KEYWORD|HOST-KEYWORD)\s*,\s*dmm\s*,",

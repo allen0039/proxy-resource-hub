@@ -5,7 +5,7 @@
 > [!IMPORTANT]
 > 这些是公开脱敏模板，里面没有真实节点。必须先下载到本地，把 `获取到的订阅链接` 替换成自己的机场订阅，才能正常使用。
 
-> 本仓库只发布远程规则订阅；地区路由规则的发布不会修改这五份本地客户端配置。请在自己的私人副本中按需添加远程规则。
+> 五份公开模板已内置由 `Rules/Source/Custom/allenrules.list` 派生的九条远程规则订阅：一条 Custom DIRECT 与八条 Regional 规则。请在自己的私人副本中填写节点订阅和其他私人信息。
 
 ## 先安装客户端
 
@@ -40,6 +40,17 @@ App Store 链接指向应用官方商店页面。部分应用可能未在所有�
 4. 导入客户端，更新订阅和远程资源。
 
 不要直接把本页或 Raw 地址当成远程配置订阅。公开模板需要填写私人信息，应该作为本地配置使用。
+
+五份公开模板都已接入由 `allenrules.list` 派生的九条远程规则订阅。
+
+| 客户端 | 自定义远程规则已接入 |
+| --- | --- |
+| Mihomo | `Custom/direct` + `Regional/{hk,hk-auto,us,us-auto,jp,jp-auto,sg,sg-auto}` |
+| Surge Mac / iPhone | 同上，对应 `Rules/Surge/` |
+| Quantumult X | 同上，对应 `Rules/QuantumultX/` |
+| Loon | 同上，对应 `Rules/Loon/` |
+
+后续域名变更只在 `Rules/Source/Custom/allenrules.list` 中维护；GitHub Actions 会重新生成各客户端列表，客户端会按已配置的 86400 秒间隔更新这些资源。
 
 ## 我该下载哪个文件
 
