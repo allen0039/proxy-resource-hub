@@ -101,7 +101,26 @@ AI_PRIORITY_DOMAINS = (
     "copilot-telemetry.githubusercontent.com",
     "githubcopilot.com",
 )
-REGIONAL_RULES = (
+CUSTOM_RULES = (
+    ("DOMAIN-SUFFIX", "synology.cn", "DIRECT"),
+    ("DOMAIN", "qbittorrent-nox", "DIRECT"),
+    ("DOMAIN-SUFFIX", "digitalocean.com", "DIRECT"),
+    ("DOMAIN-SUFFIX", "dyndns.com", "DIRECT"),
+    ("DOMAIN-SUFFIX", "whatismyip.akamai.com", "DIRECT"),
+    ("DOMAIN-KEYWORD", "volcengine", "DIRECT"),
+    ("DOMAIN-SUFFIX", "xmwsyy.com", "DIRECT"),
+    ("DOMAIN-SUFFIX", "ui.com", "DIRECT"),
+    ("DOMAIN-SUFFIX", "imgse.com", "DIRECT"),
+    ("DOMAIN-SUFFIX", "tagweb.vip", "DIRECT"),
+    ("DOMAIN-KEYWORD", "yqc-premium", "DIRECT"),
+    ("DOMAIN-SUFFIX", "ad.12306.cn", "DIRECT"),
+    ("DOMAIN-SUFFIX", "gg.caixin.com", "DIRECT"),
+    ("DOMAIN-SUFFIX", "sdkapp.uve.weibo.com", "DIRECT"),
+    ("DOMAIN-SUFFIX", "ucweb.com", "DIRECT"),
+    ("DOMAIN-SUFFIX", "amemv.com", "DIRECT"),
+    ("DOMAIN-SUFFIX", "v4.plex.tv", "DIRECT"),
+    ("DOMAIN-SUFFIX", "openwrt.ai", "美国节点"),
+    ("DOMAIN-SUFFIX", "lsposed.org", "美国节点"),
     ("DOMAIN-SUFFIX", "hytron.io", "香港节点"),
     ("DOMAIN-SUFFIX", "linux.do", "美国节点"),
     ("DOMAIN-KEYWORD", "uspatriottactical", "美国节点"),
@@ -122,7 +141,6 @@ REGIONAL_RULES = (
     ("DOMAIN-KEYWORD", "kejilion", "香港节点"),
     ("DOMAIN-SUFFIX", "nfbyte.com", "香港节点"),
     ("DOMAIN-KEYWORD", "onitsukatiger", "日本节点"),
-    ("DOMAIN-SUFFIX", "montbell.com", "香港节点"),
     ("DOMAIN-SUFFIX", "compliance.chippercash.com", "美国节点"),
     ("DOMAIN-KEYWORD", "dmm", "日本节点"),
     ("DOMAIN-KEYWORD", "javrate", "日本节点"),
@@ -147,9 +165,9 @@ REGIONAL_POLICY_FILES = {
     "新加坡节点": "sg",
     "新加坡优选": "sg-auto",
 }
-REGIONAL_SOURCE_LABEL = "Rules/Source/Regional/allenrules.list"
-REGIONAL_HEADER = (
-    f"# Generated from {REGIONAL_SOURCE_LABEL} by tools/generate_rules.py. Do not edit."
+CUSTOM_SOURCE_LABEL = "Rules/Source/Custom/allenrules.list"
+CUSTOM_HEADER = (
+    f"# Generated from {CUSTOM_SOURCE_LABEL} by tools/generate_rules.py. Do not edit."
 )
 REGIONAL_CLIENTS = ("Mihomo", "Surge", "QuantumultX", "Loon")
 REGIONAL_SLUGS = tuple(REGIONAL_POLICY_FILES.values())
@@ -173,7 +191,7 @@ class RuleGeneratorTests(unittest.TestCase):
             "https://raw.githubusercontent.com/allen0039/proxy-resource-hub/main/Rules"
         )
 
-        self.assertIn(REGIONAL_SOURCE_LABEL, readme)
+        self.assertIn(CUSTOM_SOURCE_LABEL, readme)
         for client in REGIONAL_CLIENTS:
             for slug in REGIONAL_SLUGS:
                 with self.subTest(client=client, slug=slug):
@@ -212,10 +230,10 @@ class RuleGeneratorTests(unittest.TestCase):
     def test_regional_outputs_include_all_clients_and_policies(self):
         generator = load_generator()
         outputs = generator.build_outputs(ROOT)
-        source = ROOT / "Rules" / "Source" / "Regional" / "allenrules.list"
+        source = ROOT / "Rules" / "Source" / "Custom" / "allenrules.list"
 
         self.assertTrue(source.exists())
-        self.assertEqual(REGIONAL_RULES, tuple(generator.parse_regional_source(source)))
+        self.assertEqual(CUSTOM_RULES, tuple(generator.parse_custom_source(source)))
         for client in ("Mihomo", "Surge", "QuantumultX", "Loon"):
             for slug in REGIONAL_POLICY_FILES.values():
                 with self.subTest(client=client, slug=slug):
@@ -229,7 +247,7 @@ class RuleGeneratorTests(unittest.TestCase):
         outputs = generator.build_outputs(ROOT)
 
         for policy, slug in REGIONAL_POLICY_FILES.items():
-            rules = [rule for rule in REGIONAL_RULES if rule[2] == policy]
+            rules = [rule for rule in CUSTOM_RULES if rule[2] == policy]
             for client in ("Mihomo", "Surge", "QuantumultX", "Loon"):
                 with self.subTest(policy=policy, client=client):
                     content = outputs[
@@ -261,16 +279,33 @@ class RuleGeneratorTests(unittest.TestCase):
             for client in ("Mihomo", "Surge", "QuantumultX", "Loon"):
                 with self.subTest(client=client, slug=slug):
                     self.assertEqual(
-                        f"{REGIONAL_HEADER}\n",
+                        f"{CUSTOM_HEADER}\n",
                         outputs[
                             ROOT / "Rules" / client / "Regional" / f"{slug}.list"
                         ],
                     )
 
-    def test_parse_regional_source_rejects_invalid_rows(self):
+    def test_custom_source_contains_only_confirmed_rules(self):
+        generator = load_generator()
+        source = ROOT / "Rules" / "Source" / "Custom" / "allenrules.list"
+
+        self.assertTrue(source.exists())
+        self.assertEqual(CUSTOM_RULES, tuple(generator.parse_custom_source(source)))
+        content = source.read_text(encoding="utf-8")
+        self.assertNotIn("SRC-IP-CIDR", content)
+        self.assertNotIn("hdhive.online", content)
+        self.assertNotIn("montbell.com", content)
+
+    def test_parse_custom_source_rejects_invalid_rows(self):
         generator = load_generator()
         invalid_cases = {
-            "DOMAIN,example.com,美国节点\n": "unsupported rule type",
+            "DOMAIN,example.com,美国节点\n": None,
+            "DOMAIN,qbittorrent-nox,DIRECT\n": None,
+            "DOMAIN,-invalid,DIRECT\n": "invalid exact host",
+            "DOMAIN,invalid-,DIRECT\n": "invalid exact host",
+            "DOMAIN,UPPERCASE,DIRECT\n": "invalid exact host",
+            "DOMAIN-SUFFIX,example.com,UNKNOWN\n": "unknown policy",
+            "IP-CIDR,192.0.2.0/24,美国节点\n": "unsupported rule type",
             "DOMAIN-SUFFIX,example.com,欧洲节点\n": "unknown policy",
             "DOMAIN-SUFFIX,https://example.com/path,美国节点\n": "invalid domain",
             "DOMAIN-SUFFIX,example.com,美国节点\nDOMAIN-SUFFIX,example.com,日本节点\n": "duplicate rule",
@@ -288,10 +323,13 @@ class RuleGeneratorTests(unittest.TestCase):
             for content, reason in invalid_cases.items():
                 with self.subTest(reason=reason):
                     path.write_text(content, encoding="utf-8")
-                    with self.assertRaisesRegex(ValueError, reason):
-                        generator.parse_regional_source(path)
+                    if reason is None:
+                        self.assertEqual(1, len(generator.parse_custom_source(path)))
+                    else:
+                        with self.assertRaisesRegex(ValueError, reason):
+                            generator.parse_custom_source(path)
 
-    def test_parse_regional_source_skips_whitespace_only_lines(self):
+    def test_parse_custom_source_skips_whitespace_only_lines(self):
         generator = load_generator()
         with tempfile.TemporaryDirectory() as tmp:
             path = Path(tmp) / "routing.list"
@@ -301,10 +339,10 @@ class RuleGeneratorTests(unittest.TestCase):
 
             self.assertEqual(
                 [("DOMAIN-SUFFIX", "example.com", "美国节点")],
-                generator.parse_regional_source(path),
+                generator.parse_custom_source(path),
             )
 
-    def test_parse_regional_source_skips_indented_comments(self):
+    def test_parse_custom_source_skips_indented_comments(self):
         generator = load_generator()
         with tempfile.TemporaryDirectory() as tmp:
             path = Path(tmp) / "routing.list"
@@ -315,7 +353,7 @@ class RuleGeneratorTests(unittest.TestCase):
 
             self.assertEqual(
                 [("DOMAIN-SUFFIX", "example.com", "美国节点")],
-                generator.parse_regional_source(path),
+                generator.parse_custom_source(path),
             )
 
     def test_render_regional_uses_platform_specific_rule_types(self):
@@ -328,26 +366,26 @@ class RuleGeneratorTests(unittest.TestCase):
         self.assertEqual(
             "\n".join(
                 [
-                    REGIONAL_HEADER,
+                    CUSTOM_HEADER,
                     "",
                     "DOMAIN-SUFFIX,linux.do",
                     "DOMAIN-KEYWORD,hdhive",
                     "",
                 ]
             ),
-            generator.render_regional(rules, "classical", REGIONAL_SOURCE_LABEL),
+            generator.render_regional(rules, "classical", CUSTOM_SOURCE_LABEL),
         )
         self.assertEqual(
             "\n".join(
                 [
-                    REGIONAL_HEADER,
+                    CUSTOM_HEADER,
                     "",
                     "host-suffix, linux.do, proxy",
                     "host-keyword, hdhive, proxy",
                     "",
                 ]
             ),
-            generator.render_regional(rules, "quantumultx", REGIONAL_SOURCE_LABEL),
+            generator.render_regional(rules, "quantumultx", CUSTOM_SOURCE_LABEL),
         )
 
     def test_personal_sites_outputs_are_generated_for_every_client(self):
