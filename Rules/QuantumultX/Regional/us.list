@@ -1,5 +1,7 @@
-# Generated from Rules/Source/Regional/allenrules.list by tools/generate_rules.py. Do not edit.
+# Generated from Rules/Source/Custom/allenrules.list by tools/generate_rules.py. Do not edit.
 
+host-suffix, openwrt.ai, proxy
+host-suffix, lsposed.org, proxy
 host-suffix, linux.do, proxy
 host-keyword, uspatriottactical, proxy
 host-keyword, hdhive, proxy
