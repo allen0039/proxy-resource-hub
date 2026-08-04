@@ -206,9 +206,13 @@ class RuleGeneratorTests(unittest.TestCase):
 
         self.assertIn(CUSTOM_SOURCE_LABEL, readme)
         self.assertNotIn("Rules/Source/Regional/allenrules.list", readme)
-        for client in REGIONAL_CLIENTS:
-            with self.subTest(client=client):
-                self.assertIn(f"{base_url}/{client}/Custom/direct.list", readme)
+        expected_row = (
+            f"| 自定义直连 | [订阅]({base_url}/Mihomo/Custom/direct.list) | "
+            f"[订阅]({base_url}/Surge/Custom/direct.list) | "
+            f"[订阅]({base_url}/QuantumultX/Custom/direct.list) | "
+            f"[订阅]({base_url}/Loon/Custom/direct.list) |"
+        )
+        self.assertIn(expected_row, readme)
 
     def test_regional_subscription_documentation_is_complete(self):
         readme = (ROOT / "README.md").read_text(encoding="utf-8")
