@@ -108,14 +108,24 @@ def test_custom_source_contains_only_confirmed_rules(self):
     self.assertNotIn("montbell.com", content)
 ```
 
-- [ ] **Step 3: Extend invalid-source cases with exact DOMAIN validation**
+- [ ] **Step 3: Add exact DOMAIN acceptance and rejection cases**
 
-Update the parser test so it calls `parse_custom_source` and includes:
+Add a separate `test_parse_custom_source_accepts_exact_hosts` test with exact
+expected parser results:
+
+```python
+valid_cases = {
+    "DOMAIN,example.com,美国节点\n": [("DOMAIN", "example.com", "美国节点")],
+    "DOMAIN,qbittorrent-nox,DIRECT\n": [
+        ("DOMAIN", "qbittorrent-nox", "DIRECT")
+    ],
+}
+```
+
+Extend `test_parse_custom_source_rejects_invalid_rows` with error-only cases:
 
 ```python
 invalid_cases = {
-    "DOMAIN,example.com,美国节点\n": None,
-    "DOMAIN,qbittorrent-nox,DIRECT\n": None,
     "DOMAIN,-invalid,DIRECT\n": "invalid exact host",
     "DOMAIN,invalid-,DIRECT\n": "invalid exact host",
     "DOMAIN,UPPERCASE,DIRECT\n": "invalid exact host",
@@ -123,7 +133,10 @@ invalid_cases = {
 }
 ```
 
-For the two entries whose expected value is `None`, assert parsing succeeds. For each string expectation, use `assertRaisesRegex(ValueError, expected)`.
+For each valid case, assert `parse_custom_source` equals the complete expected
+tuple list. For each invalid case, use `assertRaisesRegex(ValueError, expected)`.
+Include the source content in each `subTest` so repeated error categories remain
+distinguishable, and preserve the existing invalid-row coverage.
 
 - [ ] **Step 4: Run focused tests and verify RED**
 
@@ -212,7 +225,7 @@ python3 -m unittest \
   tests.test_generate_rules.RuleGeneratorTests.test_parse_custom_source_rejects_invalid_rows -v
 ```
 
-Expected: both tests pass.
+Expected: all three focused tests pass.
 
 - [ ] **Step 6: Commit source and parser changes**
 
