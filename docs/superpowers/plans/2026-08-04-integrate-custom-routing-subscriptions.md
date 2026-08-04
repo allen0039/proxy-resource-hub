@@ -12,7 +12,7 @@
 
 - 只把 `DIRECT` 与地区分流域名通过远程订阅接入配置；三条 `SRC-IP-CIDR,192.168.50.150/151/152/32,DIRECT` 继续保留在本地并优先匹配。
 - 迁移并删除 52 条远程源规则在五份配置中的本地副本，同时删除 `DOMAIN-SUFFIX,hdhive.online,香港节点`；保留 `montbell.com` 和其他未迁移本地规则。
-- 五份私有原始配置位于 `/Users/allen/Downloads/Agent_Worker/vpn`，不属于仓库，不能加入 Git、提交或推送。
+- 五份私有原始配置位于用户自行选择的仓库外目录，不属于仓库，不能加入 Git、提交或推送。执行本计划前，用户须在本地设置 `PRIVATE_CONFIG_DIR`（例如 `export PRIVATE_CONFIG_DIR=/path/to/private/configs`）；计划和提交中只使用 `$PRIVATE_CONFIG_DIR` 占位符，绝不记录其真实值。
 - 所有订阅 URL 固定使用 `https://raw.githubusercontent.com/allen0039/proxy-resource-hub/main/`，更新周期为 86400 秒。
 - 九个订阅 slug 固定为 `direct`、`hk`、`hk-auto`、`us`、`us-auto`、`jp`、`jp-auto`、`sg`、`sg-auto`。
 - 远程自定义规则必须位于宽泛第三方远程规则和最终兜底规则之前；客户端规则按从上到下首次匹配。
@@ -109,11 +109,11 @@ git commit -m "test: cover custom routing subscriptions in tool configs"
 ### Task 2: Update private source configurations with remote feeds and remove duplicates
 
 **Files:**
-- Modify (private, never stage): `/Users/allen/Downloads/Agent_Worker/vpn/mihomo_byallen.yaml`
-- Modify (private, never stage): `/Users/allen/Downloads/Agent_Worker/vpn/surge-Mac.conf`
-- Modify (private, never stage): `/Users/allen/Downloads/Agent_Worker/vpn/Surge-iPhone.conf`
-- Modify (private, never stage): `/Users/allen/Downloads/Agent_Worker/vpn/quantumult_byallen.conf`
-- Modify (private, never stage): `/Users/allen/Downloads/Agent_Worker/vpn/allenloon.lcf`
+- Modify (private, never stage): `$PRIVATE_CONFIG_DIR/mihomo_byallen.yaml`
+- Modify (private, never stage): `$PRIVATE_CONFIG_DIR/surge-Mac.conf`
+- Modify (private, never stage): `$PRIVATE_CONFIG_DIR/Surge-iPhone.conf`
+- Modify (private, never stage): `$PRIVATE_CONFIG_DIR/quantumult_byallen.conf`
+- Modify (private, never stage): `$PRIVATE_CONFIG_DIR/allenloon.lcf`
 
 **Interfaces:**
 - Consumes: Existing policy group names and the public paths generated under `Rules/Mihomo`, `Rules/Surge`, `Rules/QuantumultX`, and `Rules/Loon`.
@@ -124,12 +124,13 @@ git commit -m "test: cover custom routing subscriptions in tool configs"
 Run:
 
 ```bash
+: "${PRIVATE_CONFIG_DIR:?Set PRIVATE_CONFIG_DIR to the local private configuration directory}"
 git status --short
-git ls-files --error-unmatch ../mihomo_byallen.yaml 2>/dev/null || true
-git ls-files --error-unmatch ../surge-Mac.conf 2>/dev/null || true
-git ls-files --error-unmatch ../Surge-iPhone.conf 2>/dev/null || true
-git ls-files --error-unmatch ../quantumult_byallen.conf 2>/dev/null || true
-git ls-files --error-unmatch ../allenloon.lcf 2>/dev/null || true
+git ls-files --error-unmatch -- "$PRIVATE_CONFIG_DIR/mihomo_byallen.yaml" 2>/dev/null || true
+git ls-files --error-unmatch -- "$PRIVATE_CONFIG_DIR/surge-Mac.conf" 2>/dev/null || true
+git ls-files --error-unmatch -- "$PRIVATE_CONFIG_DIR/Surge-iPhone.conf" 2>/dev/null || true
+git ls-files --error-unmatch -- "$PRIVATE_CONFIG_DIR/quantumult_byallen.conf" 2>/dev/null || true
+git ls-files --error-unmatch -- "$PRIVATE_CONFIG_DIR/allenloon.lcf" 2>/dev/null || true
 ```
 
 Expected: the repository starts clean apart from no tracked private source paths; if any private path is tracked, stop before editing and remove it from the staging scope rather than committing its contents.
@@ -224,11 +225,13 @@ Run a read-only check against the five private files:
 
 ```bash
 rg -n "Rules/(Mihomo|Surge|QuantumultX|Loon)/(Custom|Regional)/(direct|hk|hk-auto|us|us-auto|jp|jp-auto|sg|sg-auto)\.list" \
-  ../mihomo_byallen.yaml ../surge-Mac.conf ../Surge-iPhone.conf \
-  ../quantumult_byallen.conf ../allenloon.lcf
+  "$PRIVATE_CONFIG_DIR/mihomo_byallen.yaml" "$PRIVATE_CONFIG_DIR/surge-Mac.conf" \
+  "$PRIVATE_CONFIG_DIR/Surge-iPhone.conf" "$PRIVATE_CONFIG_DIR/quantumult_byallen.conf" \
+  "$PRIVATE_CONFIG_DIR/allenloon.lcf"
 rg -n "hdhive\.online|DOMAIN-(SUFFIX|KEYWORD),montbell\.com|montbell\.com" \
-  ../mihomo_byallen.yaml ../surge-Mac.conf ../Surge-iPhone.conf \
-  ../quantumult_byallen.conf ../allenloon.lcf
+  "$PRIVATE_CONFIG_DIR/mihomo_byallen.yaml" "$PRIVATE_CONFIG_DIR/surge-Mac.conf" \
+  "$PRIVATE_CONFIG_DIR/Surge-iPhone.conf" "$PRIVATE_CONFIG_DIR/quantumult_byallen.conf" \
+  "$PRIVATE_CONFIG_DIR/allenloon.lcf"
 ```
 
 Expected: nine feed references per applicable config, no active `hdhive.online`, and `montbell.com` still present. Confirm three source-IP rules remain in the Mac/Mihomo sources where they originally exist.
@@ -254,7 +257,7 @@ Run from the repository root:
 
 ```bash
 python3 tools/sanitize_tool_configs.py \
-  --source-dir /Users/allen/Downloads/Agent_Worker/vpn \
+  --source-dir "$PRIVATE_CONFIG_DIR" \
   --output-dir Configs/tool_config
 ```
 
@@ -334,10 +337,19 @@ Run:
 git status --short
 git diff --stat origin/main..HEAD
 rg -n "private\.invalid|FAKE_|CHANGE_ME|获取到的订阅链接" Configs/tool_config
-git diff --name-only origin/main..HEAD
+: "${PRIVATE_CONFIG_DIR:?Set PRIVATE_CONFIG_DIR to the local private configuration directory}"
+if git diff --no-ext-diff origin/main..HEAD | rg -n -F -- "$PRIVATE_CONFIG_DIR"; then
+  echo "ERROR: private source directory appears in committed diff content" >&2
+  exit 1
+fi
+if git diff --no-ext-diff origin/main..HEAD | rg -n -i \
+  '(private[.]invalid|sk-[a-z0-9]{20,}|gh[pousr]_[a-z0-9]{20,}|xox[baprs]-[a-z0-9-]{10,}|-----BEGIN (RSA |EC |OPENSSH )?PRIVATE KEY-----|password\s*[:=]\s*[^[:space:]]{8,}|token\s*[:=]\s*[^[:space:]]{8,})'; then
+  echo "ERROR: secret or private-endpoint marker appears in committed diff content" >&2
+  exit 1
+fi
 ```
 
-Expected: only intended repository files are listed; no private URL or credential appears. `获取到的订阅链接` is allowed only as the existing public placeholder, not a real URL. Confirm the nine raw GitHub rule URLs and policy bindings remain visible in the five public templates.
+Expected: only intended repository files are listed, and both diff-content scans return no matches; no private source directory, private URL, or credential appears in committed content. `获取到的订阅链接` is allowed only as the existing public placeholder, not a real URL. Confirm the nine raw GitHub rule URLs and policy bindings remain visible in the five public templates. A changed-filename list alone is not evidence of content safety.
 
 - [ ] **Step 4: Push the current branch directly to origin/main**
 
