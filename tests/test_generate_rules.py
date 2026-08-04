@@ -228,12 +228,17 @@ class RuleGeneratorTests(unittest.TestCase):
                         f"{base_url}/{client}/Regional/{slug}.list", readme
                     )
 
-    def test_local_configuration_documentation_publishes_remote_rules_only(self):
+    def test_local_configuration_documentation_describes_embedded_custom_rules(self):
         config_readme = (ROOT / "Configs" / "tool_config" / "README.md").read_text(
             encoding="utf-8"
         )
 
-        self.assertIn("只发布远程规则订阅", config_readme)
+        self.assertIn("五份公开模板已内置", config_readme)
+        self.assertIn("allenrules.list", config_readme)
+        self.assertIn("一条 Custom DIRECT 与八条 Regional 规则", config_readme)
+        self.assertNotIn(
+            "地区路由规则的发布不会修改这五份本地客户端配置", config_readme
+        )
 
     def test_all_generated_outputs_are_current(self):
         generator = load_generator()
