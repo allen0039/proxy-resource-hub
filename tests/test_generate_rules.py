@@ -550,9 +550,9 @@ class RuleGeneratorTests(unittest.TestCase):
             (shop_dir / "shopping.txt").write_text(
                 "example.com\n", encoding="utf-8"
             )
-            regional_dir = root / "Rules" / "Source" / "Regional"
-            regional_dir.mkdir(parents=True)
-            (regional_dir / "allenrules.list").write_text(
+            custom_dir = root / "Rules" / "Source" / "Custom"
+            custom_dir.mkdir(parents=True)
+            (custom_dir / "allenrules.list").write_text(
                 "DOMAIN-SUFFIX,example.com,美国节点\n", encoding="utf-8"
             )
             generator.sync_outputs(root, check=False)
@@ -561,7 +561,7 @@ class RuleGeneratorTests(unittest.TestCase):
 
             self.assertIn(stale_path, generator.sync_outputs(root, check=True))
 
-    def test_invalid_regional_source_does_not_partially_write_outputs(self):
+    def test_invalid_custom_source_does_not_partially_write_outputs(self):
         generator = load_generator()
         with tempfile.TemporaryDirectory() as tmp:
             root = Path(tmp)
@@ -578,10 +578,10 @@ class RuleGeneratorTests(unittest.TestCase):
                     (source_dir / f"{name}.txt").write_text(
                         "example.com\n", encoding="utf-8"
                     )
-            regional_dir = root / "Rules" / "Source" / "Regional"
-            regional_dir.mkdir(parents=True)
-            regional_source = regional_dir / "allenrules.list"
-            regional_source.write_text(
+            custom_dir = root / "Rules" / "Source" / "Custom"
+            custom_dir.mkdir(parents=True)
+            custom_source = custom_dir / "allenrules.list"
+            custom_source.write_text(
                 "DOMAIN-SUFFIX,example.com,美国节点\n", encoding="utf-8"
             )
 
@@ -590,7 +590,7 @@ class RuleGeneratorTests(unittest.TestCase):
             before = {
                 path: path.read_text(encoding="utf-8") for path in output_paths
             }
-            regional_source.write_text(
+            custom_source.write_text(
                 "DOMAIN-SUFFIX,example.com,美国节点\n"
                 "DOMAIN-SUFFIX,example.com,日本节点\n",
                 encoding="utf-8",
