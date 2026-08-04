@@ -18,17 +18,19 @@ DOMAIN_RE = re.compile(
     r"(?=.{1,253}\Z)(?:[a-z0-9](?:[a-z0-9-]{0,61}[a-z0-9])?\.)+"
     r"[a-z0-9](?:[a-z0-9-]{0,61}[a-z0-9])?\Z"
 )
-REGIONAL_POLICY_FILES = {
-    "香港节点": "hk",
-    "香港优选": "hk-auto",
-    "美国节点": "us",
-    "美国优选": "us-auto",
-    "日本节点": "jp",
-    "日本优选": "jp-auto",
-    "新加坡节点": "sg",
-    "新加坡优选": "sg-auto",
+CUSTOM_POLICY_OUTPUTS = {
+    "DIRECT": ("Custom", "direct"),
+    "香港节点": ("Regional", "hk"),
+    "香港优选": ("Regional", "hk-auto"),
+    "美国节点": ("Regional", "us"),
+    "美国优选": ("Regional", "us-auto"),
+    "日本节点": ("Regional", "jp"),
+    "日本优选": ("Regional", "jp-auto"),
+    "新加坡节点": ("Regional", "sg"),
+    "新加坡优选": ("Regional", "sg-auto"),
 }
-REGIONAL_TYPES = {"DOMAIN-SUFFIX", "DOMAIN-KEYWORD"}
+CUSTOM_TYPES = {"DOMAIN", "DOMAIN-SUFFIX", "DOMAIN-KEYWORD"}
+HOST_LABEL_RE = re.compile(r"[a-z0-9](?:[a-z0-9-]{0,61}[a-z0-9])?\Z")
 KEYWORD_RE = re.compile(r"[a-z0-9][a-z0-9.-]*\Z")
 
 
@@ -46,7 +48,7 @@ def parse_source(path: Path) -> list[str]:
     return lines
 
 
-def parse_regional_source(path: Path) -> list[tuple[str, str, str]]:
+def parse_custom_source(path: Path) -> list[tuple[str, str, str]]:
     rules: list[tuple[str, str, str]] = []
     seen: set[tuple[str, str]] = set()
     for number, line in enumerate(path.read_text(encoding="utf-8").splitlines(), 1):
@@ -57,10 +59,14 @@ def parse_regional_source(path: Path) -> list[tuple[str, str, str]]:
         if len(fields) != 3 or not all(fields):
             raise ValueError(f"{path}:{number}: expected three non-empty fields")
         rule_type, value, policy = fields
-        if rule_type not in REGIONAL_TYPES:
+        if rule_type not in CUSTOM_TYPES:
             raise ValueError(f"{path}:{number}: unsupported rule type: {rule_type}")
-        if policy not in REGIONAL_POLICY_FILES:
+        if policy not in CUSTOM_POLICY_OUTPUTS:
             raise ValueError(f"{path}:{number}: unknown policy: {policy}")
+        if rule_type == "DOMAIN" and not (
+            DOMAIN_RE.fullmatch(value) or HOST_LABEL_RE.fullmatch(value)
+        ):
+            raise ValueError(f"{path}:{number}: invalid exact host: {value}")
         if rule_type == "DOMAIN-SUFFIX" and not DOMAIN_RE.fullmatch(value):
             raise ValueError(f"{path}:{number}: invalid domain: {value}")
         if rule_type == "DOMAIN-KEYWORD" and not KEYWORD_RE.fullmatch(value):
@@ -135,10 +141,10 @@ def build_outputs(root: Path) -> dict[Path, str]:
                 root / "Rules" / compatibility_directory / f"{name}.list"
             ] = classical
 
-    source = root / "Rules" / "Source" / "Regional" / "allenrules.list"
+    source = root / "Rules" / "Source" / "Custom" / "allenrules.list"
     source_label = source.relative_to(root).as_posix()
     grouped: dict[str, list[tuple[str, str, str]]] = {}
-    for rule in parse_regional_source(source):
+    for rule in parse_custom_source(source):
         grouped.setdefault(rule[2], []).append(rule)
     regional_styles = {
         "Mihomo": "classical",
@@ -147,10 +153,11 @@ def build_outputs(root: Path) -> dict[Path, str]:
         "Loon": "classical",
     }
     for client, style in regional_styles.items():
-        for policy, slug in REGIONAL_POLICY_FILES.items():
-            outputs[root / "Rules" / client / "Regional" / f"{slug}.list"] = (
-                render_regional(grouped.get(policy, []), style, source_label)
-            )
+        for policy, (directory, slug) in CUSTOM_POLICY_OUTPUTS.items():
+            if directory == "Regional":
+                outputs[root / "Rules" / client / directory / f"{slug}.list"] = (
+                    render_regional(grouped.get(policy, []), style, source_label)
+                )
     return outputs
 
 
