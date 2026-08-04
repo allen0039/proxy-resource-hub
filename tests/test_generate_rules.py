@@ -250,7 +250,7 @@ class RuleGeneratorTests(unittest.TestCase):
                 path = ROOT / "Rules" / client / "Custom" / "direct.list"
                 self.assertIn(path, outputs)
                 content = outputs[path]
-                self.assertTrue(content.startswith(CUSTOM_HEADER))
+                self.assertEqual(CUSTOM_HEADER, content.splitlines()[0])
                 self.assertNotIn("SRC-IP-CIDR", content)
                 if client == "QuantumultX":
                     expected_lines = tuple(
