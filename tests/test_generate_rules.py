@@ -298,12 +298,20 @@ class RuleGeneratorTests(unittest.TestCase):
 
     def test_parse_custom_source_accepts_exact_hosts(self):
         generator = load_generator()
+        shortest_label = "a"
+        longest_label = "a" * 63
         valid_cases = {
             "DOMAIN,example.com,美国节点\n": [
                 ("DOMAIN", "example.com", "美国节点")
             ],
             "DOMAIN,qbittorrent-nox,DIRECT\n": [
                 ("DOMAIN", "qbittorrent-nox", "DIRECT")
+            ],
+            f"DOMAIN,{shortest_label},DIRECT\n": [
+                ("DOMAIN", shortest_label, "DIRECT")
+            ],
+            f"DOMAIN,{longest_label},DIRECT\n": [
+                ("DOMAIN", longest_label, "DIRECT")
             ],
         }
         with tempfile.TemporaryDirectory() as tmp:
@@ -315,10 +323,12 @@ class RuleGeneratorTests(unittest.TestCase):
 
     def test_parse_custom_source_rejects_invalid_rows(self):
         generator = load_generator()
+        overlong_label = "a" * 64
         invalid_cases = {
             "DOMAIN,-invalid,DIRECT\n": "invalid exact host",
             "DOMAIN,invalid-,DIRECT\n": "invalid exact host",
             "DOMAIN,UPPERCASE,DIRECT\n": "invalid exact host",
+            f"DOMAIN,{overlong_label},DIRECT\n": "invalid exact host",
             "DOMAIN-SUFFIX,example.com,UNKNOWN\n": "unknown policy",
             "IP-CIDR,192.0.2.0/24,美国节点\n": "unsupported rule type",
             "DOMAIN-SUFFIX,example.com,欧洲节点\n": "unknown policy",
