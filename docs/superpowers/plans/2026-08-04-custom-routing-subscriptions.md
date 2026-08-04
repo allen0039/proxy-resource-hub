@@ -132,6 +132,7 @@ Run:
 ```bash
 python3 -m unittest \
   tests.test_generate_rules.RuleGeneratorTests.test_custom_source_contains_only_confirmed_rules \
+  tests.test_generate_rules.RuleGeneratorTests.test_parse_custom_source_accepts_exact_hosts \
   tests.test_generate_rules.RuleGeneratorTests.test_parse_custom_source_rejects_invalid_rows -v
 ```
 
@@ -207,6 +208,7 @@ Run:
 ```bash
 python3 -m unittest \
   tests.test_generate_rules.RuleGeneratorTests.test_custom_source_contains_only_confirmed_rules \
+  tests.test_generate_rules.RuleGeneratorTests.test_parse_custom_source_accepts_exact_hosts \
   tests.test_generate_rules.RuleGeneratorTests.test_parse_custom_source_rejects_invalid_rows -v
 ```
 
