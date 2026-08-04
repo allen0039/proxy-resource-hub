@@ -296,11 +296,26 @@ class RuleGeneratorTests(unittest.TestCase):
         self.assertNotIn("hdhive.online", content)
         self.assertNotIn("montbell.com", content)
 
+    def test_parse_custom_source_accepts_exact_hosts(self):
+        generator = load_generator()
+        valid_cases = {
+            "DOMAIN,example.com,美国节点\n": [
+                ("DOMAIN", "example.com", "美国节点")
+            ],
+            "DOMAIN,qbittorrent-nox,DIRECT\n": [
+                ("DOMAIN", "qbittorrent-nox", "DIRECT")
+            ],
+        }
+        with tempfile.TemporaryDirectory() as tmp:
+            path = Path(tmp) / "routing.list"
+            for content, expected in valid_cases.items():
+                with self.subTest(content=content.strip()):
+                    path.write_text(content, encoding="utf-8")
+                    self.assertEqual(expected, generator.parse_custom_source(path))
+
     def test_parse_custom_source_rejects_invalid_rows(self):
         generator = load_generator()
         invalid_cases = {
-            "DOMAIN,example.com,美国节点\n": None,
-            "DOMAIN,qbittorrent-nox,DIRECT\n": None,
             "DOMAIN,-invalid,DIRECT\n": "invalid exact host",
             "DOMAIN,invalid-,DIRECT\n": "invalid exact host",
             "DOMAIN,UPPERCASE,DIRECT\n": "invalid exact host",
@@ -321,13 +336,10 @@ class RuleGeneratorTests(unittest.TestCase):
         with tempfile.TemporaryDirectory() as tmp:
             path = Path(tmp) / "routing.list"
             for content, reason in invalid_cases.items():
-                with self.subTest(reason=reason):
+                with self.subTest(content=content.strip(), reason=reason):
                     path.write_text(content, encoding="utf-8")
-                    if reason is None:
-                        self.assertEqual(1, len(generator.parse_custom_source(path)))
-                    else:
-                        with self.assertRaisesRegex(ValueError, reason):
-                            generator.parse_custom_source(path)
+                    with self.assertRaisesRegex(ValueError, reason):
+                        generator.parse_custom_source(path)
 
     def test_parse_custom_source_skips_whitespace_only_lines(self):
         generator = load_generator()
