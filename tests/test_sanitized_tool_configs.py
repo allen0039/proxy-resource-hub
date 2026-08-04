@@ -1,3 +1,5 @@
+from __future__ import annotations
+
 import importlib.util
 import re
 import unittest
@@ -72,6 +74,45 @@ BROKEN_DOCKER_ICON_URL = (
     "https://raw.githubusercontent.com/Koolson/Qure/master/"
     "IconSet/Color/Docker.png"
 )
+CUSTOM_BASE_URL = (
+    "https://raw.githubusercontent.com/allen0039/proxy-resource-hub/main/"
+)
+CUSTOM_FEEDS = {
+    "direct": ("Custom/direct.list", "DIRECT"),
+    "hk": ("Regional/hk.list", "香港节点"),
+    "hk-auto": ("Regional/hk-auto.list", "香港优选"),
+    "us": ("Regional/us.list", "美国节点"),
+    "us-auto": ("Regional/us-auto.list", "美国优选"),
+    "jp": ("Regional/jp.list", "日本节点"),
+    "jp-auto": ("Regional/jp-auto.list", "日本优选"),
+    "sg": ("Regional/sg.list", "新加坡节点"),
+    "sg-auto": ("Regional/sg-auto.list", "新加坡优选"),
+}
+MIGRATED_LOCAL_RULES = (
+    "synology.cn", "qbittorrent-nox", "digitalocean.com", "dyndns.com",
+    "whatismyip.akamai.com", "volcengine", "xmwsyy.com", "ui.com",
+    "imgse.com", "tagweb.vip", "yqc-premium", "ad.12306.cn",
+    "gg.caixin.com", "sdkapp.uve.weibo.com", "ucweb.com", "amemv.com",
+    "v4.plex.tv", "openwrt.ai", "lsposed.org", "hytron.io", "linux.do",
+    "uspatriottactical", "hdhive", "rundongex.com", "servercontrolpanel.de",
+    "mgboard.net", "sehuatang", "greasyfork", "qichiyu", "mjji.de",
+    "hd-torrents", "embyapp.top", "vps.town", "2fa.fun", "macwk.cn",
+    "appstorrent.ru", "kejilion", "nfbyte.com", "onitsukatiger",
+    "compliance.chippercash.com", "dmm", "javrate", "jav321", "freejavbt",
+    "javbus", "mgstage", "mmtv", "javdb", "javlibrary", "avbase",
+    "missav", "ftvgirls",
+)
+
+
+def active_section(text: str, section: str, next_section: str | None = None) -> str:
+    start = text.index(section) + len(section)
+    end = text.index(next_section, start) if next_section else len(text)
+    return text[start:end]
+
+
+def custom_url(client: str, slug: str) -> str:
+    path, _ = CUSTOM_FEEDS[slug]
+    return f"{CUSTOM_BASE_URL}Rules/{client}/{path}"
 
 
 def load_sanitizer():
@@ -1072,6 +1113,128 @@ rule-providers:
                 self.assertNotIn(
                     "# 1. 局域网与管理规则 (最高优先级)", text
                 )
+
+    def test_mihomo_custom_routing_providers_precede_broad_rule_sets(self):
+        mihomo = yaml.safe_load(
+            (OUTPUT_DIR / "mihomo_allen.yaml").read_text(encoding="utf-8")
+        )
+        slugs = list(CUSTOM_FEEDS)
+
+        for slug in slugs:
+            path, policy = CUSTOM_FEEDS[slug]
+            provider = mihomo["rule-providers"][f"custom_{slug.replace('-', '_')}"]
+            with self.subTest(slug=slug, check="provider metadata"):
+                self.assertEqual("http", provider["type"])
+                self.assertEqual("classical", provider["behavior"])
+                self.assertEqual("text", provider["format"])
+                self.assertEqual(86400, provider["interval"])
+                self.assertEqual(custom_url("Mihomo", slug), provider["url"])
+
+        expected_rules = [
+            f"RULE-SET,custom_{slug.replace('-', '_')},{policy}"
+            for slug, (_, policy) in CUSTOM_FEEDS.items()
+        ]
+        rules = mihomo["rules"]
+        source_ip_rules = [
+            "SRC-IP-CIDR,192.168.50.150/32,DIRECT",
+            "SRC-IP-CIDR,192.168.50.151/32,DIRECT",
+            "SRC-IP-CIDR,192.168.50.152/32,DIRECT",
+        ]
+        self.assertEqual(source_ip_rules, rules[:3])
+        self.assertEqual(expected_rules, rules[3 : 3 + len(expected_rules)])
+        self.assertLess(
+            rules.index(expected_rules[-1]),
+            rules.index("RULE-SET,steam_cn_domain,DIRECT"),
+        )
+
+    def test_surge_custom_routing_urls_and_policies_precede_skk_rules(self):
+        for name in ("surge_mac_allen.conf", "surge_iphone_allen.conf"):
+            rules = active_section(
+                (OUTPUT_DIR / name).read_text(encoding="utf-8"),
+                "[Rule]",
+                "[Host]",
+            )
+            for slug, (_, policy) in CUSTOM_FEEDS.items():
+                url = custom_url("Surge", slug)
+                expected_line = f"RULE-SET,{url},{policy}"
+                with self.subTest(name=name, slug=slug):
+                    self.assertEqual(1, rules.count(url))
+                    self.assertIn(expected_line, rules)
+                    self.assertLess(
+                        rules.index(expected_line),
+                        rules.index("RULE-SET,https://ruleset.skk.moe/"),
+                    )
+
+    def test_quantumultx_and_loon_bind_custom_routing_feeds_before_telecom(self):
+        qx = active_section(
+            (OUTPUT_DIR / "quantumultx_allen.conf").read_text(encoding="utf-8"),
+            "[filter_remote]",
+            "[rewrite_remote]",
+        )
+        loon = active_section(
+            (OUTPUT_DIR / "loon_allen.lcf").read_text(encoding="utf-8"),
+            "[Remote Rule]",
+            "[Plugin]",
+        )
+
+        for slug, (_, policy) in CUSTOM_FEEDS.items():
+            qx_url = custom_url("QuantumultX", slug)
+            loon_url = custom_url("Loon", slug)
+            qx_policy = "direct" if slug == "direct" else policy
+            with self.subTest(client="Quantumult X", slug=slug):
+                self.assertEqual(1, qx.count(qx_url))
+                line = next(line for line in qx.splitlines() if qx_url in line)
+                self.assertIn(f"tag=自定义-{CUSTOM_FEEDS[slug][1]}", line)
+                self.assertIn(f"force-policy={qx_policy}", line)
+                self.assertIn("update-interval=86400", line)
+                self.assertIn("opt-parser=false", line)
+                self.assertIn("enabled=true", line)
+                self.assertLess(qx.index(qx_url), qx.index("ChinaTelecom"))
+            with self.subTest(client="Loon", slug=slug):
+                self.assertEqual(1, loon.count(loon_url))
+                line = next(line for line in loon.splitlines() if loon_url in line)
+                self.assertIn(f"policy={policy}", line)
+                self.assertIn(f"tag=自定义-{CUSTOM_FEEDS[slug][1]}", line)
+                self.assertIn("enabled=true", line)
+                self.assertLess(loon.index(loon_url), loon.index("ChinaTelecom"))
+
+    def test_custom_routing_migrated_rules_are_not_active_locally(self):
+        outputs = {
+            name: (OUTPUT_DIR / name).read_text(encoding="utf-8")
+            for name in CONFIG_NAMES
+        }
+        active_local_sections = {
+            "mihomo_allen.yaml": active_section(outputs["mihomo_allen.yaml"], "rules:"),
+            "surge_mac_allen.conf": active_section(
+                outputs["surge_mac_allen.conf"], "[Rule]", "[Host]"
+            ),
+            "surge_iphone_allen.conf": active_section(
+                outputs["surge_iphone_allen.conf"], "[Rule]", "[Host]"
+            ),
+            "quantumultx_allen.conf": active_section(
+                outputs["quantumultx_allen.conf"], "[filter_local]", "[rewrite_local]"
+            ),
+            "loon_allen.lcf": active_section(
+                outputs["loon_allen.lcf"], "[Rule]", "[Remote Rule]"
+            ),
+        }
+        local_rule_pattern = re.compile(
+            r"^\s*-?\s*(?:DOMAIN|DOMAIN-SUFFIX|DOMAIN-KEYWORD|"
+            r"HOST|HOST-SUFFIX|HOST-KEYWORD)\s*,\s*([^,\s]+)",
+            re.IGNORECASE,
+        )
+
+        for name, section in active_local_sections.items():
+            active_values = {
+                match.group(1).casefold()
+                for line in section.splitlines()
+                if not line.lstrip().startswith(("#", ";", "//"))
+                if (match := local_rule_pattern.match(line)) is not None
+            }
+            with self.subTest(name=name, check="migrated rules"):
+                self.assertFalse(set(MIGRATED_LOCAL_RULES) & active_values)
+                self.assertIn("montbell.com", active_values)
+                self.assertNotIn("hdhive.online", active_values)
 
 
 if __name__ == "__main__":
