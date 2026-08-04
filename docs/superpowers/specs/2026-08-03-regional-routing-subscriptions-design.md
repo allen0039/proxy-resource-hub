@@ -13,8 +13,10 @@
 源文件固定为：
 
 ```text
-Rules/Source/Regional/allenrules.list
+Rules/Source/Custom/allenrules.list
 ```
+
+2026-08-04 Custom 设计将该维护源扩展为自定义直连与地区路由共用源，既有 Regional 输出 URL 保持不变。
 
 每条有效规则使用三字段、逗号分隔格式：
 

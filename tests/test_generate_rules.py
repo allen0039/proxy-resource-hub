@@ -198,6 +198,18 @@ def load_generator():
 
 
 class RuleGeneratorTests(unittest.TestCase):
+    def test_custom_direct_subscription_documentation_is_complete(self):
+        readme = (ROOT / "README.md").read_text(encoding="utf-8")
+        base_url = (
+            "https://raw.githubusercontent.com/allen0039/proxy-resource-hub/main/Rules"
+        )
+
+        self.assertIn(CUSTOM_SOURCE_LABEL, readme)
+        self.assertNotIn("Rules/Source/Regional/allenrules.list", readme)
+        for client in REGIONAL_CLIENTS:
+            with self.subTest(client=client):
+                self.assertIn(f"{base_url}/{client}/Custom/direct.list", readme)
+
     def test_regional_subscription_documentation_is_complete(self):
         readme = (ROOT / "README.md").read_text(encoding="utf-8")
         base_url = (
