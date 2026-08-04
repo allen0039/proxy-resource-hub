@@ -338,11 +338,16 @@ git status --short
 git diff --stat origin/main..HEAD
 rg -n "private\.invalid|FAKE_|CHANGE_ME|获取到的订阅链接" Configs/tool_config
 : "${PRIVATE_CONFIG_DIR:?Set PRIVATE_CONFIG_DIR to the local private configuration directory}"
-if git diff --no-ext-diff origin/main..HEAD | rg -n -F -- "$PRIVATE_CONFIG_DIR"; then
+set -o pipefail
+if ! diff_content="$(git diff --no-ext-diff origin/main..HEAD)"; then
+  echo "ERROR: unable to inspect committed diff content" >&2
+  exit 1
+fi
+if printf '%s\n' "$diff_content" | rg -n -F -- "$PRIVATE_CONFIG_DIR"; then
   echo "ERROR: private source directory appears in committed diff content" >&2
   exit 1
 fi
-if git diff --no-ext-diff origin/main..HEAD | rg -n -i \
+if printf '%s\n' "$diff_content" | rg -n -i \
   '(private[.]invalid|sk-[a-z0-9]{20,}|gh[pousr]_[a-z0-9]{20,}|xox[baprs]-[a-z0-9-]{10,}|-----BEGIN (RSA |EC |OPENSSH )?PRIVATE KEY-----|password\s*[:=]\s*[^[:space:]]{8,}|token\s*[:=]\s*[^[:space:]]{8,})'; then
   echo "ERROR: secret or private-endpoint marker appears in committed diff content" >&2
   exit 1
