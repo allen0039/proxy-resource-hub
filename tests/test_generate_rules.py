@@ -167,11 +167,14 @@ REGIONAL_POLICY_FILES = {
     "日本节点": "jp",
     "新加坡节点": "sg",
 }
+ALLENRULE_SOURCE_FILES = {
+    "DIRECT": "direct",
+    "香港节点": "hk",
+    "美国节点": "us",
+    "日本节点": "jp",
+    "新加坡节点": "sg",
+}
 RETIRED_REGIONAL_SLUGS = ("hk-auto", "us-auto", "jp-auto", "sg-auto")
-CUSTOM_SOURCE_LABEL = "Rules/Source/Custom/allenrules.list"
-CUSTOM_HEADER = (
-    f"# Generated from {CUSTOM_SOURCE_LABEL} by tools/generate_rules.py. Do not edit."
-)
 QX_CUSTOM_TYPES = {
     "DOMAIN": "host",
     "DOMAIN-SUFFIX": "host-suffix",
@@ -179,6 +182,30 @@ QX_CUSTOM_TYPES = {
 }
 REGIONAL_CLIENTS = ("Mihomo", "Surge", "QuantumultX", "Loon")
 REGIONAL_SLUGS = tuple(REGIONAL_POLICY_FILES.values())
+
+
+def custom_source_label(policy: str) -> str:
+    return f"Rules/Source/allenrules/{ALLENRULE_SOURCE_FILES[policy]}.list"
+
+
+def custom_header(policy: str) -> str:
+    return (
+        f"# Generated from {custom_source_label(policy)} "
+        "by tools/generate_rules.py. Do not edit."
+    )
+
+
+def write_allenrule_sources(
+    source_root: Path, rules: tuple[tuple[str, str, str], ...]
+) -> None:
+    source_root.mkdir(parents=True, exist_ok=True)
+    for policy, filename in ALLENRULE_SOURCE_FILES.items():
+        content = "".join(
+            f"{rule_type},{value}\n"
+            for rule_type, value, rule_policy in rules
+            if rule_policy == policy
+        )
+        (source_root / f"{filename}.list").write_text(content, encoding="utf-8")
 
 
 def rule_lines(content: str) -> tuple[str, ...]:
@@ -207,7 +234,7 @@ class RuleGeneratorTests(unittest.TestCase):
             "https://raw.githubusercontent.com/allen0039/proxy-resource-hub/main/Rules"
         )
 
-        self.assertIn(CUSTOM_SOURCE_LABEL, readme)
+        self.assertIn(custom_source_label("DIRECT"), readme)
         self.assertNotIn("Rules/Source/Regional/allenrules.list", readme)
         expected_row = (
             f"| 自定义直连 | [订阅]({base_url}/Mihomo/Custom/direct.list) | "
@@ -223,7 +250,8 @@ class RuleGeneratorTests(unittest.TestCase):
             "https://raw.githubusercontent.com/allen0039/proxy-resource-hub/main/Rules"
         )
 
-        self.assertIn(CUSTOM_SOURCE_LABEL, readme)
+        for policy in REGIONAL_POLICY_FILES:
+            self.assertIn(custom_source_label(policy), readme)
         for client in REGIONAL_CLIENTS:
             for slug in REGIONAL_SLUGS:
                 with self.subTest(client=client, slug=slug):
@@ -281,7 +309,7 @@ class RuleGeneratorTests(unittest.TestCase):
                 path = ROOT / "Rules" / client / "Custom" / "direct.list"
                 self.assertIn(path, outputs)
                 content = outputs[path]
-                self.assertEqual(CUSTOM_HEADER, content.splitlines()[0])
+                self.assertEqual(custom_header("DIRECT"), content.splitlines()[0])
                 self.assertNotIn("SRC-IP-CIDR", content)
                 if client == "QuantumultX":
                     expected_lines = tuple(
@@ -305,10 +333,6 @@ class RuleGeneratorTests(unittest.TestCase):
     def test_regional_outputs_include_all_clients_and_policies(self):
         generator = load_generator()
         outputs = generator.build_outputs(ROOT)
-        source = ROOT / "Rules" / "Source" / "Custom" / "allenrules.list"
-
-        self.assertTrue(source.exists())
-        self.assertEqual(CUSTOM_RULES, tuple(generator.parse_custom_source(source)))
         for client in ("Mihomo", "Surge", "QuantumultX", "Loon"):
             for slug in REGIONAL_POLICY_FILES.values():
                 with self.subTest(client=client, slug=slug):
@@ -328,7 +352,7 @@ class RuleGeneratorTests(unittest.TestCase):
                     content = outputs[
                         ROOT / "Rules" / client / "Regional" / f"{slug}.list"
                     ]
-                    self.assertTrue(content.startswith(CUSTOM_HEADER))
+                    self.assertTrue(content.startswith(custom_header(policy)))
                     if client == "QuantumultX":
                         expected_lines = tuple(
                             f"{QX_CUSTOM_TYPES[rule_type]}, "
@@ -353,33 +377,43 @@ class RuleGeneratorTests(unittest.TestCase):
                     self.assertNotIn(path, outputs)
                     self.assertFalse(path.exists())
 
-    def test_custom_source_contains_only_confirmed_rules(self):
+    def test_split_sources_use_filename_owned_policies(self):
         generator = load_generator()
-        source = ROOT / "Rules" / "Source" / "Custom" / "allenrules.list"
+        source_root = ROOT / "Rules" / "Source" / "allenrules"
+        old_source = ROOT / "Rules" / "Source" / "Custom" / "allenrules.list"
 
-        self.assertTrue(source.exists())
-        self.assertEqual(CUSTOM_RULES, tuple(generator.parse_custom_source(source)))
-        content = source.read_text(encoding="utf-8")
-        self.assertNotIn("SRC-IP-CIDR", content)
-        self.assertNotIn("hdhive.online", content)
-        self.assertNotIn("montbell.com", content)
+        self.assertFalse(old_source.exists())
+        for policy, filename in ALLENRULE_SOURCE_FILES.items():
+            with self.subTest(policy=policy):
+                source = source_root / f"{filename}.list"
+                self.assertTrue(source.exists())
+                expected = tuple(
+                    rule for rule in CUSTOM_RULES if rule[2] == policy
+                )
+                self.assertEqual(
+                    expected, tuple(generator.parse_custom_source(source, policy))
+                )
+                content = source.read_text(encoding="utf-8")
+                self.assertNotIn("SRC-IP-CIDR", content)
+                self.assertNotIn("hdhive.online", content)
+                self.assertNotIn("montbell.com", content)
 
     def test_parse_custom_source_accepts_exact_hosts(self):
         generator = load_generator()
         shortest_label = "a"
         longest_label = "a" * 63
         valid_cases = {
-            "DOMAIN,example.com,美国节点\n": [
+            "DOMAIN,example.com\n": [
                 ("DOMAIN", "example.com", "美国节点")
             ],
-            "DOMAIN,qbittorrent-nox,DIRECT\n": [
-                ("DOMAIN", "qbittorrent-nox", "DIRECT")
+            "DOMAIN,qbittorrent-nox\n": [
+                ("DOMAIN", "qbittorrent-nox", "美国节点")
             ],
-            f"DOMAIN,{shortest_label},DIRECT\n": [
-                ("DOMAIN", shortest_label, "DIRECT")
+            f"DOMAIN,{shortest_label}\n": [
+                ("DOMAIN", shortest_label, "美国节点")
             ],
-            f"DOMAIN,{longest_label},DIRECT\n": [
-                ("DOMAIN", longest_label, "DIRECT")
+            f"DOMAIN,{longest_label}\n": [
+                ("DOMAIN", longest_label, "美国节点")
             ],
         }
         with tempfile.TemporaryDirectory() as tmp:
@@ -387,29 +421,28 @@ class RuleGeneratorTests(unittest.TestCase):
             for content, expected in valid_cases.items():
                 with self.subTest(content=content.strip()):
                     path.write_text(content, encoding="utf-8")
-                    self.assertEqual(expected, generator.parse_custom_source(path))
+                    self.assertEqual(
+                        expected, generator.parse_custom_source(path, "美国节点")
+                    )
 
     def test_parse_custom_source_rejects_invalid_rows(self):
         generator = load_generator()
         overlong_label = "a" * 64
         invalid_cases = {
-            "DOMAIN,-invalid,DIRECT\n": "invalid exact host",
-            "DOMAIN,invalid-,DIRECT\n": "invalid exact host",
-            "DOMAIN,UPPERCASE,DIRECT\n": "invalid exact host",
-            f"DOMAIN,{overlong_label},DIRECT\n": "invalid exact host",
-            "DOMAIN-SUFFIX,example.com,UNKNOWN\n": "unknown policy",
-            "IP-CIDR,192.0.2.0/24,美国节点\n": "unsupported rule type",
-            "DOMAIN-SUFFIX,example.com,欧洲节点\n": "unknown policy",
-            "DOMAIN-SUFFIX,https://example.com/path,美国节点\n": "invalid domain",
-            "DOMAIN-SUFFIX,example.com,美国节点\nDOMAIN-SUFFIX,example.com,日本节点\n": "duplicate rule",
-            "DOMAIN-KEYWORD,hdhive,美国节点\nDOMAIN-SUFFIX,hdhive.online,香港节点\n": "overlapping keyword and suffix",
-            "DOMAIN-SUFFIX,example.com\n": "expected three non-empty fields",
-            "DOMAIN-SUFFIX,,美国节点\n": "expected three non-empty fields",
-            "DOMAIN-SUFFIX,example.com,\n": "expected three non-empty fields",
-            "DOMAIN-SUFFIX,Example.com,美国节点\n": "invalid domain",
-            "DOMAIN-KEYWORD,Example,美国节点\n": "invalid keyword",
-            "DOMAIN-KEYWORD,example keyword,美国节点\n": "invalid keyword",
-            "DOMAIN-SUFFIX,example.com,美国节点\nDOMAIN-SUFFIX,example.com,美国节点\n": "duplicate rule",
+            "DOMAIN,-invalid\n": "invalid exact host",
+            "DOMAIN,invalid-\n": "invalid exact host",
+            "DOMAIN,UPPERCASE\n": "invalid exact host",
+            f"DOMAIN,{overlong_label}\n": "invalid exact host",
+            "IP-CIDR,192.0.2.0/24\n": "unsupported rule type",
+            "DOMAIN-SUFFIX,https://example.com/path\n": "invalid domain",
+            "DOMAIN-KEYWORD,hdhive\nDOMAIN-SUFFIX,hdhive.online\n": "overlapping keyword and suffix",
+            "DOMAIN-SUFFIX,example.com,美国节点\n": "expected two non-empty fields",
+            "DOMAIN-SUFFIX,\n": "expected two non-empty fields",
+            "DOMAIN-SUFFIX,,美国节点\n": "expected two non-empty fields",
+            "DOMAIN-SUFFIX,Example.com\n": "invalid domain",
+            "DOMAIN-KEYWORD,Example\n": "invalid keyword",
+            "DOMAIN-KEYWORD,example keyword\n": "invalid keyword",
+            "DOMAIN-SUFFIX,example.com\nDOMAIN-SUFFIX,example.com\n": "duplicate rule",
         }
         with tempfile.TemporaryDirectory() as tmp:
             path = Path(tmp) / "routing.list"
@@ -417,19 +450,45 @@ class RuleGeneratorTests(unittest.TestCase):
                 with self.subTest(content=content.strip(), reason=reason):
                     path.write_text(content, encoding="utf-8")
                     with self.assertRaisesRegex(ValueError, reason):
-                        generator.parse_custom_source(path)
+                        generator.parse_custom_source(path, "美国节点")
+
+    def test_parse_custom_sources_rejects_cross_policy_duplicates(self):
+        generator = load_generator()
+        cases = (
+            (
+                "duplicate rule",
+                (
+                    ("DOMAIN-SUFFIX", "example.com", "DIRECT"),
+                    ("DOMAIN-SUFFIX", "example.com", "香港节点"),
+                ),
+            ),
+            (
+                "overlapping keyword and suffix",
+                (
+                    ("DOMAIN-KEYWORD", "hdhive", "DIRECT"),
+                    ("DOMAIN-SUFFIX", "hdhive.online", "香港节点"),
+                ),
+            ),
+        )
+        with tempfile.TemporaryDirectory() as tmp:
+            source_root = Path(tmp) / "Rules" / "Source" / "allenrules"
+            for reason, rules in cases:
+                with self.subTest(reason=reason):
+                    write_allenrule_sources(source_root, rules)
+                    with self.assertRaisesRegex(ValueError, reason):
+                        generator.parse_custom_sources(source_root)
 
     def test_parse_custom_source_skips_whitespace_only_lines(self):
         generator = load_generator()
         with tempfile.TemporaryDirectory() as tmp:
             path = Path(tmp) / "routing.list"
             path.write_text(
-                "   \t  \nDOMAIN-SUFFIX,example.com,美国节点\n", encoding="utf-8"
+                "   \t  \nDOMAIN-SUFFIX,example.com\n", encoding="utf-8"
             )
 
             self.assertEqual(
                 [("DOMAIN-SUFFIX", "example.com", "美国节点")],
-                generator.parse_custom_source(path),
+                generator.parse_custom_source(path, "美国节点"),
             )
 
     def test_parse_custom_source_skips_indented_comments(self):
@@ -437,13 +496,13 @@ class RuleGeneratorTests(unittest.TestCase):
         with tempfile.TemporaryDirectory() as tmp:
             path = Path(tmp) / "routing.list"
             path.write_text(
-                "  # policy note\nDOMAIN-SUFFIX,example.com,美国节点\n",
+                "  # policy note\nDOMAIN-SUFFIX,example.com\n",
                 encoding="utf-8",
             )
 
             self.assertEqual(
                 [("DOMAIN-SUFFIX", "example.com", "美国节点")],
-                generator.parse_custom_source(path),
+                generator.parse_custom_source(path, "美国节点"),
             )
 
     def test_render_custom_rules_uses_platform_specific_rule_types(self):
@@ -457,7 +516,7 @@ class RuleGeneratorTests(unittest.TestCase):
         self.assertEqual(
             "\n".join(
                 [
-                    CUSTOM_HEADER,
+                    custom_header("DIRECT"),
                     "",
                     "DOMAIN,qbittorrent-nox",
                     "DOMAIN-SUFFIX,linux.do",
@@ -465,12 +524,14 @@ class RuleGeneratorTests(unittest.TestCase):
                     "",
                 ]
             ),
-            generator.render_custom_rules(rules, "classical", CUSTOM_SOURCE_LABEL),
+            generator.render_custom_rules(
+                rules, "classical", custom_source_label("DIRECT")
+            ),
         )
         self.assertEqual(
             "\n".join(
                 [
-                    CUSTOM_HEADER,
+                    custom_header("DIRECT"),
                     "",
                     "host, qbittorrent-nox, proxy",
                     "host-suffix, linux.do, proxy",
@@ -478,7 +539,9 @@ class RuleGeneratorTests(unittest.TestCase):
                     "",
                 ]
             ),
-            generator.render_custom_rules(rules, "quantumultx", CUSTOM_SOURCE_LABEL),
+            generator.render_custom_rules(
+                rules, "quantumultx", custom_source_label("DIRECT")
+            ),
         )
 
     def test_personal_sites_outputs_are_generated_for_every_client(self):
@@ -631,10 +694,10 @@ class RuleGeneratorTests(unittest.TestCase):
             (shop_dir / "shopping.txt").write_text(
                 "example.com\n", encoding="utf-8"
             )
-            custom_dir = root / "Rules" / "Source" / "Custom"
-            custom_dir.mkdir(parents=True)
-            (custom_dir / "allenrules.list").write_text(
-                "DOMAIN-SUFFIX,example.com,美国节点\n", encoding="utf-8"
+            custom_source_root = root / "Rules" / "Source" / "allenrules"
+            write_allenrule_sources(
+                custom_source_root,
+                (("DOMAIN-SUFFIX", "example.com", "美国节点"),),
             )
             generator.sync_outputs(root, check=False)
             stale_path = root / "Rules" / "Mihomo" / "AI" / "ai.list"
@@ -659,11 +722,10 @@ class RuleGeneratorTests(unittest.TestCase):
                     (source_dir / f"{name}.txt").write_text(
                         "example.com\n", encoding="utf-8"
                     )
-            custom_dir = root / "Rules" / "Source" / "Custom"
-            custom_dir.mkdir(parents=True)
-            custom_source = custom_dir / "allenrules.list"
-            custom_source.write_text(
-                "DOMAIN-SUFFIX,example.com,美国节点\n", encoding="utf-8"
+            custom_source_root = root / "Rules" / "Source" / "allenrules"
+            write_allenrule_sources(
+                custom_source_root,
+                (("DOMAIN-SUFFIX", "example.com", "美国节点"),),
             )
 
             generator.sync_outputs(root, check=False)
@@ -671,9 +733,9 @@ class RuleGeneratorTests(unittest.TestCase):
             before = {
                 path: path.read_text(encoding="utf-8") for path in output_paths
             }
-            custom_source.write_text(
-                "DOMAIN-SUFFIX,example.com,美国节点\n"
-                "DOMAIN-SUFFIX,example.com,日本节点\n",
+            (custom_source_root / "us.list").write_text(
+                "DOMAIN-SUFFIX,example.com\n"
+                "DOMAIN-SUFFIX,example.com\n",
                 encoding="utf-8",
             )
 

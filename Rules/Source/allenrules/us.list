@@ -1,0 +1,31 @@
+# Technology, development, and service administration
+DOMAIN-SUFFIX,openwrt.ai
+DOMAIN-SUFFIX,lsposed.org
+DOMAIN-SUFFIX,linux.do
+DOMAIN-SUFFIX,rundongex.com
+DOMAIN-SUFFIX,servercontrolpanel.de
+DOMAIN-SUFFIX,mgboard.net
+DOMAIN-KEYWORD,greasyfork
+DOMAIN-KEYWORD,qichiyu
+DOMAIN-SUFFIX,mjji.de
+DOMAIN-SUFFIX,vps.town
+DOMAIN-SUFFIX,2fa.fun
+
+# Media metadata and icon services
+DOMAIN-KEYWORD,themoviedb
+DOMAIN-KEYWORD,tmdb
+DOMAIN-KEYWORD,dashboardicons
+
+# Shopping and compliance services
+DOMAIN-KEYWORD,uspatriottactical
+DOMAIN-SUFFIX,compliance.chippercash.com
+
+# Downloads, media, and content sites
+DOMAIN-KEYWORD,hdhive
+DOMAIN-KEYWORD,sehuatang
+DOMAIN-KEYWORD,hd-torrents
+DOMAIN-SUFFIX,embyapp.top
+DOMAIN-SUFFIX,macwk.cn
+DOMAIN-SUFFIX,appstorrent.ru
+DOMAIN-KEYWORD,missav
+DOMAIN-KEYWORD,ftvgirls
