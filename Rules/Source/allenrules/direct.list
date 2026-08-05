@@ -1,0 +1,24 @@
+# Devices and self-hosted services
+DOMAIN-SUFFIX,synology.cn
+DOMAIN,qbittorrent-nox
+DOMAIN-SUFFIX,ui.com
+
+# Infrastructure and network diagnostics
+DOMAIN-SUFFIX,digitalocean.com
+DOMAIN-SUFFIX,dyndns.com
+DOMAIN-SUFFIX,whatismyip.akamai.com
+DOMAIN-KEYWORD,volcengine
+
+# Domestic applications and service exceptions
+DOMAIN-SUFFIX,xmwsyy.com
+DOMAIN-SUFFIX,imgse.com
+DOMAIN-SUFFIX,tagweb.vip
+DOMAIN-KEYWORD,yqc-premium
+DOMAIN-SUFFIX,ad.12306.cn
+DOMAIN-SUFFIX,gg.caixin.com
+DOMAIN-SUFFIX,sdkapp.uve.weibo.com
+DOMAIN-SUFFIX,ucweb.com
+DOMAIN-SUFFIX,amemv.com
+
+# Media service
+DOMAIN-SUFFIX,v4.plex.tv
