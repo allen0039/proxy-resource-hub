@@ -157,14 +157,9 @@ FINAL,Final
 [Remote Rule]
 https://raw.githubusercontent.com/allen0039/proxy-resource-hub/main/Rules/Loon/Custom/direct.list, policy=DIRECT, tag=自定义-直连, enabled=true
 https://raw.githubusercontent.com/allen0039/proxy-resource-hub/main/Rules/Loon/Regional/hk.list, policy=香港节点, tag=自定义-香港节点, enabled=true
-# 区域优选远程规则待仓库提供后再启用。
-https://raw.githubusercontent.com/allen0039/proxy-resource-hub/main/Rules/Loon/Regional/hk-auto.list, policy=香港优选, tag=自定义-香港优选, enabled=false
 https://raw.githubusercontent.com/allen0039/proxy-resource-hub/main/Rules/Loon/Regional/us.list, policy=美国节点, tag=自定义-美国节点, enabled=true
-https://raw.githubusercontent.com/allen0039/proxy-resource-hub/main/Rules/Loon/Regional/us-auto.list, policy=美国优选, tag=自定义-美国优选, enabled=false
 https://raw.githubusercontent.com/allen0039/proxy-resource-hub/main/Rules/Loon/Regional/jp.list, policy=日本节点, tag=自定义-日本节点, enabled=true
-https://raw.githubusercontent.com/allen0039/proxy-resource-hub/main/Rules/Loon/Regional/jp-auto.list, policy=日本优选, tag=自定义-日本优选, enabled=false
 https://raw.githubusercontent.com/allen0039/proxy-resource-hub/main/Rules/Loon/Regional/sg.list, policy=新加坡节点, tag=自定义-新加坡节点, enabled=true
-https://raw.githubusercontent.com/allen0039/proxy-resource-hub/main/Rules/Loon/Regional/sg-auto.list, policy=新加坡优选, tag=自定义-新加坡优选, enabled=false
 # policy 指定出口，enabled=false 可保留备用规则；新增策略名时需先在 [Proxy Group] 定义。
 # 本地规则优先，PT、个人域名和公益 AI 以自有订阅为准。
 https://raw.githubusercontent.com/QuixoticHeart/rule-set/refs/heads/ruleset/loon/apns.list, policy=Apple Push, tag=Apple Push, enabled=true

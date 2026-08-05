@@ -21,13 +21,9 @@ DOMAIN_RE = re.compile(
 CUSTOM_POLICY_OUTPUTS = {
     "DIRECT": ("Custom", "direct"),
     "香港节点": ("Regional", "hk"),
-    "香港优选": ("Regional", "hk-auto"),
     "美国节点": ("Regional", "us"),
-    "美国优选": ("Regional", "us-auto"),
     "日本节点": ("Regional", "jp"),
-    "日本优选": ("Regional", "jp-auto"),
     "新加坡节点": ("Regional", "sg"),
-    "新加坡优选": ("Regional", "sg-auto"),
 }
 CUSTOM_TYPES = {"DOMAIN", "DOMAIN-SUFFIX", "DOMAIN-KEYWORD"}
 HOST_LABEL_RE = re.compile(r"[a-z0-9](?:[a-z0-9-]{0,61}[a-z0-9])?\Z")
