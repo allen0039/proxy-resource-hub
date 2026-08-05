@@ -41,6 +41,11 @@ DOMAIN-SUFFIX,mjji.de,美国节点
 DOMAIN-SUFFIX,vps.town,美国节点
 DOMAIN-SUFFIX,2fa.fun,美国节点
 
+# US node: media metadata and icon services
+DOMAIN-KEYWORD,themoviedb,美国节点
+DOMAIN-KEYWORD,tmdb,美国节点
+DOMAIN-KEYWORD,dashboardicons,美国节点
+
 # US node: shopping and compliance services
 DOMAIN-KEYWORD,uspatriottactical,美国节点
 DOMAIN-SUFFIX,compliance.chippercash.com,美国节点
