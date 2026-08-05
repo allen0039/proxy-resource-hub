@@ -12,6 +12,9 @@ host-suffix, openaicom-api-bdcpf8c6d2e9atf6.z01.azurefd.net, proxy
 host-suffix, anthropic.com, proxy
 host-suffix, claude.ai, proxy
 
+# DeepSeek
+host-suffix, deepseek.com, proxy
+
 # Google AI / Gemini
 host-suffix, gemini.google.com, proxy
 host-suffix, gemini.gstatic.com, proxy
@@ -42,6 +45,8 @@ host-suffix, x.ai, proxy
 
 # Other common AI tools
 host-suffix, character.ai, proxy
+host-suffix, clawhub.ai, proxy
 host-suffix, midjourney.com, proxy
+host-suffix, open-meteo.com, proxy
 host-suffix, runwayml.com, proxy
 host-suffix, notebooklm.google.com, proxy

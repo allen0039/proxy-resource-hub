@@ -10,6 +10,9 @@ openaicom-api-bdcpf8c6d2e9atf6.z01.azurefd.net
 anthropic.com
 claude.ai
 
+# DeepSeek
+deepseek.com
+
 # Google AI / Gemini
 gemini.google.com
 gemini.gstatic.com
@@ -40,6 +43,8 @@ x.ai
 
 # Other common AI tools
 character.ai
+clawhub.ai
 midjourney.com
+open-meteo.com
 runwayml.com
 notebooklm.google.com

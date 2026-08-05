@@ -202,13 +202,14 @@ rules:
   - SRC-IP-CIDR,192.168.50.152/32,DIRECT
   - RULE-SET,custom_direct,DIRECT
   - RULE-SET,custom_hk,香港节点
-  - RULE-SET,custom_hk_auto,香港优选
+  # 区域优选远程规则待仓库提供后再启用。
+  # - RULE-SET,custom_hk_auto,香港优选
   - RULE-SET,custom_us,美国节点
-  - RULE-SET,custom_us_auto,美国优选
+  # - RULE-SET,custom_us_auto,美国优选
   - RULE-SET,custom_jp,日本节点
-  - RULE-SET,custom_jp_auto,日本优选
+  # - RULE-SET,custom_jp_auto,日本优选
   - RULE-SET,custom_sg,新加坡节点
-  - RULE-SET,custom_sg_auto,新加坡优选
+  # - RULE-SET,custom_sg_auto,新加坡优选
 
   # 2. Apple 与系统服务
   - DOMAIN-SUFFIX,push.apple.com,香港节点
@@ -216,6 +217,8 @@ rules:
 
   # 3. 直连与 PT 服务
   # 已纳入远程 PT 订阅的站点不在本地重复维护；本节固定使用内置直连。
+  # 字节跳动国内资源优先直连，覆盖后续 TikTok 等通用规则集。
+  - DOMAIN-SUFFIX,snssdk.com,DIRECT
 
   # 4. 技术开发与工具
   - DOMAIN-SUFFIX,github.io,GitHub
@@ -226,15 +229,12 @@ rules:
 
   # 5. AI 与媒体服务
   - DOMAIN-SUFFIX,mfallen.de,DIRECT
-  - DOMAIN-KEYWORD,deepseek,AI
-  - DOMAIN-KEYWORD,open-meteo,AI
-  - DOMAIN-KEYWORD,grok,AI
-  - DOMAIN-SUFFIX,clawhub.ai,AI
   # Google APIs 交由后面的 ai 与 google_domain 规则集分流，避免绕过 Google 策略组。
   - DOMAIN-KEYWORD,themoviedb,美国节点
   - DOMAIN-KEYWORD,tmdb,美国节点
   - DOMAIN-KEYWORD,dashboardicons,美国节点
   - DOMAIN-SUFFIX,ytimg.com,YouTube
+  # Google 图片资源优先交给 YouTube，覆盖后续通用 CDN 规则集。
   - DOMAIN-SUFFIX,ggpht.com,YouTube
   # - DOMAIN-SUFFIX,googleusercontent.com,Google
   # - DOMAIN-SUFFIX,gstatic.com,Google
@@ -329,13 +329,13 @@ rules:
 rule-providers:
   custom_direct: { type: http, interval: 86400, behavior: classical, format: text, url: "https://raw.githubusercontent.com/allen0039/proxy-resource-hub/main/Rules/Mihomo/Custom/direct.list" }
   custom_hk: { type: http, interval: 86400, behavior: classical, format: text, url: "https://raw.githubusercontent.com/allen0039/proxy-resource-hub/main/Rules/Mihomo/Regional/hk.list" }
-  custom_hk_auto: { type: http, interval: 86400, behavior: classical, format: text, url: "https://raw.githubusercontent.com/allen0039/proxy-resource-hub/main/Rules/Mihomo/Regional/hk-auto.list" }
+  # custom_hk_auto: { type: http, interval: 86400, behavior: classical, format: text, url: "https://raw.githubusercontent.com/allen0039/proxy-resource-hub/main/Rules/Mihomo/Regional/hk-auto.list" }
   custom_us: { type: http, interval: 86400, behavior: classical, format: text, url: "https://raw.githubusercontent.com/allen0039/proxy-resource-hub/main/Rules/Mihomo/Regional/us.list" }
-  custom_us_auto: { type: http, interval: 86400, behavior: classical, format: text, url: "https://raw.githubusercontent.com/allen0039/proxy-resource-hub/main/Rules/Mihomo/Regional/us-auto.list" }
+  # custom_us_auto: { type: http, interval: 86400, behavior: classical, format: text, url: "https://raw.githubusercontent.com/allen0039/proxy-resource-hub/main/Rules/Mihomo/Regional/us-auto.list" }
   custom_jp: { type: http, interval: 86400, behavior: classical, format: text, url: "https://raw.githubusercontent.com/allen0039/proxy-resource-hub/main/Rules/Mihomo/Regional/jp.list" }
-  custom_jp_auto: { type: http, interval: 86400, behavior: classical, format: text, url: "https://raw.githubusercontent.com/allen0039/proxy-resource-hub/main/Rules/Mihomo/Regional/jp-auto.list" }
+  # custom_jp_auto: { type: http, interval: 86400, behavior: classical, format: text, url: "https://raw.githubusercontent.com/allen0039/proxy-resource-hub/main/Rules/Mihomo/Regional/jp-auto.list" }
   custom_sg: { type: http, interval: 86400, behavior: classical, format: text, url: "https://raw.githubusercontent.com/allen0039/proxy-resource-hub/main/Rules/Mihomo/Regional/sg.list" }
-  custom_sg_auto: { type: http, interval: 86400, behavior: classical, format: text, url: "https://raw.githubusercontent.com/allen0039/proxy-resource-hub/main/Rules/Mihomo/Regional/sg-auto.list" }
+  # custom_sg_auto: { type: http, interval: 86400, behavior: classical, format: text, url: "https://raw.githubusercontent.com/allen0039/proxy-resource-hub/main/Rules/Mihomo/Regional/sg-auto.list" }
   private_domain: { type: http, interval: 86400, behavior: domain, format: mrs, url: "https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/meta/geo/geosite/private.mrs"}
   wechat_domain: { type: http, interval: 86400, behavior: domain, format: mrs, url: "https://raw.githubusercontent.com/Lanlan13-14/Rules/refs/heads/main/rules/Domain/WeChat.mrs"}
   bank_cn_domain: { type: http, interval: 86400, behavior: domain, format: mrs, url: "https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/refs/heads/meta/geo/geosite/category-bank-cn.mrs"}

@@ -95,21 +95,24 @@ SHOP_EXCLUSIONS = {
 AI_PRIORITY_DOMAINS = (
     "gateway.ai.cloudflare.com",
     "gemini.gstatic.com",
+    "deepseek.com",
     "default.exp-tas.com",
     "copilot-proxy.githubusercontent.com",
     "origin-tracker.githubusercontent.com",
     "copilot-telemetry.githubusercontent.com",
     "githubcopilot.com",
+    "clawhub.ai",
+    "open-meteo.com",
 )
 CUSTOM_RULES = (
     ("DOMAIN-SUFFIX", "synology.cn", "DIRECT"),
     ("DOMAIN", "qbittorrent-nox", "DIRECT"),
+    ("DOMAIN-SUFFIX", "ui.com", "DIRECT"),
     ("DOMAIN-SUFFIX", "digitalocean.com", "DIRECT"),
     ("DOMAIN-SUFFIX", "dyndns.com", "DIRECT"),
     ("DOMAIN-SUFFIX", "whatismyip.akamai.com", "DIRECT"),
     ("DOMAIN-KEYWORD", "volcengine", "DIRECT"),
     ("DOMAIN-SUFFIX", "xmwsyy.com", "DIRECT"),
-    ("DOMAIN-SUFFIX", "ui.com", "DIRECT"),
     ("DOMAIN-SUFFIX", "imgse.com", "DIRECT"),
     ("DOMAIN-SUFFIX", "tagweb.vip", "DIRECT"),
     ("DOMAIN-KEYWORD", "yqc-premium", "DIRECT"),
@@ -119,29 +122,31 @@ CUSTOM_RULES = (
     ("DOMAIN-SUFFIX", "ucweb.com", "DIRECT"),
     ("DOMAIN-SUFFIX", "amemv.com", "DIRECT"),
     ("DOMAIN-SUFFIX", "v4.plex.tv", "DIRECT"),
+    ("DOMAIN-SUFFIX", "hytron.io", "香港节点"),
+    ("DOMAIN-KEYWORD", "kejilion", "香港节点"),
+    ("DOMAIN-SUFFIX", "nfbyte.com", "香港节点"),
     ("DOMAIN-SUFFIX", "openwrt.ai", "美国节点"),
     ("DOMAIN-SUFFIX", "lsposed.org", "美国节点"),
-    ("DOMAIN-SUFFIX", "hytron.io", "香港节点"),
     ("DOMAIN-SUFFIX", "linux.do", "美国节点"),
-    ("DOMAIN-KEYWORD", "uspatriottactical", "美国节点"),
-    ("DOMAIN-KEYWORD", "hdhive", "美国节点"),
     ("DOMAIN-SUFFIX", "rundongex.com", "美国节点"),
     ("DOMAIN-SUFFIX", "servercontrolpanel.de", "美国节点"),
     ("DOMAIN-SUFFIX", "mgboard.net", "美国节点"),
-    ("DOMAIN-KEYWORD", "sehuatang", "美国节点"),
     ("DOMAIN-KEYWORD", "greasyfork", "美国节点"),
     ("DOMAIN-KEYWORD", "qichiyu", "美国节点"),
     ("DOMAIN-SUFFIX", "mjji.de", "美国节点"),
-    ("DOMAIN-KEYWORD", "hd-torrents", "美国节点"),
-    ("DOMAIN-SUFFIX", "embyapp.top", "美国节点"),
     ("DOMAIN-SUFFIX", "vps.town", "美国节点"),
     ("DOMAIN-SUFFIX", "2fa.fun", "美国节点"),
+    ("DOMAIN-KEYWORD", "uspatriottactical", "美国节点"),
+    ("DOMAIN-SUFFIX", "compliance.chippercash.com", "美国节点"),
+    ("DOMAIN-KEYWORD", "hdhive", "美国节点"),
+    ("DOMAIN-KEYWORD", "sehuatang", "美国节点"),
+    ("DOMAIN-KEYWORD", "hd-torrents", "美国节点"),
+    ("DOMAIN-SUFFIX", "embyapp.top", "美国节点"),
     ("DOMAIN-SUFFIX", "macwk.cn", "美国节点"),
     ("DOMAIN-SUFFIX", "appstorrent.ru", "美国节点"),
-    ("DOMAIN-KEYWORD", "kejilion", "香港节点"),
-    ("DOMAIN-SUFFIX", "nfbyte.com", "香港节点"),
+    ("DOMAIN-KEYWORD", "missav", "美国节点"),
+    ("DOMAIN-KEYWORD", "ftvgirls", "美国节点"),
     ("DOMAIN-KEYWORD", "onitsukatiger", "日本节点"),
-    ("DOMAIN-SUFFIX", "compliance.chippercash.com", "美国节点"),
     ("DOMAIN-KEYWORD", "dmm", "日本节点"),
     ("DOMAIN-KEYWORD", "javrate", "日本节点"),
     ("DOMAIN-KEYWORD", "jav321", "日本节点"),
@@ -152,8 +157,6 @@ CUSTOM_RULES = (
     ("DOMAIN-KEYWORD", "javdb", "新加坡节点"),
     ("DOMAIN-KEYWORD", "javlibrary", "新加坡节点"),
     ("DOMAIN-KEYWORD", "avbase", "新加坡节点"),
-    ("DOMAIN-KEYWORD", "missav", "美国节点"),
-    ("DOMAIN-KEYWORD", "ftvgirls", "美国节点"),
 )
 REGIONAL_POLICY_FILES = {
     "香港节点": "hk",
@@ -233,9 +236,10 @@ class RuleGeneratorTests(unittest.TestCase):
             encoding="utf-8"
         )
 
-        self.assertIn("五份公开模板已内置", config_readme)
+        self.assertIn("五份公开模板默认启用", config_readme)
         self.assertIn("allenrules.list", config_readme)
         self.assertIn("一条 Custom DIRECT 与八条 Regional 规则", config_readme)
+        self.assertIn("四条地区优选订阅保持关闭", config_readme)
         self.assertNotIn(
             "地区路由规则的发布不会修改这五份本地客户端配置", config_readme
         )

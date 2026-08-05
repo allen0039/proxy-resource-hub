@@ -88,6 +88,19 @@ CUSTOM_FEEDS = {
     "sg": ("Regional/sg.list", "新加坡节点"),
     "sg-auto": ("Regional/sg-auto.list", "新加坡优选"),
 }
+ACTIVE_CUSTOM_FEEDS = {
+    "direct": CUSTOM_FEEDS["direct"],
+    "hk": CUSTOM_FEEDS["hk"],
+    "us": CUSTOM_FEEDS["us"],
+    "jp": CUSTOM_FEEDS["jp"],
+    "sg": CUSTOM_FEEDS["sg"],
+}
+PREFERRED_CUSTOM_FEEDS = {
+    "hk-auto": CUSTOM_FEEDS["hk-auto"],
+    "us-auto": CUSTOM_FEEDS["us-auto"],
+    "jp-auto": CUSTOM_FEEDS["jp-auto"],
+    "sg-auto": CUSTOM_FEEDS["sg-auto"],
+}
 MIGRATED_LOCAL_RULES = (
     "synology.cn", "qbittorrent-nox", "digitalocean.com", "dyndns.com",
     "whatismyip.akamai.com", "volcengine", "xmwsyy.com", "ui.com",
@@ -1135,10 +1148,10 @@ rule-providers:
         mihomo = yaml.safe_load(
             (OUTPUT_DIR / "mihomo_allen.yaml").read_text(encoding="utf-8")
         )
-        slugs = list(CUSTOM_FEEDS)
+        slugs = list(ACTIVE_CUSTOM_FEEDS)
 
         for slug in slugs:
-            _, policy = CUSTOM_FEEDS[slug]
+            _, policy = ACTIVE_CUSTOM_FEEDS[slug]
             provider_key = f"custom_{slug.replace('-', '_')}"
             with self.subTest(slug=slug, check="provider metadata"):
                 self.assertIn(provider_key, mihomo["rule-providers"])
@@ -1151,9 +1164,13 @@ rule-providers:
 
         expected_rules = [
             f"RULE-SET,custom_{slug.replace('-', '_')},{policy}"
-            for slug, (_, policy) in CUSTOM_FEEDS.items()
+            for slug, (_, policy) in ACTIVE_CUSTOM_FEEDS.items()
         ]
         rules = mihomo["rules"]
+        for slug in PREFERRED_CUSTOM_FEEDS:
+            provider_key = f"custom_{slug.replace('-', '_')}"
+            self.assertNotIn(provider_key, mihomo["rule-providers"])
+            self.assertNotIn(f"RULE-SET,{provider_key},", rules)
         source_ip_rules = [
             "SRC-IP-CIDR,192.168.50.150/32,DIRECT",
             "SRC-IP-CIDR,192.168.50.151/32,DIRECT",
@@ -1180,7 +1197,7 @@ rule-providers:
                 for index, line in enumerate(rules)
                 if line.startswith("RULE-SET,https://ruleset.skk.moe/")
             )
-            for slug, (_, policy) in CUSTOM_FEEDS.items():
+            for slug, (_, policy) in ACTIVE_CUSTOM_FEEDS.items():
                 url = custom_url("Surge", slug)
                 matches = [line for line in rules if url in line]
                 with self.subTest(name=name, slug=slug):
@@ -1188,6 +1205,8 @@ rule-providers:
                     rule_parts = [part.strip() for part in matches[0].split(",")]
                     self.assertEqual(["RULE-SET", url, policy], rule_parts[:3])
                     self.assertLess(rules.index(matches[0]), skk_index)
+            for slug in PREFERRED_CUSTOM_FEEDS:
+                self.assertNotIn(custom_url("Surge", slug), rules)
 
     def test_quantumultx_and_loon_bind_custom_routing_feeds_before_telecom(self):
         qx = active_lines(
@@ -1218,6 +1237,7 @@ rule-providers:
             tag = "自定义-直连" if slug == "direct" else f"自定义-{policy}"
             qx_matches = [line for line in qx if qx_url in line]
             loon_matches = [line for line in loon if loon_url in line]
+            enabled = "false" if slug in PREFERRED_CUSTOM_FEEDS else "true"
             with self.subTest(client="Quantumult X", slug=slug):
                 self.assertEqual(1, len(qx_matches))
                 self.assertEqual(
@@ -1226,7 +1246,7 @@ rule-providers:
                         ("force-policy", qx_policy),
                         ("update-interval", "86400"),
                         ("opt-parser", "false"),
-                        ("enabled", "true"),
+                        ("enabled", enabled),
                     ],
                     option_fields(qx_matches[0]),
                 )
@@ -1234,7 +1254,7 @@ rule-providers:
             with self.subTest(client="Loon", slug=slug):
                 self.assertEqual(1, len(loon_matches))
                 self.assertEqual(
-                    [("policy", policy), ("tag", tag), ("enabled", "true")],
+                    [("policy", policy), ("tag", tag), ("enabled", enabled)],
                     option_fields(loon_matches[0]),
                 )
                 self.assertLess(loon.index(loon_matches[0]), loon_telecom_index)
