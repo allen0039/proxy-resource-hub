@@ -64,7 +64,7 @@ SUPPORTED_AI_REGION_ORDER = [
 ]
 DOCKER_ICON_URL = (
     "https://raw.githubusercontent.com/allen0039/proxy-resource-hub/main/"
-    "assets/docker.png?v=b5317ee"
+    "icons/docker.png?v=b5317ee"
 )
 LEGACY_DOCKER_ICON_URL = (
     "https://raw.githubusercontent.com/walkxcode/dashboard-icons/"
@@ -701,7 +701,7 @@ rule-providers:
         self.assertIn("Singapore", qx)
 
     def test_committed_docker_policy_uses_a_valid_icon_source(self):
-        icon_path = ROOT / "assets" / "docker.png"
+        icon_path = ROOT / "icons" / "docker.png"
         self.assertTrue(icon_path.is_file())
         self.assertGreater(icon_path.stat().st_size, 0)
         for name in CONFIG_NAMES:
