@@ -5,7 +5,7 @@
 > [!IMPORTANT]
 > 这些是公开脱敏模板，里面没有真实节点。必须先下载到本地，把 `获取到的订阅链接` 替换成自己的机场订阅，才能正常使用。
 
-> 仓库提供由 `Rules/Source/Custom/allenrules.list` 派生的一条 Custom DIRECT 与四条 Regional 规则订阅。请在自己的私人副本中填写节点订阅和其他私人信息。
+> 仓库提供由 `Rules/Source/allenrules/` 下五个源文件派生的一条 Custom DIRECT 与四条 Regional 规则订阅。请在自己的私人副本中填写节点订阅和其他私人信息。
 
 ## 先安装客户端
 
@@ -41,7 +41,7 @@ App Store 链接指向应用官方商店页面。部分应用可能未在所有�
 
 不要直接把本页或 Raw 地址当成远程配置订阅。公开模板需要填写私人信息，应该作为本地配置使用。
 
-五份公开模板默认启用由 `allenrules.list` 派生的五条远程规则订阅。
+五份公开模板默认启用由五个源文件派生的五条远程规则订阅。
 
 | 客户端 | 自定义远程规则已接入 |
 | --- | --- |
@@ -50,7 +50,7 @@ App Store 链接指向应用官方商店页面。部分应用可能未在所有�
 | Quantumult X | 同上，对应 `Rules/QuantumultX/` |
 | Loon | 同上，对应 `Rules/Loon/` |
 
-后续域名变更只在 `Rules/Source/Custom/allenrules.list` 中维护；GitHub Actions 会重新生成各客户端列表，客户端会按已配置的 86400 秒间隔更新这些资源。
+后续域名变更只在 `Rules/Source/allenrules/{direct,hk,us,jp,sg}.list` 中维护；文件名决定规则策略。GitHub Actions 会重新生成各客户端列表，客户端会按已配置的 86400 秒间隔更新这些资源。
 
 ## 我该下载哪个文件
 

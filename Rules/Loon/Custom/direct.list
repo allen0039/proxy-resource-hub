@@ -1,4 +1,4 @@
-# Generated from Rules/Source/Custom/allenrules.list by tools/generate_rules.py. Do not edit.
+# Generated from Rules/Source/allenrules/direct.list by tools/generate_rules.py. Do not edit.
 
 DOMAIN-SUFFIX,synology.cn
 DOMAIN,qbittorrent-nox

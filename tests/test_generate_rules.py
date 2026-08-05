@@ -270,7 +270,9 @@ class RuleGeneratorTests(unittest.TestCase):
         )
 
         self.assertIn("五份公开模板默认启用", config_readme)
-        self.assertIn("allenrules.list", config_readme)
+        self.assertIn("Rules/Source/allenrules/", config_readme)
+        self.assertIn("五个源文件", config_readme)
+        self.assertNotIn("Rules/Source/Custom/allenrules.list", config_readme)
         self.assertIn("一条 Custom DIRECT 与四条 Regional 规则", config_readme)
         self.assertNotIn("地区优选订阅", config_readme)
         self.assertNotIn("*-auto", config_readme)

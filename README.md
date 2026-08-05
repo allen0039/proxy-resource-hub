@@ -248,7 +248,7 @@ https://raw.githubusercontent.com/allen0039/proxy-resource-hub/main/Rules/Loon/P
 
 ### Custom / Regional 自定义路由订阅
 
-自定义直连与地区路由规则统一从 `Rules/Source/Custom/allenrules.list` 这一单一源文件维护；该源文件生成一条 Custom DIRECT 与香港、美国、日本、新加坡四条 Regional 资源。修改 `Rules/Source/Custom/allenrules.list` 会同时更新独立规则 URL 的内容，以及下一次生成的客户端模板版本。
+自定义直连与地区路由规则从五个策略源文件维护：`Rules/Source/allenrules/direct.list`、`Rules/Source/allenrules/hk.list`、`Rules/Source/allenrules/us.list`、`Rules/Source/allenrules/jp.list` 和 `Rules/Source/allenrules/sg.list`。每个非注释行使用 `RULE-TYPE,VALUE` 两列，文件名决定策略；它们生成一条 Custom DIRECT 与香港、美国、日本、新加坡四条 Regional 资源。修改对应源文件会同时更新独立规则 URL 的内容，以及下一次生成的客户端模板版本。
 
 | 策略组 | Mihomo | Surge | Quantumult X | Loon |
 | --- | --- | --- | --- | --- |
