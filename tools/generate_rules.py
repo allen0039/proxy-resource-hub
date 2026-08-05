@@ -18,13 +18,13 @@ DOMAIN_RE = re.compile(
     r"(?=.{1,253}\Z)(?:[a-z0-9](?:[a-z0-9-]{0,61}[a-z0-9])?\.)+"
     r"[a-z0-9](?:[a-z0-9-]{0,61}[a-z0-9])?\Z"
 )
-CUSTOM_POLICY_OUTPUTS = {
-    "DIRECT": ("Custom", "direct"),
-    "香港节点": ("Regional", "hk"),
-    "美国节点": ("Regional", "us"),
-    "日本节点": ("Regional", "jp"),
-    "新加坡节点": ("Regional", "sg"),
-}
+CUSTOM_SOURCE_SPECS = (
+    ("direct", "DIRECT", "Custom", "direct"),
+    ("hk", "香港节点", "Regional", "hk"),
+    ("us", "美国节点", "Regional", "us"),
+    ("jp", "日本节点", "Regional", "jp"),
+    ("sg", "新加坡节点", "Regional", "sg"),
+)
 CUSTOM_TYPES = {"DOMAIN", "DOMAIN-SUFFIX", "DOMAIN-KEYWORD"}
 HOST_LABEL_RE = re.compile(r"[a-z0-9](?:[a-z0-9-]{0,61}[a-z0-9])?\Z")
 KEYWORD_RE = re.compile(r"[a-z0-9][a-z0-9.-]*\Z")
@@ -44,21 +44,38 @@ def parse_source(path: Path) -> list[str]:
     return lines
 
 
-def parse_custom_source(path: Path) -> list[tuple[str, str, str]]:
-    rules: list[tuple[str, str, str]] = []
+def validate_custom_rule_conflicts(
+    rules: list[tuple[str, str, str]], location: Path
+) -> None:
     seen: set[tuple[str, str]] = set()
+    for rule_type, value, _ in rules:
+        key = (rule_type, value)
+        if key in seen:
+            raise ValueError(f"{location}: duplicate rule: {rule_type},{value}")
+        seen.add(key)
+
+    keywords = [value for rule_type, value, _ in rules if rule_type == "DOMAIN-KEYWORD"]
+    suffixes = [value for rule_type, value, _ in rules if rule_type == "DOMAIN-SUFFIX"]
+    for keyword in keywords:
+        for suffix in suffixes:
+            if keyword in suffix:
+                raise ValueError(
+                    f"{location}: overlapping keyword and suffix: {keyword}, {suffix}"
+                )
+
+
+def parse_custom_source(path: Path, policy: str) -> list[tuple[str, str, str]]:
+    rules: list[tuple[str, str, str]] = []
     for number, line in enumerate(path.read_text(encoding="utf-8").splitlines(), 1):
         stripped_line = line.strip()
         if not stripped_line or stripped_line.startswith("#"):
             continue
         fields = [field.strip() for field in line.split(",")]
-        if len(fields) != 3 or not all(fields):
-            raise ValueError(f"{path}:{number}: expected three non-empty fields")
-        rule_type, value, policy = fields
+        if len(fields) != 2 or not all(fields):
+            raise ValueError(f"{path}:{number}: expected two non-empty fields")
+        rule_type, value = fields
         if rule_type not in CUSTOM_TYPES:
             raise ValueError(f"{path}:{number}: unsupported rule type: {rule_type}")
-        if policy not in CUSTOM_POLICY_OUTPUTS:
-            raise ValueError(f"{path}:{number}: unknown policy: {policy}")
         if rule_type == "DOMAIN" and not (
             DOMAIN_RE.fullmatch(value) or HOST_LABEL_RE.fullmatch(value)
         ):
@@ -67,19 +84,24 @@ def parse_custom_source(path: Path) -> list[tuple[str, str, str]]:
             raise ValueError(f"{path}:{number}: invalid domain: {value}")
         if rule_type == "DOMAIN-KEYWORD" and not KEYWORD_RE.fullmatch(value):
             raise ValueError(f"{path}:{number}: invalid keyword: {value}")
-        key = (rule_type, value)
-        if key in seen:
-            raise ValueError(f"{path}:{number}: duplicate rule: {rule_type},{value}")
-        seen.add(key)
         rules.append((rule_type, value, policy))
 
-    keywords = [value for rule_type, value, _ in rules if rule_type == "DOMAIN-KEYWORD"]
-    suffixes = [value for rule_type, value, _ in rules if rule_type == "DOMAIN-SUFFIX"]
-    for keyword in keywords:
-        for suffix in suffixes:
-            if keyword in suffix:
-                raise ValueError(f"{path}: overlapping keyword and suffix: {keyword}, {suffix}")
+    validate_custom_rule_conflicts(rules, path)
     return rules
+
+
+def parse_custom_sources(
+    source_root: Path,
+) -> dict[str, tuple[Path, list[tuple[str, str, str]]]]:
+    parsed: dict[str, tuple[Path, list[tuple[str, str, str]]]] = {}
+    all_rules: list[tuple[str, str, str]] = []
+    for slug, policy, _, _ in CUSTOM_SOURCE_SPECS:
+        source = source_root / f"{slug}.list"
+        rules = parse_custom_source(source, policy)
+        parsed[policy] = (source, rules)
+        all_rules.extend(rules)
+    validate_custom_rule_conflicts(all_rules, source_root)
+    return parsed
 
 
 def render(lines: list[str], style: str, source_label: str) -> str:
@@ -138,11 +160,8 @@ def build_outputs(root: Path) -> dict[Path, str]:
                 root / "Rules" / compatibility_directory / f"{name}.list"
             ] = classical
 
-    source = root / "Rules" / "Source" / "Custom" / "allenrules.list"
-    source_label = source.relative_to(root).as_posix()
-    grouped: dict[str, list[tuple[str, str, str]]] = {}
-    for rule in parse_custom_source(source):
-        grouped.setdefault(rule[2], []).append(rule)
+    source_root = root / "Rules" / "Source" / "allenrules"
+    custom_sources = parse_custom_sources(source_root)
     client_styles = {
         "Mihomo": "classical",
         "Surge": "classical",
@@ -150,9 +169,10 @@ def build_outputs(root: Path) -> dict[Path, str]:
         "Loon": "classical",
     }
     for client, style in client_styles.items():
-        for policy, (directory, slug) in CUSTOM_POLICY_OUTPUTS.items():
+        for _, policy, directory, slug in CUSTOM_SOURCE_SPECS:
+            source, rules = custom_sources[policy]
             outputs[root / "Rules" / client / directory / f"{slug}.list"] = (
-                render_custom_rules(grouped.get(policy, []), style, source_label)
+                render_custom_rules(rules, style, source.relative_to(root).as_posix())
             )
     return outputs
 
