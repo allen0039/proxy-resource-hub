@@ -230,9 +230,6 @@ rules:
   # 5. AI 与媒体服务
   - DOMAIN-SUFFIX,mfallen.de,DIRECT
   # Google APIs 交由后面的 ai 与 google_domain 规则集分流，避免绕过 Google 策略组。
-  - DOMAIN-KEYWORD,themoviedb,美国节点
-  - DOMAIN-KEYWORD,tmdb,美国节点
-  - DOMAIN-KEYWORD,dashboardicons,美国节点
   - DOMAIN-SUFFIX,ytimg.com,YouTube
   # Google 图片资源优先交给 YouTube，覆盖后续通用 CDN 规则集。
   - DOMAIN-SUFFIX,ggpht.com,YouTube
