@@ -2,12 +2,12 @@
 
 host-suffix, synology.cn, proxy
 host, qbittorrent-nox, proxy
+host-suffix, ui.com, proxy
 host-suffix, digitalocean.com, proxy
 host-suffix, dyndns.com, proxy
 host-suffix, whatismyip.akamai.com, proxy
 host-keyword, volcengine, proxy
 host-suffix, xmwsyy.com, proxy
-host-suffix, ui.com, proxy
 host-suffix, imgse.com, proxy
 host-suffix, tagweb.vip, proxy
 host-keyword, yqc-premium, proxy

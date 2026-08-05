@@ -12,6 +12,9 @@ DOMAIN-SUFFIX,openaicom-api-bdcpf8c6d2e9atf6.z01.azurefd.net
 DOMAIN-SUFFIX,anthropic.com
 DOMAIN-SUFFIX,claude.ai
 
+# DeepSeek
+DOMAIN-SUFFIX,deepseek.com
+
 # Google AI / Gemini
 DOMAIN-SUFFIX,gemini.google.com
 DOMAIN-SUFFIX,gemini.gstatic.com
@@ -42,6 +45,8 @@ DOMAIN-SUFFIX,x.ai
 
 # Other common AI tools
 DOMAIN-SUFFIX,character.ai
+DOMAIN-SUFFIX,clawhub.ai
 DOMAIN-SUFFIX,midjourney.com
+DOMAIN-SUFFIX,open-meteo.com
 DOMAIN-SUFFIX,runwayml.com
 DOMAIN-SUFFIX,notebooklm.google.com

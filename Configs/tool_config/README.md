@@ -5,7 +5,7 @@
 > [!IMPORTANT]
 > 这些是公开脱敏模板，里面没有真实节点。必须先下载到本地，把 `获取到的订阅链接` 替换成自己的机场订阅，才能正常使用。
 
-> 五份公开模板已内置由 `Rules/Source/Custom/allenrules.list` 派生的九条远程规则订阅：一条 Custom DIRECT 与八条 Regional 规则。请在自己的私人副本中填写节点订阅和其他私人信息。
+> 仓库提供由 `Rules/Source/Custom/allenrules.list` 派生的一条 Custom DIRECT 与八条 Regional 规则订阅。公开模板默认启用 Custom DIRECT 和四条地区节点订阅；四条地区优选订阅保持关闭，待有对应规则后再启用。请在自己的私人副本中填写节点订阅和其他私人信息。
 
 ## 先安装客户端
 
@@ -41,11 +41,11 @@ App Store 链接指向应用官方商店页面。部分应用可能未在所有�
 
 不要直接把本页或 Raw 地址当成远程配置订阅。公开模板需要填写私人信息，应该作为本地配置使用。
 
-五份公开模板都已接入由 `allenrules.list` 派生的九条远程规则订阅。
+五份公开模板默认启用由 `allenrules.list` 派生的五条远程规则订阅；四条地区优选订阅作为关闭的预留项保留在模板中。
 
 | 客户端 | 自定义远程规则已接入 |
 | --- | --- |
-| Mihomo | `Custom/direct` + `Regional/{hk,hk-auto,us,us-auto,jp,jp-auto,sg,sg-auto}` |
+| Mihomo | 启用 `Custom/direct` + `Regional/{hk,us,jp,sg}`；`*-auto` 预留关闭 |
 | Surge Mac / iPhone | 同上，对应 `Rules/Surge/` |
 | Quantumult X | 同上，对应 `Rules/QuantumultX/` |
 | Loon | 同上，对应 `Rules/Loon/` |
