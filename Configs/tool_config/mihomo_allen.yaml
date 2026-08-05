@@ -202,14 +202,9 @@ rules:
   - SRC-IP-CIDR,192.168.50.152/32,DIRECT
   - RULE-SET,custom_direct,DIRECT
   - RULE-SET,custom_hk,香港节点
-  # 区域优选远程规则待仓库提供后再启用。
-  # - RULE-SET,custom_hk_auto,香港优选
   - RULE-SET,custom_us,美国节点
-  # - RULE-SET,custom_us_auto,美国优选
   - RULE-SET,custom_jp,日本节点
-  # - RULE-SET,custom_jp_auto,日本优选
   - RULE-SET,custom_sg,新加坡节点
-  # - RULE-SET,custom_sg_auto,新加坡优选
 
   # 2. Apple 与系统服务
   - DOMAIN-SUFFIX,push.apple.com,香港节点
@@ -326,13 +321,9 @@ rules:
 rule-providers:
   custom_direct: { type: http, interval: 86400, behavior: classical, format: text, url: "https://raw.githubusercontent.com/allen0039/proxy-resource-hub/main/Rules/Mihomo/Custom/direct.list" }
   custom_hk: { type: http, interval: 86400, behavior: classical, format: text, url: "https://raw.githubusercontent.com/allen0039/proxy-resource-hub/main/Rules/Mihomo/Regional/hk.list" }
-  # custom_hk_auto: { type: http, interval: 86400, behavior: classical, format: text, url: "https://raw.githubusercontent.com/allen0039/proxy-resource-hub/main/Rules/Mihomo/Regional/hk-auto.list" }
   custom_us: { type: http, interval: 86400, behavior: classical, format: text, url: "https://raw.githubusercontent.com/allen0039/proxy-resource-hub/main/Rules/Mihomo/Regional/us.list" }
-  # custom_us_auto: { type: http, interval: 86400, behavior: classical, format: text, url: "https://raw.githubusercontent.com/allen0039/proxy-resource-hub/main/Rules/Mihomo/Regional/us-auto.list" }
   custom_jp: { type: http, interval: 86400, behavior: classical, format: text, url: "https://raw.githubusercontent.com/allen0039/proxy-resource-hub/main/Rules/Mihomo/Regional/jp.list" }
-  # custom_jp_auto: { type: http, interval: 86400, behavior: classical, format: text, url: "https://raw.githubusercontent.com/allen0039/proxy-resource-hub/main/Rules/Mihomo/Regional/jp-auto.list" }
   custom_sg: { type: http, interval: 86400, behavior: classical, format: text, url: "https://raw.githubusercontent.com/allen0039/proxy-resource-hub/main/Rules/Mihomo/Regional/sg.list" }
-  # custom_sg_auto: { type: http, interval: 86400, behavior: classical, format: text, url: "https://raw.githubusercontent.com/allen0039/proxy-resource-hub/main/Rules/Mihomo/Regional/sg-auto.list" }
   private_domain: { type: http, interval: 86400, behavior: domain, format: mrs, url: "https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/meta/geo/geosite/private.mrs"}
   wechat_domain: { type: http, interval: 86400, behavior: domain, format: mrs, url: "https://raw.githubusercontent.com/Lanlan13-14/Rules/refs/heads/main/rules/Domain/WeChat.mrs"}
   bank_cn_domain: { type: http, interval: 86400, behavior: domain, format: mrs, url: "https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/refs/heads/meta/geo/geosite/category-bank-cn.mrs"}

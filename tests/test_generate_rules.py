@@ -163,14 +163,11 @@ CUSTOM_RULES = (
 )
 REGIONAL_POLICY_FILES = {
     "香港节点": "hk",
-    "香港优选": "hk-auto",
     "美国节点": "us",
-    "美国优选": "us-auto",
     "日本节点": "jp",
-    "日本优选": "jp-auto",
     "新加坡节点": "sg",
-    "新加坡优选": "sg-auto",
 }
+RETIRED_REGIONAL_SLUGS = ("hk-auto", "us-auto", "jp-auto", "sg-auto")
 CUSTOM_SOURCE_LABEL = "Rules/Source/Custom/allenrules.list"
 CUSTOM_HEADER = (
     f"# Generated from {CUSTOM_SOURCE_LABEL} by tools/generate_rules.py. Do not edit."
@@ -233,6 +230,11 @@ class RuleGeneratorTests(unittest.TestCase):
                     self.assertIn(
                         f"{base_url}/{client}/Regional/{slug}.list", readme
                     )
+            for slug in RETIRED_REGIONAL_SLUGS:
+                with self.subTest(client=client, retired_slug=slug):
+                    self.assertNotIn(
+                        f"{base_url}/{client}/Regional/{slug}.list", readme
+                    )
 
     def test_local_configuration_documentation_describes_embedded_custom_rules(self):
         config_readme = (ROOT / "Configs" / "tool_config" / "README.md").read_text(
@@ -241,8 +243,9 @@ class RuleGeneratorTests(unittest.TestCase):
 
         self.assertIn("五份公开模板默认启用", config_readme)
         self.assertIn("allenrules.list", config_readme)
-        self.assertIn("一条 Custom DIRECT 与八条 Regional 规则", config_readme)
-        self.assertIn("四条地区优选订阅保持关闭", config_readme)
+        self.assertIn("一条 Custom DIRECT 与四条 Regional 规则", config_readme)
+        self.assertNotIn("地区优选订阅", config_readme)
+        self.assertNotIn("*-auto", config_readme)
         self.assertNotIn(
             "地区路由规则的发布不会修改这五份本地客户端配置", config_readme
         )
@@ -255,7 +258,7 @@ class RuleGeneratorTests(unittest.TestCase):
         generator = load_generator()
         outputs = generator.build_outputs(ROOT)
 
-        self.assertEqual(57, len(outputs))
+        self.assertEqual(41, len(outputs))
         for client in ("Mihomo", "Surge", "QuantumultX", "Loon"):
             for ruleset in ("ai", "direct-ai"):
                 expected = ROOT / "Rules" / client / "AI" / f"{ruleset}.list"
@@ -339,19 +342,16 @@ class RuleGeneratorTests(unittest.TestCase):
                         )
                     self.assertEqual(expected_lines, rule_lines(content))
 
-    def test_regional_preferred_outputs_are_header_only_for_every_client(self):
+    def test_retired_regional_preferred_outputs_are_not_published(self):
         generator = load_generator()
         outputs = generator.build_outputs(ROOT)
 
-        for slug in ("hk-auto", "us-auto", "jp-auto", "sg-auto"):
+        for slug in RETIRED_REGIONAL_SLUGS:
             for client in ("Mihomo", "Surge", "QuantumultX", "Loon"):
                 with self.subTest(client=client, slug=slug):
-                    self.assertEqual(
-                        f"{CUSTOM_HEADER}\n",
-                        outputs[
-                            ROOT / "Rules" / client / "Regional" / f"{slug}.list"
-                        ],
-                    )
+                    path = ROOT / "Rules" / client / "Regional" / f"{slug}.list"
+                    self.assertNotIn(path, outputs)
+                    self.assertFalse(path.exists())
 
     def test_custom_source_contains_only_confirmed_rules(self):
         generator = load_generator()

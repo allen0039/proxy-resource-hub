@@ -80,26 +80,16 @@ CUSTOM_BASE_URL = (
 CUSTOM_FEEDS = {
     "direct": ("Custom/direct.list", "DIRECT"),
     "hk": ("Regional/hk.list", "香港节点"),
-    "hk-auto": ("Regional/hk-auto.list", "香港优选"),
     "us": ("Regional/us.list", "美国节点"),
-    "us-auto": ("Regional/us-auto.list", "美国优选"),
     "jp": ("Regional/jp.list", "日本节点"),
-    "jp-auto": ("Regional/jp-auto.list", "日本优选"),
     "sg": ("Regional/sg.list", "新加坡节点"),
-    "sg-auto": ("Regional/sg-auto.list", "新加坡优选"),
 }
-ACTIVE_CUSTOM_FEEDS = {
-    "direct": CUSTOM_FEEDS["direct"],
-    "hk": CUSTOM_FEEDS["hk"],
-    "us": CUSTOM_FEEDS["us"],
-    "jp": CUSTOM_FEEDS["jp"],
-    "sg": CUSTOM_FEEDS["sg"],
-}
-PREFERRED_CUSTOM_FEEDS = {
-    "hk-auto": CUSTOM_FEEDS["hk-auto"],
-    "us-auto": CUSTOM_FEEDS["us-auto"],
-    "jp-auto": CUSTOM_FEEDS["jp-auto"],
-    "sg-auto": CUSTOM_FEEDS["sg-auto"],
+ACTIVE_CUSTOM_FEEDS = CUSTOM_FEEDS
+RETIRED_CUSTOM_FEEDS = {
+    "hk-auto": "Regional/hk-auto.list",
+    "us-auto": "Regional/us-auto.list",
+    "jp-auto": "Regional/jp-auto.list",
+    "sg-auto": "Regional/sg-auto.list",
 }
 MIGRATED_LOCAL_RULES = (
     "synology.cn", "qbittorrent-nox", "digitalocean.com", "dyndns.com",
@@ -1167,7 +1157,7 @@ rule-providers:
             for slug, (_, policy) in ACTIVE_CUSTOM_FEEDS.items()
         ]
         rules = mihomo["rules"]
-        for slug in PREFERRED_CUSTOM_FEEDS:
+        for slug in RETIRED_CUSTOM_FEEDS:
             provider_key = f"custom_{slug.replace('-', '_')}"
             self.assertNotIn(provider_key, mihomo["rule-providers"])
             self.assertNotIn(f"RULE-SET,{provider_key},", rules)
@@ -1205,8 +1195,13 @@ rule-providers:
                     rule_parts = [part.strip() for part in matches[0].split(",")]
                     self.assertEqual(["RULE-SET", url, policy], rule_parts[:3])
                     self.assertLess(rules.index(matches[0]), skk_index)
-            for slug in PREFERRED_CUSTOM_FEEDS:
-                self.assertNotIn(custom_url("Surge", slug), rules)
+
+    def test_retired_regional_preferred_feeds_are_absent_from_templates(self):
+        for name in CONFIG_NAMES:
+            text = (OUTPUT_DIR / name).read_text(encoding="utf-8")
+            for path in RETIRED_CUSTOM_FEEDS.values():
+                with self.subTest(name=name, path=path):
+                    self.assertNotIn(path, text)
 
     def test_quantumultx_and_loon_bind_custom_routing_feeds_before_telecom(self):
         qx = active_lines(
@@ -1230,14 +1225,13 @@ rule-providers:
             index for index, line in enumerate(loon) if "ChinaTelecom" in line
         )
 
-        for slug, (_, policy) in CUSTOM_FEEDS.items():
+        for slug, (_, policy) in ACTIVE_CUSTOM_FEEDS.items():
             qx_url = custom_url("QuantumultX", slug)
             loon_url = custom_url("Loon", slug)
             qx_policy = "direct" if slug == "direct" else policy
             tag = "自定义-直连" if slug == "direct" else f"自定义-{policy}"
             qx_matches = [line for line in qx if qx_url in line]
             loon_matches = [line for line in loon if loon_url in line]
-            enabled = "false" if slug in PREFERRED_CUSTOM_FEEDS else "true"
             with self.subTest(client="Quantumult X", slug=slug):
                 self.assertEqual(1, len(qx_matches))
                 self.assertEqual(
@@ -1246,7 +1240,7 @@ rule-providers:
                         ("force-policy", qx_policy),
                         ("update-interval", "86400"),
                         ("opt-parser", "false"),
-                        ("enabled", enabled),
+                        ("enabled", "true"),
                     ],
                     option_fields(qx_matches[0]),
                 )
@@ -1254,7 +1248,7 @@ rule-providers:
             with self.subTest(client="Loon", slug=slug):
                 self.assertEqual(1, len(loon_matches))
                 self.assertEqual(
-                    [("policy", policy), ("tag", tag), ("enabled", enabled)],
+                    [("policy", policy), ("tag", tag), ("enabled", "true")],
                     option_fields(loon_matches[0]),
                 )
                 self.assertLess(loon.index(loon_matches[0]), loon_telecom_index)
