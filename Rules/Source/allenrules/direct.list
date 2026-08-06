@@ -1,15 +1,15 @@
-# Devices and self-hosted services
+# 设备与自托管服务
 DOMAIN-SUFFIX,synology.cn
 DOMAIN,qbittorrent-nox
 DOMAIN-SUFFIX,ui.com
 
-# Infrastructure and network diagnostics
+# 基础设施与网络诊断
 DOMAIN-SUFFIX,digitalocean.com
 DOMAIN-SUFFIX,dyndns.com
 DOMAIN-SUFFIX,whatismyip.akamai.com
 DOMAIN-KEYWORD,volcengine
 
-# Domestic applications and service exceptions
+# 国内应用与服务例外
 DOMAIN-SUFFIX,xmwsyy.com
 DOMAIN-SUFFIX,imgse.com
 DOMAIN-SUFFIX,tagweb.vip
@@ -20,5 +20,5 @@ DOMAIN-SUFFIX,sdkapp.uve.weibo.com
 DOMAIN-SUFFIX,ucweb.com
 DOMAIN-SUFFIX,amemv.com
 
-# Media service
+# 媒体服务
 DOMAIN-SUFFIX,v4.plex.tv
