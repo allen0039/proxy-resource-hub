@@ -1,0 +1,6 @@
+# UU Remote process rules for Surge Mac.
+# Add this external ruleset with the DIRECT policy.
+PROCESS-NAME,uuremote
+PROCESS-NAME,uuremoteserver
+PROCESS-NAME,uuremoteservice
+PROCESS-NAME,uuremotedaemon

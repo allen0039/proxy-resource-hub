@@ -152,6 +152,8 @@ IP-CIDR,95.161.76.100/31,REJECT-NO-DROP,no-resolve
 # 7. 最终规则
 FINAL,Final
 [Remote Rule]
+# UU远程：仅适用于 Loon for Mac，默认关闭；需要时删除下一行开头的 # 后启用。
+# https://raw.githubusercontent.com/allen0039/proxy-resource-hub/main/Rules/Loon/Custom/uuyuancheng.list, policy=DIRECT, tag=UU远程（仅Mac）, enabled=true
 https://raw.githubusercontent.com/allen0039/proxy-resource-hub/main/Rules/Loon/Custom/direct.list, policy=DIRECT, tag=自定义-直连, enabled=true
 https://raw.githubusercontent.com/allen0039/proxy-resource-hub/main/Rules/Loon/Regional/hk.list, policy=香港节点, tag=自定义-香港节点, enabled=true
 https://raw.githubusercontent.com/allen0039/proxy-resource-hub/main/Rules/Loon/Regional/us.list, policy=美国节点, tag=自定义-美国节点, enabled=true

@@ -1,0 +1,6 @@
+# UU Remote process rules for Loon for Mac.
+# Add this remote rule with the DIRECT policy.
+PROCESS-NAME,uuremote
+PROCESS-NAME,uuremoteserver
+PROCESS-NAME,uuremoteservice
+PROCESS-NAME,uuremotedaemon
