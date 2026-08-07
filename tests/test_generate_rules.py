@@ -75,6 +75,7 @@ SHOP_REQUIRED_DOMAINS = {
     "steepandcheap.com",
     "competitivecyclist.com",
     "arcteryx.com",
+    "montbell.com",
     "patagonia.com",
     "thenorthface.com",
     "campsaver.com",
@@ -112,6 +113,9 @@ CUSTOM_RULES = (
     ("DOMAIN-SUFFIX", "dyndns.com", "DIRECT"),
     ("DOMAIN-SUFFIX", "whatismyip.akamai.com", "DIRECT"),
     ("DOMAIN-KEYWORD", "volcengine", "DIRECT"),
+    ("DOMAIN-SUFFIX", "qq.com", "DIRECT"),
+    ("DOMAIN-KEYWORD", "boke", "DIRECT"),
+    ("DOMAIN-SUFFIX", "kuwo.cn", "DIRECT"),
     ("DOMAIN-SUFFIX", "xmwsyy.com", "DIRECT"),
     ("DOMAIN-SUFFIX", "imgse.com", "DIRECT"),
     ("DOMAIN-SUFFIX", "tagweb.vip", "DIRECT"),
@@ -139,6 +143,7 @@ CUSTOM_RULES = (
     ("DOMAIN-KEYWORD", "themoviedb", "美国节点"),
     ("DOMAIN-KEYWORD", "tmdb", "美国节点"),
     ("DOMAIN-KEYWORD", "dashboardicons", "美国节点"),
+    ("DOMAIN-SUFFIX", "ggpht.com", "美国节点"),
     ("DOMAIN-KEYWORD", "uspatriottactical", "美国节点"),
     ("DOMAIN-SUFFIX", "compliance.chippercash.com", "美国节点"),
     ("DOMAIN-KEYWORD", "hdhive", "美国节点"),
@@ -288,7 +293,7 @@ class RuleGeneratorTests(unittest.TestCase):
         generator = load_generator()
         outputs = generator.build_outputs(ROOT)
 
-        self.assertEqual(41, len(outputs))
+        self.assertEqual(40, len(outputs))
         for client in ("Mihomo", "Surge", "QuantumultX", "Loon"):
             for ruleset in ("ai", "direct-ai"):
                 expected = ROOT / "Rules" / client / "AI" / f"{ruleset}.list"
@@ -298,8 +303,8 @@ class RuleGeneratorTests(unittest.TestCase):
             self.assertNotIn(retired, outputs)
             self.assertFalse(retired.exists())
         compatibility = ROOT / "Rules" / "shop" / "shopping.list"
-        self.assertIn(compatibility, outputs)
-        self.assertTrue(compatibility.exists())
+        self.assertNotIn(compatibility, outputs)
+        self.assertFalse(compatibility.exists())
 
     def test_custom_direct_outputs_are_generated_for_every_client(self):
         generator = load_generator()
@@ -660,16 +665,6 @@ class RuleGeneratorTests(unittest.TestCase):
             content = outputs[path]
             self.assertTrue(all(domain in content for domain in SHOP_REQUIRED_DOMAINS))
             self.assertFalse(any(domain in content for domain in SHOP_EXCLUSIONS))
-
-        compatibility = ROOT / "Rules" / "shop" / "shopping.list"
-        self.assertIn(compatibility, outputs)
-        self.assertTrue(
-            all(
-                line.startswith("DOMAIN-SUFFIX,")
-                for line in outputs[compatibility].splitlines()
-                if line and not line.startswith("#")
-            )
-        )
 
     def test_check_mode_detects_a_stale_output(self):
         generator = load_generator()

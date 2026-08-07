@@ -121,7 +121,6 @@ DOMAIN-SUFFIX,push.apple.com,Apple Push
 # 2. 直连与 PT 服务
 # 已纳入远程 PT 订阅的站点不在本地重复维护。
 # 字节跳动国内资源优先直连，覆盖后续 TikTok 等通用规则集。
-DOMAIN-SUFFIX,snssdk.com,DIRECT
 
 # 3. 技术开发与工具
 DOMAIN,api.github.com,GitHub
@@ -132,14 +131,12 @@ DOMAIN,api.github.com,GitHub
 DOMAIN-SUFFIX,mfallen.de,DIRECT
 # Google APIs 交由下方 AI 与 Google 规则集分流，避免绕过 Google 策略组。
 # Google 图片资源优先交给 YouTube，覆盖后续通用 CDN 规则集。
-DOMAIN-SUFFIX,ggpht.com,YouTube
 # DOMAIN-SUFFIX,googleusercontent.com,Google
 # DOMAIN-SUFFIX,gstatic.com,Google
 # DOMAIN-KEYWORD,googleapis,Google
 DOMAIN-SUFFIX,safebrowsing.google.com,Google
 
 # 5. 特殊站点与区域分流
-DOMAIN-SUFFIX,montbell.com,香港节点
 
 # 6. 拦截与修正规则
 # 精确放行必须位于 adobe.io 后缀拒绝规则之前。

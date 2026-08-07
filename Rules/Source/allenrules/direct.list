@@ -10,6 +10,9 @@ DOMAIN-SUFFIX,whatismyip.akamai.com
 DOMAIN-KEYWORD,volcengine
 
 # 国内应用与服务例外
+DOMAIN-SUFFIX,qq.com
+DOMAIN-KEYWORD,boke
+DOMAIN-SUFFIX,kuwo.cn
 DOMAIN-SUFFIX,xmwsyy.com
 DOMAIN-SUFFIX,imgse.com
 DOMAIN-SUFFIX,tagweb.vip
