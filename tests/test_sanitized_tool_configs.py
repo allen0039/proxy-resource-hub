@@ -1196,6 +1196,32 @@ rule-providers:
                     self.assertEqual(["RULE-SET", url, policy], rule_parts[:3])
                     self.assertLess(rules.index(matches[0]), skk_index)
 
+    def test_uu_remote_rules_are_enabled_only_for_surge_mac(self):
+        surge_rules = active_lines(
+            active_section(
+                (OUTPUT_DIR / "surge_mac_allen.conf").read_text(encoding="utf-8"),
+                "[Rule]",
+                "[Host]",
+            )
+        )
+        surge_url = (
+            "https://raw.githubusercontent.com/allen0039/proxy-resource-hub/main/"
+            "Rules/Surge/Custom/uuyuancheng.list"
+        )
+        self.assertIn(f"RULE-SET,{surge_url},DIRECT", surge_rules)
+
+        loon_text = (OUTPUT_DIR / "loon_allen.lcf").read_text(encoding="utf-8")
+        loon_url = (
+            "https://raw.githubusercontent.com/allen0039/proxy-resource-hub/main/"
+            "Rules/Loon/Custom/uuyuancheng.list"
+        )
+        self.assertIn("仅适用于 Loon for Mac", loon_text)
+        self.assertIn("默认关闭", loon_text)
+        self.assertIn(f"# {loon_url}, policy=DIRECT", loon_text)
+        self.assertNotIn(
+            f"\n{loon_url}, policy=DIRECT", loon_text
+        )
+
     def test_retired_regional_preferred_feeds_are_absent_from_templates(self):
         for name in CONFIG_NAMES:
             text = (OUTPUT_DIR / name).read_text(encoding="utf-8")
