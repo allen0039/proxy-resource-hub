@@ -7,6 +7,9 @@ host-suffix, digitalocean.com, proxy
 host-suffix, dyndns.com, proxy
 host-suffix, whatismyip.akamai.com, proxy
 host-keyword, volcengine, proxy
+host-suffix, qq.com, proxy
+host-keyword, boke, proxy
+host-suffix, kuwo.cn, proxy
 host-suffix, xmwsyy.com, proxy
 host-suffix, imgse.com, proxy
 host-suffix, tagweb.vip, proxy

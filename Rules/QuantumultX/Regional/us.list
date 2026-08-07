@@ -14,6 +14,7 @@ host-suffix, 2fa.fun, proxy
 host-keyword, themoviedb, proxy
 host-keyword, tmdb, proxy
 host-keyword, dashboardicons, proxy
+host-suffix, ggpht.com, proxy
 host-keyword, uspatriottactical, proxy
 host-suffix, compliance.chippercash.com, proxy
 host-keyword, hdhive, proxy

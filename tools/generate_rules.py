@@ -11,7 +11,7 @@ RULESET_SPECS = (
     ("AI", "direct-ai", None),
     ("Personal", "Domain", None),
     ("PT", "Domain", None),
-    ("shop", "shopping", "shop"),
+    ("shop", "shopping", None),
 )
 CLASSICAL_TARGETS = ("Mihomo", "Surge", "Loon")
 DOMAIN_RE = re.compile(

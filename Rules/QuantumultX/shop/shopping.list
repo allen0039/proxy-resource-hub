@@ -87,6 +87,7 @@ host-suffix, steepandcheap.com, proxy
 
 # 户外品牌官方商城
 host-suffix, arcteryx.com, proxy
+host-suffix, montbell.com, proxy
 host-suffix, patagonia.com, proxy
 host-suffix, thenorthface.com, proxy
 host-suffix, sportpursuit.com, proxy

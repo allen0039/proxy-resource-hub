@@ -1287,7 +1287,7 @@ rule-providers:
             }
             with self.subTest(name=name, check="migrated rules"):
                 self.assertFalse(set(MIGRATED_LOCAL_RULES) & active_values)
-                self.assertIn("montbell.com", active_values)
+                self.assertNotIn("montbell.com", active_values)
                 self.assertNotIn("hdhive.online", active_values)
 
 
