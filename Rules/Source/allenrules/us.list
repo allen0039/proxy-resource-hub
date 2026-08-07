@@ -1,5 +1,4 @@
-# Generated from Rules/Source/allenrules/us.list by tools/generate_rules.py. Do not edit.
-
+# 技术、开发与服务管理
 DOMAIN-SUFFIX,openwrt.ai
 DOMAIN-SUFFIX,lsposed.org
 DOMAIN-SUFFIX,linux.do
@@ -11,11 +10,17 @@ DOMAIN-KEYWORD,qichiyu
 DOMAIN-SUFFIX,mjji.de
 DOMAIN-SUFFIX,vps.town
 DOMAIN-SUFFIX,2fa.fun
+
+# 媒体元数据与图标服务
 DOMAIN-KEYWORD,themoviedb
 DOMAIN-KEYWORD,tmdb
 DOMAIN-KEYWORD,dashboardicons
+
+# 购物与合规服务
 DOMAIN-KEYWORD,uspatriottactical
 DOMAIN-SUFFIX,compliance.chippercash.com
+
+# 下载、媒体与内容站点
 DOMAIN-KEYWORD,hdhive
 DOMAIN-KEYWORD,sehuatang
 DOMAIN-KEYWORD,hd-torrents

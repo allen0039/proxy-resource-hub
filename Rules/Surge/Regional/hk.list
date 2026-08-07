@@ -1,4 +1,4 @@
-# Generated from Rules/Source/Custom/allenrules.list by tools/generate_rules.py. Do not edit.
+# Generated from Rules/Source/allenrules/hk.list by tools/generate_rules.py. Do not edit.
 
 DOMAIN-SUFFIX,hytron.io
 DOMAIN-KEYWORD,kejilion
