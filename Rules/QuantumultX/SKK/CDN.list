@@ -3,9 +3,9 @@
 # Derived from https://github.com/SukkaW/Surge
 # Source: https://ruleset.skk.moe/List/domainset/cdn.conf
 # Source: https://ruleset.skk.moe/List/non_ip/cdn.conf
-# Upstream Last Updated: 2026-08-05T12:33:04.691Z (domainset)
+# Upstream Last Updated: 2026-08-07T17:00:24.513Z (domainset)
 # Upstream Last Updated: 2026-08-05T12:33:04.405Z (non_ip)
-# Rule count: 4661
+# Rule count: 4665
 
 host, 7h15.ru1353t.1s.m4d3.by.5ukk4w.skk.moe, proxy
 host, 0x0.st, proxy
@@ -217,6 +217,7 @@ host-suffix, angular.io, proxy
 host-suffix, ant.design, proxy
 host-suffix, aolcdn.com, proxy
 host-suffix, avximg.com, proxy
+host-suffix, awxcdn.com, proxy
 host-suffix, badgen.net, proxy
 host-suffix, balley.top, proxy
 host-suffix, bblcdn.com, proxy
@@ -659,6 +660,7 @@ host, e.linear.app, proxy
 host, e3.365dm.com, proxy
 host, eightcha.com, proxy
 host, eslint.style, proxy
+host-suffix, fast-sfc.com, proxy
 host-suffix, favicone.com, proxy
 host-suffix, fembeqv2.xyz, proxy
 host, file.ahu.moe, proxy
@@ -2801,6 +2803,7 @@ host, badges.frapsoft.com, proxy
 host, before.good-apps.co, proxy
 host, bundle.trysavvy.com, proxy
 host, cdn-blocks.karte.io, proxy
+host, cdn-city.livere.com, proxy
 host, cdn-fck.tnaflix.com, proxy
 host, cdn.amgreatness.com, proxy
 host, cdn.announcekit.app, proxy
@@ -4250,6 +4253,7 @@ host, antiqua-ux-cdn.monotype.com, proxy
 host, app-static-prod.posthog.com, proxy
 host, article-image-ix.nikkei.com, proxy
 host, assets.braintreegateway.com, proxy
+host, assets.weather-forecast.com, proxy
 host-suffix, cdn-lfs-us-1.huggingface.co, proxy
 host, cdn-live.foreignaffairs.com, proxy
 host, cdn-static-push.porndig.com, proxy
