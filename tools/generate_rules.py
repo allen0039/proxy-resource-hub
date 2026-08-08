@@ -25,9 +25,14 @@ CUSTOM_SOURCE_SPECS = (
     ("jp", "日本节点", "Regional", "jp"),
     ("sg", "新加坡节点", "Regional", "sg"),
 )
+PROCESS_RULESET_SPECS = (
+    ("uuyuancheng", "Custom", ("Surge", "Loon")),
+)
 CUSTOM_TYPES = {"DOMAIN", "DOMAIN-SUFFIX", "DOMAIN-KEYWORD"}
+PROCESS_RULE_TYPE = "PROCESS-NAME"
 HOST_LABEL_RE = re.compile(r"[a-z0-9](?:[a-z0-9-]{0,61}[a-z0-9])?\Z")
 KEYWORD_RE = re.compile(r"[a-z0-9][a-z0-9.-]*\Z")
+PROCESS_NAME_RE = re.compile(r"[a-z0-9][a-z0-9._-]*\Z")
 
 
 def parse_source(path: Path) -> list[str]:
@@ -104,6 +109,28 @@ def parse_custom_sources(
     return parsed
 
 
+def parse_process_source(path: Path) -> list[tuple[str, str]]:
+    rules: list[tuple[str, str]] = []
+    seen: set[str] = set()
+    for number, line in enumerate(path.read_text(encoding="utf-8").splitlines(), 1):
+        stripped_line = line.strip()
+        if not stripped_line or stripped_line.startswith("#"):
+            continue
+        fields = [field.strip() for field in line.split(",")]
+        if len(fields) != 2 or not all(fields):
+            raise ValueError(f"{path}:{number}: expected two non-empty fields")
+        rule_type, value = fields
+        if rule_type != PROCESS_RULE_TYPE:
+            raise ValueError(f"{path}:{number}: unsupported rule type: {rule_type}")
+        if not PROCESS_NAME_RE.fullmatch(value):
+            raise ValueError(f"{path}:{number}: invalid process name: {value}")
+        if value in seen:
+            raise ValueError(f"{path}:{number}: duplicate process name: {value}")
+        seen.add(value)
+        rules.append((rule_type, value))
+    return rules
+
+
 def render(lines: list[str], style: str, source_label: str) -> str:
     output = [
         f"# Generated from {source_label} by tools/generate_rules.py. Do not edit.",
@@ -143,6 +170,15 @@ def render_custom_rules(
     return "\n".join(output).rstrip() + "\n"
 
 
+def render_process_rules(rules: list[tuple[str, str]], source_label: str) -> str:
+    output = [
+        f"# Generated from {source_label} by tools/generate_rules.py. Do not edit.",
+        "",
+    ]
+    output.extend(f"{rule_type},{value}" for rule_type, value in rules)
+    return "\n".join(output).rstrip() + "\n"
+
+
 def build_outputs(root: Path) -> dict[Path, str]:
     outputs: dict[Path, str] = {}
     for directory, name, compatibility_directory in RULESET_SPECS:
@@ -174,6 +210,13 @@ def build_outputs(root: Path) -> dict[Path, str]:
             outputs[root / "Rules" / client / directory / f"{slug}.list"] = (
                 render_custom_rules(rules, style, source.relative_to(root).as_posix())
             )
+    for name, directory, clients in PROCESS_RULESET_SPECS:
+        source = source_root / f"{name}.list"
+        rendered = render_process_rules(
+            parse_process_source(source), source.relative_to(root).as_posix()
+        )
+        for client in clients:
+            outputs[root / "Rules" / client / directory / f"{name}.list"] = rendered
     return outputs
 
 
