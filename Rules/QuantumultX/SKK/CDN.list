@@ -3,9 +3,9 @@
 # Derived from https://github.com/SukkaW/Surge
 # Source: https://ruleset.skk.moe/List/domainset/cdn.conf
 # Source: https://ruleset.skk.moe/List/non_ip/cdn.conf
-# Upstream Last Updated: 2026-08-07T17:00:24.513Z (domainset)
+# Upstream Last Updated: 2026-08-08T15:02:47.990Z (domainset)
 # Upstream Last Updated: 2026-08-05T12:33:04.405Z (non_ip)
-# Rule count: 4665
+# Rule count: 4691
 
 host, 7h15.ru1353t.1s.m4d3.by.5ukk4w.skk.moe, proxy
 host, 0x0.st, proxy
@@ -395,6 +395,7 @@ host-suffix, am-cdn.pics, proxy
 host-suffix, amaicdn.com, proxy
 host-suffix, angular.dev, proxy
 host, app-spm.com, proxy
+host, app.shop.pe, proxy
 host, at.cbsi.com, proxy
 host-suffix, bdzybf7.com, proxy
 host-suffix, bftuvip.com, proxy
@@ -594,6 +595,7 @@ host-suffix, 4everland.io, proxy
 host, aimg.fc2.com, proxy
 host, ajax.cat.net, proxy
 host-suffix, apperoni.top, proxy
+host-suffix, axis-cdn.net, proxy
 host, b.peatio.com, proxy
 host, b.sf-syn.com, proxy
 host-suffix, badoocdn.com, proxy
@@ -896,6 +898,7 @@ host, data.pendo.io, proxy
 host-suffix, dd-static.net, proxy
 host-suffix, disconnect.me, proxy
 host-suffix, disquscdn.com, proxy
+host-suffix, dm-static.com, proxy
 host-suffix, doppiocdn.com, proxy
 host-suffix, doppiocdn.net, proxy
 host-suffix, doppiocdn.org, proxy
@@ -1188,6 +1191,7 @@ host, cms.mistral.ai, proxy
 host-suffix, cms.replit.com, proxy
 host-suffix, codeforces.org, proxy
 host, consent.dw.com, proxy
+host, consent.fmm.io, proxy
 host-suffix, cursor-cdn.com, proxy
 host, d.newsweek.com, proxy
 host, dc-cdn.cdw.com, proxy
@@ -1234,6 +1238,7 @@ host, image.goat.com, proxy
 host, image.nmb.best, proxy
 host, image.tmdb.org, proxy
 host, images.991.com, proxy
+host, images.gog.com, proxy
 host, images.loox.io, proxy
 host, images.rss.app, proxy
 host, images.spot.im, proxy
@@ -1354,6 +1359,7 @@ host, static.fc2.com, proxy
 host, static.itch.io, proxy
 host, static.j51.net, proxy
 host, static.lwn.net, proxy
+host, static.okx.cab, proxy
 host, static.okx.com, proxy
 host, static.reo.dev, proxy
 host, static.snyk.io, proxy
@@ -1401,6 +1407,7 @@ host-suffix, a.storyblok.com, proxy
 host, a57.foxnews.com, proxy
 host-suffix, abebookscdn.com, proxy
 host-suffix, addons.business, proxy
+host-suffix, aexp-static.com, proxy
 host-suffix, ancestrycdn.com, proxy
 host, api.bintray.com, proxy
 host, api.weather.com, proxy
@@ -1411,6 +1418,7 @@ host, assets.bbhub.io, proxy
 host, assets.canny.io, proxy
 host, assets.cello.so, proxy
 host, assets.clibo.tw, proxy
+host, assets.game8.co, proxy
 host, assets.goat.com, proxy
 host, assets.habr.com, proxy
 host, assets.jable.tv, proxy
@@ -1555,6 +1563,7 @@ host, fonts.upset.dev, proxy
 host-suffix, gannett-cdn.com, proxy
 host-suffix, gauthstatic.com, proxy
 host, gdb.voanews.com, proxy
+host-suffix, gog-statics.com, proxy
 host, hello.zonos.com, proxy
 host, himeko.iwara.tv, proxy
 host-suffix, hsappstatic.net, proxy
@@ -1880,6 +1889,7 @@ host, glyph.medium.com, proxy
 host, gravatar.cat.net, proxy
 host-suffix, htv-hydaelyn.com, proxy
 host-suffix, hubspotlinks.com, proxy
+host, i.skiplagged.com, proxy
 host, i2.hentaifox.com, proxy
 host, ichef.bbci.co.uk, proxy
 host, icon.icepanel.io, proxy
@@ -2254,6 +2264,7 @@ host, hawky.pcgamer.com, proxy
 host-suffix, highwinds-cdn.com, proxy
 host, i.dailymail.co.uk, proxy
 host, i.kickstarter.com, proxy
+host, i.macsecurity.net, proxy
 host, i.mydramalist.com, proxy
 host, i2.bahamut.com.tw, proxy
 host, icdn.missav123.to, proxy
@@ -2388,6 +2399,7 @@ host-suffix, static.mega.co.nz, proxy
 host, static.meiguo.com, proxy
 host, static.missav.com, proxy
 host, static.moomoo.com, proxy
+host, static.mul-pay.jp, proxy
 host, static.oklink.com, proxy
 host, static.oracle.com, proxy
 host, static.peatio.com, proxy
@@ -2790,6 +2802,7 @@ host, assets.queue-it.net, proxy
 host, assets.quillbot.com, proxy
 host, assets.scaleway.com, proxy
 host, assets.stickpng.com, proxy
+host, assets.swiftkey.com, proxy
 host, assets.tvtropes.org, proxy
 host, assets.unifi-ai.com, proxy
 host, assets2.blubrry.com, proxy
@@ -3357,11 +3370,17 @@ host, assets.unicorn.studio, proxy
 host, assets.unredacted.org, proxy
 host, assets.vodafone.co.uk, proxy
 host, assets0.headwayapp.co, proxy
+host, assets2.freshdesk.com, proxy
+host, assets3.freshdesk.com, proxy
+host, assets5.freshdesk.com, proxy
+host, assets7.freshdesk.com, proxy
+host, assets9.freshdesk.com, proxy
 host, badges.greenkeeper.io, proxy
 host, banners.chessbase.com, proxy
 host, beta.eslint-react.xyz, proxy
 host, bundler.nice-team.net, proxy
 host, c.speedtestcustom.com, proxy
+host, cache.mapcomplete.org, proxy
 host, cdn-client.medium.com, proxy
 host, cdn-front.freepik.com, proxy
 host, cdn-longterm.mee6.xyz, proxy
@@ -3582,6 +3601,7 @@ host, assets.squarespace.com, proxy
 host, assets.tangled.network, proxy
 host, assets.transfernow.net, proxy
 host, assets.video.yahoo.net, proxy
+host, assets10.freshdesk.com, proxy
 host, attachments.office.net, proxy
 host, avatar.stefanjudis.com, proxy
 host, avatar2.bahamut.com.tw, proxy
@@ -3748,7 +3768,8 @@ host, thumbor.4gamers.com.tw, proxy
 host-suffix, tile.openstreetmap.bzh, proxy
 host-suffix, tile.openstreetmap.org, proxy
 host-suffix, tile.thunderforest.com, proxy
-host, tile2.opencyclemap.org, proxy
+host-suffix, tile2.opencyclemap.org, proxy
+host-suffix, tile3.opencyclemap.org, proxy
 host, tiles.arcticconnect.ca, proxy
 host-suffix, tiles.openstreetmap.us, proxy
 host-suffix, tiles.virtualearth.net, proxy
@@ -3954,6 +3975,7 @@ host, appstatico.electronic.us, proxy
 host, assets-docs.circleci.com, proxy
 host, assets-next.matters.news, proxy
 host-suffix, assets.as2.amazonaws.com, proxy
+host, assets.create.roblox.com, proxy
 host, assets.cyberghostvpn.com, proxy
 host, assets.documentcloud.org, proxy
 host, assets.geeksforgeeks.org, proxy
@@ -4361,6 +4383,7 @@ host, ohttp-relay1.fastly-edge.com, proxy
 host, p16-hera-sg.larksuitecdn.com, proxy
 host, p16-hera-va.larksuitecdn.com, proxy
 host, pg2dhpc3p5ec22g3.jkforum.net, proxy
+host-suffix, privacyguidesusercontent.com, proxy
 host, renderer-assets.typeform.com, proxy
 host, sf19-scmcdn.larksuitecdn.com, proxy
 host, social-reaction-api.hk01.com, proxy
@@ -4408,6 +4431,7 @@ host, mozilla-ohttp.fastly-edge.com, proxy
 host, na-library.klarnaservices.com, proxy
 host, oct8neproxy.azurewebsites.net, proxy
 host, pic-bstarstatic.akamaized.net, proxy
+host, prod.docsiteassets.roblox.com, proxy
 host, public-assets.postmarkapp.com, proxy
 host, resources.help.salesforce.com, proxy
 host, s3.eu-central-2.wasabisys.com, proxy
@@ -4530,6 +4554,7 @@ host, wre-assets.prod.mapping.strava.com, proxy
 host, blade-public-static.blade-group.com, proxy
 host, ecommplugins-scripts.trustpilot.com, proxy
 host, firebaseremoteconfig.googleapis.com, proxy
+host, gamesapps-assets.ghub.logitechg.com, proxy
 host, ledger-wp-website-s3-prd.ledger.com, proxy
 host, listing-thumbnail.live.nicovideo.jp, proxy
 host, optimizationguide-pa.googleapis.com, proxy
@@ -4540,6 +4565,7 @@ host, stubdownloader.services.mozilla.com, proxy
 host, cf-images.us-east-1.prod.boltdns.net, proxy
 host, content-prod-live.cert.starbucks.com, proxy
 host-suffix, crashlyticsreports-pa.googleapis.com, proxy
+host, crossborder-integration.global-e.com, proxy
 host, firebaseinstallations.googleapis.com, proxy
 host, interactive-examples.mdn.mozilla.net, proxy
 host, pro2-ui-assets-s3-fy.myportfolio.com, proxy
