@@ -510,7 +510,7 @@ rule-providers:
         surge_home = (
             rf"(?m)^家宽节点 = select,"
             rf"(?=[^\n]*policy-regex-filter={re.escape(HOME_POLICY_REGEX)})"
-            rf"(?=[^\n]*img-url={re.escape(HOME_ICON_URL)})[^\n]*$"
+            rf"(?=[^\n]*icon-url={re.escape(HOME_ICON_URL)})[^\n]*$"
         )
         for name in ("surge_mac_allen.conf", "surge_iphone_allen.conf"):
             with self.subTest(name=name):
@@ -536,9 +536,14 @@ rule-providers:
 
         loon = configs["loon_allen.lcf"]
         self.assertEqual(2, loon.count(HOME_POLICY_NAME))
+        loon_home = (
+            rf"(?m)^家宽节点 = select,"
+            rf"(?=[^\n]*policy-regex-filter={re.escape(HOME_POLICY_REGEX)})"
+            rf"(?=[^\n]*img-url={re.escape(HOME_ICON_URL)})[^\n]*$"
+        )
         self.assertRegex(
             loon,
-            surge_home,
+            loon_home,
         )
         self.assertRegex(loon, r"(?m)^AI = select,.*家宽节点(?:,|, .*)")
 
