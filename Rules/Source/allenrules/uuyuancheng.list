@@ -1,5 +1,3 @@
-# Generated from Rules/Source/allenrules/uuyuancheng.list by tools/generate_rules.py. Do not edit.
-
 PROCESS-NAME,uuremote
 PROCESS-NAME,uuremoteserver
 PROCESS-NAME,uuremoteservice

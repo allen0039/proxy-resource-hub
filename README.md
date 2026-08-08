@@ -212,7 +212,7 @@ PT 规则当前包含 36 个经确认的站点域名。书签中明确排除的�
 
 #### UU远程（仅 Mac）
 
-UU远程使用多个后台进程；开启 Loon for Mac 的 Tunnel 或 Surge Mac 的增强模式时，建议把对应规则集指定为 `DIRECT`，避免经代理节点转发。规则集只适用于 Mac，不应导入 iPhone、iPad 或 Apple TV。
+UU远程使用多个后台进程；开启 Loon for Mac 的 Tunnel 或 Surge Mac 的增强模式时，建议把对应规则集指定为 `DIRECT`，避免经代理节点转发。规则集只适用于 Mac，不应导入 iPhone、iPad 或 Apple TV。只编辑 `Rules/Source/allenrules/uuyuancheng.list`；Surge 和 Loon 的 `Custom/uuyuancheng.list` 是生成结果，禁止手动编辑。
 
 ```ini
 # Surge Mac
@@ -261,7 +261,7 @@ https://raw.githubusercontent.com/allen0039/proxy-resource-hub/main/Rules/Loon/P
 
 ### Custom / Regional 自定义路由订阅
 
-自定义直连与地区路由规则从五个策略源文件维护：`Rules/Source/allenrules/direct.list`、`Rules/Source/allenrules/hk.list`、`Rules/Source/allenrules/us.list`、`Rules/Source/allenrules/jp.list` 和 `Rules/Source/allenrules/sg.list`。每个非注释行使用 `RULE-TYPE,VALUE` 两列，文件名决定策略；它们生成一条 Custom DIRECT 与香港、美国、日本、新加坡四条 Regional 资源。修改对应源文件会同时更新独立规则 URL 的内容，以及下一次生成的客户端模板版本。
+自定义直连与地区路由规则从五个策略源文件维护：`Rules/Source/allenrules/direct.list`、`Rules/Source/allenrules/hk.list`、`Rules/Source/allenrules/us.list`、`Rules/Source/allenrules/jp.list` 和 `Rules/Source/allenrules/sg.list`。每个非注释行使用 `RULE-TYPE,VALUE` 两列，文件名决定策略；它们生成一条 Custom DIRECT 与香港、美国、日本、新加坡四条 Regional 资源。修改对应源文件会同时更新独立规则 URL 的内容，以及下一次生成的客户端模板版本。`Rules/Source/allenrules/uuyuancheng.list` 是独立的 Mac 进程规则源，不属于这五个域名策略源；它只生成 Surge 与 Loon 的 UU 远程规则。
 
 | 策略组 | Mihomo | Surge | Quantumult X | Loon |
 | --- | --- | --- | --- | --- |

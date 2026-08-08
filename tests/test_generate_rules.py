@@ -187,6 +187,13 @@ QX_CUSTOM_TYPES = {
 }
 REGIONAL_CLIENTS = ("Mihomo", "Surge", "QuantumultX", "Loon")
 REGIONAL_SLUGS = tuple(REGIONAL_POLICY_FILES.values())
+UU_REMOTE_SOURCE = "Rules/Source/allenrules/uuyuancheng.list"
+UU_REMOTE_RULES = (
+    ("PROCESS-NAME", "uuremote"),
+    ("PROCESS-NAME", "uuremoteserver"),
+    ("PROCESS-NAME", "uuremoteservice"),
+    ("PROCESS-NAME", "uuremotedaemon"),
+)
 
 
 def custom_source_label(policy: str) -> str:
@@ -211,6 +218,14 @@ def write_allenrule_sources(
             if rule_policy == policy
         )
         (source_root / f"{filename}.list").write_text(content, encoding="utf-8")
+
+
+def write_uuyuancheng_source(source_root: Path) -> None:
+    source_root.mkdir(parents=True, exist_ok=True)
+    (source_root / "uuyuancheng.list").write_text(
+        "".join(f"{rule_type},{value}\n" for rule_type, value in UU_REMOTE_RULES),
+        encoding="utf-8",
+    )
 
 
 def rule_lines(content: str) -> tuple[str, ...]:
@@ -248,6 +263,17 @@ class RuleGeneratorTests(unittest.TestCase):
             f"[订阅]({base_url}/Loon/Custom/direct.list) |"
         )
         self.assertIn(expected_row, readme)
+
+    def test_uu_remote_subscription_documentation_identifies_generated_source(self):
+        readme = (ROOT / "README.md").read_text(encoding="utf-8")
+        base_url = (
+            "https://raw.githubusercontent.com/allen0039/proxy-resource-hub/main/Rules"
+        )
+
+        self.assertIn(UU_REMOTE_SOURCE, readme)
+        self.assertIn("生成结果，禁止手动编辑", readme)
+        self.assertIn(f"{base_url}/Surge/Custom/uuyuancheng.list", readme)
+        self.assertIn(f"{base_url}/Loon/Custom/uuyuancheng.list", readme)
 
     def test_regional_subscription_documentation_is_complete(self):
         readme = (ROOT / "README.md").read_text(encoding="utf-8")
@@ -293,7 +319,7 @@ class RuleGeneratorTests(unittest.TestCase):
         generator = load_generator()
         outputs = generator.build_outputs(ROOT)
 
-        self.assertEqual(40, len(outputs))
+        self.assertEqual(42, len(outputs))
         for client in ("Mihomo", "Surge", "QuantumultX", "Loon"):
             for ruleset in ("ai", "direct-ai"):
                 expected = ROOT / "Rules" / client / "AI" / f"{ruleset}.list"
@@ -305,6 +331,29 @@ class RuleGeneratorTests(unittest.TestCase):
         compatibility = ROOT / "Rules" / "shop" / "shopping.list"
         self.assertNotIn(compatibility, outputs)
         self.assertFalse(compatibility.exists())
+
+    def test_uu_remote_outputs_are_generated_only_for_surge_and_loon(self):
+        generator = load_generator()
+        outputs = generator.build_outputs(ROOT)
+        expected_header = (
+            f"# Generated from {UU_REMOTE_SOURCE} "
+            "by tools/generate_rules.py. Do not edit."
+        )
+
+        for client in ("Surge", "Loon"):
+            with self.subTest(client=client):
+                path = ROOT / "Rules" / client / "Custom" / "uuyuancheng.list"
+                self.assertIn(path, outputs)
+                self.assertEqual(expected_header, outputs[path].splitlines()[0])
+                self.assertEqual(
+                    tuple(f"{rule_type},{value}" for rule_type, value in UU_REMOTE_RULES),
+                    rule_lines(outputs[path]),
+                )
+        for client in ("Mihomo", "QuantumultX"):
+            with self.subTest(client=client):
+                path = ROOT / "Rules" / client / "Custom" / "uuyuancheng.list"
+                self.assertNotIn(path, outputs)
+                self.assertFalse(path.exists())
 
     def test_custom_direct_outputs_are_generated_for_every_client(self):
         generator = load_generator()
@@ -431,6 +480,41 @@ class RuleGeneratorTests(unittest.TestCase):
                     self.assertEqual(
                         expected, generator.parse_custom_source(path, "美国节点")
                     )
+
+    def test_parse_process_source_accepts_comments_and_process_names(self):
+        generator = load_generator()
+        with tempfile.TemporaryDirectory() as tmp:
+            path = Path(tmp) / "uuyuancheng.list"
+            path.write_text(
+                "  # Mac background processes\n\nPROCESS-NAME,uuremote\n"
+                "PROCESS-NAME,uuremotedaemon\n",
+                encoding="utf-8",
+            )
+
+            self.assertEqual(
+                [
+                    ("PROCESS-NAME", "uuremote"),
+                    ("PROCESS-NAME", "uuremotedaemon"),
+                ],
+                generator.parse_process_source(path),
+            )
+
+    def test_parse_process_source_rejects_invalid_rows(self):
+        generator = load_generator()
+        invalid_cases = {
+            "PROCESS-NAME,uu remote\n": "invalid process name",
+            "DOMAIN,uuremote\n": "unsupported rule type",
+            "PROCESS-NAME,uuremote,extra\n": "expected two non-empty fields",
+            "PROCESS-NAME,\n": "expected two non-empty fields",
+            "PROCESS-NAME,uuremote\nPROCESS-NAME,uuremote\n": "duplicate process name",
+        }
+        with tempfile.TemporaryDirectory() as tmp:
+            path = Path(tmp) / "uuyuancheng.list"
+            for content, reason in invalid_cases.items():
+                with self.subTest(content=content.strip(), reason=reason):
+                    path.write_text(content, encoding="utf-8")
+                    with self.assertRaisesRegex(ValueError, reason):
+                        generator.parse_process_source(path)
 
     def test_parse_custom_source_rejects_invalid_rows(self):
         generator = load_generator()
@@ -696,6 +780,7 @@ class RuleGeneratorTests(unittest.TestCase):
                 custom_source_root,
                 (("DOMAIN-SUFFIX", "example.com", "美国节点"),),
             )
+            write_uuyuancheng_source(custom_source_root)
             generator.sync_outputs(root, check=False)
             stale_path = root / "Rules" / "Mihomo" / "AI" / "ai.list"
             stale_path.write_text("stale\n", encoding="utf-8")
@@ -724,6 +809,7 @@ class RuleGeneratorTests(unittest.TestCase):
                 custom_source_root,
                 (("DOMAIN-SUFFIX", "example.com", "美国节点"),),
             )
+            write_uuyuancheng_source(custom_source_root)
 
             generator.sync_outputs(root, check=False)
             output_paths = tuple(generator.build_outputs(root))
