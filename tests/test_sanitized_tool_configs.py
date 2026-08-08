@@ -74,6 +74,12 @@ BROKEN_DOCKER_ICON_URL = (
     "https://raw.githubusercontent.com/Koolson/Qure/master/"
     "IconSet/Color/Docker.png"
 )
+HOME_POLICY_NAME = "家宽节点"
+HOME_POLICY_REGEX = r"(?i)(家用|家庭|家宽|\bISP\b)"
+HOME_ICON_URL = (
+    "https://raw.githubusercontent.com/allen0039/proxy-resource-hub/main/"
+    "icons/home.png"
+)
 CUSTOM_BASE_URL = (
     "https://raw.githubusercontent.com/allen0039/proxy-resource-hub/main/"
 )
@@ -494,6 +500,62 @@ rule-providers:
         }
         self.assertIn("AI", targets)
         self.assertNotIn("OpenAI", targets)
+
+    def test_committed_configs_define_home_policy_group_and_ai_option(self):
+        configs = {
+            name: (OUTPUT_DIR / name).read_text(encoding="utf-8")
+            for name in CONFIG_NAMES
+        }
+
+        surge_home = (
+            rf"(?m)^家宽节点 = select,"
+            rf"(?=[^\n]*policy-regex-filter={re.escape(HOME_POLICY_REGEX)})"
+            rf"(?=[^\n]*img-url={re.escape(HOME_ICON_URL)})[^\n]*$"
+        )
+        for name in ("surge_mac_allen.conf", "surge_iphone_allen.conf"):
+            with self.subTest(name=name):
+                text = configs[name]
+                self.assertEqual(2, text.count(HOME_POLICY_NAME))
+                self.assertRegex(text, surge_home)
+                self.assertRegex(
+                    text,
+                    r"(?m)^AI = select,.*家宽节点(?:,|, .*)",
+                )
+
+        qx = configs["quantumultx_allen.conf"]
+        self.assertEqual(2, qx.count(HOME_POLICY_NAME))
+        self.assertRegex(
+            qx,
+            (
+                rf"(?m)^static=家宽节点,"
+                rf"(?=[^\n]*server-tag-regex={re.escape(HOME_POLICY_REGEX)})"
+                rf"(?=[^\n]*img-url={re.escape(HOME_ICON_URL)})[^\n]*$"
+            ),
+        )
+        self.assertRegex(qx, r"(?m)^static=AI,.*家宽节点(?:,|$)")
+
+        loon = configs["loon_allen.lcf"]
+        self.assertEqual(2, loon.count(HOME_POLICY_NAME))
+        self.assertRegex(
+            loon,
+            surge_home,
+        )
+        self.assertRegex(loon, r"(?m)^AI = select,.*家宽节点(?:,|, .*)")
+
+        mihomo = yaml.safe_load(configs["mihomo_allen.yaml"])
+        groups = {
+            group["name"]: group
+            for group in mihomo["proxy-groups"]
+            if isinstance(group, dict)
+        }
+        self.assertIn(HOME_POLICY_NAME, groups)
+        home = groups[HOME_POLICY_NAME]
+        self.assertEqual("select", home["type"])
+        self.assertTrue(home["include-all"])
+        self.assertEqual(HOME_POLICY_REGEX, home["filter"])
+        self.assertEqual(HOME_ICON_URL, home["icon"])
+        self.assertIn(HOME_POLICY_NAME, groups["AI"]["proxies"])
+        self.assertEqual(2, configs["mihomo_allen.yaml"].count(HOME_POLICY_NAME))
 
     def test_committed_outputs_exclude_private_custom_rule_keywords(self):
         private_keywords = {"oracle3", "allen0039"}
