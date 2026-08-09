@@ -3,9 +3,9 @@
 # Derived from https://github.com/SukkaW/Surge
 # Source: https://ruleset.skk.moe/List/domainset/download.conf
 # Source: https://ruleset.skk.moe/List/non_ip/download.conf
-# Upstream Last Updated: 2026-08-05T12:33:04.695Z (domainset)
+# Upstream Last Updated: 2026-08-09T16:01:36.427Z (domainset)
 # Upstream Last Updated: 2026-08-05T12:33:04.408Z (non_ip)
-# Rule count: 1978
+# Rule count: 1975
 
 host, 7h15.ru1353t.1s.m4d3.by.5ukk4w.skk.moe, proxy
 host-suffix, gcr.io, proxy
@@ -110,6 +110,7 @@ host, ctan.math.ca, proxy
 host, d2.myani.org, proxy
 host, deb.sury.org, proxy
 host, debian.a1.bg, proxy
+host, dl.pikpak.io, proxy
 host, ftp.agdsn.de, proxy
 host, ftp.antik.sk, proxy
 host, ftp.arnes.si, proxy
@@ -224,6 +225,7 @@ host, mirrors.up.pt, proxy
 host-suffix, ossplanet.org, proxy
 host-suffix, packagist.org, proxy
 host, repository.su, proxy
+host-suffix, s3.yandex.net, proxy
 host, sft.if.usp.br, proxy
 host, ubuntu.dts.mg, proxy
 host, ubuntu.nic.cz, proxy
@@ -453,7 +455,6 @@ host, ruleset.skk.moe, proxy
 host, tux.rainside.sk, proxy
 host, ubuntu.grena.ge, proxy
 host, ubuntu.lagis.at, proxy
-host, ubuntu.syxpi.fr, proxy
 host, ubuntu.uvigo.es, proxy
 host, updates.64gr.am, proxy
 host, www-ftp.lip6.fr, proxy
@@ -497,7 +498,6 @@ host, down.filen-5.net, proxy
 host, download.kde.org, proxy
 host, download.nust.na, proxy
 host, eclats.crans.org, proxy
-host, edge.zerofs.link, proxy
 host-suffix, epicgamescdn.com, proxy
 host, fedorapeople.org, proxy
 host, formulae.brew.sh, proxy
@@ -555,7 +555,6 @@ host, mirror.ufs.ac.za, proxy
 host, mirror.ufscar.br, proxy
 host, mirror.veesp.com, proxy
 host, mirror.yandex.ru, proxy
-host, mirror1.hcgen.de, proxy
 host, mirror1.ku.ac.th, proxy
 host, mirrors.asnet.am, proxy
 host-suffix, mirrors.blix.com, proxy
@@ -920,7 +919,6 @@ host, download.eassos.com, proxy
 host, download.edovia.com, proxy
 host, download.garmin.com, proxy
 host, download.mxfast.com, proxy
-host, download.nus.edu.sg, proxy
 host-suffix, download.nvidia.com, proxy
 host, download.osmand.net, proxy
 host, download.sketch.com, proxy
@@ -1114,7 +1112,6 @@ host-suffix, mirror.digionline.de, proxy
 host-suffix, mirror.ftn.uns.ac.rs, proxy
 host, mirror.gotmyhost.com, proxy
 host, mirror.hashy0917.net, proxy
-host, mirror.hyperdedic.ru, proxy
 host, mirror.infomaniak.ch, proxy
 host, mirror.its.umich.edu, proxy
 host, mirror.low-orbit.net, proxy
@@ -1182,6 +1179,7 @@ host, desktop.parallels.com, proxy
 host, distcache.freebsd.org, proxy
 host, dl.orangefox.download, proxy
 host-suffix, download.autodesk.com, proxy
+host, download.fcitx-im.org, proxy
 host, download.geofabrik.de, proxy
 host, download.gigabyte.com, proxy
 host, download.iboysoft.com, proxy
@@ -1233,7 +1231,6 @@ host, mirrors.opensource.is, proxy
 host, mirrors.rpmfusion.org, proxy
 host-suffix, mirrors.spacedump.net, proxy
 host, mirrors.us.kernel.org, proxy
-host, mirrors.wikimedia.org, proxy
 host, mirrors.xmissions.com, proxy
 host, origin-a.akamaihd.net, proxy
 host, os-cdn.virtfusion.net, proxy
