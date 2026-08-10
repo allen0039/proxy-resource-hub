@@ -3,9 +3,9 @@
 # Derived from https://github.com/SukkaW/Surge
 # Source: https://ruleset.skk.moe/List/domainset/cdn.conf
 # Source: https://ruleset.skk.moe/List/non_ip/cdn.conf
-# Upstream Last Updated: 2026-08-09T16:01:36.426Z (domainset)
+# Upstream Last Updated: 2026-08-10T15:21:05.144Z (domainset)
 # Upstream Last Updated: 2026-08-09T16:01:35.791Z (non_ip)
-# Rule count: 4693
+# Rule count: 4701
 
 host, 7h15.ru1353t.1s.m4d3.by.5ukk4w.skk.moe, proxy
 host, 0x0.st, proxy
@@ -491,6 +491,7 @@ host-suffix, imagehub.cc, proxy
 host, img.agrd.eu, proxy
 host, img.skk.moe, proxy
 host, img.toto.im, proxy
+host-suffix, imgcdn8.com, proxy
 host-suffix, imgikzy.com, proxy
 host-suffix, imglink.win, proxy
 host-suffix, imgsmail.ru, proxy
@@ -1558,6 +1559,7 @@ host-suffix, fontawesome.com, proxy
 host, fonts.bunny.net, proxy
 host, fonts.gishan.cc, proxy
 host, fonts.upset.dev, proxy
+host, fonts.wd40.info, proxy
 host-suffix, gannett-cdn.com, proxy
 host-suffix, gauthstatic.com, proxy
 host, gdb.voanews.com, proxy
@@ -1616,6 +1618,7 @@ host, media.giphy.com, proxy
 host, media.licdn.com, proxy
 host, media.smooch.io, proxy
 host, media.tenor.com, proxy
+host, media.wd40.asia, proxy
 host, media.webtoo.ls, proxy
 host, media.wired.com, proxy
 host, metrics.kapa.ai, proxy
@@ -1775,6 +1778,7 @@ host-suffix, bootstrapcdn.com, proxy
 host-suffix, bugly.qcloud.com, proxy
 host, bundlephobia.com, proxy
 host, cache.ip-api.com, proxy
+host, cache.sgvafs.com, proxy
 host-suffix, capcutstatic.com, proxy
 host, cdn-1.porn87.com, proxy
 host, cdn-1.strava.com, proxy
@@ -1880,6 +1884,7 @@ host-suffix, gateway.scarf.sh, proxy
 host-suffix, getaroom-cdn.com, proxy
 host, gis.pinkbike.org, proxy
 host-suffix, githubassets.com, proxy
+host-suffix, githubstatus.com, proxy
 host-suffix, glass.adidas.com, proxy
 host, glyph.medium.com, proxy
 host, gravatar.cat.net, proxy
@@ -2410,6 +2415,8 @@ host, static.tumblr.com, proxy
 host, static.vinted.com, proxy
 host, static.vocadb.net, proxy
 host, static.zaobao.com, proxy
+host, status.claude.com, proxy
+host, status.openai.com, proxy
 host, stbff.newfold.com, proxy
 host-suffix, steemitimages.com, proxy
 host, storage.ko-fi.com, proxy
@@ -3153,6 +3160,7 @@ host, cdn9.bigcommerce.com, proxy
 host, cdnjs.cloudflare.com, proxy
 host, chart.googleapis.com, proxy
 host-suffix, cloud.influxdata.com, proxy
+host-suffix, cloudflarestatus.com, proxy
 host-suffix, cloudflarestream.com, proxy
 host-suffix, cloudinary.vpsvc.com, proxy
 host, cms.socialinsider.io, proxy
