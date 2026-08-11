@@ -96,8 +96,8 @@ CDN = select,香港优选,日本优选,新加坡优选,美国优选,香港节点
 美国节点 = select,美国,url = http://www.qualcomm.cn/generate_204,img-url = https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/United_States.png
 韩国节点 = select,韩国,url = http://www.qualcomm.cn/generate_204,img-url = https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/Korea.png
 英国节点 = select,英国,url = http://www.qualcomm.cn/generate_204,img-url = https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/United_Kingdom.png
-家宽节点 = select, include-other-group="拼好鸡,自建", no-alert=0, hidden=0, include-all-proxies=0, policy-regex-filter=(?i)(家用|家庭|家宽|\bISP\b), img-url=https://raw.githubusercontent.com/allen0039/proxy-resource-hub/main/icons/home.png
 其他地区 = select,其他,url = http://www.qualcomm.cn/generate_204,img-url = https://raw.githubusercontent.com/Orz-3/mini/master/Color/Static.png
+家宽节点 = select, include-other-group="拼好鸡,自建", no-alert=0, hidden=0, include-all-proxies=0, policy-regex-filter=(?i)(家用|家庭|家宽|\bISP\b), img-url=https://raw.githubusercontent.com/allen0039/proxy-resource-hub/main/icons/home.png
 全部节点 = select,All Server,url = http://cp.cloudflare.com/generate_204,img-url = https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/Server.png
 
 
