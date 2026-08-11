@@ -562,6 +562,47 @@ rule-providers:
         self.assertIn(HOME_POLICY_NAME, groups["AI"]["proxies"])
         self.assertEqual(2, configs["mihomo_allen.yaml"].count(HOME_POLICY_NAME))
 
+    def test_committed_configs_place_home_group_before_all_nodes(self):
+        configs = {
+            name: (OUTPUT_DIR / name).read_text(encoding="utf-8")
+            for name in CONFIG_NAMES
+        }
+
+        for name in ("surge_mac_allen.conf", "surge_iphone_allen.conf"):
+            with self.subTest(name=name):
+                text = configs[name]
+                self.assertLess(
+                    text.index("其他地区 = select,"),
+                    text.index("家宽节点 = select,"),
+                )
+                self.assertLess(
+                    text.index("家宽节点 = select,"),
+                    text.index("全部节点 = select,"),
+                )
+
+        qx = configs["quantumultx_allen.conf"]
+        self.assertLess(
+            qx.index("static=其他地区,"), qx.index("static=家宽节点,")
+        )
+        self.assertLess(
+            qx.index("static=家宽节点,"), qx.index("static=全部节点,")
+        )
+
+        loon = configs["loon_allen.lcf"]
+        self.assertLess(
+            loon.index("其他地区 = select,"), loon.index("家宽节点 = select,")
+        )
+        self.assertLess(
+            loon.index("家宽节点 = select,"), loon.index("全部节点 = select,")
+        )
+
+        mihomo = yaml.safe_load(
+            configs["mihomo_allen.yaml"]
+        )
+        names = [group["name"] for group in mihomo["proxy-groups"]]
+        self.assertLess(names.index("其他地区"), names.index(HOME_POLICY_NAME))
+        self.assertLess(names.index(HOME_POLICY_NAME), names.index("全部节点"))
+
     def test_committed_outputs_exclude_private_custom_rule_keywords(self):
         private_keywords = {"oracle3", "allen0039"}
         rule_pattern = re.compile(
