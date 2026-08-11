@@ -116,6 +116,7 @@ All Server = NameRegex, FilterKey = "^(?=.*(.*))(?!.*((?i)邀请|返利|循环|�
 [Rule]
 # 本地规则优先于远程规则，并按从上到下首次匹配生效。
 # === 本地自定义规则 ===
+# IP-CIDR,123.123.123.1/32,美国节点,no-resolve
 # 1. Apple 与系统服务
 DOMAIN-SUFFIX,push.apple.com,Apple Push
 
