@@ -3,9 +3,9 @@
 # Derived from https://github.com/SukkaW/Surge
 # Source: https://ruleset.skk.moe/List/domainset/cdn.conf
 # Source: https://ruleset.skk.moe/List/non_ip/cdn.conf
-# Upstream Last Updated: 2026-08-10T15:21:05.144Z (domainset)
+# Upstream Last Updated: 2026-08-10T23:08:53.341Z (domainset)
 # Upstream Last Updated: 2026-08-09T16:01:35.791Z (non_ip)
-# Rule count: 4701
+# Rule count: 4704
 
 host, 7h15.ru1353t.1s.m4d3.by.5ukk4w.skk.moe, proxy
 host, 0x0.st, proxy
@@ -1308,6 +1308,7 @@ host-suffix, nelreports.net, proxy
 host-suffix, newscdn.com.au, proxy
 host-suffix, nincontent.com, proxy
 host-suffix, ninjastream.to, proxy
+host, node.windy.com, proxy
 host, null.jsbin.com, proxy
 host, optimizely.com, proxy
 host-suffix, patientpop.com, proxy
@@ -2599,6 +2600,7 @@ host, img.4gamers.com.tw, proxy
 host, img.fastcybers.com, proxy
 host, img.hellofresh.com, proxy
 host, img.sparknotes.com, proxy
+host, imgproxy.windy.com, proxy
 host, imgrs.apkcombo.com, proxy
 host, imgs3.hcaptcha.com, proxy
 host-suffix, intercomassets.com, proxy
@@ -3377,6 +3379,7 @@ host, assets.sendinblue.com, proxy
 host, assets.tatlerasia.com, proxy
 host, assets.unicorn.studio, proxy
 host, assets.unredacted.org, proxy
+host, assets.userstyles.org, proxy
 host, assets.vodafone.co.uk, proxy
 host, assets0.headwayapp.co, proxy
 host, assets2.freshdesk.com, proxy
