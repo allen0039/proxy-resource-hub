@@ -3,9 +3,9 @@
 # Derived from https://github.com/SukkaW/Surge
 # Source: https://ruleset.skk.moe/List/domainset/cdn.conf
 # Source: https://ruleset.skk.moe/List/non_ip/cdn.conf
-# Upstream Last Updated: 2026-08-12T18:15:16.115Z (domainset)
+# Upstream Last Updated: 2026-08-13T13:38:55.331Z (domainset)
 # Upstream Last Updated: 2026-08-09T16:01:35.791Z (non_ip)
-# Rule count: 4710
+# Rule count: 4712
 
 DOMAIN,7h15.ru1353t.1s.m4d3.by.5ukk4w.skk.moe
 DOMAIN,0x0.st
@@ -1279,6 +1279,7 @@ DOMAIN-SUFFIX,imgikuncdn.com
 DOMAIN,imgs.plurk.com
 DOMAIN,imgsrc.dmm.com
 DOMAIN-SUFFIX,infura-ipfs.io
+DOMAIN-SUFFIX,insightcdn.net
 DOMAIN,int.mwbbiz.com
 DOMAIN-SUFFIX,intercomcdn.io
 DOMAIN-SUFFIX,ipfs.infura.io
@@ -3290,6 +3291,7 @@ DOMAIN,shell.cdn.office.net
 DOMAIN,sigma9.scpwikicn.com
 DOMAIN,snippet.growsumo.com
 DOMAIN-SUFFIX,spreadshirtmedia.com
+DOMAIN,sso-static.razer.com
 DOMAIN,static-act.imoim.net
 DOMAIN,static-cdn.123rf.com
 DOMAIN,static-cdn.jtvnw.net
