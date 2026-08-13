@@ -5,7 +5,7 @@
 > [!IMPORTANT]
 > 这些是公开脱敏模板，里面没有真实节点。必须先下载到本地，把 `获取到的订阅链接` 替换成自己的机场订阅，才能正常使用。
 
-> 仓库提供由 `Rules/Source/allenrules/` 下五个源文件派生的一条 Custom DIRECT 与四条 Regional 规则订阅。请在自己的私人副本中填写节点订阅和其他私人信息。
+> 仓库提供由 `Rules/Source/allenrules/` 下六个源文件派生的一条 Custom DIRECT 与五条 Regional 规则订阅。请在自己的私人副本中填写节点订阅和其他私人信息。
 
 ## 先安装客户端
 
@@ -41,18 +41,18 @@ App Store 链接指向应用官方商店页面。部分应用可能未在所有�
 
 不要直接把本页或 Raw 地址当成远程配置订阅。公开模板需要填写私人信息，应该作为本地配置使用。
 
-五份公开模板默认启用由五个源文件派生的五条远程规则订阅。
+五份公开模板默认启用由六个源文件派生的六条远程规则订阅。
 
 | 客户端 | 自定义远程规则已接入 |
 | --- | --- |
-| Mihomo | 启用 `Custom/direct` + `Regional/{hk,us,jp,sg}` |
+| Mihomo | 启用 `Custom/direct` + `Regional/{hk,us,jp,sg,de}` |
 | Surge Mac / iPhone | 同上，对应 `Rules/Surge/` |
 | Quantumult X | 同上，对应 `Rules/QuantumultX/` |
 | Loon | 同上，对应 `Rules/Loon/` |
 
 家宽节点策略组按节点名称匹配 “家用”“家庭”“家宽” 或独立单词 “ISP”，仅作为 AI 策略组的可选出口。仓库不包含真实节点、订阅地址或凭据；下载模板后仍需在本地填写私人订阅。
 
-后续域名变更只在 `Rules/Source/allenrules/{direct,hk,us,jp,sg}.list` 中维护；文件名决定规则策略。GitHub Actions 会重新生成各客户端列表，客户端会按已配置的 86400 秒间隔更新这些资源。
+后续域名变更只在 `Rules/Source/allenrules/{direct,hk,us,jp,sg,de}.list` 中维护；文件名决定规则策略。GitHub Actions 会重新生成各客户端列表，客户端会按已配置的 86400 秒间隔更新这些资源。
 
 ## 我该下载哪个文件
 
@@ -182,7 +182,7 @@ Mac 和 iPhone 必须选择对应文件。Surge Mac 模板包含 qB 下载器来
 
 - 通用入口：Surge、Loon 和 Mihomo 使用 `Proxy`；Quantumult X 使用内置小写 `proxy`；各客户端同时保留 `Final` 和直连策略。
 - 地区优选：香港、日本、新加坡、美国自动测速。
-- 地区节点：香港、台湾、日本、新加坡、美国、韩国、英国。
+- 地区节点：香港、台湾、日本、新加坡、美国、韩国、英国、德国。
 - 业务分流：Google、AI、YouTube、Telegram、Netflix、Emby、GitHub、Microsoft、Apple、TikTok、测速、CDN 等。
 - 默认直连：PT 站点、个人域名、公益 AI 和部分国内服务。
 - 远程资源：AI、PT、个人域名、CDN、媒体、游戏平台和常用服务规则。
