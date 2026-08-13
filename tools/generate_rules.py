@@ -24,6 +24,7 @@ CUSTOM_SOURCE_SPECS = (
     ("us", "美国节点", "Regional", "us"),
     ("jp", "日本节点", "Regional", "jp"),
     ("sg", "新加坡节点", "Regional", "sg"),
+    ("de", "德国节点", "Regional", "de"),
 )
 PROCESS_RULESET_SPECS = (
     ("uuyuancheng", "Custom", ("Surge", "Loon")),

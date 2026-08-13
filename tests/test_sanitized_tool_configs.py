@@ -58,6 +58,7 @@ SUPPORTED_AI_REGION_ORDER = [
     "台湾节点",
     "韩国节点",
     "英国节点",
+    "德国节点",
     "其他地区",
     "香港优选",
     "香港节点",
@@ -155,6 +156,42 @@ def load_sanitizer():
 
 
 class SanitizedToolConfigTests(unittest.TestCase):
+    def test_committed_configs_define_a_disjoint_germany_policy_group(self):
+        configs = {
+            name: (OUTPUT_DIR / name).read_text(encoding="utf-8")
+            for name in CONFIG_NAMES
+        }
+
+        for name in ("surge_mac_allen.conf", "surge_iphone_allen.conf"):
+            with self.subTest(name=name):
+                text = configs[name]
+                self.assertRegex(
+                    text,
+                    r"(?m)^德国节点 = select,.*(?:🇩🇪|德国).*(?:Germany|Deutschland)",
+                )
+                self.assertRegex(text, r"(?m)^Proxy = select,.*德国节点")
+                self.assertRegex(text, r"(?m)^其他地区 = select,.*🇩🇪.*Germany")
+
+        qx = configs["quantumultx_allen.conf"]
+        self.assertRegex(qx, r"(?m)^static=德国节点,.*🇩🇪.*Germany")
+        self.assertRegex(qx, r"(?m)^static=Final,.*德国节点")
+        self.assertRegex(qx, r"(?m)^static=其他地区,.*🇩🇪.*Germany")
+
+        loon = configs["loon_allen.lcf"]
+        self.assertRegex(loon, r"(?m)^德国节点 = select,德国,")
+        self.assertRegex(loon, r"(?m)^Proxy = select,.*德国节点")
+        self.assertRegex(loon, r"(?m)^德国 = NameRegex,.*🇩🇪.*Germany")
+        self.assertRegex(loon, r"(?m)^其他 = NameRegex,.*🇩🇪.*Germany")
+
+        mihomo = yaml.safe_load(configs["mihomo_allen.yaml"])
+        groups = {group["name"]: group for group in mihomo["proxy-groups"]}
+        self.assertIn("德国节点", groups["Proxy"]["proxies"])
+        self.assertIn("德国节点", groups["Final"]["proxies"])
+        self.assertIn("🇩🇪", groups["德国节点"]["filter"])
+        self.assertIn("Germany", groups["德国节点"]["filter"])
+        self.assertIn("🇩🇪", groups["其他地区"]["exclude-filter"])
+        self.assertIn("Germany", groups["其他地区"]["exclude-filter"])
+
     def test_generator_uses_current_mihomo_source_filename(self):
         sanitizer = load_sanitizer()
 

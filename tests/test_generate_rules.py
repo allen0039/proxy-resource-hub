@@ -165,12 +165,14 @@ CUSTOM_RULES = (
     ("DOMAIN-KEYWORD", "javdb", "新加坡节点"),
     ("DOMAIN-KEYWORD", "javlibrary", "新加坡节点"),
     ("DOMAIN-KEYWORD", "avbase", "新加坡节点"),
+    ("DOMAIN-SUFFIX", "nodeseek.com", "德国节点"),
 )
 REGIONAL_POLICY_FILES = {
     "香港节点": "hk",
     "美国节点": "us",
     "日本节点": "jp",
     "新加坡节点": "sg",
+    "德国节点": "de",
 }
 ALLENRULE_SOURCE_FILES = {
     "DIRECT": "direct",
@@ -178,6 +180,7 @@ ALLENRULE_SOURCE_FILES = {
     "美国节点": "us",
     "日本节点": "jp",
     "新加坡节点": "sg",
+    "德国节点": "de",
 }
 RETIRED_REGIONAL_SLUGS = ("hk-auto", "us-auto", "jp-auto", "sg-auto")
 QX_CUSTOM_TYPES = {
@@ -302,9 +305,9 @@ class RuleGeneratorTests(unittest.TestCase):
 
         self.assertIn("五份公开模板默认启用", config_readme)
         self.assertIn("Rules/Source/allenrules/", config_readme)
-        self.assertIn("五个源文件", config_readme)
+        self.assertIn("六个源文件", config_readme)
         self.assertNotIn("Rules/Source/Custom/allenrules.list", config_readme)
-        self.assertIn("一条 Custom DIRECT 与四条 Regional 规则", config_readme)
+        self.assertIn("一条 Custom DIRECT 与五条 Regional 规则", config_readme)
         self.assertNotIn("地区优选订阅", config_readme)
         self.assertNotIn("*-auto", config_readme)
         self.assertNotIn(
@@ -319,7 +322,7 @@ class RuleGeneratorTests(unittest.TestCase):
         generator = load_generator()
         outputs = generator.build_outputs(ROOT)
 
-        self.assertEqual(42, len(outputs))
+        self.assertEqual(46, len(outputs))
         for client in ("Mihomo", "Surge", "QuantumultX", "Loon"):
             for ruleset in ("ai", "direct-ai"):
                 expected = ROOT / "Rules" / client / "AI" / f"{ruleset}.list"

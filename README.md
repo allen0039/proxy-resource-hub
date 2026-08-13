@@ -163,7 +163,7 @@ Loon 的远程规则位于 `[Remote Rule]`，插件位于 `[Plugin]`。启用需
 ```text
 香港优选 → 日本优选 → 新加坡优选 → 美国优选
 香港节点 → 台湾节点 → 日本节点 → 新加坡节点 → 美国节点
-韩国节点 → 英国节点 → 其他节点组
+韩国节点 → 英国节点 → 德国节点 → 其他节点组
 ```
 
 - `优选`：自动测速并选择地区内延迟较低的节点。
@@ -261,7 +261,7 @@ https://raw.githubusercontent.com/allen0039/proxy-resource-hub/main/Rules/Loon/P
 
 ### Custom / Regional 自定义路由订阅
 
-自定义直连与地区路由规则从五个策略源文件维护：`Rules/Source/allenrules/direct.list`、`Rules/Source/allenrules/hk.list`、`Rules/Source/allenrules/us.list`、`Rules/Source/allenrules/jp.list` 和 `Rules/Source/allenrules/sg.list`。每个非注释行使用 `RULE-TYPE,VALUE` 两列，文件名决定策略；它们生成一条 Custom DIRECT 与香港、美国、日本、新加坡四条 Regional 资源。修改对应源文件会同时更新独立规则 URL 的内容，以及下一次生成的客户端模板版本。`Rules/Source/allenrules/uuyuancheng.list` 是独立的 Mac 进程规则源，不属于这五个域名策略源；它只生成 Surge 与 Loon 的 UU 远程规则。
+自定义直连与地区路由规则从六个策略源文件维护：`Rules/Source/allenrules/direct.list`、`Rules/Source/allenrules/hk.list`、`Rules/Source/allenrules/us.list`、`Rules/Source/allenrules/jp.list`、`Rules/Source/allenrules/sg.list` 和 `Rules/Source/allenrules/de.list`。每个非注释行使用 `RULE-TYPE,VALUE` 两列，文件名决定策略；它们生成一条 Custom DIRECT 与香港、美国、日本、新加坡、德国五条 Regional 资源。修改对应源文件会同时更新独立规则 URL 的内容，以及下一次生成的客户端模板版本。`Rules/Source/allenrules/uuyuancheng.list` 是独立的 Mac 进程规则源，不属于这六个域名策略源；它只生成 Surge 与 Loon 的 UU 远程规则。
 
 | 策略组 | Mihomo | Surge | Quantumult X | Loon |
 | --- | --- | --- | --- | --- |
@@ -269,6 +269,7 @@ https://raw.githubusercontent.com/allen0039/proxy-resource-hub/main/Rules/Loon/P
 | 美国节点 (`us`) | [订阅](https://raw.githubusercontent.com/allen0039/proxy-resource-hub/main/Rules/Mihomo/Regional/us.list) | [订阅](https://raw.githubusercontent.com/allen0039/proxy-resource-hub/main/Rules/Surge/Regional/us.list) | [订阅](https://raw.githubusercontent.com/allen0039/proxy-resource-hub/main/Rules/QuantumultX/Regional/us.list) | [订阅](https://raw.githubusercontent.com/allen0039/proxy-resource-hub/main/Rules/Loon/Regional/us.list) |
 | 日本节点 (`jp`) | [订阅](https://raw.githubusercontent.com/allen0039/proxy-resource-hub/main/Rules/Mihomo/Regional/jp.list) | [订阅](https://raw.githubusercontent.com/allen0039/proxy-resource-hub/main/Rules/Surge/Regional/jp.list) | [订阅](https://raw.githubusercontent.com/allen0039/proxy-resource-hub/main/Rules/QuantumultX/Regional/jp.list) | [订阅](https://raw.githubusercontent.com/allen0039/proxy-resource-hub/main/Rules/Loon/Regional/jp.list) |
 | 新加坡节点 (`sg`) | [订阅](https://raw.githubusercontent.com/allen0039/proxy-resource-hub/main/Rules/Mihomo/Regional/sg.list) | [订阅](https://raw.githubusercontent.com/allen0039/proxy-resource-hub/main/Rules/Surge/Regional/sg.list) | [订阅](https://raw.githubusercontent.com/allen0039/proxy-resource-hub/main/Rules/QuantumultX/Regional/sg.list) | [订阅](https://raw.githubusercontent.com/allen0039/proxy-resource-hub/main/Rules/Loon/Regional/sg.list) |
+| 德国节点 (`de`) | [订阅](https://raw.githubusercontent.com/allen0039/proxy-resource-hub/main/Rules/Mihomo/Regional/de.list) | [订阅](https://raw.githubusercontent.com/allen0039/proxy-resource-hub/main/Rules/Surge/Regional/de.list) | [订阅](https://raw.githubusercontent.com/allen0039/proxy-resource-hub/main/Rules/QuantumultX/Regional/de.list) | [订阅](https://raw.githubusercontent.com/allen0039/proxy-resource-hub/main/Rules/Loon/Regional/de.list) |
 
 以下示例把美国节点规则绑定到已有的 `美国节点` 策略组；可按相同方式替换 URL 和策略组名称。
 
