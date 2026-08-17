@@ -1,6 +1,6 @@
 # Generated from Rules/Source/PT/Domain.txt by tools/generate_rules.py. Do not edit.
 
-# Allen PT sites (default: DIRECT)
+# Allen 的 PT 站点（默认：直连）
 host-suffix, agsvpt.com, proxy
 host-suffix, audiences.me, proxy
 host-suffix, btschool.club, proxy

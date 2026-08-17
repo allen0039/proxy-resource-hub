@@ -1,6 +1,6 @@
 # Generated from Rules/Source/AI/ai.txt by tools/generate_rules.py. Do not edit.
 
-# OpenAI / ChatGPT
+# OpenAI / ChatGPT 服务
 host-suffix, openai.com, proxy
 host-suffix, chatgpt.com, proxy
 host-suffix, oaistatic.com, proxy
@@ -8,24 +8,24 @@ host-suffix, oaiusercontent.com, proxy
 host-suffix, openaiapi-site.azureedge.net, proxy
 host-suffix, openaicom-api-bdcpf8c6d2e9atf6.z01.azurefd.net, proxy
 
-# Anthropic / Claude
+# Anthropic / Claude 服务
 host-suffix, anthropic.com, proxy
 host-suffix, claude.ai, proxy
 
-# DeepSeek
+# DeepSeek 服务
 host-suffix, deepseek.com, proxy
 
-# Google AI / Gemini
+# Google AI / Gemini 服务
 host-suffix, gemini.google.com, proxy
 host-suffix, gemini.gstatic.com, proxy
 host-suffix, aistudio.google.com, proxy
 host-suffix, makersuite.google.com, proxy
 host-suffix, generativelanguage.googleapis.com, proxy
 
-# Cloudflare AI
+# Cloudflare AI 服务
 host-suffix, gateway.ai.cloudflare.com, proxy
 
-# Microsoft Copilot / GitHub Copilot
+# Microsoft Copilot / GitHub Copilot 服务
 host-suffix, copilot.microsoft.com, proxy
 host-suffix, copilot.cloud.microsoft, proxy
 host-suffix, edgeservices.bing.com, proxy
@@ -35,15 +35,15 @@ host-suffix, origin-tracker.githubusercontent.com, proxy
 host-suffix, copilot-telemetry.githubusercontent.com, proxy
 host-suffix, githubcopilot.com, proxy
 
-# Perplexity / Poe
+# Perplexity / Poe 服务
 host-suffix, perplexity.ai, proxy
 host-suffix, poe.com, proxy
 
-# xAI / Grok
+# xAI / Grok 服务
 host-suffix, grok.com, proxy
 host-suffix, x.ai, proxy
 
-# Other common AI tools
+# 其他常用 AI 工具
 host-suffix, character.ai, proxy
 host-suffix, clawhub.ai, proxy
 host-suffix, midjourney.com, proxy
