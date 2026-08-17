@@ -1,6 +1,6 @@
 # Generated from Rules/Source/AI/direct-ai.txt by tools/generate_rules.py. Do not edit.
 
-# Public-welfare AI services maintained by Allen
+# Allen 维护的公益 AI 服务
 DOMAIN-SUFFIX,abrdns.com
 DOMAIN-SUFFIX,anyrouter.top
 DOMAIN-SUFFIX,muyuan.do

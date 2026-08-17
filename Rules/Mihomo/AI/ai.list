@@ -1,6 +1,6 @@
 # Generated from Rules/Source/AI/ai.txt by tools/generate_rules.py. Do not edit.
 
-# OpenAI / ChatGPT
+# OpenAI / ChatGPT 服务
 DOMAIN-SUFFIX,openai.com
 DOMAIN-SUFFIX,chatgpt.com
 DOMAIN-SUFFIX,oaistatic.com
@@ -8,24 +8,24 @@ DOMAIN-SUFFIX,oaiusercontent.com
 DOMAIN-SUFFIX,openaiapi-site.azureedge.net
 DOMAIN-SUFFIX,openaicom-api-bdcpf8c6d2e9atf6.z01.azurefd.net
 
-# Anthropic / Claude
+# Anthropic / Claude 服务
 DOMAIN-SUFFIX,anthropic.com
 DOMAIN-SUFFIX,claude.ai
 
-# DeepSeek
+# DeepSeek 服务
 DOMAIN-SUFFIX,deepseek.com
 
-# Google AI / Gemini
+# Google AI / Gemini 服务
 DOMAIN-SUFFIX,gemini.google.com
 DOMAIN-SUFFIX,gemini.gstatic.com
 DOMAIN-SUFFIX,aistudio.google.com
 DOMAIN-SUFFIX,makersuite.google.com
 DOMAIN-SUFFIX,generativelanguage.googleapis.com
 
-# Cloudflare AI
+# Cloudflare AI 服务
 DOMAIN-SUFFIX,gateway.ai.cloudflare.com
 
-# Microsoft Copilot / GitHub Copilot
+# Microsoft Copilot / GitHub Copilot 服务
 DOMAIN-SUFFIX,copilot.microsoft.com
 DOMAIN-SUFFIX,copilot.cloud.microsoft
 DOMAIN-SUFFIX,edgeservices.bing.com
@@ -35,15 +35,15 @@ DOMAIN-SUFFIX,origin-tracker.githubusercontent.com
 DOMAIN-SUFFIX,copilot-telemetry.githubusercontent.com
 DOMAIN-SUFFIX,githubcopilot.com
 
-# Perplexity / Poe
+# Perplexity / Poe 服务
 DOMAIN-SUFFIX,perplexity.ai
 DOMAIN-SUFFIX,poe.com
 
-# xAI / Grok
+# xAI / Grok 服务
 DOMAIN-SUFFIX,grok.com
 DOMAIN-SUFFIX,x.ai
 
-# Other common AI tools
+# 其他常用 AI 工具
 DOMAIN-SUFFIX,character.ai
 DOMAIN-SUFFIX,clawhub.ai
 DOMAIN-SUFFIX,midjourney.com

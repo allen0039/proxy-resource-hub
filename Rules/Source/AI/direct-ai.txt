@@ -1,4 +1,4 @@
-# Public-welfare AI services maintained by Allen
+# Allen 维护的公益 AI 服务
 abrdns.com
 anyrouter.top
 muyuan.do

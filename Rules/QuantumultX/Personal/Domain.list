@@ -1,6 +1,6 @@
 # Generated from Rules/Source/Personal/Domain.txt by tools/generate_rules.py. Do not edit.
 
-# Allen personal sites (default: DIRECT)
+# Allen 的个人站点（默认：直连）
 host-suffix, ikirito.de, proxy
 host-suffix, allennas.de, proxy
 host-suffix, 052909.xyz, proxy

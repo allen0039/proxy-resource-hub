@@ -1,6 +1,6 @@
 # Generated from Rules/Source/AI/direct-ai.txt by tools/generate_rules.py. Do not edit.
 
-# Public-welfare AI services maintained by Allen
+# Allen 维护的公益 AI 服务
 host-suffix, abrdns.com, proxy
 host-suffix, anyrouter.top, proxy
 host-suffix, muyuan.do, proxy

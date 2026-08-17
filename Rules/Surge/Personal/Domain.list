@@ -1,6 +1,6 @@
 # Generated from Rules/Source/Personal/Domain.txt by tools/generate_rules.py. Do not edit.
 
-# Allen personal sites (default: DIRECT)
+# Allen 的个人站点（默认：直连）
 DOMAIN-SUFFIX,ikirito.de
 DOMAIN-SUFFIX,allennas.de
 DOMAIN-SUFFIX,052909.xyz

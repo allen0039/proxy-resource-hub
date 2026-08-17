@@ -1,4 +1,4 @@
-# Allen personal sites (default: DIRECT)
+# Allen 的个人站点（默认：直连）
 ikirito.de
 allennas.de
 052909.xyz
