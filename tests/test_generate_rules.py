@@ -154,6 +154,7 @@ CUSTOM_RULES = (
     ("DOMAIN-SUFFIX", "appstorrent.ru", "美国节点"),
     ("DOMAIN-KEYWORD", "missav", "美国节点"),
     ("DOMAIN-KEYWORD", "ftvgirls", "美国节点"),
+    ("DOMAIN-SUFFIX", "api.daidaio.com", "美国节点"),
     ("DOMAIN-KEYWORD", "onitsukatiger", "日本节点"),
     ("DOMAIN-KEYWORD", "dmm", "日本节点"),
     ("DOMAIN-KEYWORD", "javrate", "日本节点"),
