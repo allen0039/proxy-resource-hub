@@ -104,6 +104,24 @@ AI_PRIORITY_DOMAINS = (
     "clawhub.ai",
     "open-meteo.com",
 )
+GOOGLE_AI_DOMAINS = (
+    "ai.google.dev",
+    "gemini.google",
+    "gemini.google.com",
+    "gemini.gstatic.com",
+    "aistudio.google.com",
+    "generativeai.google",
+    "makersuite.google.com",
+    "geller-pa.googleapis.com",
+    "aisandbox-pa.googleapis.com",
+    "cloudcode-pa.googleapis.com",
+    "robinfrontend-pa.googleapis.com",
+    "alkalicore-pa.clients6.google.com",
+    "alkalimakersuite-pa.clients6.google.com",
+    "daily-cloudcode-pa.googleapis.com",
+    "generativelanguage.googleapis.com",
+    "proactivebackend-pa.googleapis.com",
+)
 CUSTOM_RULES = (
     ("DOMAIN-SUFFIX", "synology.cn", "DIRECT"),
     ("DOMAIN", "qbittorrent-nox", "DIRECT"),
@@ -322,7 +340,7 @@ class RuleGeneratorTests(unittest.TestCase):
         generator = load_generator()
         outputs = generator.build_outputs(ROOT)
 
-        self.assertEqual(46, len(outputs))
+        self.assertEqual(50, len(outputs))
         for client in ("Mihomo", "Surge", "QuantumultX", "Loon"):
             for ruleset in ("ai", "direct-ai"):
                 expected = ROOT / "Rules" / client / "AI" / f"{ruleset}.list"
@@ -695,6 +713,31 @@ class RuleGeneratorTests(unittest.TestCase):
                     else:
                         self.assertIn(f"DOMAIN-SUFFIX,{domain}", content)
 
+    def test_gemini_domains_are_generated_only_into_google_rules(self):
+        generator = load_generator()
+        outputs = generator.build_outputs(ROOT)
+        source = ROOT / "Rules" / "Source" / "Google" / "gemini.txt"
+        source_domains = tuple(
+            line
+            for line in source.read_text(encoding="utf-8").splitlines()
+            if line and not line.startswith("#")
+        )
+
+        self.assertEqual(GOOGLE_AI_DOMAINS, source_domains)
+        for client in ("Mihomo", "Surge", "QuantumultX", "Loon"):
+            google_path = ROOT / "Rules" / client / "Google" / "gemini.list"
+            ai_path = ROOT / "Rules" / client / "AI" / "ai.list"
+            self.assertIn(google_path, outputs)
+            for domain in GOOGLE_AI_DOMAINS:
+                with self.subTest(client=client, domain=domain):
+                    expected = (
+                        f"host-suffix, {domain}, proxy"
+                        if client == "QuantumultX"
+                        else f"DOMAIN-SUFFIX,{domain}"
+                    )
+                    self.assertIn(expected, outputs[google_path])
+                    self.assertNotIn(domain, outputs[ai_path])
+
     def test_pt_outputs_are_generated_for_every_client(self):
         generator = load_generator()
         outputs = generator.build_outputs(ROOT)
@@ -763,6 +806,11 @@ class RuleGeneratorTests(unittest.TestCase):
                 (source_dir / f"{name}.txt").write_text(
                     "example.com\n", encoding="utf-8"
                 )
+            google_dir = root / "Rules" / "Source" / "Google"
+            google_dir.mkdir(parents=True)
+            (google_dir / "gemini.txt").write_text(
+                "gemini.google.com\n", encoding="utf-8"
+            )
             personal_dir = root / "Rules" / "Source" / "Personal"
             personal_dir.mkdir(parents=True)
             (personal_dir / "Domain.txt").write_text(
@@ -796,6 +844,7 @@ class RuleGeneratorTests(unittest.TestCase):
             root = Path(tmp)
             source_specs = (
                 ("AI", ("ai", "direct-ai")),
+                ("Google", ("gemini",)),
                 ("Personal", ("Domain",)),
                 ("PT", ("Domain",)),
                 ("shop", ("shopping",)),

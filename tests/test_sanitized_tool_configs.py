@@ -1094,8 +1094,15 @@ rule-providers:
             name: (OUTPUT_DIR / name).read_text(encoding="utf-8")
             for name in CONFIG_NAMES
         }
-        # Gemini requires Google resource/API families to be pinned locally
-        # before third-party AI rule sets. Keep unrelated broad overrides disabled.
+        # Gemini keeps one exact local fallback while its maintained remote feed
+        # loads before every generic or third-party AI rule set.
+        for name, text in outputs.items():
+            with self.subTest(name=name, check="Gemini local fallback"):
+                self.assertRegex(
+                    text,
+                    r"(?im)^\s*-?\s*(?:DOMAIN|host)\s*,\s*gemini\.google\.com\s*,\s*Google",
+                )
+
         broad_values = ("githubusercontent.com", "cloudflare.com")
         for name, text in outputs.items():
             with self.subTest(name=name, check="GitHub API override"):
@@ -1117,6 +1124,7 @@ rule-providers:
                     )
 
         surge_markers = (
+            "Rules/Surge/Google/gemini.list",
             "Rules/Surge/AI/direct-ai.list",
             "Rules/Surge/AI/ai.list",
             "ruleset.skk.moe/List/non_ip/ai.conf",
@@ -1129,14 +1137,26 @@ rule-providers:
             self.assertEqual(positions, sorted(positions))
 
         qx = outputs["quantumultx_allen.conf"]
+        qx_gemini_marker = "Rules/QuantumultX/Google/gemini.list"
+        self.assertIn(qx_gemini_marker, qx)
         self.assertIn("Rules/QuantumultX/AI/ai.list", qx)
+        gemini_qx = next(
+            line for line in qx.splitlines() if qx_gemini_marker in line
+        )
+        self.assertIn("force-policy=Google", gemini_qx)
+        self.assertIn("inserted-resource=true", gemini_qx)
         owned_qx = next(
             line for line in qx.splitlines() if "Rules/QuantumultX/AI/ai.list" in line
         )
         self.assertIn("force-policy=AI", owned_qx)
         self.assertIn("inserted-resource=true", owned_qx)
+        self.assertLess(qx.index(qx_gemini_marker), qx.index("Rules/QuantumultX/AI/direct-ai.list"))
+        self.assertLess(qx.index(qx_gemini_marker), qx.index("Rules/QuantumultX/AI/ai.list"))
+        self.assertLess(qx.index(qx_gemini_marker), qx.index("/rule/QuantumultX/OpenAI/OpenAI.list"))
 
         loon = outputs["loon_allen.lcf"]
+        loon_gemini_marker = "Rules/Loon/Google/gemini.list"
+        self.assertIn(loon_gemini_marker, loon)
         self.assertIn("Rules/Loon/AI/ai.list", loon)
         openai_index = loon.find("/rule/Loon/OpenAI/OpenAI.list")
         self.assertNotEqual(-1, openai_index)
@@ -1144,6 +1164,12 @@ rule-providers:
             loon.index("Rules/Loon/AI/ai.list"),
             openai_index,
         )
+        for marker in (
+            "Rules/Loon/AI/direct-ai.list",
+            "Rules/Loon/AI/ai.list",
+            "/rule/Loon/OpenAI/OpenAI.list",
+        ):
+            self.assertLess(loon.index(loon_gemini_marker), loon.index(marker))
         for marker in (
             "/rule/Loon/OpenAI/OpenAI.list",
             "/rule/Loon/Speedtest/Speedtest.list",
@@ -1161,8 +1187,14 @@ rule-providers:
         )
 
         mihomo = yaml.safe_load(outputs["mihomo_allen.yaml"])
+        self.assertIn("gemini", mihomo["rule-providers"])
+        self.assertIn(
+            "Rules/Mihomo/Google/gemini.list",
+            mihomo["rule-providers"]["gemini"]["url"],
+        )
         self.assertIn("ai_priority", mihomo["rule-providers"])
         mihomo_markers = (
+            "RULE-SET,gemini,Google",
             "RULE-SET,direct-ai,DIRECT",
             "RULE-SET,personal_domain,DIRECT",
             "RULE-SET,ai_priority,AI",

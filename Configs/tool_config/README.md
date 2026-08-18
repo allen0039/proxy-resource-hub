@@ -7,6 +7,8 @@
 
 > 仓库提供由 `Rules/Source/allenrules/` 下六个源文件派生的一条 Custom DIRECT 与五条 Regional 规则订阅。请在自己的私人副本中填写节点订阅和其他私人信息。
 
+> Gemini / Google AI 规则由 `Rules/Source/Google/gemini.txt` 维护，并生成四端 `Google/gemini.list` 远程订阅；五份模板只保留 `gemini.google.com` 本地精确兜底，远程规则位于通用 AI 规则之前。
+
 ## 先安装客户端
 
 ### Apple 客户端

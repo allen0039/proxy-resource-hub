@@ -9,6 +9,7 @@ ROOT = Path(__file__).resolve().parents[1]
 RULESET_SPECS = (
     ("AI", "ai", None),
     ("AI", "direct-ai", None),
+    ("Google", "gemini", None),
     ("Personal", "Domain", None),
     ("PT", "Domain", None),
     ("shop", "shopping", None),
