@@ -15,12 +15,7 @@ DOMAIN-SUFFIX,claude.ai
 # DeepSeek 服务
 DOMAIN-SUFFIX,deepseek.com
 
-# Google AI / Gemini 服务
-DOMAIN-SUFFIX,gemini.google.com
-DOMAIN-SUFFIX,gemini.gstatic.com
-DOMAIN-SUFFIX,aistudio.google.com
-DOMAIN-SUFFIX,makersuite.google.com
-DOMAIN-SUFFIX,generativelanguage.googleapis.com
+# Google AI / Gemini 由 Google 策略组处理，不放入通用 AI 规则。
 
 # Cloudflare AI 服务
 DOMAIN-SUFFIX,gateway.ai.cloudflare.com

@@ -133,7 +133,25 @@ DOMAIN,api.github.com,GitHub
 
 # 4. AI 与媒体服务
 DOMAIN-SUFFIX,mfallen.de,DIRECT
-# Google APIs 交由下方 AI 与 Google 规则集分流，避免绕过 Google 策略组。
+# Gemini/Google AI 必须先于第三方 AI 规则命中，所有会话固定交给 Google。
+DOMAIN,ai.google.dev,Google
+DOMAIN-SUFFIX,gemini.google,Google
+DOMAIN-SUFFIX,gemini.gstatic.com,Google
+DOMAIN-SUFFIX,aistudio.google.com,Google
+DOMAIN-SUFFIX,generativeai.google,Google
+DOMAIN-SUFFIX,makersuite.google.com,Google
+DOMAIN-SUFFIX,geller-pa.googleapis.com,Google
+DOMAIN-SUFFIX,aisandbox-pa.googleapis.com,Google
+DOMAIN-SUFFIX,cloudcode-pa.googleapis.com,Google
+DOMAIN,robinfrontend-pa.googleapis.com,Google
+DOMAIN,alkalicore-pa.clients6.google.com,Google
+DOMAIN,daily-cloudcode-pa.googleapis.com,Google
+DOMAIN-SUFFIX,generativelanguage.googleapis.com,Google
+DOMAIN-SUFFIX,proactivebackend-pa.googleapis.com,Google
+DOMAIN-KEYWORD,alkalimakersuite-pa.clients6.google.com,Google
+DOMAIN-SUFFIX,googleusercontent.com,Google
+DOMAIN-SUFFIX,gstatic.com,Google
+DOMAIN-KEYWORD,googleapis,Google
 # Google 图片资源优先交给 YouTube，覆盖后续通用 CDN 规则集。
 # DOMAIN-SUFFIX,googleusercontent.com,Google
 # DOMAIN-SUFFIX,gstatic.com,Google

@@ -13,12 +13,7 @@ claude.ai
 # DeepSeek 服务
 deepseek.com
 
-# Google AI / Gemini 服务
-gemini.google.com
-gemini.gstatic.com
-aistudio.google.com
-makersuite.google.com
-generativelanguage.googleapis.com
+# Google AI / Gemini 由 Google 策略组处理，不放入通用 AI 规则。
 
 # Cloudflare AI 服务
 gateway.ai.cloudflare.com
