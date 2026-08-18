@@ -133,26 +133,8 @@ DOMAIN,api.github.com,GitHub
 
 # 4. AI 与媒体服务
 DOMAIN-SUFFIX,mfallen.de,DIRECT
-# Gemini/Google AI 必须先于第三方 AI 规则命中，所有会话固定交给 Google。
-DOMAIN,ai.google.dev,Google
+# Gemini 首页保留本地精确兜底；完整端点由远程 Gemini 规则统一维护。
 DOMAIN,gemini.google.com,Google
-DOMAIN-SUFFIX,gemini.google,Google
-DOMAIN-SUFFIX,gemini.gstatic.com,Google
-DOMAIN-SUFFIX,aistudio.google.com,Google
-DOMAIN-SUFFIX,generativeai.google,Google
-DOMAIN-SUFFIX,makersuite.google.com,Google
-DOMAIN-SUFFIX,geller-pa.googleapis.com,Google
-DOMAIN-SUFFIX,aisandbox-pa.googleapis.com,Google
-DOMAIN-SUFFIX,cloudcode-pa.googleapis.com,Google
-DOMAIN,robinfrontend-pa.googleapis.com,Google
-DOMAIN,alkalicore-pa.clients6.google.com,Google
-DOMAIN,daily-cloudcode-pa.googleapis.com,Google
-DOMAIN-SUFFIX,generativelanguage.googleapis.com,Google
-DOMAIN-SUFFIX,proactivebackend-pa.googleapis.com,Google
-DOMAIN-KEYWORD,alkalimakersuite-pa.clients6.google.com,Google
-DOMAIN-SUFFIX,googleusercontent.com,Google
-DOMAIN-SUFFIX,gstatic.com,Google
-DOMAIN-KEYWORD,googleapis,Google
 # Google 图片资源优先交给 YouTube，覆盖后续通用 CDN 规则集。
 # DOMAIN-SUFFIX,googleusercontent.com,Google
 # DOMAIN-SUFFIX,gstatic.com,Google
@@ -187,6 +169,7 @@ https://raw.githubusercontent.com/allen0039/proxy-resource-hub/main/Rules/Loon/R
 # 本地规则优先，PT、个人域名和公益 AI 以自有订阅为准。
 https://raw.githubusercontent.com/QuixoticHeart/rule-set/refs/heads/ruleset/loon/apns.list, policy=Apple Push, tag=Apple Push, enabled=true
 https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/rule/Loon/ChinaTelecom/ChinaTelecom.list, policy=DIRECT, tag=中国电信, enabled=true
+https://raw.githubusercontent.com/allen0039/proxy-resource-hub/main/Rules/Loon/Google/gemini.list, policy=Google, tag=Gemini, enabled=true
 https://raw.githubusercontent.com/allen0039/proxy-resource-hub/main/Rules/Loon/AI/direct-ai.list, policy=DIRECT, tag=公益AI, enabled=true
 https://raw.githubusercontent.com/allen0039/proxy-resource-hub/main/Rules/Loon/Personal/Domain.list, policy=DIRECT, tag=个人域名, enabled=true
 https://raw.githubusercontent.com/allen0039/proxy-resource-hub/main/Rules/Loon/PT/Domain.list, policy=DIRECT, tag=PT站点, enabled=true

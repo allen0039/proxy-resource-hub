@@ -226,26 +226,8 @@ rules:
 
   # 5. AI 与媒体服务
   - DOMAIN-SUFFIX,mfallen.de,DIRECT
-  # Gemini/Google AI 必须先于第三方 AI 规则命中，所有会话固定交给 Google。
-  - DOMAIN,ai.google.dev,Google
+  # Gemini 首页保留本地精确兜底；完整端点由远程 Gemini 规则统一维护。
   - DOMAIN,gemini.google.com,Google
-  - DOMAIN-SUFFIX,gemini.google,Google
-  - DOMAIN-SUFFIX,gemini.gstatic.com,Google
-  - DOMAIN-SUFFIX,aistudio.google.com,Google
-  - DOMAIN-SUFFIX,generativeai.google,Google
-  - DOMAIN-SUFFIX,makersuite.google.com,Google
-  - DOMAIN-SUFFIX,geller-pa.googleapis.com,Google
-  - DOMAIN-SUFFIX,aisandbox-pa.googleapis.com,Google
-  - DOMAIN-SUFFIX,cloudcode-pa.googleapis.com,Google
-  - DOMAIN,robinfrontend-pa.googleapis.com,Google
-  - DOMAIN,alkalicore-pa.clients6.google.com,Google
-  - DOMAIN,daily-cloudcode-pa.googleapis.com,Google
-  - DOMAIN-SUFFIX,generativelanguage.googleapis.com,Google
-  - DOMAIN-SUFFIX,proactivebackend-pa.googleapis.com,Google
-  - DOMAIN-KEYWORD,alkalimakersuite-pa.clients6.google.com,Google
-  - DOMAIN-SUFFIX,googleusercontent.com,Google
-  - DOMAIN-SUFFIX,gstatic.com,Google
-  - DOMAIN-KEYWORD,googleapis,Google
   - DOMAIN-SUFFIX,ytimg.com,YouTube
   # Google 图片资源优先交给 YouTube，覆盖后续通用 CDN 规则集。
   # - DOMAIN-SUFFIX,googleusercontent.com,Google
@@ -288,6 +270,7 @@ rules:
   - RULE-SET,public-tracker_domain,DIRECT
   - RULE-SET,apple_cn_domain,DIRECT
   - RULE-SET,apple_domain,Apple
+  - RULE-SET,gemini,Google
   - RULE-SET,direct-ai,DIRECT
   - RULE-SET,personal_domain,DIRECT
   - RULE-SET,ai_priority,AI
@@ -358,6 +341,7 @@ rule-providers:
   pt_cn_domain: { type: http, interval: 86400, behavior: domain, format: mrs, url: "https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/refs/heads/meta/geo/geosite/category-pt.mrs"}
   public-tracker_domain: { type: http, interval: 86400, behavior: domain, format: mrs, url: "https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/refs/heads/meta/geo/geosite/category-public-tracker.mrs"}
   Cloudflare_domain: { type: http, interval: 86400, behavior: domain, format: mrs, url: "https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/refs/heads/meta/geo/geosite/cloudflare.mrs"}
+  gemini: { type: http, interval: 86400, behavior: classical, format: text, url: "https://raw.githubusercontent.com/allen0039/proxy-resource-hub/main/Rules/Mihomo/Google/gemini.list" }
   direct-ai: { type: http, interval: 86400, behavior: classical, format: text, url: "https://raw.githubusercontent.com/allen0039/proxy-resource-hub/main/Rules/Mihomo/AI/direct-ai.list" }
   personal_domain: { type: http, interval: 86400, behavior: classical, format: text, url: "https://raw.githubusercontent.com/allen0039/proxy-resource-hub/main/Rules/Mihomo/Personal/Domain.list" }
   docker: { type: http, interval: 86400, behavior: classical, format: yaml, url: "https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/rule/Clash/Docker/Docker.yaml" }

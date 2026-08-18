@@ -182,7 +182,7 @@ Loon 的远程规则位于 `[Remote Rule]`，插件位于 `[Plugin]`。启用需
 
 所有客户端都按从上到下首次匹配生效。本地精确规则位于远程大类规则之前，最终规则必须位于末尾。
 
-五份模板使用 `api.github.com` 本地精确规则固定走 `GitHub`。`githubusercontent.com`、`cloudflare.com`、`gstatic.com`、`googleusercontent.com` 和 `DOMAIN-KEYWORD,googleapis` 等宽泛本地规则仅以注释保留，避免覆盖 AI 专属端点；AI 服务先加载仓库自有 `AI/ai.list`，再加载第三方 AI 规则作为补充。
+五份模板使用 `api.github.com` 本地精确规则固定走 `GitHub`。Gemini / Google AI 以仓库自有 `Google/gemini.list` 为权威规则，并在第三方 AI 规则之前加载；本地只保留 `gemini.google.com` 精确兜底。`githubusercontent.com`、`cloudflare.com`、`gstatic.com`、`googleusercontent.com` 和 `DOMAIN-KEYWORD,googleapis` 等宽泛本地规则保持停用，避免覆盖无关业务；其他 AI 服务先加载仓库自有 `AI/ai.list`，再加载第三方 AI 规则作为补充。
 
 Mihomo 将自有 AI 精确规则置于 Cloudflare 大类规则之前。Loon 的 AI、测速、Steam 和 Game 补充规则使用 Blackmatrix 的 Loon 原生列表；当前无法下载的 Kelee 插件只作停用备份保留。
 
@@ -194,6 +194,7 @@ Surge Mac 和 Mihomo 支持 qB 下载器来源 IP 直连保护。使用时应把
 
 | 规则 | Mihomo | Surge | Quantumult X | Loon |
 | --- | --- | --- | --- | --- |
+| Gemini / Google AI | [订阅](https://raw.githubusercontent.com/allen0039/proxy-resource-hub/main/Rules/Mihomo/Google/gemini.list) | [订阅](https://raw.githubusercontent.com/allen0039/proxy-resource-hub/main/Rules/Surge/Google/gemini.list) | [订阅](https://raw.githubusercontent.com/allen0039/proxy-resource-hub/main/Rules/QuantumultX/Google/gemini.list) | [订阅](https://raw.githubusercontent.com/allen0039/proxy-resource-hub/main/Rules/Loon/Google/gemini.list) |
 | AI 服务 | [订阅](https://raw.githubusercontent.com/allen0039/proxy-resource-hub/main/Rules/Mihomo/AI/ai.list) | [订阅](https://raw.githubusercontent.com/allen0039/proxy-resource-hub/main/Rules/Surge/AI/ai.list) | [订阅](https://raw.githubusercontent.com/allen0039/proxy-resource-hub/main/Rules/QuantumultX/AI/ai.list) | [订阅](https://raw.githubusercontent.com/allen0039/proxy-resource-hub/main/Rules/Loon/AI/ai.list) |
 | 公益 AI | [订阅](https://raw.githubusercontent.com/allen0039/proxy-resource-hub/main/Rules/Mihomo/AI/direct-ai.list) | [订阅](https://raw.githubusercontent.com/allen0039/proxy-resource-hub/main/Rules/Surge/AI/direct-ai.list) | [订阅](https://raw.githubusercontent.com/allen0039/proxy-resource-hub/main/Rules/QuantumultX/AI/direct-ai.list) | [订阅](https://raw.githubusercontent.com/allen0039/proxy-resource-hub/main/Rules/Loon/AI/direct-ai.list) |
 | 自定义直连 | [订阅](https://raw.githubusercontent.com/allen0039/proxy-resource-hub/main/Rules/Mihomo/Custom/direct.list) | [订阅](https://raw.githubusercontent.com/allen0039/proxy-resource-hub/main/Rules/Surge/Custom/direct.list) | [订阅](https://raw.githubusercontent.com/allen0039/proxy-resource-hub/main/Rules/QuantumultX/Custom/direct.list) | [订阅](https://raw.githubusercontent.com/allen0039/proxy-resource-hub/main/Rules/Loon/Custom/direct.list) |
