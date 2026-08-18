@@ -1094,13 +1094,9 @@ rule-providers:
             name: (OUTPUT_DIR / name).read_text(encoding="utf-8")
             for name in CONFIG_NAMES
         }
-        broad_values = (
-            "githubusercontent.com",
-            "cloudflare.com",
-            "gstatic.com",
-            "googleusercontent.com",
-            "googleapis",
-        )
+        # Gemini requires Google resource/API families to be pinned locally
+        # before third-party AI rule sets. Keep unrelated broad overrides disabled.
+        broad_values = ("githubusercontent.com", "cloudflare.com")
         for name, text in outputs.items():
             with self.subTest(name=name, check="GitHub API override"):
                 self.assertRegex(

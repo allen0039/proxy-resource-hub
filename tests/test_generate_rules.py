@@ -95,7 +95,6 @@ SHOP_EXCLUSIONS = {
 }
 AI_PRIORITY_DOMAINS = (
     "gateway.ai.cloudflare.com",
-    "gemini.gstatic.com",
     "deepseek.com",
     "default.exp-tas.com",
     "copilot-proxy.githubusercontent.com",

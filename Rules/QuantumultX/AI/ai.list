@@ -15,12 +15,7 @@ host-suffix, claude.ai, proxy
 # DeepSeek 服务
 host-suffix, deepseek.com, proxy
 
-# Google AI / Gemini 服务
-host-suffix, gemini.google.com, proxy
-host-suffix, gemini.gstatic.com, proxy
-host-suffix, aistudio.google.com, proxy
-host-suffix, makersuite.google.com, proxy
-host-suffix, generativelanguage.googleapis.com, proxy
+# Google AI / Gemini 由 Google 策略组处理，不放入通用 AI 规则。
 
 # Cloudflare AI 服务
 host-suffix, gateway.ai.cloudflare.com, proxy
