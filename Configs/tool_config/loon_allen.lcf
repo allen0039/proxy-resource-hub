@@ -47,46 +47,45 @@ resource-parser = https://raw.githubusercontent.com/sub-store-org/Sub-Store/rele
 备用 = 获取到的订阅链接,udp=true,block-quic=true,fast-open=default,vmess-aead=true,skip-cert-verify=false,enabled=false,flexible-sni=false,img-url=https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/Filter.png
 
 [Proxy Group]
-Proxy = select,香港优选,日本优选,新加坡优选,美国优选,香港节点,台湾节点,日本节点,新加坡节点,美国节点,韩国节点,英国节点,德国节点,其他地区,全部节点,DIRECT,img-url = https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/Proxy.png
-Final = select,香港优选,日本优选,新加坡优选,美国优选,香港节点,台湾节点,日本节点,新加坡节点,美国节点,韩国节点,英国节点,德国节点,其他地区,Proxy,DIRECT,img-url = https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/Final.png
+Proxy = select,香港优选,日本优选,美国优选,香港节点,台湾节点,日本节点,新加坡节点,美国节点,韩国节点,英国节点,德国节点,其他地区,全部节点,DIRECT,img-url = https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/Proxy.png
+Final = select,香港优选,日本优选,美国优选,香港节点,台湾节点,日本节点,新加坡节点,美国节点,韩国节点,英国节点,德国节点,其他地区,Proxy,DIRECT,img-url = https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/Final.png
 
-Google = select,香港优选,日本优选,新加坡优选,美国优选,香港节点,台湾节点,日本节点,新加坡节点,美国节点,韩国节点,英国节点,德国节点,其他地区,Proxy,DIRECT,img-url = https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/Google_Search.png
-AI = select,美国优选,日本优选,新加坡优选,美国节点,日本节点,新加坡节点,台湾节点,韩国节点,英国节点,德国节点,其他地区,香港优选,香港节点,家宽节点,Proxy,DIRECT,img-url = https://raw.githubusercontent.com/chxm1023/Script_X/main/icon/ChatGPT/ChatGPT4.png
+Google = select,香港优选,日本优选,美国优选,香港节点,台湾节点,日本节点,新加坡节点,美国节点,韩国节点,英国节点,德国节点,其他地区,Proxy,DIRECT,img-url = https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/Google_Search.png
+AI = select,美国优选,日本优选,美国节点,日本节点,新加坡节点,台湾节点,韩国节点,英国节点,德国节点,其他地区,香港优选,香港节点,家宽节点,Proxy,DIRECT,img-url = https://raw.githubusercontent.com/chxm1023/Script_X/main/icon/ChatGPT/ChatGPT4.png
 
-Telegram = select,香港优选,日本优选,新加坡优选,美国优选,香港节点,台湾节点,日本节点,新加坡节点,美国节点,韩国节点,英国节点,德国节点,其他地区,Proxy,DIRECT,img-url = https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/Telegram.png
-TikTok = select,香港优选,日本优选,新加坡优选,美国优选,香港节点,台湾节点,日本节点,新加坡节点,美国节点,韩国节点,英国节点,德国节点,其他地区,Proxy,DIRECT,img-url = https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/TikTok.png
-国外社交 = select,香港优选,日本优选,新加坡优选,美国优选,香港节点,台湾节点,日本节点,新加坡节点,美国节点,韩国节点,英国节点,德国节点,其他地区,Proxy,DIRECT,img-url = https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/Twitter.png
+Telegram = select,香港优选,日本优选,美国优选,香港节点,台湾节点,日本节点,新加坡节点,美国节点,韩国节点,英国节点,德国节点,其他地区,Proxy,DIRECT,img-url = https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/Telegram.png
+TikTok = select,香港优选,日本优选,美国优选,香港节点,台湾节点,日本节点,新加坡节点,美国节点,韩国节点,英国节点,德国节点,其他地区,Proxy,DIRECT,img-url = https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/TikTok.png
+国外社交 = select,香港优选,日本优选,美国优选,香港节点,台湾节点,日本节点,新加坡节点,美国节点,韩国节点,英国节点,德国节点,其他地区,Proxy,DIRECT,img-url = https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/Twitter.png
 
-YouTube = select,香港优选,日本优选,新加坡优选,美国优选,香港节点,台湾节点,日本节点,新加坡节点,美国节点,韩国节点,英国节点,德国节点,其他地区,Proxy,DIRECT,img-url = https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/YouTube.png
-Netflix = select,香港优选,日本优选,新加坡优选,美国优选,香港节点,台湾节点,日本节点,新加坡节点,美国节点,韩国节点,英国节点,德国节点,其他地区,Proxy,DIRECT,img-url = https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/Netflix.png
-迪士尼+ = select,香港优选,日本优选,新加坡优选,美国优选,香港节点,台湾节点,日本节点,新加坡节点,美国节点,韩国节点,英国节点,德国节点,其他地区,Proxy,DIRECT,img-url = https://raw.githubusercontent.com/erdongchanyo/icon/main/Policy-Filter/Disney+.png
-HBO = select,香港优选,日本优选,新加坡优选,美国优选,香港节点,台湾节点,日本节点,新加坡节点,美国节点,韩国节点,英国节点,德国节点,其他地区,Proxy,DIRECT,img-url = https://raw.githubusercontent.com/erdongchanyo/icon/main/Policy-Filter/HBO.png
-Emby = select,DIRECT,香港优选,日本优选,新加坡优选,美国优选,香港节点,台湾节点,日本节点,新加坡节点,美国节点,韩国节点,英国节点,德国节点,其他地区,Proxy,img-url = https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/Emby.png
-Spotify = select,香港优选,日本优选,新加坡优选,美国优选,香港节点,台湾节点,日本节点,新加坡节点,美国节点,韩国节点,英国节点,德国节点,其他地区,Proxy,DIRECT,img-url = https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/Spotify.png
+YouTube = select,香港优选,日本优选,美国优选,香港节点,台湾节点,日本节点,新加坡节点,美国节点,韩国节点,英国节点,德国节点,其他地区,Proxy,DIRECT,img-url = https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/YouTube.png
+Netflix = select,香港优选,日本优选,美国优选,香港节点,台湾节点,日本节点,新加坡节点,美国节点,韩国节点,英国节点,德国节点,其他地区,Proxy,DIRECT,img-url = https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/Netflix.png
+迪士尼+ = select,香港优选,日本优选,美国优选,香港节点,台湾节点,日本节点,新加坡节点,美国节点,韩国节点,英国节点,德国节点,其他地区,Proxy,DIRECT,img-url = https://raw.githubusercontent.com/erdongchanyo/icon/main/Policy-Filter/Disney+.png
+HBO = select,香港优选,日本优选,美国优选,香港节点,台湾节点,日本节点,新加坡节点,美国节点,韩国节点,英国节点,德国节点,其他地区,Proxy,DIRECT,img-url = https://raw.githubusercontent.com/erdongchanyo/icon/main/Policy-Filter/HBO.png
+Emby = select,DIRECT,香港优选,日本优选,美国优选,香港节点,台湾节点,日本节点,新加坡节点,美国节点,韩国节点,英国节点,德国节点,其他地区,Proxy,img-url = https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/Emby.png
+Spotify = select,香港优选,日本优选,美国优选,香港节点,台湾节点,日本节点,新加坡节点,美国节点,韩国节点,英国节点,德国节点,其他地区,Proxy,DIRECT,img-url = https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/Spotify.png
 巴哈姆特 = select,台湾节点,香港节点,DIRECT,img-url = https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/Bahamut.png
 
 哔哩哔哩 = select,DIRECT,香港节点,台湾节点,新加坡节点,Proxy,img-url = https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/bilibili.png
-国外媒体 = select,香港优选,日本优选,新加坡优选,美国优选,香港节点,台湾节点,日本节点,新加坡节点,美国节点,韩国节点,英国节点,德国节点,其他地区,Proxy,DIRECT,img-url = https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/Streaming.png
-特殊媒体 = select,香港优选,日本优选,新加坡优选,美国优选,香港节点,台湾节点,日本节点,新加坡节点,美国节点,韩国节点,英国节点,德国节点,其他地区,Proxy,DIRECT,img-url = https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/Streaming.png
+国外媒体 = select,香港优选,日本优选,美国优选,香港节点,台湾节点,日本节点,新加坡节点,美国节点,韩国节点,英国节点,德国节点,其他地区,Proxy,DIRECT,img-url = https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/Streaming.png
+特殊媒体 = select,香港优选,日本优选,美国优选,香港节点,台湾节点,日本节点,新加坡节点,美国节点,韩国节点,英国节点,德国节点,其他地区,Proxy,DIRECT,img-url = https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/Streaming.png
 国内媒体 = select,DIRECT,Proxy,香港节点,台湾节点,日本节点,新加坡节点,美国节点,韩国节点,img-url = https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/StreamingSE.png
 
 海淘 = select,美国节点,日本节点,香港节点,英国节点,德国节点,新加坡节点,韩国节点,台湾节点,其他地区,DIRECT,img-url = https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/Amazon.png
-PayPal = select,香港优选,日本优选,新加坡优选,美国优选,香港节点,台湾节点,日本节点,新加坡节点,美国节点,韩国节点,英国节点,德国节点,其他地区,Proxy,DIRECT,img-url = https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/PayPal.png
+PayPal = select,香港优选,日本优选,美国优选,香港节点,台湾节点,日本节点,新加坡节点,美国节点,韩国节点,英国节点,德国节点,其他地区,Proxy,DIRECT,img-url = https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/PayPal.png
 
 Apple = select,DIRECT,Proxy,香港节点,台湾节点,日本节点,新加坡节点,美国节点,韩国节点,img-url = https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/Apple.png
 Apple Push = fallback,日本节点,香港节点,美国节点,DIRECT,url = http://cp.cloudflare.com/generate_204,interval = 300,max-timeout = 3000,img-url = https://fastly.jsdelivr.net/gh/fmz200/wool_scripts@main/icons/apps/Apple_Messages.png
-Microsoft = select,香港优选,日本优选,新加坡优选,美国优选,香港节点,台湾节点,日本节点,新加坡节点,美国节点,韩国节点,英国节点,德国节点,其他地区,Proxy,DIRECT,img-url = https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/Microsoft.png
-OneDrive = select,香港优选,日本优选,新加坡优选,美国优选,香港节点,台湾节点,日本节点,新加坡节点,美国节点,韩国节点,英国节点,德国节点,其他地区,Proxy,DIRECT,Microsoft,img-url = https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/OneDrive.png
-GitHub = select,香港优选,日本优选,新加坡优选,美国优选,香港节点,台湾节点,日本节点,新加坡节点,美国节点,韩国节点,英国节点,德国节点,其他地区,Proxy,DIRECT,img-url = https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/GitHub.png
-Docker = select,香港优选,日本优选,新加坡优选,美国优选,香港节点,台湾节点,日本节点,新加坡节点,美国节点,韩国节点,英国节点,德国节点,其他地区,Proxy,DIRECT,img-url = https://raw.githubusercontent.com/allen0039/proxy-resource-hub/main/icons/docker.png?v=b5317ee
+Microsoft = select,香港优选,日本优选,美国优选,香港节点,台湾节点,日本节点,新加坡节点,美国节点,韩国节点,英国节点,德国节点,其他地区,Proxy,DIRECT,img-url = https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/Microsoft.png
+OneDrive = select,香港优选,日本优选,美国优选,香港节点,台湾节点,日本节点,新加坡节点,美国节点,韩国节点,英国节点,德国节点,其他地区,Proxy,DIRECT,Microsoft,img-url = https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/OneDrive.png
+GitHub = select,香港优选,日本优选,美国优选,香港节点,台湾节点,日本节点,新加坡节点,美国节点,韩国节点,英国节点,德国节点,其他地区,Proxy,DIRECT,img-url = https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/GitHub.png
+Docker = select,香港优选,日本优选,美国优选,香港节点,台湾节点,日本节点,新加坡节点,美国节点,韩国节点,英国节点,德国节点,其他地区,Proxy,DIRECT,img-url = https://raw.githubusercontent.com/allen0039/proxy-resource-hub/main/icons/docker.png?v=b5317ee
 
-游戏平台 = select,香港优选,日本优选,新加坡优选,美国优选,香港节点,台湾节点,日本节点,新加坡节点,美国节点,韩国节点,英国节点,德国节点,其他地区,Proxy,DIRECT,img-url = https://github.com/shindgewongxj/WHATSINStash/raw/main/icon/applegamecenter.png
-CDN = select,香港优选,日本优选,新加坡优选,美国优选,香港节点,台湾节点,日本节点,新加坡节点,美国节点,韩国节点,英国节点,德国节点,其他地区,Proxy,DIRECT,img-url = https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/Cloudflare.png
-测速 = select,香港优选,日本优选,新加坡优选,美国优选,香港节点,台湾节点,日本节点,新加坡节点,美国节点,韩国节点,英国节点,德国节点,其他地区,Proxy,DIRECT,img-url = https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/Speedtest.png
+游戏平台 = select,香港优选,日本优选,美国优选,香港节点,台湾节点,日本节点,新加坡节点,美国节点,韩国节点,英国节点,德国节点,其他地区,Proxy,DIRECT,img-url = https://github.com/shindgewongxj/WHATSINStash/raw/main/icon/applegamecenter.png
+CDN = select,香港优选,日本优选,美国优选,香港节点,台湾节点,日本节点,新加坡节点,美国节点,韩国节点,英国节点,德国节点,其他地区,Proxy,DIRECT,img-url = https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/Cloudflare.png
+测速 = select,香港优选,日本优选,美国优选,香港节点,台湾节点,日本节点,新加坡节点,美国节点,韩国节点,英国节点,德国节点,其他地区,Proxy,DIRECT,img-url = https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/Speedtest.png
 
 香港优选 = url-test,香港,url = http://www.qualcomm.cn/generate_204,interval = 300,tolerance = 50,img-url = https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/Hong_Kong.png
 日本优选 = url-test,日本,url = http://www.qualcomm.cn/generate_204,interval = 300,tolerance = 50,img-url = https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/Japan.png
-新加坡优选 = url-test,新加坡,url = http://www.qualcomm.cn/generate_204,interval = 300,tolerance = 50,img-url = https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/Singapore.png
 美国优选 = url-test,美国,url = http://www.qualcomm.cn/generate_204,interval = 300,tolerance = 50,img-url = https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/United_States.png
 
 香港节点 = select,香港,url = http://www.qualcomm.cn/generate_204,img-url = https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/Hong_Kong.png
@@ -132,7 +131,8 @@ DOMAIN,api.github.com,GitHub
 # DOMAIN-SUFFIX,cloudflare.com,CDN
 
 # 4. AI 与媒体服务
-DOMAIN-SUFFIX,mfallen.de,DIRECT
+DOMAIN-SUFFIX,mfallen.de,美国节点
+DOMAIN-SUFFIX,api.flyapi.tech,美国节点
 # Gemini 首页保留本地精确兜底；完整端点由远程 Gemini 规则统一维护。
 DOMAIN,gemini.google.com,Google
 # Google 图片资源优先交给 YouTube，覆盖后续通用 CDN 规则集。

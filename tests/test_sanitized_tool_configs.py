@@ -51,7 +51,6 @@ DUPLICATE_PT_VALUES = {
 SUPPORTED_AI_REGION_ORDER = [
     "美国优选",
     "日本优选",
-    "新加坡优选",
     "美国节点",
     "日本节点",
     "新加坡节点",
@@ -951,7 +950,7 @@ rule-providers:
                 qx,
                 rf"(?m)^(?:available|url-latency-benchmark)={group_name},",
             )
-        for group_name in ("香港优选", "日本优选", "新加坡优选", "美国优选"):
+        for group_name in ("香港优选", "日本优选", "美国优选"):
             self.assertRegex(
                 qx, rf"(?m)^url-latency-benchmark={group_name},"
             )
@@ -1036,6 +1035,36 @@ rule-providers:
         self.assertFalse(
             any(rule.startswith("RULE-SET,ai_custom,") for rule in mihomo["rules"])
         )
+
+        self.assertNotIn("新加坡优选", "\n".join(outputs.values()))
+        self.assertNotIn("实时油价-浙江", "\n".join(outputs.values()))
+        self.assertNotRegex("\n".join(outputs.values()), r"(?m)^YJ\\s*=")
+        expected_domain_rules = {
+            "surge_mac_allen.conf": (
+                "DOMAIN-SUFFIX,mfallen.de,美国节点",
+                "DOMAIN-SUFFIX,api.flyapi.tech,美国节点",
+            ),
+            "surge_iphone_allen.conf": (
+                "DOMAIN-SUFFIX,mfallen.de,美国节点",
+                "DOMAIN-SUFFIX,api.flyapi.tech,美国节点",
+            ),
+            "quantumultx_allen.conf": (
+                "host-suffix, mfallen.de, 美国节点",
+                "host-suffix, api.flyapi.tech, 美国节点",
+            ),
+            "loon_allen.lcf": (
+                "DOMAIN-SUFFIX,mfallen.de,美国节点",
+                "DOMAIN-SUFFIX,api.flyapi.tech,美国节点",
+            ),
+            "mihomo_allen.yaml": (
+                "  - DOMAIN-SUFFIX,mfallen.de,美国节点",
+                "  - DOMAIN-SUFFIX,api.flyapi.tech,美国节点",
+            ),
+        }
+        for name, rules in expected_domain_rules.items():
+            with self.subTest(name=name, check="domain routing"):
+                for rule in rules:
+                    self.assertIn(rule, outputs[name])
 
         combined = "\n".join(outputs.values())
         self.assertNotRegex(
