@@ -1,0 +1,769 @@
+# Allen 维护 - Egern 专属配置模板
+# 适用版本：Egern 2.20.0 及以上
+# 使用前只需先替换一次“获取到的订阅链接”。
+
+# 基础设置
+ipv6: false
+http_port: 6152
+socks_port: 6153
+allow_external_connections: false
+vif_only: true
+hide_vpn_icon: false
+# Loon 主订阅阻止 QUIC，但 Surge 未全局阻止；保持 false，避免破坏 Hysteria/TUIC 等 UDP 原生节点。
+block_quic: false
+close_connections_on_policy_change: true
+# 保持与现有 Surge iPhone 一致，接管 APNs 长连接。
+include_all_networks: true
+include_apns: true
+include_cellular_services: false
+include_local_networks: false
+hijack_dns:
+  - '*:53'
+geoip_db_url: https://raw.githubusercontent.com/Loyalsoldier/geoip/release/Country-without-asn.mmdb
+asn_db_url: https://raw.githubusercontent.com/Loyalsoldier/geoip/release/GeoLite2-ASN.mmdb
+proxy_latency_test_url: https://www.gstatic.com/generate_204
+direct_latency_test_url: https://www.apple.com/library/test/success.html
+
+# 对齐 Loon/Surge 的本地网段，并移植 Loon SkipProxy 插件中无脚本的安全部分。
+bypass_tunnel_proxy:
+  - localhost
+  - '*.local'
+  - 10.0.0.0/8
+  - 100.64.0.0/10
+  - 127.0.0.0/8
+  - 169.254.0.0/16
+  - 172.16.0.0/12
+  - 192.168.0.0/16
+  - www.baidu.com
+  - yunbusiness.ccb.com
+
+# 不使用 Fake IP 的系统、局域网、游戏、STUN 和流媒体域名。
+real_ip_domains:
+  - '*.lan'
+  - '*.local'
+  - '*.push.apple.com'
+  - '*.msftconnecttest.com'
+  - '*.msftncsi.com'
+  - '*.srv.nintendo.net'
+  - '*.stun.playstation.net'
+  - 'xbox.*.microsoft.com'
+  - '*.xboxlive.com'
+  - '*.logon.battlenet.com.cn'
+  - '*.logon.battle.net'
+  - '*.battlenet.com.cn'
+  - '*.battlenet.com'
+  - '*.blzstatic.cn'
+  - '*.battle.net'
+  - '*.turn.twilio.com'
+  - '*.stun.twilio.com'
+  - 'stun.syncthing.net'
+  - 'stun.*'
+  - 'stun.l.google.com'
+  - 'easy-login.10099.com.cn'
+  - '*-update.xoyocdn.com'
+  - 'lancache.steamcontent.com'
+  - '*.prod.cloud.netflix.com'
+  - 'appboot.netflix.com'
+  - '*-appboot.netflix.com'
+  - '127.*.*.*.sslip.io'
+  - '127-*-*-*.sslip.io'
+  - '*.127.*.*.*.sslip.io'
+  - '*-127-*-*-*.sslip.io'
+  - '127.*.*.*.nip.io'
+  - '127-*-*-*.nip.io'
+  - '*.127.*.*.*.nip.io'
+  - '*-127-*-*-*.nip.io'
+
+# DNS：国内域名走国内 DoH，其余走国际 DoH。
+dns:
+  bootstrap:
+    - system
+    - 223.5.5.5
+    - 119.29.29.29
+  upstreams:
+    Domestic-DNS:
+      - https://dns.alidns.com/dns-query
+      - https://doh.pub/dns-query
+    Global-DNS:
+      - https://cloudflare-dns.com/dns-query
+      - https://dns.google/dns-query
+  forward:
+    # 局域网名称优先交给系统/引导 DNS，避免送往国际公共 DoH。
+    - domain_suffix:
+        match: lan
+        value: bootstrap
+    - domain_suffix:
+        match: local
+        value: bootstrap
+    - domain_suffix:
+        match: router.asus.com
+        value: bootstrap
+    - domain_suffix:
+        match: miwifi.com
+        value: bootstrap
+    - domain_suffix:
+        match: router.synology.com
+        value: bootstrap
+    - domain_suffix:
+        match: tplogin.cn
+        value: bootstrap
+    - domain_suffix:
+        match: melogin.cn
+        value: bootstrap
+    - domain_suffix:
+        match: falogin.cn
+        value: bootstrap
+    - domain_suffix:
+        match: tplinklogin.net
+        value: bootstrap
+    - domain_suffix:
+        match: orbilogin.com
+        value: bootstrap
+    - domain_suffix:
+        match: routerlogin.net
+        value: bootstrap
+    - proxy_rule_set:
+        match: https://raw.githubusercontent.com/Repcz/Tool/X/Egern/Rules/Reject.yaml
+        value: reject
+        update_interval: 86400
+    - proxy_rule_set:
+        match: https://raw.githubusercontent.com/Repcz/Tool/X/Egern/Rules/ChinaDomain.yaml
+        value: Domestic-DNS
+        update_interval: 86400
+    - domain_wildcard:
+        match: '*'
+        value: Global-DNS
+  proxy_nameservers:
+    - 223.5.5.5
+    - 119.29.29.29
+  public_ip_lookup_url: https://ifconfig.me/ip
+
+policy_groups:
+  # 唯一需要填写的订阅入口。需要多机场时继续在 urls 下添加 URL。
+  - select:
+      name: 拼好鸡
+      urls:
+        - 获取到的订阅链接
+        # - https://example.com/backup-subscription
+      update_interval: 21600
+      hidden: true
+
+  # 通用出口
+  - select:
+      name: Proxy
+      policies:
+        - 香港优选
+        - 日本优选
+        - 新加坡优选
+        - 美国优选
+        - 香港节点
+        - 台湾节点
+        - 日本节点
+        - 新加坡节点
+        - 美国节点
+        - 韩国节点
+        - 英国节点
+        - 德国节点
+        - 其他地区
+        - 全部节点
+        - DIRECT
+      icon: globe
+  - select:
+      name: Final
+      policies:
+        - 香港优选
+        - 日本优选
+        - 美国优选
+        - 香港节点
+        - 台湾节点
+        - 日本节点
+        - 新加坡节点
+        - 美国节点
+        - 韩国节点
+        - 英国节点
+        - 德国节点
+        - 其他地区
+        - Proxy
+        - DIRECT
+      icon: arrow.triangle.branch
+
+  # 业务策略
+  - select:
+      name: Google
+      policies: [香港优选, 日本优选, 美国优选, 香港节点, 台湾节点, 日本节点, 新加坡节点, 美国节点, 韩国节点, 英国节点, 德国节点, 其他地区, Proxy, DIRECT]
+      icon: magnifyingglass
+  - select:
+      name: AI
+      policies: [家宽节点, 美国优选, 日本优选, 美国节点, 日本节点, 新加坡节点, 台湾节点, 韩国节点, 英国节点, 德国节点, 其他地区, 香港优选, 香港节点, Proxy, DIRECT]
+      icon: sparkles
+  - select:
+      name: Telegram
+      policies: [香港优选, 日本优选, 美国优选, 香港节点, 台湾节点, 日本节点, 新加坡节点, 美国节点, 韩国节点, 英国节点, 德国节点, 其他地区, Proxy, DIRECT]
+      icon: paperplane
+  - select:
+      name: TikTok
+      policies: [香港优选, 日本优选, 美国优选, 香港节点, 台湾节点, 日本节点, 新加坡节点, 美国节点, 韩国节点, 英国节点, 德国节点, 其他地区, Proxy, DIRECT]
+      icon: music.note
+  - select:
+      name: 国外社交
+      policies: [香港优选, 日本优选, 美国优选, 香港节点, 台湾节点, 日本节点, 新加坡节点, 美国节点, 韩国节点, 英国节点, 德国节点, 其他地区, Proxy, DIRECT]
+      icon: person.2
+  - select:
+      name: YouTube
+      policies: [香港优选, 日本优选, 美国优选, 香港节点, 台湾节点, 日本节点, 新加坡节点, 美国节点, 韩国节点, 英国节点, 德国节点, 其他地区, Proxy, DIRECT]
+      icon: play.rectangle
+  - select:
+      name: Netflix
+      policies: [香港优选, 日本优选, 美国优选, 香港节点, 台湾节点, 日本节点, 新加坡节点, 美国节点, 韩国节点, 英国节点, 德国节点, 其他地区, Proxy, DIRECT]
+      icon: n.square
+  - select:
+      name: 迪士尼+
+      policies: [香港优选, 日本优选, 美国优选, 香港节点, 台湾节点, 日本节点, 新加坡节点, 美国节点, 韩国节点, 英国节点, 德国节点, 其他地区, Proxy, DIRECT]
+      icon: sparkles.tv
+  - select:
+      name: HBO
+      policies: [香港优选, 日本优选, 美国优选, 香港节点, 台湾节点, 日本节点, 新加坡节点, 美国节点, 韩国节点, 英国节点, 德国节点, 其他地区, Proxy, DIRECT]
+      icon: play.square
+  - select:
+      name: Emby
+      policies: [DIRECT, 香港优选, 日本优选, 美国优选, 香港节点, 台湾节点, 日本节点, 新加坡节点, 美国节点, 韩国节点, 英国节点, 德国节点, 其他地区, Proxy]
+      icon: play.tv
+  - select:
+      name: Spotify
+      policies: [香港优选, 日本优选, 美国优选, 香港节点, 台湾节点, 日本节点, 新加坡节点, 美国节点, 韩国节点, 英国节点, 德国节点, 其他地区, Proxy, DIRECT]
+      icon: music.note.list
+  - select:
+      name: 巴哈姆特
+      policies: [台湾节点, 香港节点, DIRECT]
+      icon: gamecontroller
+  - select:
+      name: 哔哩哔哩
+      policies: [DIRECT, 香港节点, 台湾节点, 新加坡节点, Proxy]
+      icon: play.rectangle.on.rectangle
+  - select:
+      name: 国外媒体
+      policies: [香港优选, 日本优选, 美国优选, 香港节点, 台湾节点, 日本节点, 新加坡节点, 美国节点, 韩国节点, 英国节点, 德国节点, 其他地区, Proxy, DIRECT]
+      icon: film
+  - select:
+      name: 特殊媒体
+      policies: [香港优选, 日本优选, 美国优选, 香港节点, 台湾节点, 日本节点, 新加坡节点, 美国节点, 韩国节点, 英国节点, 德国节点, 其他地区, Proxy, DIRECT]
+      icon: eye.slash
+  - select:
+      name: 国内媒体
+      policies: [DIRECT, Proxy, 香港节点, 台湾节点, 日本节点, 新加坡节点, 美国节点, 韩国节点]
+      icon: tv
+  - select:
+      name: 海淘
+      policies: [美国节点, 日本节点, 香港节点, 英国节点, 德国节点, 新加坡节点, 韩国节点, 台湾节点, 其他地区, DIRECT]
+      icon: cart
+  - select:
+      name: PayPal
+      policies: [香港优选, 日本优选, 美国优选, 香港节点, 台湾节点, 日本节点, 新加坡节点, 美国节点, 韩国节点, 英国节点, 德国节点, 其他地区, Proxy, DIRECT]
+      icon: creditcard
+  - select:
+      name: Apple
+      policies: [DIRECT, Proxy, 香港节点, 台湾节点, 日本节点, 新加坡节点, 美国节点, 韩国节点]
+      icon: apple.logo
+  - fallback:
+      name: Apple Push
+      policies: [日本节点, 香港节点, 美国节点, DIRECT]
+      interval: 300
+      timeout: 5
+      icon: bell
+  - select:
+      name: Microsoft
+      policies: [香港优选, 日本优选, 美国优选, 香港节点, 台湾节点, 日本节点, 新加坡节点, 美国节点, 韩国节点, 英国节点, 德国节点, 其他地区, Proxy, DIRECT]
+      icon: square.grid.2x2
+  - select:
+      name: OneDrive
+      policies: [香港优选, 日本优选, 美国优选, 香港节点, 台湾节点, 日本节点, 新加坡节点, 美国节点, 韩国节点, 英国节点, 德国节点, 其他地区, Proxy, DIRECT, Microsoft]
+      icon: externaldrive.badge.icloud
+  - select:
+      name: GitHub
+      policies: [香港优选, 日本优选, 美国优选, 香港节点, 台湾节点, 日本节点, 新加坡节点, 美国节点, 韩国节点, 英国节点, 德国节点, 其他地区, Proxy, DIRECT]
+      icon: chevron.left.forwardslash.chevron.right
+  - select:
+      name: Docker
+      policies: [香港优选, 日本优选, 美国优选, 香港节点, 台湾节点, 日本节点, 新加坡节点, 美国节点, 韩国节点, 英国节点, 德国节点, 其他地区, Proxy, DIRECT]
+      icon: shippingbox
+  - select:
+      name: 游戏平台
+      policies: [香港优选, 日本优选, 美国优选, 香港节点, 台湾节点, 日本节点, 新加坡节点, 美国节点, 韩国节点, 英国节点, 德国节点, 其他地区, Proxy, DIRECT]
+      icon: gamecontroller
+  - select:
+      name: CDN
+      policies: [香港优选, 日本优选, 美国优选, 香港节点, 台湾节点, 日本节点, 新加坡节点, 美国节点, 韩国节点, 英国节点, 德国节点, 其他地区, Proxy, DIRECT]
+      icon: cloud
+  - select:
+      name: 测速
+      policies: [香港优选, 日本优选, 美国优选, 香港节点, 台湾节点, 日本节点, 新加坡节点, 美国节点, 韩国节点, 英国节点, 德国节点, 其他地区, Proxy, DIRECT]
+      icon: speedometer
+
+  # 地区智能优选：smart 综合延迟、抖动和成功率，比单次最低延迟更稳。
+  - smart:
+      name: 香港优选
+      policies: [拼好鸡]
+      flatten: true
+      filter: '(?i)^(?!.*(家用|家庭|家宽|\bISP\b|回国|校园|游戏|🎮|\bGAME\b)).*(🇭🇰|香港|(^|[^A-Za-z0-9])(HK|HKG|Hong([ _-]?Kong)?)([ _-]?\d+)?($|[^A-Za-z0-9])).*$'
+      icon: h.circle
+  - smart:
+      name: 日本优选
+      policies: [拼好鸡]
+      flatten: true
+      filter: '(?i)^(?!.*(家用|家庭|家宽|\bISP\b|回国|校园|游戏|🎮|\bGAME\b)).*(🇯🇵|日本|川日|东京|大阪|泉日|沪日|深日|埼玉|(^|[^A-Za-z0-9])(JP|JPN|Japan)([ _-]?\d+)?($|[^A-Za-z0-9])).*$'
+      icon: j.circle
+  - smart:
+      name: 新加坡优选
+      policies: [拼好鸡]
+      flatten: true
+      filter: '(?i)^(?!.*(家用|家庭|家宽|\bISP\b|回国|校园|游戏|🎮|\bGAME\b)).*(🇸🇬|新加坡|狮城|(^|[^A-Za-z0-9])(SG|SGP|Singapore)([ _-]?\d+)?($|[^A-Za-z0-9])).*$'
+      icon: s.circle
+  - smart:
+      name: 美国优选
+      policies: [拼好鸡]
+      flatten: true
+      filter: '(?i)^(?!.*(家用|家庭|家宽|\bISP\b|回国|校园|游戏|🎮|\bGAME\b)).*(🇺🇸|🇺🇲|美国|波特兰|达拉斯|俄勒冈|凤凰城|费利蒙|硅谷|拉斯维加斯|洛杉矶|圣何塞|圣克拉拉|西雅图|芝加哥|(^|[^A-Za-z0-9])(US|USA|United[ _-]?States|States)([ _-]?\d+)?($|[^A-Za-z0-9])).*$'
+      icon: u.circle
+
+  # 地区手选
+  - select:
+      name: 香港节点
+      policies: [拼好鸡]
+      flatten: true
+      filter: '(?i)^(?!.*(家用|家庭|家宽|\bISP\b|回国|校园|游戏|🎮|\bGAME\b)).*(🇭🇰|香港|(^|[^A-Za-z0-9])(HK|HKG|Hong([ _-]?Kong)?)([ _-]?\d+)?($|[^A-Za-z0-9])).*$'
+  - select:
+      name: 台湾节点
+      policies: [拼好鸡]
+      flatten: true
+      filter: '(?i)^(?!.*(家用|家庭|家宽|\bISP\b|回国|校园|游戏|🎮|\bGAME\b)).*(🇹🇼|台湾|台北|(^|[^A-Za-z0-9])(TW|TWN|Tai|Taiwan)([ _-]?\d+)?($|[^A-Za-z0-9])).*$'
+  - select:
+      name: 日本节点
+      policies: [拼好鸡]
+      flatten: true
+      filter: '(?i)^(?!.*(家用|家庭|家宽|\bISP\b|回国|校园|游戏|🎮|\bGAME\b)).*(🇯🇵|日本|川日|东京|大阪|泉日|沪日|深日|埼玉|(^|[^A-Za-z0-9])(JP|JPN|Japan)([ _-]?\d+)?($|[^A-Za-z0-9])).*$'
+  - select:
+      name: 新加坡节点
+      policies: [拼好鸡]
+      flatten: true
+      filter: '(?i)^(?!.*(家用|家庭|家宽|\bISP\b|回国|校园|游戏|🎮|\bGAME\b)).*(🇸🇬|新加坡|狮城|(^|[^A-Za-z0-9])(SG|SGP|Singapore)([ _-]?\d+)?($|[^A-Za-z0-9])).*$'
+  - select:
+      name: 美国节点
+      policies: [拼好鸡]
+      flatten: true
+      filter: '(?i)^(?!.*(家用|家庭|家宽|\bISP\b|回国|校园|游戏|🎮|\bGAME\b)).*(🇺🇸|🇺🇲|美国|波特兰|达拉斯|俄勒冈|凤凰城|费利蒙|硅谷|拉斯维加斯|洛杉矶|圣何塞|圣克拉拉|西雅图|芝加哥|(^|[^A-Za-z0-9])(US|USA|United[ _-]?States|States)([ _-]?\d+)?($|[^A-Za-z0-9])).*$'
+  - select:
+      name: 韩国节点
+      policies: [拼好鸡]
+      flatten: true
+      filter: '(?i)^(?!.*(家用|家庭|家宽|\bISP\b|回国|校园|游戏|🎮|\bGAME\b)).*(🇰🇷|韩国|韓國|首尔|首爾|(^|[^A-Za-z0-9])(KR|KOR|Korea)([ _-]?\d+)?($|[^A-Za-z0-9])).*$'
+  - select:
+      name: 英国节点
+      policies: [拼好鸡]
+      flatten: true
+      filter: '(?i)^(?!.*(家用|家庭|家宽|\bISP\b|回国|校园|游戏|🎮|\bGAME\b)).*(🇬🇧|英国|倫敦|伦敦|(^|[^A-Za-z0-9])(UK|GB|GBR|United[ _-]?Kingdom)([ _-]?\d+)?($|[^A-Za-z0-9])).*$'
+  - select:
+      name: 德国节点
+      policies: [拼好鸡]
+      flatten: true
+      filter: '(?i)^(?!.*(家用|家庭|家宽|\bISP\b|回国|校园|游戏|🎮|\bGAME\b)).*(🇩🇪|德国|德國|法兰克福|法蘭克福|柏林|慕尼黑|(^|[^A-Za-z0-9])(DE|DEU|Germany|Deutschland|Frankfurt|Berlin|Munich)([ _-]?\d+)?($|[^A-Za-z0-9])).*$'
+  - select:
+      name: 家宽节点
+      policies: [拼好鸡]
+      flatten: true
+      filter: '(?i)(家用|家庭|家宽|(^|[^A-Za-z0-9])ISP([ _-]?\d+)?($|[^A-Za-z0-9]))'
+      icon: house
+  - select:
+      name: 其他地区
+      policies: [拼好鸡]
+      flatten: true
+      filter: '(?i)^(?!.*(家用|家庭|家宽|\bISP\b|🇭🇰|香港|(^|[^A-Za-z0-9])(HK|HKG|Hong([ _-]?Kong)?)([ _-]?\d+)?($|[^A-Za-z0-9])|🇹🇼|台湾|台北|(^|[^A-Za-z0-9])(TW|TWN|Tai|Taiwan)([ _-]?\d+)?($|[^A-Za-z0-9])|🇯🇵|日本|川日|东京|大阪|泉日|沪日|深日|埼玉|(^|[^A-Za-z0-9])(JP|JPN|Japan)([ _-]?\d+)?($|[^A-Za-z0-9])|🇸🇬|新加坡|狮城|(^|[^A-Za-z0-9])(SG|SGP|Singapore)([ _-]?\d+)?($|[^A-Za-z0-9])|🇺🇸|🇺🇲|美国|波特兰|达拉斯|俄勒冈|凤凰城|费利蒙|硅谷|拉斯维加斯|洛杉矶|圣何塞|圣克拉拉|西雅图|芝加哥|(^|[^A-Za-z0-9])(US|USA|United[ _-]?States|States)([ _-]?\d+)?($|[^A-Za-z0-9])|🇰🇷|韩国|韓|韓國|首尔|首爾|(^|[^A-Za-z0-9])(KR|KOR|Korea)([ _-]?\d+)?($|[^A-Za-z0-9])|🇬🇧|英国|倫敦|伦敦|(^|[^A-Za-z0-9])(UK|GB|GBR|United[ _-]?Kingdom)([ _-]?\d+)?($|[^A-Za-z0-9])|🇩🇪|德国|德國|法兰克福|法蘭克福|柏林|慕尼黑|(^|[^A-Za-z0-9])(DE|DEU|Germany|Deutschland|Frankfurt|Berlin|Munich)([ _-]?\d+)?($|[^A-Za-z0-9])|直连|回国|校园|游戏|🎮|邀请|返利|循环|官网|客服|网站|网址|获取|订阅|流量|到期|机场|下次|版本|官址|备用|过期|已用|联系|邮箱|工单|交流群|官方群|用户群|群组|社群|群聊|贩卖|倒卖|防止|国内|(^|[^A-Za-z0-9])(GAME|USE|USED|TOTAL|EXPIRE|EMAIL|Panel)($|[^A-Za-z0-9])|\d{4}-\d{2}-\d{2})).+$'
+      icon: map
+  - select:
+      name: 全部节点
+      policies: [拼好鸡]
+      flatten: true
+      filter: '(?i)^(?!.*(邀请|返利|循环|官网|客服|网站|网址|获取|订阅|流量|到期|机场|下次|版本|官址|备用|过期|已用|联系|邮箱|工单|交流群|官方群|用户群|群组|社群|群聊|贩卖|倒卖|防止|国内|(^|[^A-Za-z0-9])(USE|USED|TOTAL|EXPIRE|EMAIL|Panel)($|[^A-Za-z0-9])|\d{4}-\d{2}-\d{2})).+$'
+      icon: server.rack
+
+rules:
+  # 1. 与 Loon/Surge 对齐的最高优先级例外。
+  - domain_suffix:
+      name: mfallen 美国路由
+      match: mfallen.de
+      policy: 美国节点
+  - domain_suffix:
+      name: FlyAPI 美国路由
+      match: api.flyapi.tech
+      policy: 美国节点
+  - domain_suffix:
+      name: Apple Push 兜底
+      match: push.apple.com
+      policy: Apple Push
+  - domain_suffix:
+      name: Apple Relay
+      match: apple-relay.apple.com
+      policy: Apple
+  - domain_suffix:
+      name: GitHub Pages
+      match: github.io
+      policy: GitHub
+  - domain_suffix:
+      name: GitHub Assets
+      match: githubassets.com
+      policy: GitHub
+  - domain:
+      name: GitHub API
+      match: api.github.com
+      policy: GitHub
+  - domain:
+      name: Gemini 首页
+      match: gemini.google.com
+      policy: Google
+  - domain:
+      name: Adobe 授权放行
+      match: lcs-cops.adobe.io
+      policy: DIRECT
+  - domain_suffix:
+      name: Adobe IC 拦截
+      match: ic.adobe.io
+      policy: REJECT
+  - domain_suffix:
+      name: Adobe HStatic 拦截
+      match: hstatic.io
+      policy: REJECT
+  - domain_suffix:
+      name: Adobe Stats 拦截
+      match: adobestats.io
+      policy: REJECT
+  - domain_suffix:
+      name: Adobe IO 拦截
+      match: adobe.io
+      policy: REJECT
+  - domain:
+      name: 拦截 ntb.lanjie100
+      match: ntb.lanjie100.com
+      policy: REJECT
+  - domain:
+      name: 拦截农行检测
+      match: msmp.abchina.com.cn
+      policy: REJECT
+  - ip_cidr:
+      name: Loon 本地拒绝 IP
+      match: 95.161.76.100/31
+      policy: REJECT
+      no_resolve: true
+  - ip_cidr:
+      name: Surge 本地拒绝 IP
+      match: 180.76.76.200/32
+      policy: REJECT
+      no_resolve: true
+  - ip_cidr:
+      name: Surge 阿里 HTTPDNS 拒绝段
+      match: 203.107.1.0/24
+      policy: REJECT
+      no_resolve: true
+  - domain_suffix:
+      name: YouTube 静态资源
+      match: ytimg.com
+      policy: YouTube
+  - domain_suffix:
+      name: Google Safe Browsing
+      match: safebrowsing.google.com
+      policy: Google
+
+  # 测速通用规则：与 Loon 的 Blackmatrix 规则保持一致，并先于 Direct/CDN。
+  - domain_suffix:
+      name: Fast.com 测速
+      match: fast.com
+      policy: 测速
+  - domain_suffix:
+      name: Ookla 测速节点
+      match: ooklaserver.net
+      policy: 测速
+  - domain_suffix:
+      name: Cloudflare 测速
+      match: speed.cloudflare.com
+      policy: 测速
+  - domain_suffix:
+      name: Dler 测速
+      match: speed.dler.io
+      policy: 测速
+  - domain_keyword:
+      name: Speedtest 关键字
+      match: speedtest
+      policy: 测速
+
+  # 2. Allen 自维护规则，仍需先发布 Rules/Egern 到 main 分支。
+  - rule_set:
+      name: 自定义直连
+      match: https://raw.githubusercontent.com/allen0039/proxy-resource-hub/main/Rules/Egern/Custom/direct.yaml
+      policy: DIRECT
+      update_interval: 86400
+  - rule_set:
+      name: 香港指定站点
+      match: https://raw.githubusercontent.com/allen0039/proxy-resource-hub/main/Rules/Egern/Regional/hk.yaml
+      policy: 香港节点
+      update_interval: 86400
+  - rule_set:
+      name: 美国指定站点
+      match: https://raw.githubusercontent.com/allen0039/proxy-resource-hub/main/Rules/Egern/Regional/us.yaml
+      policy: 美国节点
+      update_interval: 86400
+  - rule_set:
+      name: 日本指定站点
+      match: https://raw.githubusercontent.com/allen0039/proxy-resource-hub/main/Rules/Egern/Regional/jp.yaml
+      policy: 日本节点
+      update_interval: 86400
+  - rule_set:
+      name: 新加坡指定站点
+      match: https://raw.githubusercontent.com/allen0039/proxy-resource-hub/main/Rules/Egern/Regional/sg.yaml
+      policy: 新加坡节点
+      update_interval: 86400
+  - rule_set:
+      name: 德国指定站点
+      match: https://raw.githubusercontent.com/allen0039/proxy-resource-hub/main/Rules/Egern/Regional/de.yaml
+      policy: 德国节点
+      update_interval: 86400
+  - rule_set:
+      name: 公益 AI
+      match: https://raw.githubusercontent.com/allen0039/proxy-resource-hub/main/Rules/Egern/AI/direct-ai.yaml
+      policy: DIRECT
+      update_interval: 86400
+  - rule_set:
+      name: 个人域名
+      match: https://raw.githubusercontent.com/allen0039/proxy-resource-hub/main/Rules/Egern/Personal/Domain.yaml
+      policy: DIRECT
+      update_interval: 86400
+  - rule_set:
+      name: PT 站点
+      match: https://raw.githubusercontent.com/allen0039/proxy-resource-hub/main/Rules/Egern/PT/Domain.yaml
+      policy: DIRECT
+      update_interval: 86400
+
+  # 3. 局域网、系统服务与拦截。
+  - rule_set:
+      name: 局域网
+      match: https://raw.githubusercontent.com/Repcz/Tool/X/Egern/Rules/Lan.yaml
+      policy: DIRECT
+      update_interval: 86400
+  - rule_set:
+      name: Apple Push
+      match: https://raw.githubusercontent.com/Repcz/Tool/X/Egern/Rules/APNs.yaml
+      policy: Apple Push
+      update_interval: 86400
+  - rule_set:
+      name: 通用直连
+      match: https://raw.githubusercontent.com/Repcz/Tool/X/Egern/Rules/Direct.yaml
+      policy: DIRECT
+      update_interval: 86400
+  - rule_set:
+      name: 广告拦截
+      match: https://raw.githubusercontent.com/Repcz/Tool/X/Egern/Rules/Reject.yaml
+      policy: REJECT
+      update_interval: 86400
+
+  # 4. AI、开发与通信服务。YouTube 必须位于 Google 前。
+  - rule_set:
+      name: YouTube
+      match: https://raw.githubusercontent.com/Repcz/Tool/X/Egern/Rules/YouTube.yaml
+      policy: YouTube
+      update_interval: 86400
+  - rule_set:
+      name: Google
+      match: https://raw.githubusercontent.com/Repcz/Tool/X/Egern/Rules/Google.yaml
+      policy: Google
+      update_interval: 86400
+  - rule_set:
+      name: Allen AI
+      match: https://raw.githubusercontent.com/allen0039/proxy-resource-hub/main/Rules/Egern/AI/ai.yaml
+      policy: AI
+      update_interval: 86400
+  - rule_set:
+      name: AI 补充
+      match: https://raw.githubusercontent.com/Repcz/Tool/X/Egern/Rules/AI.yaml
+      policy: AI
+      update_interval: 86400
+  - rule_set:
+      name: GitHub
+      match: https://raw.githubusercontent.com/Repcz/Tool/X/Egern/Rules/Github.yaml
+      policy: GitHub
+      update_interval: 86400
+  # Docker 与 Loon/Surge 使用同一份 Blackmatrix 规则内容，内联避免失效远程源。
+  - domain:
+      name: Docker CloudFront 1
+      match: d1q6f0aelx0por.cloudfront.net
+      policy: Docker
+  - domain:
+      name: Docker CloudFront 2
+      match: d2wy8f7a9ursnm.cloudfront.net
+      policy: Docker
+  - domain:
+      name: Docker CloudFront 3
+      match: d36jcksde1wxzq.cloudfront.net
+      policy: Docker
+  - domain_suffix:
+      name: Docker Compose Spec
+      match: compose-spec.io
+      policy: Docker
+  - domain_suffix:
+      name: Docker 官网
+      match: docker.com
+      policy: Docker
+  - domain_suffix:
+      name: Docker Registry
+      match: docker.io
+      policy: Docker
+  - domain_suffix:
+      name: Docker Hub
+      match: dockerhub.com
+      policy: Docker
+  - rule_set:
+      name: Telegram
+      match: https://raw.githubusercontent.com/Repcz/Tool/X/Egern/Rules/Telegram.yaml
+      policy: Telegram
+      update_interval: 86400
+  - rule_set:
+      name: X
+      match: https://raw.githubusercontent.com/Repcz/Tool/X/Egern/Rules/Twitter.yaml
+      policy: 国外社交
+      update_interval: 86400
+  - rule_set:
+      name: Facebook
+      match: https://raw.githubusercontent.com/Repcz/Tool/X/Egern/Rules/Facebook.yaml
+      policy: 国外社交
+      update_interval: 86400
+  - rule_set:
+      name: Instagram
+      match: https://raw.githubusercontent.com/Repcz/Tool/X/Egern/Rules/Instagram.yaml
+      policy: 国外社交
+      update_interval: 86400
+  - rule_set:
+      name: TikTok
+      match: https://raw.githubusercontent.com/Repcz/Tool/X/Egern/Rules/TikTok.yaml
+      policy: TikTok
+      update_interval: 86400
+
+  # 5. 具体媒体服务优先于 CDN、通用媒体和购物规则。
+  - rule_set:
+      name: Emby
+      match: https://raw.githubusercontent.com/Repcz/Tool/X/Egern/Rules/Emby.yaml
+      policy: Emby
+      update_interval: 86400
+  - rule_set:
+      name: Netflix
+      match: https://raw.githubusercontent.com/Repcz/Tool/X/Egern/Rules/Netflix.yaml
+      policy: Netflix
+      update_interval: 86400
+  - rule_set:
+      name: Disney
+      match: https://raw.githubusercontent.com/Repcz/Tool/X/Egern/Rules/Disney.yaml
+      policy: 迪士尼+
+      update_interval: 86400
+  - rule_set:
+      name: Prime Video
+      match: https://raw.githubusercontent.com/Repcz/Tool/X/Egern/Rules/PrimeVideo.yaml
+      policy: 国外媒体
+      update_interval: 86400
+  - rule_set:
+      name: HBO
+      match: https://raw.githubusercontent.com/Repcz/Tool/X/Egern/Rules/HBO.yaml
+      policy: HBO
+      update_interval: 86400
+  - rule_set:
+      name: Spotify
+      match: https://raw.githubusercontent.com/Repcz/Tool/X/Egern/Rules/Spotify.yaml
+      policy: Spotify
+      update_interval: 86400
+  - rule_set:
+      name: Bahamut
+      match: https://raw.githubusercontent.com/Repcz/Tool/X/Egern/Rules/Bahamut.yaml
+      policy: 巴哈姆特
+      update_interval: 86400
+  - rule_set:
+      name: Bilibili
+      match: https://raw.githubusercontent.com/Repcz/Tool/X/Egern/Rules/Bilibili.yaml
+      policy: 哔哩哔哩
+      update_interval: 86400
+  - rule_set:
+      name: 特殊媒体
+      match: https://raw.githubusercontent.com/Repcz/Tool/X/Egern/Rules/Porn.yaml
+      policy: 特殊媒体
+      update_interval: 86400
+  - rule_set:
+      name: 游戏平台
+      match: https://raw.githubusercontent.com/Repcz/Tool/X/Egern/Rules/Game.yaml
+      policy: 游戏平台
+      update_interval: 86400
+  - rule_set:
+      name: PayPal
+      match: https://raw.githubusercontent.com/Repcz/Tool/X/Egern/Rules/PayPal.yaml
+      policy: PayPal
+      update_interval: 86400
+  # 6. Apple、Microsoft 等具体平台位于 CDN 前。
+  - rule_set:
+      name: Apple 中国服务
+      match: https://raw.githubusercontent.com/Repcz/Tool/X/Egern/Rules/AppleCN.yaml
+      policy: DIRECT
+      update_interval: 86400
+  - rule_set:
+      name: Apple
+      match: https://raw.githubusercontent.com/Repcz/Tool/X/Egern/Rules/Apple.yaml
+      policy: Apple
+      update_interval: 86400
+  - rule_set:
+      name: OneDrive
+      match: https://raw.githubusercontent.com/Repcz/Tool/X/Egern/Rules/OneDrive.yaml
+      policy: OneDrive
+      update_interval: 86400
+  - rule_set:
+      name: Microsoft
+      match: https://raw.githubusercontent.com/Repcz/Tool/X/Egern/Rules/Microsoft.yaml
+      policy: Microsoft
+      update_interval: 86400
+
+  # 7. 通用 CDN、国外媒体和海淘，随后才进入国内/国外兜底。
+  - rule_set:
+      name: CDN
+      match: https://raw.githubusercontent.com/Repcz/Tool/X/Egern/Rules/CDN.yaml
+      policy: CDN
+      update_interval: 86400
+  - rule_set:
+      name: 通用国外媒体
+      match: https://raw.githubusercontent.com/Repcz/Tool/X/Egern/Rules/ProxyMedia.yaml
+      policy: 国外媒体
+      update_interval: 86400
+  - rule_set:
+      name: 海淘
+      match: https://raw.githubusercontent.com/allen0039/proxy-resource-hub/main/Rules/Egern/shop/shopping.yaml
+      policy: 海淘
+      update_interval: 86400
+  - rule_set:
+      name: 国内域名
+      match: https://raw.githubusercontent.com/Repcz/Tool/X/Egern/Rules/ChinaDomain.yaml
+      policy: DIRECT
+      update_interval: 86400
+  - rule_set:
+      name: 代理域名
+      match: https://raw.githubusercontent.com/Repcz/Tool/X/Egern/Rules/Proxy.yaml
+      policy: Proxy
+      update_interval: 86400
+  - rule_set:
+      name: 国内 IP
+      match: https://raw.githubusercontent.com/Repcz/Tool/X/Egern/Rules/ChinaIP.yaml
+      policy: DIRECT
+      update_interval: 86400
+  - geoip:
+      name: GeoIP 中国
+      match: CN
+      policy: DIRECT
+      no_resolve: true
+  - default:
+      name: 最终规则
+      policy: Final
+
+# 新增订阅和手写节点时，默认加入以下策略组。
+default_subscription_group: 拼好鸡
+default_proxy_group: Proxy
+
+# Loon SkipProxy 的安全功能已通过 bypass_tunnel_proxy 对齐。
+# MITM、破解/响应脚本、重写、小组件与模块不迁移，以 Surge 的无活动脚本基线为准。
