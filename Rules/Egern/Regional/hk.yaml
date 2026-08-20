@@ -1,0 +1,7 @@
+# Generated from Rules/Source/allenrules/hk.list by tools/generate_rules.py. Do not edit.
+
+domain_suffix_set:
+  - hytron.io
+  - nfbyte.com
+domain_keyword_set:
+  - kejilion

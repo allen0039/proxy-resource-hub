@@ -1,0 +1,30 @@
+# Generated from Rules/Source/allenrules/us.list by tools/generate_rules.py. Do not edit.
+
+domain_suffix_set:
+  - openwrt.ai
+  - lsposed.org
+  - linux.do
+  - rundongex.com
+  - servercontrolpanel.de
+  - mgboard.net
+  - mjji.de
+  - vps.town
+  - 2fa.fun
+  - ggpht.com
+  - compliance.chippercash.com
+  - embyapp.top
+  - macwk.cn
+  - appstorrent.ru
+  - api.daidaio.com
+domain_keyword_set:
+  - greasyfork
+  - qichiyu
+  - themoviedb
+  - tmdb
+  - dashboardicons
+  - uspatriottactical
+  - hdhive
+  - sehuatang
+  - hd-torrents
+  - missav
+  - ftvgirls

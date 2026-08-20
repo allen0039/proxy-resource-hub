@@ -1,0 +1,4 @@
+# Generated from Rules/Source/allenrules/de.list by tools/generate_rules.py. Do not edit.
+
+domain_suffix_set:
+  - nodeseek.com

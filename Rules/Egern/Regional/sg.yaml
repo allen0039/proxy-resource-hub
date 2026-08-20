@@ -1,0 +1,6 @@
+# Generated from Rules/Source/allenrules/sg.list by tools/generate_rules.py. Do not edit.
+
+domain_keyword_set:
+  - javdb
+  - javlibrary
+  - avbase
