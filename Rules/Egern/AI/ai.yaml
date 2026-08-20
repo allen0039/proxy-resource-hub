@@ -1,0 +1,48 @@
+# Generated from Rules/Source/AI/ai.txt by tools/generate_rules.py. Do not edit.
+
+domain_suffix_set:
+  # OpenAI / ChatGPT 服务
+  - openai.com
+  - chatgpt.com
+  - oaistatic.com
+  - oaiusercontent.com
+  - openaiapi-site.azureedge.net
+  - openaicom-api-bdcpf8c6d2e9atf6.z01.azurefd.net
+
+  # Anthropic / Claude 服务
+  - anthropic.com
+  - claude.ai
+
+  # DeepSeek 服务
+  - deepseek.com
+
+  # Gemini / Google AI 由 Google 规则统一处理，避免与 AI 策略组拆分。
+
+  # Cloudflare AI 服务
+  - gateway.ai.cloudflare.com
+
+  # Microsoft Copilot / GitHub Copilot 服务
+  - copilot.microsoft.com
+  - copilot.cloud.microsoft
+  - edgeservices.bing.com
+  - default.exp-tas.com
+  - copilot-proxy.githubusercontent.com
+  - origin-tracker.githubusercontent.com
+  - copilot-telemetry.githubusercontent.com
+  - githubcopilot.com
+
+  # Perplexity / Poe 服务
+  - perplexity.ai
+  - poe.com
+
+  # xAI / Grok 服务
+  - grok.com
+  - x.ai
+
+  # 其他常用 AI 工具
+  - character.ai
+  - clawhub.ai
+  - midjourney.com
+  - open-meteo.com
+  - runwayml.com
+  - notebooklm.google.com

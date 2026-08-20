@@ -1,0 +1,11 @@
+# Generated from Rules/Source/AI/direct-ai.txt by tools/generate_rules.py. Do not edit.
+
+domain_suffix_set:
+  # Allen 维护的公益 AI 服务
+  - abrdns.com
+  - anyrouter.top
+  - muyuan.do
+  - 7r.fit
+  - hybgzs.com
+  - muapi.cn
+  - flyapi.tech

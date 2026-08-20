@@ -1,0 +1,25 @@
+# Generated from Rules/Source/allenrules/direct.list by tools/generate_rules.py. Do not edit.
+
+domain_set:
+  - qbittorrent-nox
+domain_suffix_set:
+  - synology.cn
+  - ui.com
+  - digitalocean.com
+  - dyndns.com
+  - whatismyip.akamai.com
+  - qq.com
+  - kuwo.cn
+  - xmwsyy.com
+  - imgse.com
+  - tagweb.vip
+  - ad.12306.cn
+  - gg.caixin.com
+  - sdkapp.uve.weibo.com
+  - ucweb.com
+  - amemv.com
+  - v4.plex.tv
+domain_keyword_set:
+  - volcengine
+  - boke
+  - yqc-premium

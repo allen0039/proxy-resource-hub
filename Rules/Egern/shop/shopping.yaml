@@ -1,0 +1,94 @@
+# Generated from Rules/Source/shop/shopping.txt by tools/generate_rules.py. Do not edit.
+
+domain_suffix_set:
+  # 海淘购物域名
+  # Prime Video 规则应置于本规则集之前，避免 amazon.com 下的视频接口被购物策略接管。
+
+  # Amazon 国际商城、支付、短链接与商品图片
+  - amazon.ae
+  - amazon.ca
+  - amazon.cl
+  - amazon.co.jp
+  - amazon.co.uk
+  - amazon.co.za
+  - amazon.com
+  - amazon.com.au
+  - amazon.com.be
+  - amazon.com.br
+  - amazon.com.co
+  - amazon.com.mx
+  - amazon.com.ng
+  - amazon.com.tr
+  - amazon.de
+  - amazon.eg
+  - amazon.es
+  - amazon.fr
+  - amazon.ie
+  - amazon.in
+  - amazon.it
+  - amazon.jp
+  - amazon.lu
+  - amazon.nl
+  - amazon.pl
+  - amazon.sa
+  - amazon.se
+  - amazon.sg
+  - amazonimages.com
+  - amazonpay.com
+  - amazonpay.in
+  - amzn.asia
+  - amzn.com
+  - amzn.to
+  - images-amazon.com
+  - ssl-images-amazon.com
+
+  # eBay 国际商城与静态资源
+  - ebay.at
+  - ebay.be
+  - ebay.ca
+  - ebay.ch
+  - ebay.co.nz
+  - ebay.co.uk
+  - ebay.co.za
+  - ebay.com
+  - ebay.com.ar
+  - ebay.com.au
+  - ebay.com.ec
+  - ebay.com.hk
+  - ebay.com.mt
+  - ebay.com.my
+  - ebay.com.ph
+  - ebay.com.sg
+  - ebay.de
+  - ebay.es
+  - ebay.fr
+  - ebay.ie
+  - ebay.in
+  - ebay.it
+  - ebay.jp
+  - ebay.lt
+  - ebay.nl
+  - ebay.ph
+  - ebay.pk
+  - ebay.pl
+  - ebay.sg
+  - ebaycdn.net
+  - ebayimg.com
+  - ebaystatic.com
+
+  # 户外零售商及折扣站
+  - backcountry.com
+  - campsaver.com
+  - competitivecyclist.com
+  - evo.com
+  - gearx.com
+  - rei.com
+  - sierra.com
+  - steepandcheap.com
+
+  # 户外品牌官方商城
+  - arcteryx.com
+  - montbell.com
+  - patagonia.com
+  - thenorthface.com
+  - sportpursuit.com
