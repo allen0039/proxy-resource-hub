@@ -13,6 +13,7 @@ import yaml
 ROOT = Path(__file__).resolve().parents[1]
 OUTPUT_NAMES = {
     "mihomo_byallen.yaml": "mihomo_allen.yaml",
+    "egern_byallen.yaml": "egern_byallen.yaml",
     "surge-Mac.conf": "surge_mac_allen.conf",
     "Surge-iPhone.conf": "surge_iphone_allen.conf",
     "quantumult_byallen.conf": "quantumultx_allen.conf",
@@ -36,6 +37,15 @@ PRIVATE_QUERY_RE = re.compile(
     r"(?i)https?://[^\s,]*(?:token|password|passwd|secret|auth|key)="
 )
 PEM_MARKERS = ("BEGIN PRIVATE KEY", "BEGIN CERTIFICATE")
+EGERN_FORBIDDEN_SECTIONS = {
+    "proxies",
+    "mitm",
+    "modules",
+    "script",
+    "scripts",
+    "scripting",
+    "scriptings",
+}
 
 
 class SanitizationError(ValueError):
@@ -393,6 +403,80 @@ def sanitize_mihomo(text: str) -> str:
     return normalize_text(sanitized)
 
 
+def _replace_egern_subscription_urls(text: str) -> str:
+    output: list[str] = []
+    in_policy_groups = False
+    urls_indent: int | None = None
+
+    for line in text.splitlines():
+        if line and not line.startswith((" ", "\t", "#")):
+            in_policy_groups = line.strip() == "policy_groups:"
+            urls_indent = None
+
+        if in_policy_groups:
+            match = re.match(r"^(\s*)urls:\s*(?:#.*)?$", line)
+            if match is not None:
+                urls_indent = len(match.group(1))
+            elif urls_indent is not None:
+                stripped = line.strip()
+                indent = len(line) - len(line.lstrip())
+                if stripped and not stripped.startswith("#") and indent <= urls_indent:
+                    urls_indent = None
+
+            if urls_indent is not None and URL_RE.search(line):
+                line = URL_RE.sub(
+                    lambda match: (
+                        match.group(0)
+                        if _is_subscription_placeholder(match.group(0))
+                        else SUBSCRIPTION_URL_PLACEHOLDER
+                    ),
+                    line,
+                    count=1,
+                )
+
+        output.append(line)
+    return "\n".join(output)
+
+
+def sanitize_egern(text: str) -> str:
+    normalized = normalize_text(text)
+    try:
+        parsed = yaml.safe_load(normalized)
+    except yaml.YAMLError as error:
+        raise SanitizationError("egern: source YAML cannot be parsed") from error
+    if not isinstance(parsed, dict):
+        raise SanitizationError("egern: source YAML root is not a mapping")
+
+    if EGERN_FORBIDDEN_SECTIONS & {
+        str(key).casefold() for key in parsed
+    }:
+        raise SanitizationError(
+            "egern: sensitive executable or credential section remains"
+        )
+
+    groups = parsed.get("policy_groups")
+    if not isinstance(groups, list):
+        raise SanitizationError("egern: policy_groups list is missing")
+    subscription_names: list[str] = []
+    for group in groups:
+        if not isinstance(group, dict) or len(group) != 1:
+            continue
+        payload = next(iter(group.values()))
+        if isinstance(payload, dict) and "urls" in payload:
+            name = payload.get("name")
+            if not isinstance(name, str) or not name:
+                raise SanitizationError("egern: subscription group name is missing")
+            subscription_names.append(name)
+    if not subscription_names:
+        raise SanitizationError("egern: no subscription groups found")
+
+    sanitized = _rename_provider_tokens(normalized, subscription_names)
+    sanitized = _replace_egern_subscription_urls(sanitized)
+    sanitized = normalize_text(sanitized)
+    _validate_egern("egern_byallen.yaml", sanitized)
+    return sanitized
+
+
 def _sections(text: str) -> dict[str, list[tuple[int, str]]]:
     result: dict[str, list[tuple[int, str]]] = {}
     current = ""
@@ -588,6 +672,113 @@ def _validate_mihomo(filename: str, text: str) -> None:
         raise SanitizationError(f"{filename}: MATCH is not the final rule")
 
 
+def _validate_egern(filename: str, text: str) -> None:
+    try:
+        parsed = yaml.safe_load(text)
+    except yaml.YAMLError as error:
+        raise SanitizationError(f"{filename}: YAML cannot be parsed") from error
+    if not isinstance(parsed, dict):
+        raise SanitizationError(f"{filename}: YAML root is not a mapping")
+
+    present_forbidden = EGERN_FORBIDDEN_SECTIONS & {
+        str(key).casefold() for key in parsed
+    }
+    if present_forbidden:
+        raise SanitizationError(
+            f"{filename}: sensitive executable or credential section remains"
+        )
+
+    credential_keys = {
+        "password",
+        "passwd",
+        "passphrase",
+        "secret",
+        "token",
+        "private-key",
+        "private_key",
+        "certificate",
+        "ca-p12",
+        "ca_p12",
+        "ca-passphrase",
+        "ca_passphrase",
+    }
+
+    def reject_credentials(value: object) -> None:
+        if isinstance(value, dict):
+            for key, nested in value.items():
+                if str(key).casefold() in credential_keys:
+                    raise SanitizationError(f"{filename}: credential field remains")
+                reject_credentials(nested)
+        elif isinstance(value, list):
+            for nested in value:
+                reject_credentials(nested)
+
+    reject_credentials(parsed)
+
+    groups = parsed.get("policy_groups")
+    rules = parsed.get("rules")
+    if not isinstance(groups, list) or not groups:
+        raise SanitizationError(f"{filename}: policy_groups list is missing")
+    if not isinstance(rules, list) or not rules:
+        raise SanitizationError(f"{filename}: rules list is missing")
+
+    group_names: list[str] = []
+    subscription_names: list[str] = []
+    policy_references: list[str] = []
+    for group in groups:
+        if not isinstance(group, dict) or len(group) != 1:
+            raise SanitizationError(f"{filename}: policy group entry is invalid")
+        payload = next(iter(group.values()))
+        if not isinstance(payload, dict):
+            raise SanitizationError(f"{filename}: policy group payload is invalid")
+        name = payload.get("name")
+        if not isinstance(name, str) or not name:
+            raise SanitizationError(f"{filename}: policy group name is missing")
+        group_names.append(name)
+
+        if "urls" in payload:
+            urls = payload["urls"]
+            if not isinstance(urls, list) or not urls:
+                raise SanitizationError(f"{filename}: subscription URL list is empty")
+            if not all(_is_subscription_placeholder(str(url)) for url in urls):
+                raise SanitizationError(
+                    f"{filename}: non-placeholder subscription URL remains"
+                )
+            subscription_names.append(name)
+        policies = payload.get("policies", [])
+        if not isinstance(policies, list):
+            raise SanitizationError(f"{filename}: policy references are invalid")
+        policy_references.extend(str(policy) for policy in policies)
+
+    if len(group_names) != len(set(group_names)):
+        raise SanitizationError(f"{filename}: duplicate policy group name remains")
+    expected_subscription_names = [
+        subscription_name(index)
+        for index in range(1, len(subscription_names) + 1)
+    ]
+    if subscription_names != expected_subscription_names:
+        raise SanitizationError(f"{filename}: subscription group names are not generic")
+
+    allowed_policies = set(group_names) | {"DIRECT", "REJECT"}
+    if not set(policy_references) <= allowed_policies:
+        raise SanitizationError(f"{filename}: policy group reference is missing")
+    if parsed.get("default_subscription_group") not in subscription_names:
+        raise SanitizationError(f"{filename}: default subscription group is missing")
+    if parsed.get("default_proxy_group") not in set(group_names):
+        raise SanitizationError(f"{filename}: default proxy group is missing")
+
+    for rule in rules:
+        if not isinstance(rule, dict) or len(rule) != 1:
+            raise SanitizationError(f"{filename}: rule entry is invalid")
+        payload = next(iter(rule.values()))
+        if not isinstance(payload, dict):
+            raise SanitizationError(f"{filename}: rule payload is invalid")
+        if payload.get("policy") not in allowed_policies:
+            raise SanitizationError(f"{filename}: rule policy reference is missing")
+    if next(iter(rules[-1])) != "default":
+        raise SanitizationError(f"{filename}: default is not the final rule")
+
+
 def validate_common_patterns(filename: str, text: str) -> None:
     if UUID_RE.search(text):
         raise SanitizationError(f"{filename}: UUID remains")
@@ -602,6 +793,8 @@ def validate_common_patterns(filename: str, text: str) -> None:
 def validate_client_structure(filename: str, text: str) -> None:
     if filename == "mihomo_allen.yaml":
         _validate_mihomo(filename, text)
+    elif filename == "egern_byallen.yaml":
+        _validate_egern(filename, text)
     else:
         _validate_ini_client(filename, text)
 
@@ -621,6 +814,7 @@ def generate(source_dir: Path, output_dir: Path) -> dict[str, str]:
         "quantumult_byallen.conf": sanitize_quantumultx,
         "allenloon.lcf": sanitize_loon,
         "mihomo_byallen.yaml": sanitize_mihomo,
+        "egern_byallen.yaml": sanitize_egern,
     }
     outputs: dict[str, str] = {}
     for source_name, output_name in OUTPUT_NAMES.items():

@@ -12,12 +12,14 @@ ROOT = Path(__file__).resolve().parents[1]
 SANITIZER_PATH = ROOT / "tools" / "sanitize_tool_configs.py"
 OUTPUT_DIR = ROOT / "Configs" / "tool_config"
 CONFIG_NAMES = {
+    "egern_byallen.yaml",
     "mihomo_allen.yaml",
     "surge_mac_allen.conf",
     "surge_iphone_allen.conf",
     "quantumultx_allen.conf",
     "loon_allen.lcf",
 }
+NON_EGERN_CONFIG_NAMES = CONFIG_NAMES - {"egern_byallen.yaml"}
 
 PUBLIC_RULE_URL = "https://public.example/rules.list"
 PRIVATE_URL = "https://private.invalid/sub?token=FAKE_TOKEN"
@@ -402,12 +404,52 @@ rule-providers:
         self.assertEqual("example.com", parsed["proxies"][0]["server"])
         self.assertIn(PUBLIC_RULE_URL, result)
 
+    def test_egern_replaces_subscription_urls_and_rejects_sensitive_sections(self):
+        sanitizer = load_sanitizer()
+        source = f"""policy_groups:
+  - select:
+      name: Personal Airport
+      urls:
+        - {PRIVATE_URL}
+      update_interval: 21600
+  - select:
+      name: Proxy
+      policies: [Personal Airport, DIRECT]
+rules:
+  - rule_set:
+      name: Public rules
+      match: {PUBLIC_RULE_URL}
+      policy: Proxy
+  - default:
+      name: Final
+      policy: Proxy
+default_subscription_group: Personal Airport
+default_proxy_group: Proxy
+"""
+
+        result = sanitizer.sanitize_egern(source)
+        parsed = yaml.safe_load(result)
+
+        self.assertNotIn("private.invalid", result)
+        self.assertNotIn("Personal Airport", result)
+        self.assertIn(PUBLIC_RULE_URL, result)
+        self.assertEqual("拼好鸡", parsed["policy_groups"][0]["select"]["name"])
+        self.assertEqual(
+            ["获取到的订阅链接"],
+            parsed["policy_groups"][0]["select"]["urls"],
+        )
+        sanitizer.validate_client_structure("egern_byallen.yaml", result)
+
+        unsafe = result + "modules: []\n"
+        with self.assertRaises(sanitizer.SanitizationError):
+            sanitizer.validate_client_structure("egern_byallen.yaml", unsafe)
+
     def test_validator_rejects_a_private_endpoint(self):
         sanitizer = load_sanitizer()
         outputs = {
-            name: "[General]\n" for name in CONFIG_NAMES if not name.endswith(".yaml")
+            name: (OUTPUT_DIR / name).read_text(encoding="utf-8")
+            for name in CONFIG_NAMES
         }
-        outputs["mihomo_allen.yaml"] = "rules:\n  - MATCH,DIRECT\n"
         outputs["surge_mac_allen.conf"] += PRIVATE_URL
 
         with self.assertRaises(sanitizer.SanitizationError):
@@ -660,6 +702,7 @@ rule-providers:
             for name in CONFIG_NAMES
         }
         titles = {
+            "egern_byallen.yaml": "# Allen 维护 - Egern 专属配置模板",
             "surge_iphone_allen.conf": "# Allen 维护 - Surge iPhone 配置",
             "surge_mac_allen.conf": "# Allen 维护 - Surge Mac 配置",
             "loon_allen.lcf": "# Allen 维护 - Loon 配置",
@@ -789,6 +832,16 @@ rule-providers:
             loon_remote_proxy,
         )
 
+        egern = yaml.safe_load(outputs["egern_byallen.yaml"])
+        egern_subscriptions = [
+            payload
+            for group in egern["policy_groups"]
+            for payload in group.values()
+            if "urls" in payload
+        ]
+        self.assertEqual(1, len(egern_subscriptions))
+        self.assertEqual(21600, egern_subscriptions[0]["update_interval"])
+
     def test_committed_outputs_preserve_routing_optimizations(self):
         outputs = {
             name: (OUTPUT_DIR / name).read_text(encoding="utf-8")
@@ -838,12 +891,23 @@ rule-providers:
         icon_path = ROOT / "icons" / "docker.png"
         self.assertTrue(icon_path.is_file())
         self.assertGreater(icon_path.stat().st_size, 0)
-        for name in CONFIG_NAMES:
+        for name in NON_EGERN_CONFIG_NAMES:
             text = (OUTPUT_DIR / name).read_text(encoding="utf-8")
             with self.subTest(name=name):
                 self.assertIn(DOCKER_ICON_URL, text)
                 self.assertNotIn(LEGACY_DOCKER_ICON_URL, text)
                 self.assertNotIn(BROKEN_DOCKER_ICON_URL, text)
+
+        egern = yaml.safe_load(
+            (OUTPUT_DIR / "egern_byallen.yaml").read_text(encoding="utf-8")
+        )
+        docker = next(
+            payload
+            for group in egern["policy_groups"]
+            for payload in group.values()
+            if payload.get("name") == "Docker"
+        )
+        self.assertEqual("shippingbox", docker["icon"])
 
     def test_committed_docker_domains_have_no_local_override(self):
         domains = ("docker.com", "docker.io", "dockerhub.com")
@@ -1036,7 +1100,10 @@ rule-providers:
             any(rule.startswith("RULE-SET,ai_custom,") for rule in mihomo["rules"])
         )
 
-        self.assertNotIn("新加坡优选", "\n".join(outputs.values()))
+        self.assertNotIn(
+            "新加坡优选",
+            "\n".join(outputs[name] for name in NON_EGERN_CONFIG_NAMES),
+        )
         self.assertNotIn("实时油价-浙江", "\n".join(outputs.values()))
         self.assertNotRegex("\n".join(outputs.values()), r"(?m)^YJ\\s*=")
         expected_domain_rules = {
@@ -1125,7 +1192,8 @@ rule-providers:
         }
         # Gemini keeps one exact local fallback while its maintained remote feed
         # loads before every generic or third-party AI rule set.
-        for name, text in outputs.items():
+        for name in NON_EGERN_CONFIG_NAMES:
+            text = outputs[name]
             with self.subTest(name=name, check="Gemini local fallback"):
                 self.assertRegex(
                     text,
@@ -1133,7 +1201,8 @@ rule-providers:
                 )
 
         broad_values = ("githubusercontent.com", "cloudflare.com")
-        for name, text in outputs.items():
+        for name in NON_EGERN_CONFIG_NAMES:
+            text = outputs[name]
             with self.subTest(name=name, check="GitHub API override"):
                 self.assertRegex(
                     text,
@@ -1151,6 +1220,16 @@ rule-providers:
                         rf"(?im)^\s*#\s*-?\s*(?:DOMAIN-SUFFIX|DOMAIN-KEYWORD|"
                         rf"host-suffix|host-keyword)\s*,\s*{re.escape(value)}\s*,",
                     )
+
+        egern = yaml.safe_load(outputs["egern_byallen.yaml"])
+        egern_rules = [next(iter(rule.values())) for rule in egern["rules"]]
+        egern_matches = {
+            (rule.get("match"), rule.get("policy")) for rule in egern_rules
+        }
+        self.assertIn(("gemini.google.com", "Google"), egern_matches)
+        self.assertIn(("api.github.com", "GitHub"), egern_matches)
+        self.assertNotIn("githubusercontent.com", {match for match, _ in egern_matches})
+        self.assertNotIn("cloudflare.com", {match for match, _ in egern_matches})
 
         surge_markers = (
             "Rules/Surge/Google/gemini.list",

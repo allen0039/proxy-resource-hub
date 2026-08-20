@@ -321,7 +321,7 @@ class RuleGeneratorTests(unittest.TestCase):
             encoding="utf-8"
         )
 
-        self.assertIn("五份公开模板默认启用", config_readme)
+        self.assertIn("六份公开模板默认启用", config_readme)
         self.assertIn("Rules/Source/allenrules/", config_readme)
         self.assertIn("六个源文件", config_readme)
         self.assertNotIn("Rules/Source/Custom/allenrules.list", config_readme)
