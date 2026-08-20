@@ -3,9 +3,9 @@
 # Derived from https://github.com/SukkaW/Surge
 # Source: https://ruleset.skk.moe/List/domainset/cdn.conf
 # Source: https://ruleset.skk.moe/List/non_ip/cdn.conf
-# Upstream Last Updated: 2026-08-14T12:22:28.498Z (domainset)
+# Upstream Last Updated: 2026-08-20T15:29:43.566Z (domainset)
 # Upstream Last Updated: 2026-08-19T01:29:53.827Z (non_ip)
-# Rule count: 4710
+# Rule count: 4709
 
 host, 7h15.ru1353t.1s.m4d3.by.5ukk4w.skk.moe, proxy
 host, 0x0.st, proxy
@@ -550,7 +550,6 @@ host-suffix, reactjs.org, proxy
 host, s.gishan.cc, proxy
 host, s.imgur.com, proxy
 host, s.plurk.com, proxy
-host, s3.aaaaa.io, proxy
 host, s3.masto.ai, proxy
 host-suffix, skypack.dev, proxy
 host-suffix, smilecdn.co, proxy
@@ -1477,6 +1476,7 @@ host, cdn.iporntv.net, proxy
 host, cdn.javmiku.com, proxy
 host, cdn.jetboost.io, proxy
 host, cdn.jolipage.co, proxy
+host, cdn.leonardo.ai, proxy
 host, cdn.mathjax.org, proxy
 host, cdn.mcp-use.com, proxy
 host, cdn.mercury.com, proxy
@@ -1563,6 +1563,7 @@ host-suffix, firebaseapp.com, proxy
 host-suffix, fontawesome.com, proxy
 host, fonts.bunny.net, proxy
 host, fonts.gishan.cc, proxy
+host, fonts.reown.com, proxy
 host, fonts.upset.dev, proxy
 host, fonts.wd40.info, proxy
 host-suffix, gannett-cdn.com, proxy
@@ -1673,7 +1674,6 @@ host, sprig.figma.com, proxy
 host, ssl.gstatic.com, proxy
 host-suffix, stack.imgur.com, proxy
 host-suffix, stackassets.com, proxy
-host, static.bad.news, proxy
 host, static.blip.net, proxy
 host, static.fboom.me, proxy
 host, static.ietf.org, proxy
@@ -1809,6 +1809,7 @@ host, cdn.equalweb.com, proxy
 host, cdn.firebase.com, proxy
 host, cdn.foxycart.com, proxy
 host, cdn.getkoala.com, proxy
+host, cdn.getmerlin.in, proxy
 host, cdn.ghostery.com, proxy
 host, cdn.gofundme.com, proxy
 host, cdn.hashnode.com, proxy
@@ -2475,7 +2476,6 @@ host, assets.jolipage.co, proxy
 host, assets.mailgun.com, proxy
 host, assets.nflxext.com, proxy
 host, assets.nxtrace.org, proxy
-host, assets.onestore.ms, proxy
 host, assets.ontrack.com, proxy
 host, assets.pingone.com, proxy
 host, assets.porndig.com, proxy
@@ -2507,7 +2507,6 @@ host, cdn.boldmethod.com, proxy
 host, cdn.britannica.com, proxy
 host, cdn.bullwhip.cloud, proxy
 host, cdn.cmcmarkets.com, proxy
-host, cdn.commandbar.com, proxy
 host, cdn.contentful.com, proxy
 host, cdn.convertbox.com, proxy
 host, cdn.conveythis.com, proxy
@@ -4169,6 +4168,7 @@ host-suffix, push.services.mozilla.com, proxy
 host-suffix, ravencoinipfs-gateway.com, proxy
 host, report-uri.cloudflare.com, proxy
 host, resource.tnlmediagene.com, proxy
+host, s3.beta.coinmarketcap.com, proxy
 host, scripts.scriptwrapper.com, proxy
 host, simplicity.trustpilot.com, proxy
 host-suffix, smartscreen.microsoft.com, proxy
@@ -4597,7 +4597,6 @@ host, cdn-yotpo-images-production.yotpo.com, proxy
 host, cdn.us-east-1.prod.moon.dubai.aws.dev, proxy
 host-suffix, content-storage-upload.googleapis.com, proxy
 host, firefox.settings.services.mozilla.com, proxy
-host, frames-commandbar-prod.commandbar.com, proxy
 host, frontend-apps-multi-region.workos.com, proxy
 host, pplx-next-static-public.perplexity.ai, proxy
 host, prod-packager-packages.codesandbox.io, proxy
