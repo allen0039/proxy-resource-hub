@@ -2,7 +2,7 @@
 
 [![Validate rules](https://github.com/allen0039/proxy-resource-hub/actions/workflows/validate-rules.yml/badge.svg)](https://github.com/allen0039/proxy-resource-hub/actions/workflows/validate-rules.yml)
 
-面向 Mihomo、Surge、Quantumult X 和 Loon 的代理配置与分流规则仓库。仓库提供五份脱敏配置模板，以及 AI、个人域名、PT 站点、海淘购物和 SKK CDN/Download 规则订阅。
+面向 Mihomo、Surge、Quantumult X、Loon 和 Egern 的代理配置与分流规则仓库。仓库提供六份脱敏配置模板，以及 AI、个人域名、PT 站点、海淘购物和 SKK CDN/Download 规则订阅。
 
 > [!IMPORTANT]
 > `Configs/tool_config/` 中的文件是公开脱敏模板，不是开箱即用的节点订阅。使用前必须在自己的私人副本中替换 `获取到的订阅链接`、`CHANGE_ME`、本地节点和 MITM 证书。不要把填写后的私人配置提交到公开仓库。
@@ -27,6 +27,7 @@
 | Surge for iPhone | [surge_iphone_allen.conf](Configs/tool_config/surge_iphone_allen.conf) · [Raw](https://raw.githubusercontent.com/allen0039/proxy-resource-hub/main/Configs/tool_config/surge_iphone_allen.conf) | `[Proxy Group]` 中的 `policy-path` | 按需添加 `[Proxy]` |
 | Quantumult X | [quantumultx_allen.conf](Configs/tool_config/quantumultx_allen.conf) · [Raw](https://raw.githubusercontent.com/allen0039/proxy-resource-hub/main/Configs/tool_config/quantumultx_allen.conf) | `[server_remote]` | `[server_local]` |
 | Loon | [loon_allen.lcf](Configs/tool_config/loon_allen.lcf) · [Raw](https://raw.githubusercontent.com/allen0039/proxy-resource-hub/main/Configs/tool_config/loon_allen.lcf) | `[Remote Proxy]` | 按需添加 `[Proxy]` |
+| Egern | [egern_byallen.yaml](Configs/tool_config/egern_byallen.yaml) · [Raw](https://raw.githubusercontent.com/allen0039/proxy-resource-hub/main/Configs/tool_config/egern_byallen.yaml) | `policy_groups` 中的 `urls` | 在私人副本中按需添加 |
 
 ### 规则类型
 
@@ -38,7 +39,7 @@
 | PT 站点 | 经确认的 PT 站点域名 | 直连 |
 | 海淘购物 | Amazon、eBay、REI、Backcountry 与户外品牌商城 | `海淘购物` 或自定义手动策略 |
 | SKK CDN | CDN 与静态资源域名 | `CDN` |
-| SKK Download | 下载域名规则 | 仅自动维护，五份模板当前未启用 |
+| SKK Download | 下载域名规则 | 仅自动维护，六份模板当前未启用 |
 
 ## 快速开始
 
@@ -158,7 +159,7 @@ Loon 的远程规则位于 `[Remote Rule]`，插件位于 `[Plugin]`。启用需
 
 ### 策略组顺序
 
-地区相关策略在五份模板中统一按以下顺序排列：
+地区相关策略在六份模板中按客户端能力采用以下顺序：
 
 ```text
 香港优选 → 日本优选 → 新加坡优选 → 美国优选
@@ -182,7 +183,7 @@ Loon 的远程规则位于 `[Remote Rule]`，插件位于 `[Plugin]`。启用需
 
 所有客户端都按从上到下首次匹配生效。本地精确规则位于远程大类规则之前，最终规则必须位于末尾。
 
-五份模板使用 `api.github.com` 本地精确规则固定走 `GitHub`。Gemini / Google AI 以仓库自有 `Google/gemini.list` 为权威规则，并在第三方 AI 规则之前加载；本地只保留 `gemini.google.com` 精确兜底。`githubusercontent.com`、`cloudflare.com`、`gstatic.com`、`googleusercontent.com` 和 `DOMAIN-KEYWORD,googleapis` 等宽泛本地规则保持停用，避免覆盖无关业务；其他 AI 服务先加载仓库自有 `AI/ai.list`，再加载第三方 AI 规则作为补充。
+六份模板使用 `api.github.com` 本地精确规则固定走 `GitHub`。Gemini / Google AI 在支持仓库自有 `Google/gemini.list` 的客户端中优先加载该规则；本地只保留 `gemini.google.com` 精确兜底。`githubusercontent.com`、`cloudflare.com`、`gstatic.com`、`googleusercontent.com` 和 `DOMAIN-KEYWORD,googleapis` 等宽泛本地规则保持停用，避免覆盖无关业务；其他 AI 服务先加载仓库自有 `AI/ai.list`，再加载第三方 AI 规则作为补充。
 
 Mihomo 将自有 AI 精确规则置于 Cloudflare 大类规则之前。Loon 的 AI、测速、Steam 和 Game 补充规则使用 Blackmatrix 的 Loon 原生列表；当前无法下载的 Kelee 插件只作停用备份保留。
 
@@ -361,13 +362,14 @@ python3 tools/sanitize_tool_configs.py \
 
 ```text
 Configs/
-└── tool_config/             # 五份公开脱敏配置模板
+└── tool_config/             # 六份公开脱敏配置模板
 Rules/
 ├── Source/                  # AI、个人域名和 PT 的唯一手工维护入口
 ├── Mihomo/                  # Mihomo 规则
 ├── Surge/                   # Surge 规则
 ├── QuantumultX/             # Quantumult X 规则及 SKK 转换结果
 ├── Loon/                    # Loon 规则及 SKK 转换结果
+├── Egern/                   # Egern 原生 YAML 规则
 └── SKK/                     # SKK 来源与许可证说明
 tools/
 ├── generate_rules.py        # 生成跨客户端规则

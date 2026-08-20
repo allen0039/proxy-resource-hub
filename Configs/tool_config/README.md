@@ -1,13 +1,13 @@
 # 新手配置使用指南
 
-这里提供 Mihomo、Surge、Quantumult X 和 Loon 的五份完整配置模板。
+这里提供 Mihomo、Surge、Quantumult X、Loon 和 Egern 的六份完整配置模板。
 
 > [!IMPORTANT]
 > 这些是公开脱敏模板，里面没有真实节点。必须先下载到本地，把 `获取到的订阅链接` 替换成自己的机场订阅，才能正常使用。
 
 > 仓库提供由 `Rules/Source/allenrules/` 下六个源文件派生的一条 Custom DIRECT 与五条 Regional 规则订阅。请在自己的私人副本中填写节点订阅和其他私人信息。
 
-> Gemini / Google AI 规则由 `Rules/Source/Google/gemini.txt` 维护，并生成四端 `Google/gemini.list` 远程订阅；五份模板只保留 `gemini.google.com` 本地精确兜底，远程规则位于通用 AI 规则之前。
+> Gemini / Google AI 规则由 `Rules/Source/Google/gemini.txt` 维护，并生成四端 `Google/gemini.list` 远程订阅；六份模板只保留 `gemini.google.com` 本地精确兜底，支持该远程规则的客户端会在通用 AI 规则之前加载。
 
 ## 先安装客户端
 
@@ -19,6 +19,7 @@
 | Surge for Mac | [Surge 官方网站](https://nssurge.com/) | 对应 `surge_mac_allen.conf`；Mac 版不通过 Mac App Store 提供 |
 | Quantumult X | [App Store](https://apps.apple.com/us/app/quantumult-x/id1443988620) | 对应 `quantumultx_allen.conf` |
 | Loon | [App Store](https://apps.apple.com/us/app/loon/id1373567447) | 对应 `loon_allen.lcf` |
+| Egern | [App Store](https://apps.apple.com/app/egern/id1616105820) | 对应 `egern_byallen.yaml` |
 
 App Store 链接指向应用官方商店页面。部分应用可能未在所有国家或地区上架，需要使用已上架该应用的 Apple ID 地区。
 
@@ -43,7 +44,7 @@ App Store 链接指向应用官方商店页面。部分应用可能未在所有�
 
 不要直接把本页或 Raw 地址当成远程配置订阅。公开模板需要填写私人信息，应该作为本地配置使用。
 
-五份公开模板默认启用由六个源文件派生的六条远程规则订阅。
+六份公开模板默认启用由六个源文件派生的六条远程规则订阅。
 
 | 客户端 | 自定义远程规则已接入 |
 | --- | --- |
@@ -51,6 +52,7 @@ App Store 链接指向应用官方商店页面。部分应用可能未在所有�
 | Surge Mac / iPhone | 同上，对应 `Rules/Surge/` |
 | Quantumult X | 同上，对应 `Rules/QuantumultX/` |
 | Loon | 同上，对应 `Rules/Loon/` |
+| Egern | 同上，对应 `Rules/Egern/`，使用原生 YAML 规则 |
 
 家宽节点策略组按节点名称匹配 “家用”“家庭”“家宽” 或独立单词 “ISP”，仅作为 AI 策略组的可选出口。仓库不包含真实节点、订阅地址或凭据；下载模板后仍需在本地填写私人订阅。
 
@@ -65,6 +67,7 @@ App Store 链接指向应用官方商店页面。部分应用可能未在所有�
 | Surge for iPhone | [surge_iphone_allen.conf](surge_iphone_allen.conf) · [Raw 下载](https://raw.githubusercontent.com/allen0039/proxy-resource-hub/main/Configs/tool_config/surge_iphone_allen.conf) | Surge 配置 |
 | Quantumult X | [quantumultx_allen.conf](quantumultx_allen.conf) · [Raw 下载](https://raw.githubusercontent.com/allen0039/proxy-resource-hub/main/Configs/tool_config/quantumultx_allen.conf) | Quantumult X 配置 |
 | Loon | [loon_allen.lcf](loon_allen.lcf) · [Raw 下载](https://raw.githubusercontent.com/allen0039/proxy-resource-hub/main/Configs/tool_config/loon_allen.lcf) | Loon 配置 |
+| Egern | [egern_byallen.yaml](egern_byallen.yaml) · [Raw 下载](https://raw.githubusercontent.com/allen0039/proxy-resource-hub/main/Configs/tool_config/egern_byallen.yaml) | Egern YAML 配置 |
 
 ## 三分钟完成配置
 
@@ -180,6 +183,26 @@ Mac 和 iPhone 必须选择对应文件。Surge Mac 模板包含 qB 下载器来
 4. 如果地区组没有节点，检查订阅节点名称能否匹配 `[Remote Filter]`。
 5. MITM 类插件需要先安装并信任本地证书。
 
+### Egern
+
+需要修改：
+
+```yaml
+policy_groups:
+  - select:
+      name: 拼好鸡
+      urls:
+        - 获取到的订阅链接
+```
+
+操作要点：
+
+1. 只替换 `urls` 下第一条 `获取到的订阅链接`。
+2. 多机场可继续在 `urls` 下添加订阅 URL。
+3. 保留 `default_subscription_group: 拼好鸡` 和 `default_proxy_group: Proxy`。
+4. 公开模板不包含 MITM、脚本、模块、证书或本地节点；这些内容只能在私人副本中按需配置。
+5. 导入后更新订阅与远程规则，确认策略组均能正常引用。
+
 ## 这套配置包含什么
 
 - 通用入口：Surge、Loon 和 Mihomo 使用 `Proxy`；Quantumult X 使用内置小写 `proxy`；各客户端同时保留 `Final` 和直连策略。
@@ -193,7 +216,7 @@ Mac 和 iPhone 必须选择对应文件。Surge Mac 模板包含 qB 下载器来
 
 Loon 的 AI、测速、Steam 和 Game 补充规则使用 Blackmatrix 的 Loon 原生列表。无法通过当前网络更新的 Kelee 插件保留为 `enabled=false`，避免导入后持续产生资源更新错误。
 
-`Download` 规则仍在仓库中自动维护，但这五份模板没有启用 Download 策略组，避免国外下载域名被过度分流。
+`Download` 规则仍在仓库中自动维护，但这六份模板没有启用 Download 策略组，避免国外下载域名被过度分流。
 
 ## 新手不要随便改这些内容
 
