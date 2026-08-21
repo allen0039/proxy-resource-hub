@@ -1,0 +1,9 @@
+# Apple iCloud Private Relay endpoints.
+# Bind this ruleset to the Apple policy and place it before iCloud.list.
+
+DOMAIN,mask.icloud.com
+DOMAIN,mask-h2.icloud.com
+DOMAIN,mask-api.icloud.com
+DOMAIN,mask-canary.icloud.com
+DOMAIN,mask.apple-dns.net
+DOMAIN,canary.mask.apple-dns.net

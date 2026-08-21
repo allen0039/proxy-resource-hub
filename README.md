@@ -198,6 +198,8 @@ Surge Mac 和 Mihomo 支持 qB 下载器来源 IP 直连保护。使用时应把
 | Gemini / Google AI | [订阅](https://raw.githubusercontent.com/allen0039/proxy-resource-hub/main/Rules/Mihomo/Google/gemini.list) | [订阅](https://raw.githubusercontent.com/allen0039/proxy-resource-hub/main/Rules/Surge/Google/gemini.list) | [订阅](https://raw.githubusercontent.com/allen0039/proxy-resource-hub/main/Rules/QuantumultX/Google/gemini.list) | [订阅](https://raw.githubusercontent.com/allen0039/proxy-resource-hub/main/Rules/Loon/Google/gemini.list) |
 | AI 服务 | [订阅](https://raw.githubusercontent.com/allen0039/proxy-resource-hub/main/Rules/Mihomo/AI/ai.list) | [订阅](https://raw.githubusercontent.com/allen0039/proxy-resource-hub/main/Rules/Surge/AI/ai.list) | [订阅](https://raw.githubusercontent.com/allen0039/proxy-resource-hub/main/Rules/QuantumultX/AI/ai.list) | [订阅](https://raw.githubusercontent.com/allen0039/proxy-resource-hub/main/Rules/Loon/AI/ai.list) |
 | 公益 AI | [订阅](https://raw.githubusercontent.com/allen0039/proxy-resource-hub/main/Rules/Mihomo/AI/direct-ai.list) | [订阅](https://raw.githubusercontent.com/allen0039/proxy-resource-hub/main/Rules/Surge/AI/direct-ai.list) | [订阅](https://raw.githubusercontent.com/allen0039/proxy-resource-hub/main/Rules/QuantumultX/AI/direct-ai.list) | [订阅](https://raw.githubusercontent.com/allen0039/proxy-resource-hub/main/Rules/Loon/AI/direct-ai.list) |
+| iCloud 数据直连 | — | [订阅](https://raw.githubusercontent.com/allen0039/proxy-resource-hub/main/Rules/Apple/iCloud.list) | — | [订阅](https://raw.githubusercontent.com/allen0039/proxy-resource-hub/main/Rules/Apple/iCloud.list) |
+| Apple Private Relay | — | [订阅](https://raw.githubusercontent.com/allen0039/proxy-resource-hub/main/Rules/Apple/PrivateRelay.list) | — | [订阅](https://raw.githubusercontent.com/allen0039/proxy-resource-hub/main/Rules/Apple/PrivateRelay.list) |
 | 自定义直连 | [订阅](https://raw.githubusercontent.com/allen0039/proxy-resource-hub/main/Rules/Mihomo/Custom/direct.list) | [订阅](https://raw.githubusercontent.com/allen0039/proxy-resource-hub/main/Rules/Surge/Custom/direct.list) | [订阅](https://raw.githubusercontent.com/allen0039/proxy-resource-hub/main/Rules/QuantumultX/Custom/direct.list) | [订阅](https://raw.githubusercontent.com/allen0039/proxy-resource-hub/main/Rules/Loon/Custom/direct.list) |
 | UU远程（Mac 进程直连） | — | [订阅](https://raw.githubusercontent.com/allen0039/proxy-resource-hub/main/Rules/Surge/Custom/uuyuancheng.list) | — | [订阅](https://raw.githubusercontent.com/allen0039/proxy-resource-hub/main/Rules/Loon/Custom/uuyuancheng.list) |
 | 个人域名 | [订阅](https://raw.githubusercontent.com/allen0039/proxy-resource-hub/main/Rules/Mihomo/Personal/Domain.list) | [订阅](https://raw.githubusercontent.com/allen0039/proxy-resource-hub/main/Rules/Surge/Personal/Domain.list) | [订阅](https://raw.githubusercontent.com/allen0039/proxy-resource-hub/main/Rules/QuantumultX/Personal/Domain.list) | [订阅](https://raw.githubusercontent.com/allen0039/proxy-resource-hub/main/Rules/Loon/Personal/Domain.list) |
@@ -211,6 +213,20 @@ PT 规则当前包含 36 个经确认的站点域名。书签中明确排除的�
 ### 单独添加规则订阅
 
 以下示例使用 PT 规则并默认直连。策略名称可以替换，但必须确保对应策略已经存在。
+
+#### Apple Push 代理与 iCloud 直连
+
+`PrivateRelay.list` 必须放在 `iCloud.list` 前面，避免 `mask.icloud.com` 被 iCloud 后缀规则提前直连。Apple Push 策略组以及 Surge 的 `always-real-ip`、Loon 的 `real-ip` 仍由本地配置维护。
+
+```ini
+# Surge（在 [Rule] 中添加）
+RULE-SET,https://raw.githubusercontent.com/allen0039/proxy-resource-hub/main/Rules/Apple/PrivateRelay.list,Apple
+RULE-SET,https://raw.githubusercontent.com/allen0039/proxy-resource-hub/main/Rules/Apple/iCloud.list,DIRECT
+
+# Loon（在 [Remote Rule] 中添加，并保持相同顺序）
+https://raw.githubusercontent.com/allen0039/proxy-resource-hub/main/Rules/Apple/PrivateRelay.list, policy=Apple, tag=Apple Private Relay, enabled=true
+https://raw.githubusercontent.com/allen0039/proxy-resource-hub/main/Rules/Apple/iCloud.list, policy=DIRECT, tag=iCloud直连, enabled=true
+```
 
 #### UU远程（仅 Mac）
 
