@@ -332,7 +332,7 @@ https://raw.githubusercontent.com/allen0039/proxy-resource-hub/main/Rules/Loon/R
 
 ### 手工规则维护
 
-域名只在 `Rules/Source/` 中维护一次。各客户端目录中的生成文件不要直接编辑。
+常规跨客户端域名只在 `Rules/Source/` 中维护一次，各客户端目录中的生成文件不要直接编辑。`Rules/Apple/` 是 Surge 与 Loon 共用的 classical 规则，直接维护其中的 `iCloud.list` 与 `PrivateRelay.list`，每行使用 `RULE-TYPE,VALUE` 格式。
 
 ```bash
 python3 tools/generate_rules.py
