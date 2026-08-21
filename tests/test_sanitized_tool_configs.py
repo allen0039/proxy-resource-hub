@@ -640,6 +640,16 @@ default_proxy_group: Proxy
         self.assertIn(HOME_POLICY_NAME, groups["AI"]["proxies"])
         self.assertEqual(2, configs["mihomo_allen.yaml"].count(HOME_POLICY_NAME))
 
+        egern = yaml.safe_load(configs["egern_byallen.yaml"])
+        egern_groups = {
+            payload["name"]: payload
+            for group in egern["policy_groups"]
+            for payload in group.values()
+        }
+        self.assertIn(HOME_POLICY_NAME, egern_groups)
+        self.assertIn(HOME_POLICY_NAME, egern_groups["AI"]["policies"])
+        self.assertIn(HOME_POLICY_NAME, egern_groups["Final"]["policies"])
+
     def test_committed_configs_place_home_group_before_all_nodes(self):
         configs = {
             name: (OUTPUT_DIR / name).read_text(encoding="utf-8")

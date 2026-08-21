@@ -183,6 +183,7 @@ policy_groups:
         - 英国节点
         - 德国节点
         - 其他地区
+        - 家宽节点
         - Proxy
         - DIRECT
       icon: arrow.triangle.branch
