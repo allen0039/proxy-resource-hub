@@ -1,0 +1,8 @@
+# iCloud data-plane domains.
+# Bind this ruleset to DIRECT. Keep PrivateRelay.list before this ruleset.
+
+DOMAIN-SUFFIX,icloud.com
+DOMAIN-SUFFIX,icloud-content.com
+DOMAIN-SUFFIX,me.com
+DOMAIN-SUFFIX,apple-cloudkit.com
+DOMAIN-SUFFIX,apple-livephotoskit.com
