@@ -3,9 +3,9 @@
 # Derived from https://github.com/SukkaW/Surge
 # Source: https://ruleset.skk.moe/List/domainset/cdn.conf
 # Source: https://ruleset.skk.moe/List/non_ip/cdn.conf
-# Upstream Last Updated: 2026-08-21T08:17:07.730Z (domainset)
+# Upstream Last Updated: 2026-08-22T19:56:09.234Z (domainset)
 # Upstream Last Updated: 2026-08-19T01:29:53.827Z (non_ip)
-# Rule count: 4710
+# Rule count: 4715
 
 host, 7h15.ru1353t.1s.m4d3.by.5ukk4w.skk.moe, proxy
 host, 0x0.st, proxy
@@ -913,6 +913,7 @@ host-suffix, emotivecdn.io, proxy
 host-suffix, ensighten.com, proxy
 host, eu.cdnbye.com, proxy
 host-suffix, fastlycdn.com, proxy
+host-suffix, fe.indazn.com, proxy
 host-suffix, feedercdn.com, proxy
 host-suffix, fiverrcdn.com, proxy
 host-suffix, flagpedia.net, proxy
@@ -2400,6 +2401,7 @@ host, static.codepen.io, proxy
 host, static.cracked.ax, proxy
 host, static.cracked.sh, proxy
 host, static.crypto.com, proxy
+host, static.dazndn.com, proxy
 host-suffix, static.flickr.com, proxy
 host, static.frame.work, proxy
 host, static.garmin.com, proxy
@@ -4244,6 +4246,7 @@ host-suffix, hackerone-user-content.com, proxy
 host-suffix, hubspotusercontent-eu1.net, proxy
 host-suffix, hubspotusercontent-na1.net, proxy
 host, idportal-cdn-prd.unity.com, proxy
+host, image.discovery.indazn.com, proxy
 host, images.applegamingwiki.com, proxy
 host, images.ecomm.microsoft.com, proxy
 host, images.financemagnates.com, proxy
@@ -4534,6 +4537,7 @@ host, b5x-sentry.1passwordservices.com, proxy
 host, cmtycdn.powerpages.microsoft.com, proxy
 host-suffix, commondatastorage.googleapis.com, proxy
 host-suffix, crash-reports.browser.yandex.net, proxy
+host, dazn-content-proxy.sd.indazn.com, proxy
 host, detectportal.brave-http-only.com, proxy
 host, edge-mobile-static.azureedge.net, proxy
 host, nbcnewsdigital-static.nbcuni.com, proxy
@@ -4585,6 +4589,7 @@ host, static-assets-prod.unrealengine.com, proxy
 host, stubdownloader.services.mozilla.com, proxy
 host, cf-images.us-east-1.prod.boltdns.net, proxy
 host, content-prod-live.cert.starbucks.com, proxy
+host, contentful-asset-proxy.sd.indazn.com, proxy
 host-suffix, crashlyticsreports-pa.googleapis.com, proxy
 host, crossborder-integration.global-e.com, proxy
 host, firebaseinstallations.googleapis.com, proxy
