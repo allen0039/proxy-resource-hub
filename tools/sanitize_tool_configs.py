@@ -36,6 +36,11 @@ LONG_BASE64_RE = re.compile(
 PRIVATE_QUERY_RE = re.compile(
     r"(?i)https?://[^\s,]*(?:token|password|passwd|secret|auth|key)="
 )
+IP_ROUTING_RULE_RE = re.compile(
+    r"^\s*(?:[#;]\s*)?(?:-\s*)?(?:IP-CIDR6?|IP6-CIDR)\s*,"
+    r"\s*[^,\s]+\s*,\s*([^,\s]+)",
+    re.IGNORECASE,
+)
 PEM_MARKERS = ("BEGIN PRIVATE KEY", "BEGIN CERTIFICATE")
 EGERN_FORBIDDEN_SECTIONS = {
     "proxies",
@@ -110,6 +115,25 @@ def _append_placeholder_once(
     return True
 
 
+def _is_nonpublic_ip_routing_rule(line: str) -> bool:
+    """Treat address-specific proxy routing as private configuration."""
+    match = IP_ROUTING_RULE_RE.match(line)
+    if match is None:
+        return False
+    policy = match.group(1).casefold()
+    return policy != "direct" and not policy.startswith("reject")
+
+
+def _drop_nonpublic_ip_routing_rules(text: str) -> str:
+    return normalize_text(
+        "\n".join(
+            line
+            for line in text.splitlines()
+            if not _is_nonpublic_ip_routing_rule(line)
+        )
+    )
+
+
 def sanitize_surge(text: str, slug: str) -> str:
     lines = normalize_text(text).splitlines()
     output: list[str] = []
@@ -166,6 +190,8 @@ def sanitize_surge(text: str, slug: str) -> str:
                 proxy_marker,
             )
             continue
+        if current == "rule" and _is_nonpublic_ip_routing_rule(line):
+            continue
         if key in secret_keys:
             output.append(line.split("=", 1)[0].rstrip() + " = CHANGE_ME")
             continue
@@ -173,7 +199,7 @@ def sanitize_surge(text: str, slug: str) -> str:
 
     if subscription_index == 0:
         raise SanitizationError(f"{slug}: no policy-path subscriptions found")
-    return normalize_text("\n".join(output))
+    return _drop_nonpublic_ip_routing_rules("\n".join(output))
 
 
 def sanitize_quantumultx(text: str) -> str:
@@ -239,7 +265,7 @@ def sanitize_quantumultx(text: str) -> str:
 
     if subscription_index == 0:
         raise SanitizationError("quantumultx: no remote subscriptions found")
-    return normalize_text("\n".join(output))
+    return _drop_nonpublic_ip_routing_rules("\n".join(output))
 
 
 def sanitize_loon(text: str) -> str:
@@ -297,7 +323,7 @@ def sanitize_loon(text: str) -> str:
 
     if subscription_index == 0:
         raise SanitizationError("loon: no remote subscriptions found")
-    return normalize_text("\n".join(output))
+    return _drop_nonpublic_ip_routing_rules("\n".join(output))
 
 
 def _provider_names(text: str) -> list[str]:
@@ -400,7 +426,7 @@ def sanitize_mihomo(text: str) -> str:
     sanitized = _rename_provider_tokens(normalized, names)
     sanitized = _replace_mihomo_provider_urls(sanitized)
     sanitized = _sanitize_mihomo_proxy_scalars(sanitized)
-    return normalize_text(sanitized)
+    return _drop_nonpublic_ip_routing_rules(sanitized)
 
 
 def _replace_egern_subscription_urls(text: str) -> str:
@@ -788,6 +814,10 @@ def validate_common_patterns(filename: str, text: str) -> None:
         raise SanitizationError(f"{filename}: long base64 material remains")
     if PRIVATE_QUERY_RE.search(text):
         raise SanitizationError(f"{filename}: credential query parameter remains")
+    if any(_is_nonpublic_ip_routing_rule(line) for line in text.splitlines()):
+        raise SanitizationError(
+            f"{filename}: address-specific proxy routing rule remains"
+        )
 
 
 def validate_client_structure(filename: str, text: str) -> None:
