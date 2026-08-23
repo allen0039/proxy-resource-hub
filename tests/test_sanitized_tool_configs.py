@@ -260,6 +260,35 @@ hostname = example.org
         self.assertNotIn("private.invalid", result)
         sanitizer.validate_client_structure("surge_mac_allen.conf", result)
 
+    def test_surge_removes_address_specific_proxy_routing_rules(self):
+        sanitizer = load_sanitizer()
+        source = f"""[General]
+loglevel = notify
+
+[Proxy Group]
+Main = select, policy-path={PRIVATE_URL}, DIRECT
+
+[Rule]
+IP-CIDR,192.0.2.99/32,美国节点,no-resolve
+IP-CIDR,198.51.100.0/24,REJECT,no-resolve
+IP-CIDR,192.168.0.0/16,DIRECT,no-resolve
+FINAL,Main
+"""
+
+        result = sanitizer.sanitize_surge(source, "surge-mac")
+
+        self.assertNotIn("192.0.2.99/32", result)
+        self.assertIn("198.51.100.0/24,REJECT", result)
+        self.assertIn("192.168.0.0/16,DIRECT", result)
+        sanitizer.validate_common_patterns("surge_mac_allen.conf", result)
+
+    def test_validator_rejects_address_specific_proxy_routing_rules(self):
+        sanitizer = load_sanitizer()
+        unsafe = "[Rule]\nIP-CIDR,192.0.2.99/32,美国节点,no-resolve\n"
+
+        with self.assertRaises(sanitizer.SanitizationError):
+            sanitizer.validate_common_patterns("surge_mac_allen.conf", unsafe)
+
     def test_quantumultx_replaces_remote_servers_and_removes_local_nodes(self):
         sanitizer = load_sanitizer()
         source = f"""[policy]
