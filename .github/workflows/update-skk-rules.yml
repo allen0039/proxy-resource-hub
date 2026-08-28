@@ -22,7 +22,9 @@ jobs:
         with:
           python-version: "3.x"
       - name: Update generated SKK rules
-        run: python3 tools/update_skk_rules.py
+        run: |
+          python3 tools/update_skk_rules.py
+          python3 tools/update_egern_rules.py
       - name: Run tests
         run: |
           python3 -m pip install -r requirements-test.txt
@@ -33,7 +35,8 @@ jobs:
             Rules/QuantumultX/SKK/CDN.list \
             Rules/QuantumultX/SKK/Download.list \
             Rules/Loon/SKK/CDN.list \
-            Rules/Loon/SKK/Download.list
+            Rules/Loon/SKK/Download.list \
+            Rules/Egern
           if git diff --cached --quiet; then
             echo "SKK rules are already current."
             exit 0

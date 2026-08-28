@@ -473,12 +473,9 @@ def sanitize_egern(text: str) -> str:
     if not isinstance(parsed, dict):
         raise SanitizationError("egern: source YAML root is not a mapping")
 
-    if EGERN_FORBIDDEN_SECTIONS & {
-        str(key).casefold() for key in parsed
-    }:
-        raise SanitizationError(
-            "egern: sensitive executable or credential section remains"
-        )
+    for key in list(parsed):
+        if str(key).casefold() in EGERN_FORBIDDEN_SECTIONS:
+            parsed.pop(key)
 
     groups = parsed.get("policy_groups")
     if not isinstance(groups, list):
@@ -488,7 +485,7 @@ def sanitize_egern(text: str) -> str:
         if not isinstance(group, dict) or len(group) != 1:
             continue
         payload = next(iter(group.values()))
-        if isinstance(payload, dict) and "urls" in payload:
+        if isinstance(payload, dict) and ({"urls", "urls_disabled"} & set(payload)):
             name = payload.get("name")
             if not isinstance(name, str) or not name:
                 raise SanitizationError("egern: subscription group name is missing")
@@ -496,8 +493,40 @@ def sanitize_egern(text: str) -> str:
     if not subscription_names:
         raise SanitizationError("egern: no subscription groups found")
 
-    sanitized = _rename_provider_tokens(normalized, subscription_names)
-    sanitized = _replace_egern_subscription_urls(sanitized)
+    renamed = {
+        name: subscription_name(index)
+        for index, name in enumerate(subscription_names, 1)
+    }
+
+    def rename_references(value: object) -> object:
+        if isinstance(value, dict):
+            return {key: rename_references(nested) for key, nested in value.items()}
+        if isinstance(value, list):
+            return [rename_references(nested) for nested in value]
+        if isinstance(value, str):
+            return renamed.get(value, value)
+        return value
+
+    parsed = rename_references(parsed)
+    if not isinstance(parsed, dict):
+        raise SanitizationError("egern: sanitized YAML root is not a mapping")
+    for group in parsed["policy_groups"]:
+        payload = next(iter(group.values()))
+        if isinstance(payload, dict):
+            for url_key in ("urls", "urls_disabled"):
+                if url_key not in payload:
+                    continue
+                urls = payload[url_key]
+                if not isinstance(urls, list) or not urls:
+                    raise SanitizationError("egern: subscription URL list is invalid")
+                payload[url_key] = [SUBSCRIPTION_URL_PLACEHOLDER for _ in urls]
+
+    sanitized = "# Allen 维护 - Egern 专属配置模板\n" + yaml.safe_dump(
+        parsed,
+        allow_unicode=True,
+        sort_keys=False,
+        width=1000,
+    )
     sanitized = normalize_text(sanitized)
     _validate_egern("egern_byallen.yaml", sanitized)
     return sanitized
