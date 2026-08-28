@@ -2,7 +2,7 @@
 
 [![Validate rules](https://github.com/allen0039/proxy-resource-hub/actions/workflows/validate-rules.yml/badge.svg)](https://github.com/allen0039/proxy-resource-hub/actions/workflows/validate-rules.yml)
 
-面向 Mihomo、Surge、Quantumult X、Loon 和 Egern 的代理配置与分流规则仓库。仓库提供六份脱敏配置模板，以及 AI、个人域名、PT 站点、海淘购物和 SKK CDN/Download 规则订阅。
+面向 Mihomo、Surge、Quantumult X、Loon 和 Egern 的代理配置与分流规则仓库。仓库提供六份脱敏配置模板，以及 AI、个人域名、PT 站点、海淘购物、SKK CDN/Download 和 Surge 等价 Egern 原生规则订阅。
 
 > [!IMPORTANT]
 > `Configs/tool_config/` 中的文件是公开脱敏模板，不是开箱即用的节点订阅。使用前必须在自己的私人副本中替换 `获取到的订阅链接`、`CHANGE_ME`、本地节点和 MITM 证书。不要把填写后的私人配置提交到公开仓库。
@@ -40,6 +40,7 @@
 | 海淘购物 | Amazon、eBay、REI、Backcountry 与户外品牌商城 | `海淘购物` 或自定义手动策略 |
 | SKK CDN | CDN 与静态资源域名 | `CDN` |
 | SKK Download | 下载域名规则 | 仅自动维护，六份模板当前未启用 |
+| Egern Surge 对齐层 | 拦截、局域网、国内域名/IP、AI、Google、Sony 与全球媒体等 | 按公开 Egern 模板中的对应策略 |
 
 ## 快速开始
 
@@ -351,16 +352,17 @@ python3 -m unittest discover -s tests -v
 
 ### SKK 自动更新
 
-`.github/workflows/update-skk-rules.yml` 每天北京时间 04:17 自动获取 SKK 的 `domainset` 与 `non_ip` 规则，校验来源和最低条目数后转换。也可以从 GitHub Actions 手动运行 `workflow_dispatch`。
+`.github/workflows/update-skk-rules.yml` 每天北京时间 04:17 自动获取 SKK 及 Egern 配置使用的选定 Surge 规则源，校验来源、许可证、最低条目数和原生字段后转换。也可以从 GitHub Actions 手动运行 `workflow_dispatch`。
 
-自动化只会提交以下四个公开文件，不会修改 `Configs/`：
+自动化只会提交公开规则，不会修改 `Configs/`：
 
 - `Rules/QuantumultX/SKK/CDN.list`
 - `Rules/QuantumultX/SKK/Download.list`
 - `Rules/Loon/SKK/CDN.list`
 - `Rules/Loon/SKK/Download.list`
+- `Rules/Egern/` 中由 `tools/update_egern_rules.py` 声明的原生 YAML 输出
 
-SKK 转换产物继承 `AGPL-3.0-only` 许可证，来源和许可证范围见 [Rules/SKK/README.md](Rules/SKK/README.md)。
+Egern 转换器严格拒绝未知规则类型和未知选项；SKK 的唯一复合规则由公开 Egern 配置以内联 `and` 规则承载。SKK 转换产物的来源和许可证范围见 [Rules/SKK/README.md](Rules/SKK/README.md)。
 
 ### 生成脱敏配置
 
@@ -390,6 +392,7 @@ Rules/
 tools/
 ├── generate_rules.py        # 生成跨客户端规则
 ├── sanitize_tool_configs.py # 生成脱敏配置
+├── update_egern_rules.py    # 将 Surge 来源转换为 Egern 原生 YAML
 └── update_skk_rules.py      # 转换 SKK 规则
 tests/                        # 生成、脱敏和自动更新测试
 ```

@@ -443,7 +443,11 @@ rule-providers:
       update_interval: 21600
   - select:
       name: Proxy
-      policies: [Personal Airport, DIRECT]
+      policies: [Personal Airport, Disabled Airport, DIRECT]
+  - external:
+      name: Disabled Airport
+      urls_disabled:
+        - https://private.invalid/disabled?token=FAKE_DISABLED_TOKEN
 rules:
   - rule_set:
       name: Public rules
@@ -452,6 +456,13 @@ rules:
   - default:
       name: Final
       policy: Proxy
+mitm:
+  ca_p12: FAKE_P12_BASE64
+  ca_passphrase: FAKE_PASSWORD
+modules:
+  - name: Optional module
+    url: https://public.example/module.yaml
+    enabled: false
 default_subscription_group: Personal Airport
 default_proxy_group: Proxy
 """
@@ -461,11 +472,20 @@ default_proxy_group: Proxy
 
         self.assertNotIn("private.invalid", result)
         self.assertNotIn("Personal Airport", result)
+        self.assertNotIn("FAKE_P12_BASE64", result)
+        self.assertNotIn("FAKE_PASSWORD", result)
         self.assertIn(PUBLIC_RULE_URL, result)
+        self.assertNotIn("mitm", parsed)
+        self.assertNotIn("modules", parsed)
         self.assertEqual("拼好鸡", parsed["policy_groups"][0]["select"]["name"])
         self.assertEqual(
             ["获取到的订阅链接"],
             parsed["policy_groups"][0]["select"]["urls"],
+        )
+        disabled = parsed["policy_groups"][2]["external"]
+        self.assertEqual("机场", disabled["name"])
+        self.assertEqual(
+            ["获取到的订阅链接"], disabled["urls_disabled"]
         )
         sanitizer.validate_client_structure("egern_byallen.yaml", result)
 
@@ -946,7 +966,7 @@ default_proxy_group: Proxy
             for payload in group.values()
             if payload.get("name") == "Docker"
         )
-        self.assertEqual("shippingbox", docker["icon"])
+        self.assertEqual(DOCKER_ICON_URL, docker["icon"])
 
     def test_committed_docker_domains_have_no_local_override(self):
         domains = ("docker.com", "docker.io", "dockerhub.com")
@@ -1263,7 +1283,9 @@ default_proxy_group: Proxy
         egern = yaml.safe_load(outputs["egern_byallen.yaml"])
         egern_rules = [next(iter(rule.values())) for rule in egern["rules"]]
         egern_matches = {
-            (rule.get("match"), rule.get("policy")) for rule in egern_rules
+            (rule.get("match"), rule.get("policy"))
+            for rule in egern_rules
+            if isinstance(rule.get("match"), str)
         }
         self.assertIn(("gemini.google.com", "Google"), egern_matches)
         self.assertIn(("api.github.com", "GitHub"), egern_matches)
