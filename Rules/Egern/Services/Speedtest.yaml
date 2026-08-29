@@ -2,7 +2,7 @@
 # SPDX-License-Identifier: AGPL-3.0-only
 # Derived from https://github.com/SukkaW/Surge
 # Source: https://ruleset.skk.moe/List/domainset/speedtest.conf
-# Rule count: 3353
+# Rule count: 3356
 
 domain_set:
   - "7h15.ru1353t.1s.m4d3.by.5ukk4w.skk.moe"
@@ -1004,6 +1004,7 @@ domain_set:
   - "ookla.gctelecom.com.br"
   - "ookla.mia.teracast.net"
   - "ookla.micrologicwv.com"
+  - "ookla.premierdc.com.tr"
   - "ookla1.talkiefiber.com"
   - "ookla1.the.net.1310.io"
   - "ooklaspeed.statenet.in"
@@ -2967,6 +2968,8 @@ domain_set:
   - "speedtest.webfibertelecom.com.br"
   - "speedtest.wifi-communication.com"
   - "speedtest.winchesterwireless.com"
+  - "speedtest01.mel01.nexthop.net.au"
+  - "speedtest01.syd01.nexthop.net.au"
   - "speedtest1.kablosuzonline.com.tr"
   - "speedtest16.mustafasevinc.com.tr"
   - "speedtest2.lightningfibre.net.uk"
