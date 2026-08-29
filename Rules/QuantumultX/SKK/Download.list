@@ -3,9 +3,9 @@
 # Derived from https://github.com/SukkaW/Surge
 # Source: https://ruleset.skk.moe/List/domainset/download.conf
 # Source: https://ruleset.skk.moe/List/non_ip/download.conf
-# Upstream Last Updated: 2026-08-19T01:29:54.301Z (domainset)
+# Upstream Last Updated: 2026-08-29T18:28:31.014Z (domainset)
 # Upstream Last Updated: 2026-08-05T12:33:04.408Z (non_ip)
-# Rule count: 1976
+# Rule count: 1977
 
 host, 7h15.ru1353t.1s.m4d3.by.5ukk4w.skk.moe, proxy
 host-suffix, gcr.io, proxy
@@ -1638,6 +1638,7 @@ host, pubmirrors.dal.corespace.com, proxy
 host, redstone-launcher.mojang.com, proxy
 host, softwareupdate.pilotmoon.com, proxy
 host, update.code.visualstudio.com, proxy
+host, assets-tcpviewer.proxyman.com, proxy
 host, centos-stream.ip-connect.info, proxy
 host-suffix, cos.ap-singapore.myqcloud.com, proxy
 host-suffix, cos.eu-frankfurt.myqcloud.com, proxy

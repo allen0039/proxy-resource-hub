@@ -3,9 +3,9 @@
 # Derived from https://github.com/SukkaW/Surge
 # Source: https://ruleset.skk.moe/List/domainset/cdn.conf
 # Source: https://ruleset.skk.moe/List/non_ip/cdn.conf
-# Upstream Last Updated: 2026-08-27T16:33:13.948Z (domainset)
+# Upstream Last Updated: 2026-08-29T20:42:48.719Z (domainset)
 # Upstream Last Updated: 2026-08-19T01:29:53.827Z (non_ip)
-# Rule count: 4716
+# Rule count: 4723
 
 host, 7h15.ru1353t.1s.m4d3.by.5ukk4w.skk.moe, proxy
 host, 0x0.st, proxy
@@ -1029,6 +1029,7 @@ host, r2.dejavu.moe, proxy
 host, r2cdn.c7d.dev, proxy
 host-suffix, randomuser.me, proxy
 host-suffix, rawgithub.com, proxy
+host-suffix, rcsobjects.it, proxy
 host, rdr.windy.com, proxy
 host-suffix, runkitcdn.com, proxy
 host-suffix, s-nbcnews.com, proxy
@@ -2581,6 +2582,7 @@ host, favicon.yandex.net, proxy
 host, files.gempages.net, proxy
 host, flows.trysavvy.com, proxy
 host, fonts.codeberg.org, proxy
+host-suffix, gazzettaobjects.it, proxy
 host, genesis-cdn.ff.com, proxy
 host, global.divhunt.com, proxy
 host, graph.facebook.com, proxy
@@ -2918,6 +2920,7 @@ host, error.rakuten.co.jp, proxy
 host, event.ithome.com.tw, proxy
 host-suffix, events.backtrace.io, proxy
 host, favicons.nextdns.io, proxy
+host, files.blocktempo.ai, proxy
 host, files.namecheap.com, proxy
 host-suffix, files.wordpress.com, proxy
 host, geoserveis.icgc.cat, proxy
@@ -3210,6 +3213,7 @@ host-suffix, hscollectedforms.net, proxy
 host, hubspotonwebflow.com, proxy
 host, icons.duckduckgo.com, proxy
 host, image-us.samsung.com, proxy
+host, image.blocktempo.com, proxy
 host, imageproxy.ifunny.co, proxy
 host, images.anandtech.com, proxy
 host, images.blockscan.com, proxy
@@ -3356,6 +3360,7 @@ host, uploads.pullfrog.com, proxy
 host, variations.brave.com, proxy
 host, vice-prod.sdiapi.com, proxy
 host, video-meta.humix.com, proxy
+host, video.giroditalia.it, proxy
 host-suffix, vodvideo.cbsnews.com, proxy
 host, vpncdn.protonweb.com, proxy
 host, wandi-6402.kxcdn.com, proxy
@@ -3780,6 +3785,7 @@ host, static.tradingview.com, proxy
 host, static.tryprofound.com, proxy
 host, static.underhentai.net, proxy
 host, static.webclicks24.com, proxy
+host, static2.giroditalia.it, proxy
 host-suffix, static2cdn.hubspot.com, proxy
 host, statics.streamable.com, proxy
 host-suffix, storage.googleapis.com, proxy
@@ -4030,6 +4036,7 @@ host, cms-assets.nodecraft.com, proxy
 host, conf.config-security.com, proxy
 host, cookie-cdn.cookiepro.com, proxy
 host, css.blackmagicdesign.com, proxy
+host, delivery.twentythree.com, proxy
 host, detectportal.firefox.com, proxy
 host, dynamic-cdn.cms.ayoba.me, proxy
 host, ecn.dev.virtualearth.net, proxy
