@@ -2,7 +2,7 @@
 # SPDX-License-Identifier: AGPL-3.0-only
 # Derived from https://github.com/SukkaW/Surge
 # Source: https://ruleset.skk.moe/List/domainset/speedtest.conf
-# Rule count: 3356
+# Rule count: 3358
 
 domain_set:
   - "7h15.ru1353t.1s.m4d3.by.5ukk4w.skk.moe"
@@ -717,6 +717,7 @@ domain_set:
   - "spt-jfk1.edgeuno.com"
   - "spt-lax1.edgeuno.com"
   - "spt-lon1.edgeuno.com"
+  - "spt-noc.umal-nds.com"
   - "spt-sjo1.edgeuno.com"
   - "srv-st03.arcolink.it"
   - "srv-st04.arcolink.it"
@@ -1696,6 +1697,7 @@ domain_set:
   - "aragonnetspeedtest.com.br"
   - "bassoon-sg-1.violin.co.th"
   - "bursaspeedtest.pendns.net"
+  - "cns-speedtest.duckdns.org"
   - "hiztesti-ist.codit.com.tr"
   - "hl-speed.twmbroadband.com"
   - "iskendurum.veganet.com.tr"
