@@ -3,9 +3,9 @@
 # Derived from https://github.com/SukkaW/Surge
 # Source: https://ruleset.skk.moe/List/domainset/cdn.conf
 # Source: https://ruleset.skk.moe/List/non_ip/cdn.conf
-# Upstream Last Updated: 2026-08-29T20:42:48.719Z (domainset)
+# Upstream Last Updated: 2026-08-30T07:31:52.951Z (domainset)
 # Upstream Last Updated: 2026-08-19T01:29:53.827Z (non_ip)
-# Rule count: 4723
+# Rule count: 4729
 
 DOMAIN,7h15.ru1353t.1s.m4d3.by.5ukk4w.skk.moe
 DOMAIN,0x0.st
@@ -1526,9 +1526,11 @@ DOMAIN,cdn1.telesco.pe
 DOMAIN,cdn2.hextom.com
 DOMAIN,cdn2.macpaw.com
 DOMAIN,cdn2.stamped.io
+DOMAIN,cdn2.telesco.pe
 DOMAIN,cdn2.ttloli.com
 DOMAIN,cdn3.hextom.com
 DOMAIN,cdn3.stamped.io
+DOMAIN,cdn3.telesco.pe
 DOMAIN,cdn4.telesco.pe
 DOMAIN,cdn5.hextom.com
 DOMAIN,cdn5.telesco.pe
@@ -2164,6 +2166,7 @@ DOMAIN,cdn.babylonjs.com
 DOMAIN,cdn.blogarama.com
 DOMAIN,cdn.brandfetch.io
 DOMAIN,cdn.buttercms.com
+DOMAIN,cdn.candycode.com
 DOMAIN,cdn.cds.dmm.co.jp
 DOMAIN,cdn.changelog.com
 DOMAIN,cdn.cloudcraft.co
@@ -2887,9 +2890,11 @@ DOMAIN,cdn1.telegram.space
 DOMAIN,cdn1.tubeteen18.com
 DOMAIN,cdn2.editmysite.com
 DOMAIN,cdn2.iconfinder.com
+DOMAIN,cdn2.telegram.space
 DOMAIN,cdn2.tubeteen18.com
 DOMAIN,cdn2.turboviplay.cc
 DOMAIN,cdn3.iconfinder.com
+DOMAIN,cdn3.telegram.space
 DOMAIN,cdn3.tubeteen18.com
 DOMAIN,cdn4.iconfinder.com
 DOMAIN,cdn4.telegram.space
@@ -3597,6 +3602,7 @@ DOMAIN,videos2-h.sendvid.com
 DOMAIN,wac-cdn.atlassian.com
 DOMAIN,web-assets.strava.com
 DOMAIN,website-cdn.ipinfo.io
+DOMAIN,websiteres.nmteam.xyz
 DOMAIN,widget.allkeyshop.com
 DOMAIN,widget.automizely.com
 DOMAIN,widget.freshworks.com

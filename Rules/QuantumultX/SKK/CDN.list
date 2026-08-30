@@ -3,9 +3,9 @@
 # Derived from https://github.com/SukkaW/Surge
 # Source: https://ruleset.skk.moe/List/domainset/cdn.conf
 # Source: https://ruleset.skk.moe/List/non_ip/cdn.conf
-# Upstream Last Updated: 2026-08-29T20:42:48.719Z (domainset)
+# Upstream Last Updated: 2026-08-30T07:31:52.951Z (domainset)
 # Upstream Last Updated: 2026-08-19T01:29:53.827Z (non_ip)
-# Rule count: 4723
+# Rule count: 4729
 
 host, 7h15.ru1353t.1s.m4d3.by.5ukk4w.skk.moe, proxy
 host, 0x0.st, proxy
@@ -1526,9 +1526,11 @@ host, cdn1.telesco.pe, proxy
 host, cdn2.hextom.com, proxy
 host, cdn2.macpaw.com, proxy
 host, cdn2.stamped.io, proxy
+host, cdn2.telesco.pe, proxy
 host, cdn2.ttloli.com, proxy
 host, cdn3.hextom.com, proxy
 host, cdn3.stamped.io, proxy
+host, cdn3.telesco.pe, proxy
 host, cdn4.telesco.pe, proxy
 host, cdn5.hextom.com, proxy
 host, cdn5.telesco.pe, proxy
@@ -2164,6 +2166,7 @@ host, cdn.babylonjs.com, proxy
 host, cdn.blogarama.com, proxy
 host, cdn.brandfetch.io, proxy
 host, cdn.buttercms.com, proxy
+host, cdn.candycode.com, proxy
 host, cdn.cds.dmm.co.jp, proxy
 host, cdn.changelog.com, proxy
 host, cdn.cloudcraft.co, proxy
@@ -2887,9 +2890,11 @@ host, cdn1.telegram.space, proxy
 host, cdn1.tubeteen18.com, proxy
 host, cdn2.editmysite.com, proxy
 host, cdn2.iconfinder.com, proxy
+host, cdn2.telegram.space, proxy
 host, cdn2.tubeteen18.com, proxy
 host, cdn2.turboviplay.cc, proxy
 host, cdn3.iconfinder.com, proxy
+host, cdn3.telegram.space, proxy
 host, cdn3.tubeteen18.com, proxy
 host, cdn4.iconfinder.com, proxy
 host, cdn4.telegram.space, proxy
@@ -3597,6 +3602,7 @@ host, videos2-h.sendvid.com, proxy
 host, wac-cdn.atlassian.com, proxy
 host, web-assets.strava.com, proxy
 host, website-cdn.ipinfo.io, proxy
+host, websiteres.nmteam.xyz, proxy
 host, widget.allkeyshop.com, proxy
 host, widget.automizely.com, proxy
 host, widget.freshworks.com, proxy
