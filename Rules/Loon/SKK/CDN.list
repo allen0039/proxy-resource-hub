@@ -3,9 +3,9 @@
 # Derived from https://github.com/SukkaW/Surge
 # Source: https://ruleset.skk.moe/List/domainset/cdn.conf
 # Source: https://ruleset.skk.moe/List/non_ip/cdn.conf
-# Upstream Last Updated: 2026-08-30T07:31:52.951Z (domainset)
+# Upstream Last Updated: 2026-08-31T12:15:29.942Z (domainset)
 # Upstream Last Updated: 2026-08-19T01:29:53.827Z (non_ip)
-# Rule count: 4729
+# Rule count: 4730
 
 DOMAIN,7h15.ru1353t.1s.m4d3.by.5ukk4w.skk.moe
 DOMAIN,0x0.st
@@ -4583,6 +4583,7 @@ DOMAIN-SUFFIX,assets.brightspot.abebooks.a2z.com
 DOMAIN,categoriespages-cdn.trustpilot.net
 DOMAIN,cdn-a.sonyentertainmentnetwork.com
 DOMAIN,cdn.prod.ext.web.purview.azure.com
+DOMAIN,client-log-forwarder.1password.com
 DOMAIN,consumersite-assets.trustpilot.net
 DOMAIN,content-management-files.canva.com
 DOMAIN,disco-static.productessentials.app
