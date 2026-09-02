@@ -150,6 +150,18 @@ def render(lines: list[str], style: str, source_label: str) -> str:
     return "\n".join(output).rstrip() + "\n"
 
 
+def render_egern(lines: list[str], source_label: str) -> str:
+    output = [
+        f"# Generated from {source_label} by tools/generate_rules.py. Do not edit.",
+        "",
+        "domain_suffix_set:",
+    ]
+    for line in lines:
+        if line and not line.startswith("#"):
+            output.append(f'  - "{line}"')
+    return "\n".join(output).rstrip() + "\n"
+
+
 def render_custom_rules(
     rules: list[tuple[str, str, str]], style: str, source_label: str
 ) -> str:
@@ -193,6 +205,10 @@ def build_outputs(root: Path) -> dict[Path, str]:
         outputs[
             root / "Rules" / "QuantumultX" / directory / f"{name}.list"
         ] = render(lines, "quantumultx", source_label)
+        if directory == "Google" and name == "gemini":
+            outputs[root / "Rules" / "Egern" / directory / f"{name}.yaml"] = (
+                render_egern(lines, source_label)
+            )
         if compatibility_directory:
             outputs[
                 root / "Rules" / compatibility_directory / f"{name}.list"

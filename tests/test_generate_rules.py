@@ -121,6 +121,7 @@ GOOGLE_AI_DOMAINS = (
     "daily-cloudcode-pa.googleapis.com",
     "generativelanguage.googleapis.com",
     "proactivebackend-pa.googleapis.com",
+    "content-push.googleapis.com",
 )
 CUSTOM_RULES = (
     ("DOMAIN-SUFFIX", "synology.cn", "DIRECT"),
@@ -340,7 +341,7 @@ class RuleGeneratorTests(unittest.TestCase):
         generator = load_generator()
         outputs = generator.build_outputs(ROOT)
 
-        self.assertEqual(50, len(outputs))
+        self.assertEqual(51, len(outputs))
         for client in ("Mihomo", "Surge", "QuantumultX", "Loon"):
             for ruleset in ("ai", "direct-ai"):
                 expected = ROOT / "Rules" / client / "AI" / f"{ruleset}.list"
@@ -352,6 +353,7 @@ class RuleGeneratorTests(unittest.TestCase):
         compatibility = ROOT / "Rules" / "shop" / "shopping.list"
         self.assertNotIn(compatibility, outputs)
         self.assertFalse(compatibility.exists())
+        self.assertIn(ROOT / "Rules" / "Egern" / "Google" / "gemini.yaml", outputs)
 
     def test_uu_remote_outputs_are_generated_only_for_surge_and_loon(self):
         generator = load_generator()
@@ -738,6 +740,12 @@ class RuleGeneratorTests(unittest.TestCase):
                     self.assertIn(expected, outputs[google_path])
                     self.assertNotIn(domain, outputs[ai_path])
 
+        egern_path = ROOT / "Rules" / "Egern" / "Google" / "gemini.yaml"
+        self.assertIn(egern_path, outputs)
+        for domain in GOOGLE_AI_DOMAINS:
+            with self.subTest(client="Egern", domain=domain):
+                self.assertIn(f'  - "{domain}"', outputs[egern_path])
+
     def test_pt_outputs_are_generated_for_every_client(self):
         generator = load_generator()
         outputs = generator.build_outputs(ROOT)
@@ -889,6 +897,12 @@ class RuleGeneratorTests(unittest.TestCase):
         for path, content in outputs.items():
             rule_lines = [line for line in content.splitlines() if line and not line.startswith("#")]
             if "Regional" in path.parts or "Custom" in path.parts:
+                continue
+            if "Egern" in path.parts:
+                self.assertEqual("domain_suffix_set:", rule_lines[0])
+                self.assertTrue(
+                    all(line.startswith('  - "') and line.endswith('"') for line in rule_lines[1:])
+                )
                 continue
             if "QuantumultX" in path.parts:
                 self.assertTrue(all(line.startswith("host-suffix, ") for line in rule_lines))
