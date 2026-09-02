@@ -11,8 +11,7 @@ include_apns: true
 include_cellular_services: false
 include_local_networks: false
 hijack_dns:
-- 8.8.8.8:53
-- 8.8.4.4:53
+- '*:53'
 proxy_latency_test_url: http://detectportal.firefox.com/success.txt
 direct_latency_test_url: http://connectivitycheck.platform.hicloud.com/generate_204
 geoip_db_url: https://raw.githubusercontent.com/Loyalsoldier/geoip/release/Country-without-asn.mmdb
@@ -31,19 +30,23 @@ vif_excluded_routes:
 - 203.0.113.0/24
 - 224.0.0.0/4
 - 255.255.255.255/32
+# DNS：公网查询统一使用国内 DoH；system/明文 DNS 仅用于引导解析和局域网兼容。
 dns:
   bootstrap:
   - system
   - 223.5.5.5
-  - 180.184.1.1
+  - 119.29.29.29
   upstreams:
-    default:
-    - system
-    - 223.5.5.5
-    - 180.184.1.1
+    Secure-DNS:
+    - https://dns.alidns.com/dns-query
+    - https://doh.pub/dns-query
+  forward:
+  - domain_wildcard:
+      match: '*'
+      value: Secure-DNS
   proxy_nameservers:
-  - 223.5.5.5
-  - 180.184.1.1
+  - https://dns.alidns.com/dns-query
+  - https://doh.pub/dns-query
   public_ip_lookup_url: https://ifconfig.me/ip
 bypass_tunnel_proxy:
 - 192.168.0.0/16
