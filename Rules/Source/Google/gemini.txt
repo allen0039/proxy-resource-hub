@@ -17,3 +17,4 @@ alkalimakersuite-pa.clients6.google.com
 daily-cloudcode-pa.googleapis.com
 generativelanguage.googleapis.com
 proactivebackend-pa.googleapis.com
+content-push.googleapis.com

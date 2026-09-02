@@ -1,0 +1,20 @@
+# Generated from Rules/Source/Google/gemini.txt by tools/generate_rules.py. Do not edit.
+
+domain_suffix_set:
+  - "ai.google.dev"
+  - "gemini.google"
+  - "gemini.google.com"
+  - "gemini.gstatic.com"
+  - "aistudio.google.com"
+  - "generativeai.google"
+  - "makersuite.google.com"
+  - "geller-pa.googleapis.com"
+  - "aisandbox-pa.googleapis.com"
+  - "cloudcode-pa.googleapis.com"
+  - "robinfrontend-pa.googleapis.com"
+  - "alkalicore-pa.clients6.google.com"
+  - "alkalimakersuite-pa.clients6.google.com"
+  - "daily-cloudcode-pa.googleapis.com"
+  - "generativelanguage.googleapis.com"
+  - "proactivebackend-pa.googleapis.com"
+  - "content-push.googleapis.com"

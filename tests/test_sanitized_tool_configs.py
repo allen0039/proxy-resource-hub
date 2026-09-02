@@ -1292,6 +1292,14 @@ default_proxy_group: Proxy
         self.assertNotIn("githubusercontent.com", {match for match, _ in egern_matches})
         self.assertNotIn("cloudflare.com", {match for match, _ in egern_matches})
 
+        egern_gemini_marker = "Rules/Egern/Google/gemini.yaml"
+        egern_ai_marker = "Rules/Egern/AI/ai.yaml"
+        self.assertIn(egern_gemini_marker, outputs["egern_byallen.yaml"])
+        self.assertLess(
+            outputs["egern_byallen.yaml"].index(egern_gemini_marker),
+            outputs["egern_byallen.yaml"].index(egern_ai_marker),
+        )
+
         surge_markers = (
             "Rules/Surge/Google/gemini.list",
             "Rules/Surge/AI/direct-ai.list",

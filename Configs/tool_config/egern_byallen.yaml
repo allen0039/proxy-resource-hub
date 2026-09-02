@@ -960,6 +960,9 @@ rules:
     match: https://raw.githubusercontent.com/allen0039/proxy-resource-hub/main/Rules/Egern/Services/ChinaTelecom.yaml
     policy: DIRECT
 - rule_set:
+    match: https://raw.githubusercontent.com/allen0039/proxy-resource-hub/main/Rules/Egern/Google/gemini.yaml
+    policy: Google
+- rule_set:
     match: https://raw.githubusercontent.com/allen0039/proxy-resource-hub/main/Rules/Egern/AI/direct-ai.yaml
     policy: DIRECT
 - rule_set:
