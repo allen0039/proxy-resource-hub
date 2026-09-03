@@ -476,7 +476,14 @@ default_proxy_group: Proxy
         self.assertNotIn("FAKE_PASSWORD", result)
         self.assertIn(PUBLIC_RULE_URL, result)
         self.assertNotIn("mitm", parsed)
-        self.assertNotIn("modules", parsed)
+        self.assertEqual(
+            [{
+                "name": "Optional module",
+                "url": "https://public.example/module.yaml",
+                "enabled": False,
+            }],
+            parsed["modules"],
+        )
         self.assertEqual("拼好鸡", parsed["policy_groups"][0]["select"]["name"])
         self.assertEqual(
             ["获取到的订阅链接"],
@@ -489,7 +496,7 @@ default_proxy_group: Proxy
         )
         sanitizer.validate_client_structure("egern_byallen.yaml", result)
 
-        unsafe = result + "modules: []\n"
+        unsafe = result + "mitm: {}\n"
         with self.assertRaises(sanitizer.SanitizationError):
             sanitizer.validate_client_structure("egern_byallen.yaml", unsafe)
 

@@ -55,6 +55,8 @@ bypass_tunnel_proxy:
 - localhost
 - '*.local'
 - e.crashlynatics.com
+- www.baidu.com
+- yunbusiness.ccb.com
 real_ip_domains:
 - apple.com
 - '*.apple.com'
@@ -1144,5 +1146,43 @@ rules:
     no_resolve: true
 - default:
     policy: Final
+# 使用 Egern 可兼容的 Surge 模块；广告平台拦截器保持在最前。
+modules:
+- name: 广告平台拦截器
+  url: https://raw.githubusercontent.com/Repcz/Tool/X/Surge/Module/Kelee/BlockAdvertisers.sgmodule
+  enabled: true
+- name: APP启动页去广告lite
+  url: https://yfamilys.com/module/adlite.sgmodule
+  enabled: true
+- name: 番茄小说去广告
+  url: https://raw.githubusercontent.com/zqzess/rule_for_quantumultX/master/Surge/Module/FanQieNovel.sgmodule
+  enabled: true
+- name: YouTube去除广告
+  url: https://raw.githubusercontent.com/zqzess/rule_for_quantumultX/master/Surge/Module/YouTubeAd.sgmodule
+  enabled: true
+- name: 闲鱼去广告
+  url: https://raw.githubusercontent.com/fmz200/wool_scripts/main/Surge/module/split/partX/XianYu.sgmodule
+  enabled: true
+- name: 菜鸟去广告
+  url: https://raw.githubusercontent.com/fmz200/wool_scripts/main/Surge/module/split/partC/CaiNiaoGuoGuo.sgmodule
+  enabled: true
+- name: 小红书去广告去水印
+  url: https://raw.githubusercontent.com/Repcz/Tool/X/Surge/Module/Kelee/RedPaper_remove_ads.sgmodule
+  enabled: true
+- name: 高德地图去广告
+  url: https://raw.githubusercontent.com/Repcz/Tool/X/Surge/Module/Kelee/Amap_remove_ads.sgmodule
+  enabled: true
+- name: 粉笔去广告
+  url: https://raw.githubusercontent.com/fmz200/wool_scripts/main/Surge/module/split/partF/FenBi.sgmodule
+  enabled: true
+- name: 网易邮箱大师去广告
+  url: https://raw.githubusercontent.com/fmz200/wool_scripts/main/Surge/module/split/partW/NetEaseMail.sgmodule
+  enabled: true
+- name: 彩云天气去广告
+  url: https://raw.githubusercontent.com/fmz200/wool_scripts/main/Surge/module/split/partC/CaiYunWeather.sgmodule
+  enabled: true
+- name: 哔哩哔哩去广告
+  url: https://raw.githubusercontent.com/zqzess/rule_for_quantumultX/master/Surge/Module/bilibili_adBlock.sgmodule
+  enabled: true
 default_subscription_group: 拼好鸡
 default_proxy_group: Proxy

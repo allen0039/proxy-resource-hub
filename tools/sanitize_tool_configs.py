@@ -45,7 +45,6 @@ PEM_MARKERS = ("BEGIN PRIVATE KEY", "BEGIN CERTIFICATE")
 EGERN_FORBIDDEN_SECTIONS = {
     "proxies",
     "mitm",
-    "modules",
     "script",
     "scripts",
     "scripting",
