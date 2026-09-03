@@ -2,7 +2,7 @@
 # SPDX-License-Identifier: AGPL-3.0-only
 # Derived from https://github.com/SukkaW/Surge
 # Source: https://ruleset.skk.moe/List/domainset/speedtest.conf
-# Rule count: 3363
+# Rule count: 3366
 
 domain_set:
   - "7h15.ru1353t.1s.m4d3.by.5ukk4w.skk.moe"
@@ -2330,6 +2330,7 @@ domain_set:
   - "speed.circlecityinternet.com"
   - "speed.newclicktelecom.com.br"
   - "speed.supersonicinternet.com"
+  - "speed.uberlinktelecom.com.br"
   - "speed02.buchholz-digital.net"
   - "speedfor.infolinktelecom.com"
   - "speedhn.radius2online.com.tr"
@@ -2887,6 +2888,7 @@ domain_set:
   - "speedtesttucson.arkdnacloud.com"
   - "st-ankara-1.turksatkablo.com.tr"
   - "st-atakoy-1.turksatkablo.com.tr"
+  - "st-edirne-1.turksatkablo.com.tr"
   - "st-manisa-1.turksatkablo.com.tr"
   - "st-samsun-1.turksatkablo.com.tr"
   - "stbellevillewireless.rogers.com"
@@ -3038,6 +3040,7 @@ domain_set:
   - "speedtest-ookla-roc1.synoptek.com"
   - "speedtest-sanbonifacio.wifiweb.it"
   - "speedtest-seattle.ripplefiber.com"
+  - "speedtest-thn.uk.airbytes.network"
   - "speedtest.7stardigitalnetwork.com"
   - "speedtest.fra01.fusionflare.cloud"
   - "speedtest.heartlandtechnology.com"
