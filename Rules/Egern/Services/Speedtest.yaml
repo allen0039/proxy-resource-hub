@@ -2,7 +2,7 @@
 # SPDX-License-Identifier: AGPL-3.0-only
 # Derived from https://github.com/SukkaW/Surge
 # Source: https://ruleset.skk.moe/List/domainset/speedtest.conf
-# Rule count: 3366
+# Rule count: 3368
 
 domain_set:
   - "7h15.ru1353t.1s.m4d3.by.5ukk4w.skk.moe"
@@ -1634,6 +1634,7 @@ domain_set:
   - "speedtest.twinvalley.net"
   - "speedtest.unifica.net.br"
   - "speedtest.vanciscloud.nl"
+  - "speedtest.virtical.cloud"
   - "speedtest.worldstream.nl"
   - "speedtest.wrinternet.com"
   - "speedtest.xcdtelecom.com"
@@ -2491,6 +2492,7 @@ domain_set:
   - "chi-speedtest.net.sangoma.net"
   - "cspeedtest.candorsolution.com"
   - "dal-speedtest.net.sangoma.net"
+  - "dlls-speedtest.northstate.net"
   - "dns.yesindiacommunications.in"
   - "edgemark-chi.cust.edgemark.io"
   - "edgemark-lax.cust.edgemark.io"
