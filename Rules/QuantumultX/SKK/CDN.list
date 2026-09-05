@@ -3,9 +3,9 @@
 # Derived from https://github.com/SukkaW/Surge
 # Source: https://ruleset.skk.moe/List/domainset/cdn.conf
 # Source: https://ruleset.skk.moe/List/non_ip/cdn.conf
-# Upstream Last Updated: 2026-09-04T02:06:57.617Z (domainset)
+# Upstream Last Updated: 2026-09-05T11:56:51.377Z (domainset)
 # Upstream Last Updated: 2026-08-19T01:29:53.827Z (non_ip)
-# Rule count: 4735
+# Rule count: 4737
 
 host, 7h15.ru1353t.1s.m4d3.by.5ukk4w.skk.moe, proxy
 host, 0x0.st, proxy
@@ -326,6 +326,7 @@ host-suffix, od-cdn.com, proxy
 host-suffix, odycdn.com, proxy
 host, p.sda1.dev, proxy
 host-suffix, pagecdn.io, proxy
+host-suffix, pgimgs.com, proxy
 host-suffix, phncdn.com, proxy
 host-suffix, pinimg.com, proxy
 host-suffix, pixhost.to, proxy
@@ -2398,6 +2399,7 @@ host, st.codeforces.com, proxy
 host, st.deviantart.net, proxy
 host, static-id.fc2.com, proxy
 host, static-sv.fc2.com, proxy
+host-suffix, static-upwork.com, proxy
 host, static.ahrefs.com, proxy
 host, static.anysex.com, proxy
 host, static.bbci.co.uk, proxy
@@ -3585,6 +3587,7 @@ host-suffix, static.chaosgroup.com, proxy
 host, static.chessarena.com, proxy
 host, static.clips4sale.com, proxy
 host, static.getpostman.com, proxy
+host, static.idp.sph.com.sg, proxy
 host, static.mytonwallet.io, proxy
 host, static.openreplay.com, proxy
 host, static.pfrt.yna.co.kr, proxy
@@ -4020,7 +4023,6 @@ host, assets.documentcloud.org, proxy
 host, assets.geeksforgeeks.org, proxy
 host, assets.nationbuilder.com, proxy
 host, assets.prowritingaid.com, proxy
-host, assets.static-upwork.com, proxy
 host, assets.trainingpeaks.com, proxy
 host, assets10.lottiefiles.com, proxy
 host, atl-global.atlassian.com, proxy
