@@ -2,7 +2,7 @@
 # SPDX-License-Identifier: AGPL-3.0-only
 # Derived from https://github.com/SukkaW/Surge
 # Source: https://ruleset.skk.moe/List/domainset/speedtest.conf
-# Rule count: 3369
+# Rule count: 3371
 
 domain_set:
   - "7h15.ru1353t.1s.m4d3.by.5ukk4w.skk.moe"
@@ -846,6 +846,7 @@ domain_set:
   - "speedtest.blacksun.ca"
   - "speedtest.blizznet.at"
   - "speedtest.bmcc.com.cn"
+  - "speedtest.btc-bci.com"
   - "speedtest.cdpalace.in"
   - "speedtest.chanute.org"
   - "speedtest.connexio.ca"
@@ -1071,6 +1072,7 @@ domain_set:
   - "speedtest.amnet.net.br"
   - "speedtest.as203446.net"
   - "speedtest.as210667.net"
+  - "speedtest.as210699.net"
   - "speedtest.as212683.net"
   - "speedtest.as214199.net"
   - "speedtest.as214243.net"
