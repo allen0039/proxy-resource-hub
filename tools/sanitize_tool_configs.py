@@ -13,6 +13,7 @@ import yaml
 ROOT = Path(__file__).resolve().parents[1]
 OUTPUT_NAMES = {
     "mihomo_byallen.yaml": "mihomo_allen.yaml",
+    "mihomo_byallen_mmwx.yaml": "mihomo_byallen_mmwx.yaml",
     "egern_byallen.yaml": "egern_byallen.yaml",
     "surge-Mac.conf": "surge_mac_allen.conf",
     "Surge-iPhone.conf": "surge_iphone_allen.conf",
@@ -849,7 +850,7 @@ def validate_common_patterns(filename: str, text: str) -> None:
 
 
 def validate_client_structure(filename: str, text: str) -> None:
-    if filename == "mihomo_allen.yaml":
+    if filename in {"mihomo_allen.yaml", "mihomo_byallen_mmwx.yaml"}:
         _validate_mihomo(filename, text)
     elif filename == "egern_byallen.yaml":
         _validate_egern(filename, text)
@@ -872,6 +873,7 @@ def generate(source_dir: Path, output_dir: Path) -> dict[str, str]:
         "quantumult_byallen.conf": sanitize_quantumultx,
         "allenloon.lcf": sanitize_loon,
         "mihomo_byallen.yaml": sanitize_mihomo,
+        "mihomo_byallen_mmwx.yaml": sanitize_mihomo,
         "egern_byallen.yaml": sanitize_egern,
     }
     outputs: dict[str, str] = {}
