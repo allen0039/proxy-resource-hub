@@ -1,4 +1,5 @@
 import importlib.util
+import shutil
 import tempfile
 import unittest
 from pathlib import Path
@@ -123,69 +124,6 @@ GOOGLE_AI_DOMAINS = (
     "proactivebackend-pa.googleapis.com",
     "content-push.googleapis.com",
 )
-CUSTOM_RULES = (
-    ("DOMAIN-SUFFIX", "synology.cn", "DIRECT"),
-    ("DOMAIN", "qbittorrent-nox", "DIRECT"),
-    ("DOMAIN-SUFFIX", "ui.com", "DIRECT"),
-    ("DOMAIN-SUFFIX", "digitalocean.com", "DIRECT"),
-    ("DOMAIN-SUFFIX", "dyndns.com", "DIRECT"),
-    ("DOMAIN-SUFFIX", "whatismyip.akamai.com", "DIRECT"),
-    ("DOMAIN-KEYWORD", "volcengine", "DIRECT"),
-    ("DOMAIN-SUFFIX", "qq.com", "DIRECT"),
-    ("DOMAIN-KEYWORD", "boke", "DIRECT"),
-    ("DOMAIN-SUFFIX", "kuwo.cn", "DIRECT"),
-    ("DOMAIN-SUFFIX", "xmwsyy.com", "DIRECT"),
-    ("DOMAIN-SUFFIX", "imgse.com", "DIRECT"),
-    ("DOMAIN-SUFFIX", "tagweb.vip", "DIRECT"),
-    ("DOMAIN-KEYWORD", "yqc-premium", "DIRECT"),
-    ("DOMAIN-SUFFIX", "ad.12306.cn", "DIRECT"),
-    ("DOMAIN-SUFFIX", "gg.caixin.com", "DIRECT"),
-    ("DOMAIN-SUFFIX", "sdkapp.uve.weibo.com", "DIRECT"),
-    ("DOMAIN-SUFFIX", "ucweb.com", "DIRECT"),
-    ("DOMAIN-SUFFIX", "amemv.com", "DIRECT"),
-    ("DOMAIN-SUFFIX", "v4.plex.tv", "DIRECT"),
-    ("DOMAIN-SUFFIX", "hytron.io", "香港节点"),
-    ("DOMAIN-KEYWORD", "kejilion", "香港节点"),
-    ("DOMAIN-SUFFIX", "nfbyte.com", "香港节点"),
-    ("DOMAIN-SUFFIX", "openwrt.ai", "美国节点"),
-    ("DOMAIN-SUFFIX", "lsposed.org", "美国节点"),
-    ("DOMAIN-SUFFIX", "linux.do", "美国节点"),
-    ("DOMAIN-SUFFIX", "rundongex.com", "美国节点"),
-    ("DOMAIN-SUFFIX", "servercontrolpanel.de", "美国节点"),
-    ("DOMAIN-SUFFIX", "mgboard.net", "美国节点"),
-    ("DOMAIN-KEYWORD", "greasyfork", "美国节点"),
-    ("DOMAIN-KEYWORD", "qichiyu", "美国节点"),
-    ("DOMAIN-SUFFIX", "mjji.de", "美国节点"),
-    ("DOMAIN-SUFFIX", "vps.town", "美国节点"),
-    ("DOMAIN-SUFFIX", "2fa.fun", "美国节点"),
-    ("DOMAIN-KEYWORD", "themoviedb", "美国节点"),
-    ("DOMAIN-KEYWORD", "tmdb", "美国节点"),
-    ("DOMAIN-KEYWORD", "dashboardicons", "美国节点"),
-    ("DOMAIN-SUFFIX", "ggpht.com", "美国节点"),
-    ("DOMAIN-KEYWORD", "uspatriottactical", "美国节点"),
-    ("DOMAIN-SUFFIX", "compliance.chippercash.com", "美国节点"),
-    ("DOMAIN-KEYWORD", "hdhive", "美国节点"),
-    ("DOMAIN-KEYWORD", "sehuatang", "美国节点"),
-    ("DOMAIN-KEYWORD", "hd-torrents", "美国节点"),
-    ("DOMAIN-SUFFIX", "embyapp.top", "美国节点"),
-    ("DOMAIN-SUFFIX", "macwk.cn", "美国节点"),
-    ("DOMAIN-SUFFIX", "appstorrent.ru", "美国节点"),
-    ("DOMAIN-KEYWORD", "missav", "美国节点"),
-    ("DOMAIN-KEYWORD", "ftvgirls", "美国节点"),
-    ("DOMAIN-SUFFIX", "api.daidaio.com", "美国节点"),
-    ("DOMAIN-KEYWORD", "onitsukatiger", "日本节点"),
-    ("DOMAIN-KEYWORD", "dmm", "日本节点"),
-    ("DOMAIN-KEYWORD", "javrate", "日本节点"),
-    ("DOMAIN-KEYWORD", "jav321", "日本节点"),
-    ("DOMAIN-KEYWORD", "freejavbt", "日本节点"),
-    ("DOMAIN-KEYWORD", "javbus", "日本节点"),
-    ("DOMAIN-KEYWORD", "mgstage", "日本节点"),
-    ("DOMAIN-KEYWORD", "mmtv", "日本节点"),
-    ("DOMAIN-KEYWORD", "javdb", "新加坡节点"),
-    ("DOMAIN-KEYWORD", "javlibrary", "新加坡节点"),
-    ("DOMAIN-KEYWORD", "avbase", "新加坡节点"),
-    ("DOMAIN-SUFFIX", "nodeseek.com", "德国节点"),
-)
 REGIONAL_POLICY_FILES = {
     "香港节点": "hk",
     "美国节点": "us",
@@ -220,6 +158,19 @@ UU_REMOTE_RULES = (
 
 def custom_source_label(policy: str) -> str:
     return f"Rules/Source/allenrules/{ALLENRULE_SOURCE_FILES[policy]}.list"
+
+
+def source_rules(policy: str, root: Path = ROOT) -> tuple[tuple[str, str, str], ...]:
+    """Read expectations from editable data, independently of the generator parser."""
+    rows = (root / custom_source_label(policy)).read_text(encoding="utf-8")
+    rules = []
+    for line in rows.splitlines():
+        if not line.strip() or line.lstrip().startswith("#"):
+            continue
+        rule_type, value = (field.strip() for field in line.split(","))
+        rules.append((rule_type, value, policy))
+    return tuple(rules)
+
 
 
 def custom_header(policy: str) -> str:
@@ -381,7 +332,7 @@ class RuleGeneratorTests(unittest.TestCase):
     def test_custom_direct_outputs_are_generated_for_every_client(self):
         generator = load_generator()
         outputs = generator.build_outputs(ROOT)
-        direct_rules = tuple(rule for rule in CUSTOM_RULES if rule[2] == "DIRECT")
+        direct_rules = source_rules("DIRECT")
 
         for client in ("Mihomo", "Surge", "QuantumultX", "Loon"):
             with self.subTest(client=client):
@@ -396,17 +347,11 @@ class RuleGeneratorTests(unittest.TestCase):
                         f"{value}, proxy"
                         for rule_type, value, _ in direct_rules
                     )
-                    self.assertIn("host, qbittorrent-nox, proxy", content)
-                    self.assertIn("host-suffix, synology.cn, proxy", content)
-                    self.assertIn("host-keyword, volcengine, proxy", content)
                 else:
                     expected_lines = tuple(
                         f"{rule_type},{value}"
                         for rule_type, value, _ in direct_rules
                     )
-                    self.assertIn("DOMAIN,qbittorrent-nox", content)
-                    self.assertIn("DOMAIN-SUFFIX,synology.cn", content)
-                    self.assertIn("DOMAIN-KEYWORD,volcengine", content)
                 self.assertEqual(expected_lines, rule_lines(content))
 
     def test_regional_outputs_include_all_clients_and_policies(self):
@@ -425,7 +370,7 @@ class RuleGeneratorTests(unittest.TestCase):
         outputs = generator.build_outputs(ROOT)
 
         for policy, slug in REGIONAL_POLICY_FILES.items():
-            rules = [rule for rule in CUSTOM_RULES if rule[2] == policy]
+            rules = source_rules(policy)
             for client in ("Mihomo", "Surge", "QuantumultX", "Loon"):
                 with self.subTest(policy=policy, client=client):
                     content = outputs[
@@ -466,16 +411,50 @@ class RuleGeneratorTests(unittest.TestCase):
             with self.subTest(policy=policy):
                 source = source_root / f"{filename}.list"
                 self.assertTrue(source.exists())
-                expected = tuple(
-                    rule for rule in CUSTOM_RULES if rule[2] == policy
-                )
+                expected = source_rules(policy)
                 self.assertEqual(
                     expected, tuple(generator.parse_custom_source(source, policy))
                 )
                 content = source.read_text(encoding="utf-8")
                 self.assertNotIn("SRC-IP-CIDR", content)
-                self.assertNotIn("hdhive.online", content)
-                self.assertNotIn("montbell.com", content)
+
+    def test_manual_rule_additions_stay_in_their_source_group(self):
+        generator = load_generator()
+        with tempfile.TemporaryDirectory() as tmp:
+            root = Path(tmp)
+            shutil.copytree(ROOT / "Rules" / "Source", root / "Rules" / "Source")
+            before = generator.build_outputs(root)
+            for policy, slug in ALLENRULE_SOURCE_FILES.items():
+                source = root / custom_source_label(policy)
+                original = source.read_text(encoding="utf-8")
+                additions = (
+                    ("DOMAIN", f"host.{slug}.example.test"),
+                    ("DOMAIN-SUFFIX", f"suffix.{slug}.example.test"),
+                    ("DOMAIN-KEYWORD", f"regressionkeyword{slug}"),
+                )
+                with self.subTest(policy=policy):
+                    source.write_text(
+                        original + "\n  # Manually added rules\n\n"
+                        + "".join(f"{kind},{value}\n" for kind, value in additions),
+                        encoding="utf-8",
+                    )
+                    try:
+                        after = generator.build_outputs(root)
+                        directory = "Custom" if policy == "DIRECT" else "Regional"
+                        changed = set()
+                        for client in REGIONAL_CLIENTS:
+                            path = root / "Rules" / client / directory / f"{slug}.list"
+                            changed.add(path)
+                            extra = tuple(
+                                f"{QX_CUSTOM_TYPES[kind]}, {value}, proxy"
+                                if client == "QuantumultX" else f"{kind},{value}"
+                                for kind, value in additions
+                            )
+                            self.assertEqual(rule_lines(before[path]) + extra, rule_lines(after[path]))
+                        self.assertEqual(changed, {path for path in before if before[path] != after[path]})
+                    finally:
+                        source.write_text(original, encoding="utf-8")
+
 
     def test_parse_custom_source_accepts_exact_hosts(self):
         generator = load_generator()
