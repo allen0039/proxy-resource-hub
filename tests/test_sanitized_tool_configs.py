@@ -1033,8 +1033,7 @@ default_proxy_group: Proxy
             for name in ("surge_mac_allen.conf", "surge_iphone_allen.conf")
         }
         apple_push_group = (
-            "Apple Push = fallback, 日本节点, 香港节点, 美国节点, DIRECT, "
-            "url=http://cp.cloudflare.com/generate_204, interval=300, "
+            "Apple Push = select, 日本节点, 香港节点, 美国节点, DIRECT, "
             "icon-url=https://fastly.jsdelivr.net/gh/fmz200/wool_scripts@main/"
             "icons/apps/Apple_Messages.png"
         )
@@ -1067,7 +1066,7 @@ default_proxy_group: Proxy
         loon = (OUTPUT_DIR / "loon_allen.lcf").read_text(encoding="utf-8")
         self.assertEqual(
             loon.count(
-                "Apple Push = fallback,日本节点,香港节点,美国节点,DIRECT,"
+                "Apple Push = select,日本节点,香港节点,美国节点,DIRECT,"
             ),
             1,
         )
