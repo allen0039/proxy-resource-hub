@@ -14,7 +14,6 @@ OUTPUT_DIR = ROOT / "Configs" / "tool_config"
 CONFIG_NAMES = {
     "egern_byallen.yaml",
     "mihomo_allen.yaml",
-    "mihomo_byallen_mmwx.yaml",
     "surge_mac_allen.conf",
     "surge_iphone_allen.conf",
     "quantumultx_allen.conf",
@@ -198,34 +197,20 @@ class SanitizedToolConfigTests(unittest.TestCase):
         sanitizer = load_sanitizer()
 
         self.assertIn("mihomo_byallen.yaml", sanitizer.OUTPUT_NAMES)
-        self.assertIn("mihomo_byallen_mmwx.yaml", sanitizer.OUTPUT_NAMES)
         self.assertNotIn("mihomo_byallen-nokey.yaml", sanitizer.OUTPUT_NAMES)
 
-    def test_mihomo_variants_define_converter_compatible_empty_group_fallbacks(self):
+    def test_mihomo_dynamic_groups_use_empty_fallback_direct(self):
         standard = yaml.safe_load(
             (OUTPUT_DIR / "mihomo_allen.yaml").read_text(encoding="utf-8")
         )
-        mmwx = yaml.safe_load(
-            (OUTPUT_DIR / "mihomo_byallen_mmwx.yaml").read_text(encoding="utf-8")
-        )
         standard_groups = {group["name"]: group for group in standard["proxy-groups"]}
-        mmwx_groups = {group["name"]: group for group in mmwx["proxy-groups"]}
         dynamic_names = {
             name for name, group in standard_groups.items() if group.get("include-all")
         }
 
         for name in dynamic_names:
-            with self.subTest(variant="empty-fallback", group=name):
+            with self.subTest(group=name):
                 self.assertEqual("DIRECT", standard_groups[name].get("empty-fallback"))
-
-        for name in dynamic_names:
-            group = mmwx_groups[name]
-            with self.subTest(variant="mmwx", group=name):
-                self.assertNotIn("empty-fallback", group)
-                if group.get("type") == "select":
-                    self.assertEqual(["DIRECT"], group.get("proxies"))
-                elif group.get("type") == "url-test":
-                    self.assertNotIn("DIRECT", group.get("proxies", []))
 
     def test_normalize_text_removes_trailing_whitespace(self):
         sanitizer = load_sanitizer()
@@ -802,7 +787,6 @@ default_proxy_group: Proxy
             "loon_allen.lcf": "# Allen 维护 - Loon 配置",
             "quantumultx_allen.conf": "# Allen 维护 - Quantumult X 配置",
             "mihomo_allen.yaml": "# Allen 维护 - Mihomo 配置",
-            "mihomo_byallen_mmwx.yaml": "# Allen 维护 - Mihomo 配置",
         }
 
         for name, title in titles.items():
