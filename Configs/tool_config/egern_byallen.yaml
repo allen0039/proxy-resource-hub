@@ -843,6 +843,9 @@ rules:
     match: stun
     policy: REJECT
 - domain_suffix:
+    match: 052909.xyz
+    policy: 美国节点
+- domain_suffix:
     match: mfallen.de
     policy: 美国节点
 - domain_suffix:
