@@ -2,7 +2,7 @@
 # SPDX-License-Identifier: AGPL-3.0-only
 # Derived from https://github.com/SukkaW/Surge
 # Source: https://ruleset.skk.moe/List/non_ip/ai.conf
-# Rule count: 51
+# Rule count: 52
 
 domain_set:
   - "7h15.ru1353t.1s.m4d3.by.5ukk4w.skk.moe"
@@ -31,6 +31,7 @@ domain_suffix_set:
   - "groq.com"
   - "sora.com"
   - "claude.ai"
+  - "cursor.sh"
   - "jasper.ai"
   - "claude.com"
   - "openart.ai"
