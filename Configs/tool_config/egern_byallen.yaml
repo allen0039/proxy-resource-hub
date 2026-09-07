@@ -843,6 +843,9 @@ rules:
     match: stun
     policy: REJECT
 - domain_suffix:
+    match: private-service-3.invalid
+    policy: 美国节点
+- domain_suffix:
     match: private-service-4.invalid
     policy: 美国节点
 - domain_suffix:
