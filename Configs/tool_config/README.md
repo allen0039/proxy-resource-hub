@@ -1,13 +1,13 @@
 # 新手配置使用指南
 
-这里提供 Mihomo、Surge、Quantumult X、Loon 和 Egern 的七份完整配置模板。
+这里提供 Mihomo、Surge、Quantumult X、Loon 和 Egern 的六份完整配置模板。
 
 > [!IMPORTANT]
 > 这些是公开脱敏模板，里面没有真实节点。必须先下载到本地，把 `获取到的订阅链接` 替换成自己的机场订阅，才能正常使用。
 
 > 仓库提供由 `Rules/Source/allenrules/` 下六个源文件派生的一条 Custom DIRECT 与五条 Regional 规则订阅。请在自己的私人副本中填写节点订阅和其他私人信息。
 
-> Gemini / Google AI 规则由 `Rules/Source/Google/gemini.txt` 维护，并生成四端 `Google/gemini.list` 远程订阅；七份模板只保留 `gemini.google.com` 本地精确兜底，支持该远程规则的客户端会在通用 AI 规则之前加载。
+> Gemini / Google AI 规则由 `Rules/Source/Google/gemini.txt` 维护，并生成四端 `Google/gemini.list` 远程订阅；六份模板只保留 `gemini.google.com` 本地精确兜底，支持该远程规则的客户端会在通用 AI 规则之前加载。
 
 ## 先安装客户端
 
@@ -44,7 +44,7 @@ App Store 链接指向应用官方商店页面。部分应用可能未在所有�
 
 不要直接把本页或 Raw 地址当成远程配置订阅。公开模板需要填写私人信息，应该作为本地配置使用。
 
-七份公开模板默认启用由六个源文件派生的六条远程规则订阅。
+六份公开模板默认启用由六个源文件派生的六条远程规则订阅。
 
 | 客户端 | 自定义远程规则已接入 |
 | --- | --- |
@@ -63,7 +63,6 @@ App Store 链接指向应用官方商店页面。部分应用可能未在所有�
 | 你使用的客户端 | 下载文件 | 格式 |
 | --- | --- | --- |
 | Mihomo、Clash Meta、OpenClash | [mihomo_allen.yaml](mihomo_allen.yaml) · [Raw 下载](https://raw.githubusercontent.com/allen0039/proxy-resource-hub/main/Configs/tool_config/mihomo_allen.yaml) | YAML |
-| Mihomo、Clash Meta、OpenClash（妙妙屋兼容） | [mihomo_byallen_mmwx.yaml](mihomo_byallen_mmwx.yaml) · [Raw 下载](https://raw.githubusercontent.com/allen0039/proxy-resource-hub/main/Configs/tool_config/mihomo_byallen_mmwx.yaml) | YAML |
 | Surge for Mac | [surge_mac_allen.conf](surge_mac_allen.conf) · [Raw 下载](https://raw.githubusercontent.com/allen0039/proxy-resource-hub/main/Configs/tool_config/surge_mac_allen.conf) | Surge 配置 |
 | Surge for iPhone | [surge_iphone_allen.conf](surge_iphone_allen.conf) · [Raw 下载](https://raw.githubusercontent.com/allen0039/proxy-resource-hub/main/Configs/tool_config/surge_iphone_allen.conf) | Surge 配置 |
 | Quantumult X | [quantumultx_allen.conf](quantumultx_allen.conf) · [Raw 下载](https://raw.githubusercontent.com/allen0039/proxy-resource-hub/main/Configs/tool_config/quantumultx_allen.conf) | Quantumult X 配置 |
@@ -217,7 +216,7 @@ policy_groups:
 
 Loon 的 AI、测速、Steam 和 Game 补充规则使用 Blackmatrix 的 Loon 原生列表。无法通过当前网络更新的 Kelee 插件保留为 `enabled=false`，避免导入后持续产生资源更新错误。
 
-`Download` 规则仍在仓库中自动维护，但这七份模板没有启用 Download 策略组，避免国外下载域名被过度分流。
+`Download` 规则仍在仓库中自动维护，但这六份模板没有启用 Download 策略组，避免国外下载域名被过度分流。
 
 ## 新手不要随便改这些内容
 
