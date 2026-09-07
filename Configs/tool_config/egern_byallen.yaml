@@ -449,16 +449,14 @@ policy_groups:
     - 美国节点
     - 韩国节点
     icon: https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/Apple.png
-- fallback:
+- select:
     name: Apple Push
     policies:
     - 日本节点
     - 香港节点
     - 美国节点
     - DIRECT
-    interval: 300
     latency_test_url: https://www.apple.com/library/test/success.html
-    timeout: 3000
     icon: https://fastly.jsdelivr.net/gh/fmz200/wool_scripts@main/icons/apps/Apple_Messages.png
 - select:
     name: Microsoft
