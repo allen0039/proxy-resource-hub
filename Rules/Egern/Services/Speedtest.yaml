@@ -2,7 +2,7 @@
 # SPDX-License-Identifier: AGPL-3.0-only
 # Derived from https://github.com/SukkaW/Surge
 # Source: https://ruleset.skk.moe/List/domainset/speedtest.conf
-# Rule count: 3373
+# Rule count: 3376
 
 domain_set:
   - "7h15.ru1353t.1s.m4d3.by.5ukk4w.skk.moe"
@@ -132,6 +132,7 @@ domain_set:
   - "sp1.vlink.net.br"
   - "sp3.atcc-gns.net"
   - "sp7.atcc-gns.net"
+  - "speed.fiber23.it"
   - "speed.sparcs.net"
   - "speed2.suitit.nl"
   - "speed3.aitspl.in"
@@ -143,6 +144,7 @@ domain_set:
   - "speedtest.hep.gg"
   - "speedtest.kko.me"
   - "speedtest.nt.net"
+  - "speedtest.oa.net"
   - "speedtest.oc.edu"
   - "speedtest.ohz.es"
   - "speedtest.skv.nl"
@@ -668,6 +670,7 @@ domain_set:
   - "speedtest.netrack.ru"
   - "speedtest.oopaya.com"
   - "speedtest.quadro.net"
+  - "speedtest.quickqc.nl"
   - "speedtest.sentco.net"
   - "speedtest.spd.net.tr"
   - "speedtest.spectra.co"
