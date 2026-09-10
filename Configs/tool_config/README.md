@@ -54,7 +54,7 @@ App Store 链接指向应用官方商店页面。部分应用可能未在所有�
 | Loon | 同上，对应 `Rules/Loon/` |
 | Egern | 同上，对应 `Rules/Egern/`，使用原生 YAML 规则 |
 
-家宽节点策略组按节点名称匹配 “家用”“家庭”“家宽” 或独立单词 “ISP”，仅作为 AI 策略组的可选出口。仓库不包含真实节点、订阅地址或凭据；下载模板后仍需在本地填写私人订阅。
+家宽节点策略组按节点名称匹配“家宽”，作为 AI 和 Final 策略组的可选出口。仓库不包含真实节点、订阅地址或凭据；下载模板后仍需在本地填写私人订阅。
 
 后续域名变更只在 `Rules/Source/allenrules/{direct,hk,us,jp,sg,de}.list` 中维护；文件名决定规则策略。GitHub Actions 会重新生成各客户端列表，客户端会按已配置的 86400 秒间隔更新这些资源。
 
@@ -144,7 +144,7 @@ secret: CHANGE_ME
 3. 备用订阅行以 `#` 开头；替换 URL 并删除 `#` 后才会启用。
 4. MITM 证书需要在 Surge 和系统中本地配置并信任。
 
-Mac 和 iPhone 必须选择对应文件。Surge Mac 模板包含 qB 下载器来源 IP 直连保护；iPhone 版不包含这类规则。
+Mac 和 iPhone 必须选择对应文件。公开模板不包含特定设备的来源 IP 直连规则；需要下载器直连保护时，请在私人副本中按实际设备地址配置。
 
 ### Quantumult X
 
@@ -212,9 +212,9 @@ policy_groups:
 - 默认直连：PT 站点、个人域名、公益 AI 和部分国内服务。
 - 远程资源：AI、PT、个人域名、CDN、媒体、游戏平台和常用服务规则。
 
-`api.github.com` 由本地精确规则固定交给 GitHub 策略。宽泛的 GitHub、Cloudflare 和 Google 静态资源本地规则仅注释保留；AI 专属端点由仓库自有 AI 订阅优先接管，既有第三方 AI 订阅继续作为补充。
+`api.github.com` 由本地精确规则固定交给 GitHub 策略。宽泛的 GitHub 和 Cloudflare 本地覆盖规则已移除；AI 专属端点由仓库自有 AI 订阅优先接管，既有第三方 AI 订阅继续作为补充。
 
-Loon 的 AI、测速、Steam 和 Game 补充规则使用 Blackmatrix 的 Loon 原生列表。无法通过当前网络更新的 Kelee 插件保留为 `enabled=false`，避免导入后持续产生资源更新错误。
+Loon 的 AI、测速和 Game 补充规则使用 Blackmatrix 的 Loon 原生列表。无法通过当前网络更新的 Kelee 插件保留为 `enabled=false`，避免导入后持续产生资源更新错误。
 
 `Download` 规则仍在仓库中自动维护，但这六份模板没有启用 Download 策略组，避免国外下载域名被过度分流。
 
