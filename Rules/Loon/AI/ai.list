@@ -45,3 +45,6 @@ DOMAIN-SUFFIX,midjourney.com
 DOMAIN-SUFFIX,open-meteo.com
 DOMAIN-SUFFIX,runwayml.com
 DOMAIN-SUFFIX,notebooklm.google.com
+
+# AI中转站
+DOMAIN-SUFFIX,anyrouter.top
