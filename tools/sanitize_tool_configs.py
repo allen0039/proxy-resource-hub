@@ -527,7 +527,7 @@ def sanitize_egern(text: str) -> str:
                     raise SanitizationError("egern: subscription URL list is invalid")
                 payload[url_key] = [SUBSCRIPTION_URL_PLACEHOLDER for _ in urls]
 
-    sanitized = "# Allen 维护 - Egern 专属配置模板\n" + yaml.safe_dump(
+    sanitized = "# Allen 维护 - Egern 配置\n" + yaml.safe_dump(
         parsed,
         allow_unicode=True,
         sort_keys=False,
@@ -872,7 +872,16 @@ def validate_sanitized_outputs(outputs: dict[str, str]) -> None:
         validate_client_structure(filename, text)
 
 
-def generate(source_dir: Path, output_dir: Path) -> dict[str, str]:
+def generate(
+    source_dir: Path,
+    output_dir: Path,
+    only: set[str] | None = None,
+    check: bool = False,
+) -> dict[str, str]:
+    if source_dir.resolve() == output_dir.resolve():
+        raise SanitizationError("source and output directories must be different")
+    if only is not None and (not only or not only <= OUTPUT_NAMES.keys()):
+        raise SanitizationError("unknown or empty source selection")
     sanitizers = {
         "surge-Mac.conf": lambda text: sanitize_surge(text, "surge-mac"),
         "Surge-iPhone.conf": lambda text: sanitize_surge(text, "surge-iphone"),
@@ -883,13 +892,30 @@ def generate(source_dir: Path, output_dir: Path) -> dict[str, str]:
     }
     outputs: dict[str, str] = {}
     for source_name, output_name in OUTPUT_NAMES.items():
+        if only is not None and source_name not in only:
+            continue
         source_path = source_dir / source_name
         if not source_path.is_file():
             raise SanitizationError(f"missing private source category: {source_name}")
         outputs[output_name] = sanitizers[source_name](
             source_path.read_text(encoding="utf-8")
         )
-    validate_sanitized_outputs(outputs)
+    if only is None:
+        validate_sanitized_outputs(outputs)
+    else:
+        for filename, text in outputs.items():
+            validate_common_patterns(filename, text)
+            validate_client_structure(filename, text)
+    if check:
+        stale = [
+            filename for filename, text in outputs.items()
+            if not (output_dir / filename).is_file()
+            or (output_dir / filename).read_text(encoding="utf-8") != text
+        ]
+        if stale:
+            # Report filenames only: private source material must not enter logs.
+            raise SanitizationError("out of sync: " + ", ".join(sorted(stale)))
+        return outputs
     output_dir.mkdir(parents=True, exist_ok=True)
     for filename, text in outputs.items():
         (output_dir / filename).write_text(text, encoding="utf-8")
@@ -902,14 +928,26 @@ def main() -> int:
     parser.add_argument(
         "--output-dir", type=Path, default=ROOT / "Configs" / "tool_config"
     )
+    parser.add_argument(
+        "--only", action="append", choices=sorted(OUTPUT_NAMES),
+        help="Generate or check only a selected client; repeat for multiple clients.",
+    )
+    parser.add_argument(
+        "--check", action="store_true",
+        help="Check templates against sanitized sources without writing files.",
+    )
     args = parser.parse_args()
     try:
-        outputs = generate(args.source_dir, args.output_dir)
+        outputs = generate(
+            args.source_dir, args.output_dir,
+            only=set(args.only) if args.only else None, check=args.check,
+        )
     except (OSError, UnicodeError, SanitizationError) as error:
         print(error, file=sys.stderr)
         return 1
     for filename in sorted(outputs):
-        print(f"updated: {filename}")
+        action = "in sync" if args.check else "updated"
+        print(f"{action}: {filename}")
     return 0
 
 
