@@ -91,6 +91,7 @@ CUSTOM_FEEDS = {
     "us": ("Regional/us.list", "美国节点"),
     "jp": ("Regional/jp.list", "日本节点"),
     "sg": ("Regional/sg.list", "新加坡节点"),
+    "de": ("Regional/de.list", "德国节点"),
 }
 ACTIVE_CUSTOM_FEEDS = CUSTOM_FEEDS
 RETIRED_CUSTOM_FEEDS = {
@@ -294,6 +295,37 @@ FINAL,Main
         self.assertIn("198.51.100.0/24,REJECT", result)
         self.assertIn("192.168.0.0/16,DIRECT", result)
         sanitizer.validate_common_patterns("surge_mac_allen.conf", result)
+
+    def test_sanitizer_removes_device_source_ip_rules_but_keeps_direct_networks(self):
+        sanitizer = load_sanitizer()
+        source = (
+            "SRC-IP,192.168.50.150,DIRECT\n"
+            "  - SRC-IP-CIDR,192.168.50.151/32,DIRECT\n"
+            "# SRC-IP-CIDR,192.168.50.152/32,DIRECT\n"
+            "IP-CIDR,192.168.0.0/16,DIRECT,no-resolve\n"
+        )
+        result = sanitizer._drop_nonpublic_ip_routing_rules(source)
+        self.assertEqual("IP-CIDR,192.168.0.0/16,DIRECT,no-resolve\n", result)
+        with self.assertRaises(sanitizer.SanitizationError):
+            sanitizer.validate_common_patterns("surge_mac_allen.conf", source)
+
+    def test_loon_public_plugins_default_to_disabled(self):
+        sanitizer = load_sanitizer()
+        source = (
+            "[Remote Proxy]\nProvider = https://private.invalid/sub\n"
+            "[Plugin]\n"
+            "https://example.com/ads.lpx, enabled=true\n"
+            "https://example.com/optional.lpx\n"
+            "[Rule]\nFINAL,DIRECT\n"
+        )
+        result = sanitizer.sanitize_loon(source)
+        self.assertIn("https://example.com/ads.lpx, enabled=false", result)
+        self.assertIn("https://example.com/optional.lpx, enabled=false", result)
+        self.assertIn("FINAL,DIRECT", result)
+        committed = (OUTPUT_DIR / "loon_allen.lcf").read_text().split("\n[Plugin]\n", 1)[1].split("\n[Mitm]\n", 1)[0]
+        for line in committed.splitlines():
+            if line.startswith("https://"):
+                self.assertIn("enabled=false", line)
 
     def test_validator_rejects_address_specific_proxy_routing_rules(self):
         sanitizer = load_sanitizer()
@@ -654,45 +686,27 @@ default_proxy_group: Proxy
             for name in CONFIG_NAMES
         }
 
-        surge_home = (
-            rf"(?m)^家宽节点 = select,"
-            rf"(?=[^\n]*policy-regex-filter={re.escape(HOME_POLICY_REGEX)})"
-            rf"(?=[^\n]*icon-url={re.escape(HOME_ICON_URL)})[^\n]*$"
-        )
-        for name in ("surge_mac_allen.conf", "surge_iphone_allen.conf"):
-            with self.subTest(name=name):
-                text = configs[name]
-                self.assertEqual(2, text.count(HOME_POLICY_NAME))
-                self.assertRegex(text, surge_home)
-                self.assertRegex(
-                    text,
-                    r"(?m)^AI = select,.*家宽节点(?:,|, .*)",
-                )
-
-        qx = configs["quantumultx_allen.conf"]
-        self.assertEqual(2, qx.count(HOME_POLICY_NAME))
-        self.assertRegex(
-            qx,
-            (
-                rf"(?m)^static=家宽节点,"
-                rf"(?=[^\n]*server-tag-regex={re.escape(HOME_POLICY_REGEX)})"
-                rf"(?=[^\n]*img-url={re.escape(HOME_ICON_URL)})[^\n]*$"
-            ),
-        )
-        self.assertRegex(qx, r"(?m)^static=AI,.*家宽节点(?:,|$)")
-
-        loon = configs["loon_allen.lcf"]
-        self.assertEqual(2, loon.count(HOME_POLICY_NAME))
-        loon_home = (
-            rf"(?m)^家宽节点 = select,"
-            rf"(?=[^\n]*policy-regex-filter={re.escape(HOME_POLICY_REGEX)})"
-            rf"(?=[^\n]*img-url={re.escape(HOME_ICON_URL)})[^\n]*$"
-        )
-        self.assertRegex(
-            loon,
-            loon_home,
-        )
-        self.assertRegex(loon, r"(?m)^AI = select,.*家宽节点(?:,|, .*)")
+        for name in NON_EGERN_CONFIG_NAMES - {"mihomo_allen.yaml"}:
+            text = configs[name]
+            prefix = "static=" if name == "quantumultx_allen.conf" else ""
+            for group in ("AI", "Final"):
+                with self.subTest(name=name, group=group):
+                    line = next(line for line in text.splitlines()
+                                if line.startswith(prefix + group + ("," if prefix else " =")))
+                    self.assertIn(HOME_POLICY_NAME, [part.strip() for part in line.split(",")])
+            home_lines = [line for line in text.splitlines()
+                          if line.startswith(prefix + HOME_POLICY_NAME + ("," if prefix else " ="))]
+            with self.subTest(name=name, check="home group"):
+                self.assertEqual(1, len(home_lines))
+                self.assertIn(HOME_ICON_URL, home_lines[0])
+                if name == "quantumultx_allen.conf":
+                    self.assertIn("server-tag-regex=(?i)家宽", home_lines[0])
+                elif name == "loon_allen.lcf":
+                    self.assertIn("select,家宽,", home_lines[0])
+                    self.assertIn('家宽 = NameRegex, FilterKey = "^(?=.*家宽).*$"', text)
+                else:
+                    self.assertIn("select,", home_lines[0])
+                    self.assertIn("policy-regex-filter=(家宽)", home_lines[0])
 
         mihomo = yaml.safe_load(configs["mihomo_allen.yaml"])
         groups = {
@@ -704,10 +718,10 @@ default_proxy_group: Proxy
         home = groups[HOME_POLICY_NAME]
         self.assertEqual("select", home["type"])
         self.assertTrue(home["include-all"])
-        self.assertEqual(HOME_POLICY_REGEX, home["filter"])
+        self.assertEqual("家宽", home["filter"])
         self.assertEqual(HOME_ICON_URL, home["icon"])
         self.assertIn(HOME_POLICY_NAME, groups["AI"]["proxies"])
-        self.assertEqual(2, configs["mihomo_allen.yaml"].count(HOME_POLICY_NAME))
+        self.assertIn(HOME_POLICY_NAME, groups["Final"]["proxies"])
 
         egern = yaml.safe_load(configs["egern_byallen.yaml"])
         egern_groups = {
@@ -781,7 +795,7 @@ default_proxy_group: Proxy
             for name in CONFIG_NAMES
         }
         titles = {
-            "egern_byallen.yaml": "# Allen 维护 - Egern 专属配置模板",
+            "egern_byallen.yaml": "# Allen 维护 - Egern 配置",
             "surge_iphone_allen.conf": "# Allen 维护 - Surge iPhone 配置",
             "surge_mac_allen.conf": "# Allen 维护 - Surge Mac 配置",
             "loon_allen.lcf": "# Allen 维护 - Loon 配置",
@@ -935,7 +949,7 @@ default_proxy_group: Proxy
         }
         for name, rule in cloudflare_rules.items():
             with self.subTest(name=name, check="Cloudflare CDN"):
-                self.assertEqual(outputs[name].count(rule), 1)
+                self.assertNotIn(rule, outputs[name])
 
         mihomo = yaml.safe_load(outputs["mihomo_allen.yaml"])
         missing_icons = [
@@ -1033,7 +1047,7 @@ default_proxy_group: Proxy
             for name in ("surge_mac_allen.conf", "surge_iphone_allen.conf")
         }
         apple_push_group = (
-            "Apple Push = select, 日本节点, 香港节点, 美国节点, DIRECT, "
+            "Apple Push = select, 日本优选, 香港优选, 美国优选, 日本节点, 香港节点, 美国节点, DIRECT, "
             "icon-url=https://fastly.jsdelivr.net/gh/fmz200/wool_scripts@main/"
             "icons/apps/Apple_Messages.png"
         )
@@ -1066,7 +1080,7 @@ default_proxy_group: Proxy
         loon = (OUTPUT_DIR / "loon_allen.lcf").read_text(encoding="utf-8")
         self.assertEqual(
             loon.count(
-                "Apple Push = select,日本节点,香港节点,美国节点,DIRECT,"
+                "Apple Push = select,日本优选,香港优选,美国优选,日本节点,香港节点,美国节点,DIRECT,"
             ),
             1,
         )
@@ -1074,7 +1088,7 @@ default_proxy_group: Proxy
         qx = (OUTPUT_DIR / "quantumultx_allen.conf").read_text(encoding="utf-8")
         self.assertEqual(
             qx.count(
-                "static=Apple Push, 日本节点, 香港节点, 美国节点, direct,"
+                "static=Apple Push, 日本优选, 香港优选, 美国优选, 日本节点, 香港节点, 美国节点, direct,"
             ),
             1,
         )
@@ -1240,7 +1254,7 @@ default_proxy_group: Proxy
             "Rules/Loon/PT/Domain.list",
         ):
             self.assertLess(loon_remote.index(marker), first_service)
-        self.assertIn("tag=ProxyLite", loon_remote)
+        self.assertNotIn("tag=ProxyLite", loon_remote)
         self.assertIn("tag=GFWList", loon_remote)
 
     def test_committed_outputs_use_renamed_primary_subscription(self):
@@ -1291,11 +1305,6 @@ default_proxy_group: Proxy
                     self.assertNotRegex(
                         text,
                         rf"(?im)^\s*-?\s*(?:DOMAIN-SUFFIX|DOMAIN-KEYWORD|"
-                        rf"host-suffix|host-keyword)\s*,\s*{re.escape(value)}\s*,",
-                    )
-                    self.assertRegex(
-                        text,
-                        rf"(?im)^\s*#\s*-?\s*(?:DOMAIN-SUFFIX|DOMAIN-KEYWORD|"
                         rf"host-suffix|host-keyword)\s*,\s*{re.escape(value)}\s*,",
                     )
 
@@ -1369,7 +1378,6 @@ default_proxy_group: Proxy
         for marker in (
             "/rule/Loon/OpenAI/OpenAI.list",
             "/rule/Loon/Speedtest/Speedtest.list",
-            "/rule/Loon/Steam/Steam.list",
             "/rule/Loon/Game/Game.list",
         ):
             self.assertIn(marker, loon)
@@ -1489,6 +1497,12 @@ default_proxy_group: Proxy
         with self.assertRaises(sanitizer.SanitizationError):
             sanitizer._validate_mihomo("mihomo_allen.yaml", legacy)
 
+    def test_public_templates_exclude_device_source_ip_rules(self):
+        for name in CONFIG_NAMES:
+            with self.subTest(name=name):
+                text = (OUTPUT_DIR / name).read_text()
+                self.assertNotRegex(text, r"(?im)^\s*(?:#\s*)?(?:-\s*)?SRC-IP(?:-CIDR|6-CIDR)?,")
+
     def test_committed_non_gateway_configs_exclude_active_source_ip_rules(self):
         configs = {
             "surge_iphone_allen.conf": r"(?im)^\s*#?\s*src-ip,",
@@ -1530,15 +1544,11 @@ default_proxy_group: Proxy
             provider_key = f"custom_{slug.replace('-', '_')}"
             self.assertNotIn(provider_key, mihomo["rule-providers"])
             self.assertNotIn(f"RULE-SET,{provider_key},", rules)
-        source_ip_rules = [
-            "SRC-IP-CIDR,192.168.50.150/32,DIRECT",
-            "SRC-IP-CIDR,192.168.50.151/32,DIRECT",
-            "SRC-IP-CIDR,192.168.50.152/32,DIRECT",
-        ]
-        self.assertEqual(source_ip_rules, rules[:3])
-        self.assertEqual(expected_rules, rules[3 : 3 + len(expected_rules)])
+        self.assertFalse(any(rule.startswith("SRC-IP") for rule in rules))
+        positions = [rules.index(rule) for rule in expected_rules]
+        self.assertEqual(list(range(min(positions), max(positions) + 1)), sorted(positions))
         self.assertLess(
-            rules.index(expected_rules[-1]),
+            max(positions),
             rules.index("RULE-SET,steam_cn_domain,DIRECT"),
         )
 
@@ -1624,7 +1634,7 @@ default_proxy_group: Proxy
             qx_url = custom_url("QuantumultX", slug)
             loon_url = custom_url("Loon", slug)
             qx_policy = "direct" if slug == "direct" else policy
-            tag = "自定义-直连" if slug == "direct" else f"自定义-{policy}"
+            tag = "地区分流·直连" if slug == "direct" else f"地区分流·{policy.removesuffix('节点')}"
             qx_matches = [line for line in qx if qx_url in line]
             loon_matches = [line for line in loon if loon_url in line]
             with self.subTest(client="Quantumult X", slug=slug):

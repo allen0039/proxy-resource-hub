@@ -243,25 +243,25 @@ https://raw.githubusercontent.com/Tartarus2014/Loon-Script/master/Rule/GEOIP.lsr
 https://raw.githubusercontent.com/ACL4SSR/ACL4SSR/master/Clash/ProxyGFWlist.list, policy=Proxy, tag=GFWList, enabled=true
 
 [Plugin]
-https://kelee.one/Tool/Loon/Lpx/BlockAdvertisers.lpx, enabled=true
-https://yfamilys.com/plugin/adlite.plugin, enabled=true
-https://raw.githubusercontent.com/zqzess/rule_for_quantumultX/master/Loon/Plugin/FanQieNovel.plugin, enabled=true
+https://kelee.one/Tool/Loon/Lpx/BlockAdvertisers.lpx, enabled=false
+https://yfamilys.com/plugin/adlite.plugin, enabled=false
+https://raw.githubusercontent.com/zqzess/rule_for_quantumultX/master/Loon/Plugin/FanQieNovel.plugin, enabled=false
 
 # 所有插件默认关闭；MitM 类插件需安装并信任 [Mitm] 证书后再启用。
 
-https://kelee.one/Tool/Loon/Lpx/YouTube_remove_ads.lpx, tag=YouTube去除广告, enabled=true
-https://kelee.one/Tool/Loon/Lpx/FleaMarket_remove_ads.lpx, enabled=true
-https://kelee.one/Tool/Loon/Lpx/Cainiao_remove_ads.lpx, enabled=true
-https://kelee.one/Tool/Loon/Lpx/RedPaper_remove_ads.lpx, tag=小红书去广告去水印, enabled=true
-https://kelee.one/Tool/Loon/Lpx/Amap_remove_ads.lpx, enabled=true
-https://kelee.one/Tool/Loon/Lpx/FenBi_remove_ads.lpx, enabled=true
-https://kelee.one/Tool/Loon/Lpx/MailMaster_remove_ads.lpx, enabled=true
-https://kelee.one/Tool/Loon/Lpx/ColorfulClouds_remove_ads.lpx, enabled=true
-https://kelee.one/Tool/Loon/Lpx/Bilibili_remove_ads.lpx, enabled=true
-https://kelee.one/Tool/Loon/Lpx/BoxJs.lpx, enabled=true
+https://kelee.one/Tool/Loon/Lpx/YouTube_remove_ads.lpx, tag=YouTube去除广告, enabled=false
+https://kelee.one/Tool/Loon/Lpx/FleaMarket_remove_ads.lpx, enabled=false
+https://kelee.one/Tool/Loon/Lpx/Cainiao_remove_ads.lpx, enabled=false
+https://kelee.one/Tool/Loon/Lpx/RedPaper_remove_ads.lpx, tag=小红书去广告去水印, enabled=false
+https://kelee.one/Tool/Loon/Lpx/Amap_remove_ads.lpx, enabled=false
+https://kelee.one/Tool/Loon/Lpx/FenBi_remove_ads.lpx, enabled=false
+https://kelee.one/Tool/Loon/Lpx/MailMaster_remove_ads.lpx, enabled=false
+https://kelee.one/Tool/Loon/Lpx/ColorfulClouds_remove_ads.lpx, enabled=false
+https://kelee.one/Tool/Loon/Lpx/Bilibili_remove_ads.lpx, enabled=false
+https://kelee.one/Tool/Loon/Lpx/BoxJs.lpx, enabled=false
 https://kelee.one/Tool/Loon/Lpx/DragonRead_remove_ads.lpx, tag=番茄小说去广告, enabled=false
-https://raw.githubusercontent.com/zqzess/rule_for_quantumultX/master/Loon/Plugin/SkipProxy.plugin, tag=SkipProxy, enabled=true
-https://kelee.one/Tool/Loon/Lpx/Node_detection_tool.lpx, tag=节点解锁检测, enabled=true
+https://raw.githubusercontent.com/zqzess/rule_for_quantumultX/master/Loon/Plugin/SkipProxy.plugin, tag=SkipProxy, enabled=false
+https://kelee.one/Tool/Loon/Lpx/Node_detection_tool.lpx, tag=节点解锁检测, enabled=false
 
 
 [Mitm]

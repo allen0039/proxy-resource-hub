@@ -116,6 +116,8 @@ def _append_placeholder_once(
 
 def _is_nonpublic_ip_routing_rule(line: str) -> bool:
     """Treat address-specific proxy routing as private configuration."""
+    if re.match(r"(?i)^\s*(?:#\s*)?(?:-\s*)?SRC-IP(?:-CIDR|6-CIDR)?,", line):
+        return True
     match = IP_ROUTING_RULE_RE.match(line)
     if match is None:
         return False
@@ -318,6 +320,11 @@ def sanitize_loon(text: str) -> str:
                 mitm_marker,
             )
             continue
+        if current == "plugin" and content and URL_RE.search(line):
+            if re.search(r"(?i)enabled\s*=", line):
+                line = re.sub(r"(?i)enabled\s*=\s*(?:true|false)", "enabled=false", line)
+            else:
+                line = line.rstrip() + ", enabled=false"
         output.append(line)
 
     if subscription_index == 0:
