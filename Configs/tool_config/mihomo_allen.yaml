@@ -167,7 +167,7 @@ dns:
 #     type: vless
 #     server: <TRANSIT_SERVER>
 #     port: <TRANSIT_PORT>
-#     uuid: CHANGE_ME
+#     uuid: <TRANSIT_UUID>
 #     udp: true
 #     tls: true
 #     skip-cert-verify: false
@@ -184,7 +184,7 @@ dns:
 #     type: anytls
 #     server: <LANDING_ANYTLS_SERVER>
 #     port: <LANDING_ANYTLS_PORT>
-#     password: CHANGE_ME
+#     password: <LANDING_ANYTLS_PASSWORD>
 #     udp: true
 #     tls: true
 #     skip-cert-verify: false
@@ -198,7 +198,7 @@ dns:
 #     type: vless
 #     server: <LANDING_VLESS_SERVER>
 #     port: <LANDING_VLESS_PORT>
-#     uuid: CHANGE_ME
+#     uuid: <LANDING_VLESS_UUID>
 #     udp: true
 #     tls: true
 #     skip-cert-verify: false
