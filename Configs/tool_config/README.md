@@ -262,3 +262,32 @@ Loon 的 AI、测速和 Game 补充规则使用 Blackmatrix 的 Loon 原生列�
 六份模板已同步当前个人配置并脱敏。Loon、Quantumult X 和 Mihomo 已启用 anti-AD 官方远程规则，无需 MITM；QX 与 Mihomo 设置每天更新，Loon 按客户端规则资源更新设置刷新。规则从官方地址下载，本仓库未保存 anti-AD 规则副本。已有其他广告规则仍保留，测试时可按需暂停重叠规则。
 
 真实订阅、节点认证、控制器密钥和 MITM 材料已移除或替换；特定内网设备的来源 IP 分流规则未包含在公开模板中。个人公开规则订阅与策略名称保留。下载后请填写自己的节点订阅；需要 HTTPS 重写的模块还需在设备上生成、安装并信任证书。
+
+## 维护者：同步本地配置与公开模板
+
+仓库以 GitHub 的最新 `main` 为基准；个人配置保存在仓库外。不要把旧分支的模板、测试或生成规则整体覆盖到主分支。第三方 Egern 规则由 `tools/update_egern_rules.py` 更新，自有规则由 `tools/generate_rules.py` 生成。
+
+在仓库根目录执行（以下假设六份个人配置放在上一级目录）：
+
+```sh
+git pull --ff-only
+python3 tools/sanitize_tool_configs.py --source-dir .. --check
+```
+
+检查不会修改文件；不一致时返回非零状态，只列文件名。需要同步个人配置变更时执行：
+
+```sh
+python3 tools/sanitize_tool_configs.py --source-dir ..
+python3 tools/generate_rules.py
+python3 -m unittest discover -s tests -v
+python3 tools/generate_rules.py --check
+python3 tools/sanitize_tool_configs.py --source-dir .. --check
+git diff --check
+git diff --stat
+```
+
+检查通过后，将公开模板、对应测试和说明一起提交，通过 PR 合并；再在本地 `main` 执行 `git pull --ff-only`。只处理单个客户端时可追加 `--only Surge-iPhone.conf`，该选项可重复使用。
+
+**同步判定是“个人配置经过公开模板转换后相同”，不是私人文件逐字相同。** 转换替换订阅和凭据，移除私人节点、证书及设备/IP 专属规则，并统一格式。另有两个明确的公开模板例外：Loon 插件默认关闭；Egern 不发布 MITM、脚本和本地节点区块。它们不是普通分流差异；个人配置保留原设置，命令不会回写私人文件。DNS、策略组和其余分流设置随个人配置同步。
+
+GitHub Actions 无法读取你电脑上的私人配置，因此私人配置变化后需要运行上述命令；远端的定时任务只更新公开规则。
