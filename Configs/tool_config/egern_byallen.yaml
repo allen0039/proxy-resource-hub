@@ -1,4 +1,4 @@
-# Allen 维护 - Egern 专属配置模板
+# Allen 维护 - Egern 配置
 ipv6: false
 http_port: 8585
 socks_port: 1235
@@ -30,7 +30,6 @@ vif_excluded_routes:
 - 203.0.113.0/24
 - 224.0.0.0/4
 - 255.255.255.255/32
-# DNS：公网查询统一使用国内 DoH；system/明文 DNS 仅用于引导解析和局域网兼容。
 dns:
   bootstrap:
   - system
@@ -42,12 +41,57 @@ dns:
     - https://doh.pub/dns-query
   forward:
   - domain_wildcard:
+      match: '*.lan'
+      value: system
+  - domain_wildcard:
+      match: '*.local'
+      value: system
+  - domain_wildcard:
+      match: router.asus.com
+      value: system
+  - domain_wildcard:
+      match: www.miwifi.com
+      value: system
+  - domain_wildcard:
+      match: miwifi.com
+      value: system
+  - domain_wildcard:
+      match: router.synology.com
+      value: system
+  - domain_wildcard:
+      match: tplogin.cn
+      value: system
+  - domain_wildcard:
+      match: melogin.cn
+      value: system
+  - domain_wildcard:
+      match: falogin.cn
+      value: system
+  - domain_wildcard:
+      match: tplinklogin.net
+      value: system
+  - domain_wildcard:
+      match: orbilogin.com
+      value: system
+  - domain_wildcard:
+      match: routerlogin.net
+      value: system
+  - domain_wildcard:
+      match: injections.adguard.org
+      value: system
+  - domain_wildcard:
+      match: local.adguard.org
+      value: system
+  - domain_wildcard:
+      match: '*.bogon'
+      value: system
+  - domain_wildcard:
       match: '*'
       value: Secure-DNS
   proxy_nameservers:
   - https://dns.alidns.com/dns-query
   - https://doh.pub/dns-query
-  public_ip_lookup_url: https://ifconfig.me/ip
+  skip_tls_verify: false
 bypass_tunnel_proxy:
 - 192.168.0.0/16
 - 10.0.0.0/8
@@ -839,6 +883,12 @@ policy_groups:
     filter: (?i)^(?!.*(家用|家庭|家宽|\bISP\b|🇭🇰|香港|Hong[ _-]?Kong|🇹🇼|台湾|台北|Taipei|🇯🇵|日本|川日|东京|大阪|泉日|沪日|深日|埼玉|Tokyo|Osaka|🇸🇬|新加坡|狮城|🇺🇸|🇺🇲|美国|波特兰|达拉斯|俄勒冈|凤凰城|费利蒙|硅谷|拉斯维加斯|洛杉矶|圣何塞|圣克拉拉|西雅图|芝加哥|🇰🇷|韩国|韓國|首尔|首爾|Seoul|🇬🇧|英国|倫敦|伦敦|London|🇩🇪|德国|德國|法兰克福|法蘭克福|柏林|慕尼黑|(^|[^A-Za-z0-9])(HK|HKG|TW|TWN|Tai|Taiwan|JP|JPN|Japan|SG|SGP|Singapore|US|USA|United[ _-]?States|States|KR|KOR|Korea|UK|GB|GBR|United[ _-]?Kingdom|DE|DEU|Germany|Deutschland|Frankfurt|Berlin|Munich)([ _-]?\d+)?($|[^A-Za-z0-9])|直连|回国|校园|游戏|🎮|邀请|返利|循环|官网|客服|网站|网址|获取|订阅|流量|到期|机场|下次|版本|官址|备用|过期|已用|联系|邮箱|工单|交流群|官方群|用户群|群组|社群|群聊|贩卖|倒卖|防止|国内|(^|[^A-Za-z0-9])(GAME|USE|USED|TOTAL|EXPIRE|EMAIL|Panel)($|[^A-Za-z0-9])|\d{4}-\d{2}-\d{2})).+$
     hidden: true
 rules:
+- domain:
+    match: doh.pub
+    policy: DIRECT
+- domain:
+    match: dns.alidns.com
+    policy: DIRECT
 - protocol:
     match: stun
     policy: REJECT
@@ -911,9 +961,6 @@ rules:
 - domain:
     match: lcs-cops.adobe.io
     policy: DIRECT
-- domain_suffix:
-    match: ic.adobe.io
-    policy: REJECT
 - domain_suffix:
     match: hstatic.io
     policy: REJECT
@@ -1006,9 +1053,6 @@ rules:
     match: https://raw.githubusercontent.com/allen0039/proxy-resource-hub/main/Rules/Egern/AI/ai.yaml
     policy: AI
 - rule_set:
-    match: https://raw.githubusercontent.com/Repcz/Tool/X/Egern/Rules/OpenAI.yaml
-    policy: AI
-- rule_set:
     match: https://raw.githubusercontent.com/allen0039/proxy-resource-hub/main/Rules/Egern/SKK/AI.yaml
     policy: AI
 - rule_set:
@@ -1020,22 +1064,6 @@ rules:
 - rule_set:
     match: https://raw.githubusercontent.com/allen0039/proxy-resource-hub/main/Rules/Egern/Google/Google.yaml
     policy: Google
-- rule_set:
-    match: https://raw.githubusercontent.com/Repcz/Tool/X/Egern/Rules/Google.yaml
-    policy: DIRECT
-    disabled: true
-- rule_set:
-    match: https://raw.githubusercontent.com/Repcz/Tool/X/Egern/Rules/Ads_AWAvenue.yaml
-    policy: REJECT
-    disabled: true
-- rule_set:
-    match: https://raw.githubusercontent.com/Repcz/Tool/X/Egern/Rules/Ads_limbopro.yaml
-    policy: REJECT
-    disabled: true
-- rule_set:
-    match: https://raw.githubusercontent.com/Repcz/Tool/X/Egern/Rules/TestFlight.yaml
-    policy: Proxy
-    disabled: true
 - rule_set:
     match: https://raw.githubusercontent.com/Repcz/Tool/X/Egern/Rules/Apple.yaml
     policy: Apple
@@ -1123,31 +1151,15 @@ rules:
 - rule_set:
     match: https://raw.githubusercontent.com/allen0039/proxy-resource-hub/main/Rules/Egern/shop/shopping.yaml
     policy: 海淘
-- domain_suffix:
-    match: yqc-premium.com
-    policy: DIRECT
-- rule_set:
-    match: https://raw.githubusercontent.com/Repcz/Tool/X/Egern/Rules/ChinaIP.yaml
-    policy: DIRECT
-    disabled: true
-- rule_set:
-    match: https://raw.githubusercontent.com/Repcz/Tool/X/Egern/Rules/Proxy.yaml
-    policy: Proxy
-    disabled: true
 - rule_set:
     match: https://raw.githubusercontent.com/Repcz/Tool/X/Egern/Rules/ProxyGFW.yaml
     policy: Proxy
-- rule_set:
-    match: https://raw.githubusercontent.com/Repcz/Tool/X/Egern/Rules/ChinaASN.yaml
-    policy: DIRECT
-    disabled: true
 - geoip:
     match: CN
     policy: DIRECT
     no_resolve: true
 - default:
     policy: Final
-# 使用 Egern 可兼容的 Surge 模块；广告平台拦截器保持在最前。
 modules:
 - name: 广告平台拦截器
   url: https://raw.githubusercontent.com/Repcz/Tool/X/Surge/Module/Kelee/BlockAdvertisers.sgmodule
