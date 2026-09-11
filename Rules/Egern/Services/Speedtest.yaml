@@ -2,7 +2,7 @@
 # SPDX-License-Identifier: AGPL-3.0-only
 # Derived from https://github.com/SukkaW/Surge
 # Source: https://ruleset.skk.moe/List/domainset/speedtest.conf
-# Rule count: 3380
+# Rule count: 3382
 
 domain_set:
   - "7h15.ru1353t.1s.m4d3.by.5ukk4w.skk.moe"
@@ -1818,6 +1818,7 @@ domain_set:
   - "speedtest.powernet.com.ru"
   - "speedtest.puraknet.com.br"
   - "speedtest.rajeshcable.com"
+  - "speedtest.respawnhost.com"
   - "speedtest.rtm.t-mobile.nl"
   - "speedtest.samparkinfo.com"
   - "speedtest.sesfiber.com.br"
@@ -2904,6 +2905,7 @@ domain_set:
   - "st-atakoy-1.turksatkablo.com.tr"
   - "st-edirne-1.turksatkablo.com.tr"
   - "st-manisa-1.turksatkablo.com.tr"
+  - "st-mersin-1.turksatkablo.com.tr"
   - "st-samsun-1.turksatkablo.com.tr"
   - "stbellevillewireless.rogers.com"
   - "stgeorgetownwireless.rogers.com"
