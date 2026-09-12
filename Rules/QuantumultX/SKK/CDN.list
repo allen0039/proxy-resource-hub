@@ -3,9 +3,9 @@
 # Derived from https://github.com/SukkaW/Surge
 # Source: https://ruleset.skk.moe/List/domainset/cdn.conf
 # Source: https://ruleset.skk.moe/List/non_ip/cdn.conf
-# Upstream Last Updated: 2026-09-05T11:56:51.377Z (domainset)
+# Upstream Last Updated: 2026-09-12T18:18:09.839Z (domainset)
 # Upstream Last Updated: 2026-08-19T01:29:53.827Z (non_ip)
-# Rule count: 4737
+# Rule count: 4739
 
 host, 7h15.ru1353t.1s.m4d3.by.5ukk4w.skk.moe, proxy
 host, 0x0.st, proxy
@@ -3076,6 +3076,7 @@ host, storageapi.fleek.co, proxy
 host, sync.getpublica.com, proxy
 host, tag.unifyintent.com, proxy
 host, tags.nationwide.com, proxy
+host, thumb.wikimedia.org, proxy
 host, thumbs.onlyfans.com, proxy
 host, thumbs2.sendvid.com, proxy
 host, tile2.intervals.icu, proxy
@@ -3290,6 +3291,7 @@ host, r2cdn.myshopline.com, proxy
 host, rapid-cdn.yottaa.com, proxy
 host, reload.getsentry.net, proxy
 host, res-3.cdn.office.net, proxy
+host, resources.redbull.tv, proxy
 host, resources.whatwg.org, proxy
 host, rs-cdn.splashtop.com, proxy
 host, rules1.clearurls.xyz, proxy
