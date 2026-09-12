@@ -3,9 +3,9 @@
 # Derived from https://github.com/SukkaW/Surge
 # Source: https://ruleset.skk.moe/List/domainset/download.conf
 # Source: https://ruleset.skk.moe/List/non_ip/download.conf
-# Upstream Last Updated: 2026-08-29T18:28:31.014Z (domainset)
+# Upstream Last Updated: 2026-09-12T18:18:09.839Z (domainset)
 # Upstream Last Updated: 2026-08-05T12:33:04.408Z (non_ip)
-# Rule count: 1977
+# Rule count: 1978
 
 DOMAIN,7h15.ru1353t.1s.m4d3.by.5ukk4w.skk.moe
 DOMAIN-SUFFIX,gcr.io
@@ -250,6 +250,7 @@ DOMAIN,debian.mnet.bg
 DOMAIN,disks.webvm.io
 DOMAIN,dl.devmate.com
 DOMAIN,dl.flathub.org
+DOMAIN,dl.gl-inet.com
 DOMAIN,dl.nssurge.com
 DOMAIN,dl.pikpak.site
 DOMAIN,dl2.osmand.net
