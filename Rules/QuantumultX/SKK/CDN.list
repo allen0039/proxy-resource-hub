@@ -3,9 +3,9 @@
 # Derived from https://github.com/SukkaW/Surge
 # Source: https://ruleset.skk.moe/List/domainset/cdn.conf
 # Source: https://ruleset.skk.moe/List/non_ip/cdn.conf
-# Upstream Last Updated: 2026-09-12T18:18:09.839Z (domainset)
+# Upstream Last Updated: 2026-09-13T08:44:07.146Z (domainset)
 # Upstream Last Updated: 2026-08-19T01:29:53.827Z (non_ip)
-# Rule count: 4739
+# Rule count: 4745
 
 host, 7h15.ru1353t.1s.m4d3.by.5ukk4w.skk.moe, proxy
 host, 0x0.st, proxy
@@ -598,6 +598,7 @@ host-suffix, 4everland.io, proxy
 host, aimg.fc2.com, proxy
 host, ajax.cat.net, proxy
 host-suffix, apperoni.top, proxy
+host-suffix, axiom-cdn.io, proxy
 host-suffix, axis-cdn.net, proxy
 host, b.peatio.com, proxy
 host, b.sf-syn.com, proxy
@@ -1058,6 +1059,7 @@ host-suffix, stackblitz.io, proxy
 host, static.dw.com, proxy
 host, static.ffx.io, proxy
 host, static.iyf.tv, proxy
+host, static.jup.ag, proxy
 host, static.k2s.cc, proxy
 host, static.nrk.no, proxy
 host, static.ui.com, proxy
@@ -3077,6 +3079,7 @@ host, sync.getpublica.com, proxy
 host, tag.unifyintent.com, proxy
 host, tags.nationwide.com, proxy
 host, thumb.wikimedia.org, proxy
+host, thumbnails.padre.gg, proxy
 host, thumbs.onlyfans.com, proxy
 host, thumbs2.sendvid.com, proxy
 host, tile2.intervals.icu, proxy
@@ -4127,6 +4130,7 @@ host, tiles.openrailwaymap.org, proxy
 host, tools-static.wmflabs.org, proxy
 host, typescript.azureedge.net, proxy
 host, ubistatic2-a.ubisoft.com, proxy
+host, ugc.production.linktr.ee, proxy
 host, viu-static.akamaized.net, proxy
 host, web-assets.zendesk.co.jp, proxy
 host, wl-apps.yourwebsite.life, proxy
@@ -4150,6 +4154,7 @@ host, cdn.privacy.paramount.com, proxy
 host, cdn.registerdisney.go.com, proxy
 host, changelog-widget.canny.io, proxy
 host, chunk-composing.canva.com, proxy
+host, coin-images.coingecko.com, proxy
 host, components.justanswer.com, proxy
 host, cors-proxy.htmldriven.com, proxy
 host-suffix, crashlytics2.l.google.com, proxy
@@ -4322,6 +4327,7 @@ host, antiqua-ux-cdn.monotype.com, proxy
 host, app-static-prod.posthog.com, proxy
 host, article-image-ix.nikkei.com, proxy
 host, assets.braintreegateway.com, proxy
+host, assets.production.linktr.ee, proxy
 host, assets.weather-forecast.com, proxy
 host-suffix, cdn-lfs-us-1.huggingface.co, proxy
 host, cdn-live.foreignaffairs.com, proxy
