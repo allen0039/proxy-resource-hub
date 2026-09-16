@@ -51,18 +51,18 @@ DUPLICATE_PT_VALUES = {
     "springsunday.net",
 }
 SUPPORTED_AI_REGION_ORDER = [
-    "美国优选",
-    "日本优选",
-    "美国节点",
-    "日本节点",
-    "新加坡节点",
-    "台湾节点",
-    "韩国节点",
-    "英国节点",
-    "德国节点",
-    "其他地区",
-    "香港优选",
-    "香港节点",
+    '香港故转',
+    "日本故转",
+    '美国故转',
+    '香港节点',
+    '日本节点',
+    '新加坡节点',
+    '美国节点',
+    '台湾节点',
+    '韩国节点',
+    '英国节点',
+    '德国节点',
+    '其他地区',
 ]
 DOCKER_ICON_URL = (
     "https://raw.githubusercontent.com/allen0039/proxy-resource-hub/main/"
@@ -733,7 +733,7 @@ default_proxy_group: Proxy
         self.assertIn(HOME_POLICY_NAME, egern_groups["AI"]["policies"])
         self.assertIn(HOME_POLICY_NAME, egern_groups["Final"]["policies"])
 
-    def test_committed_configs_place_home_group_before_all_nodes(self):
+    def test_committed_configs_place_aggregate_groups_after_home(self):
         configs = {
             name: (OUTPUT_DIR / name).read_text(encoding="utf-8")
             for name in CONFIG_NAMES
@@ -1047,7 +1047,7 @@ default_proxy_group: Proxy
             for name in ("surge_mac_allen.conf", "surge_iphone_allen.conf")
         }
         apple_push_group = (
-            "Apple Push = select, 日本优选, 香港优选, 美国优选, 日本节点, 香港节点, 美国节点, DIRECT, "
+            "Apple Push = select, 香港故转, 日本故转, 新加坡故转, 美国故转, 日本优选, 美国优选, 香港节点, 日本节点, 美国节点, DIRECT, "
             "icon-url=https://fastly.jsdelivr.net/gh/fmz200/wool_scripts@main/"
             "icons/apps/Apple_Messages.png"
         )
@@ -1080,7 +1080,7 @@ default_proxy_group: Proxy
         loon = (OUTPUT_DIR / "loon_allen.lcf").read_text(encoding="utf-8")
         self.assertEqual(
             loon.count(
-                "Apple Push = select,日本优选,香港优选,美国优选,日本节点,香港节点,美国节点,DIRECT,"
+                "Apple Push = select,香港优选,日本优选,新加坡优选,美国优选,香港节点,日本节点,美国节点,DIRECT,"
             ),
             1,
         )
@@ -1088,16 +1088,16 @@ default_proxy_group: Proxy
         qx = (OUTPUT_DIR / "quantumultx_allen.conf").read_text(encoding="utf-8")
         self.assertEqual(
             qx.count(
-                "static=Apple Push, 日本优选, 香港优选, 美国优选, 日本节点, 香港节点, 美国节点, direct,"
+                "static=Apple Push, 香港故转, 日本故转, 新加坡故转, 美国故转, 香港节点, 日本节点, 美国节点, direct, "
             ),
             1,
         )
         for group_name in (
             "香港节点",
-            "台湾节点",
-            "日本节点",
-            "新加坡节点",
-            "美国节点",
+            '日本节点',
+            '新加坡节点',
+            '美国节点',
+            '台湾节点',
             "韩国节点",
             "英国节点",
         ):
@@ -1106,9 +1106,9 @@ default_proxy_group: Proxy
                 qx,
                 rf"(?m)^(?:available|url-latency-benchmark)={group_name},",
             )
-        for group_name in ("香港优选", "日本优选", "美国优选"):
+        for group_name in ("香港故转", "日本故转", "美国故转"):
             self.assertRegex(
-                qx, rf"(?m)^url-latency-benchmark={group_name},"
+                qx, rf"(?m)^available={group_name},"
             )
 
     def test_committed_quantumultx_excludes_unsupported_source_ip_rules(self):
@@ -1153,16 +1153,17 @@ default_proxy_group: Proxy
             if group.get("name") == "AI"
         )
         for name, line in group_lines.items():
+            expected_order = [region.replace("故转", "优选") if name == "loon_allen.lcf" else region for region in SUPPORTED_AI_REGION_ORDER]
             with self.subTest(name=name, check="AI region order"):
                 self.assertEqual(
-                    SUPPORTED_AI_REGION_ORDER,
+                    expected_order,
                     [
                         region
-                        for region in SUPPORTED_AI_REGION_ORDER
+                        for region in expected_order
                         if re.search(rf"(?:^|,\s*){re.escape(region)}(?:,|$)", line)
                     ],
                 )
-                positions = [line.index(region) for region in SUPPORTED_AI_REGION_ORDER]
+                positions = [line.index(region) for region in expected_order]
                 self.assertEqual(positions, sorted(positions))
         self.assertEqual(
             SUPPORTED_AI_REGION_ORDER,
@@ -1194,7 +1195,7 @@ default_proxy_group: Proxy
 
         self.assertNotIn(
             "新加坡优选",
-            "\n".join(outputs[name] for name in NON_EGERN_CONFIG_NAMES),
+            "\n".join(outputs[name] for name in NON_EGERN_CONFIG_NAMES if name != "loon_allen.lcf"),
         )
         self.assertNotIn("实时油价-浙江", "\n".join(outputs.values()))
         self.assertNotRegex("\n".join(outputs.values()), r"(?m)^YJ\\s*=")
