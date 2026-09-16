@@ -38,7 +38,6 @@ dns:
   upstreams:
     Secure-DNS:
     - https://dns.alidns.com/dns-query
-    - https://doh.pub/dns-query
   forward:
   - domain_wildcard:
       match: '*.lan'
@@ -90,7 +89,6 @@ dns:
       value: Secure-DNS
   proxy_nameservers:
   - https://dns.alidns.com/dns-query
-  - https://doh.pub/dns-query
   skip_tls_verify: false
 bypass_tunnel_proxy:
 - 192.168.0.0/16
@@ -152,51 +150,54 @@ policy_groups:
 - select:
     name: Proxy
     policies:
-    - 香港优选
-    - 日本优选
-    - 美国优选
+    - 香港故转
+    - 日本故转
+    - 新加坡故转
+    - 美国故转
     - 香港节点
-    - 台湾节点
     - 日本节点
     - 新加坡节点
     - 美国节点
+    - 台湾节点
     - 韩国节点
     - 英国节点
     - 德国节点
     - 其他地区
-    - 全部节点
     - DIRECT
+    - 全部节点
     icon: https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/Proxy.png
 - select:
     name: Final
     policies:
-    - 香港优选
-    - 日本优选
-    - 美国优选
+    - 香港故转
+    - 日本故转
+    - 新加坡故转
+    - 美国故转
     - 香港节点
-    - 台湾节点
     - 日本节点
     - 新加坡节点
     - 美国节点
+    - 台湾节点
     - 韩国节点
     - 英国节点
     - 德国节点
     - 其他地区
-    - 家宽节点
     - Proxy
     - DIRECT
+    - 家宽节点
     icon: https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/Final.png
 - select:
     name: Google
     policies:
-    - 香港优选
-    - 日本优选
-    - 美国优选
+    - 香港故转
+    - 日本故转
+    - 新加坡故转
+    - 美国故转
     - 香港节点
-    - 台湾节点
     - 日本节点
     - 新加坡节点
     - 美国节点
+    - 台湾节点
     - 韩国节点
     - 英国节点
     - 德国节点
@@ -208,32 +209,34 @@ policy_groups:
     name: AI
     policies:
     - 家宽节点
-    - 美国优选
-    - 日本优选
-    - 美国节点
+    - 香港故转
+    - 日本故转
+    - 新加坡故转
+    - 美国故转
+    - 香港节点
     - 日本节点
     - 新加坡节点
+    - 美国节点
     - 台湾节点
     - 韩国节点
     - 英国节点
     - 德国节点
     - 其他地区
-    - 香港优选
-    - 香港节点
     - Proxy
     - DIRECT
     icon: https://raw.githubusercontent.com/chxm1023/Script_X/main/icon/ChatGPT/ChatGPT4.png
 - select:
     name: Telegram
     policies:
-    - 香港优选
-    - 日本优选
-    - 美国优选
+    - 香港故转
+    - 日本故转
+    - 新加坡故转
+    - 美国故转
     - 香港节点
-    - 台湾节点
     - 日本节点
     - 新加坡节点
     - 美国节点
+    - 台湾节点
     - 韩国节点
     - 英国节点
     - 德国节点
@@ -244,14 +247,15 @@ policy_groups:
 - select:
     name: TikTok
     policies:
-    - 香港优选
-    - 日本优选
-    - 美国优选
+    - 香港故转
+    - 日本故转
+    - 新加坡故转
+    - 美国故转
     - 香港节点
-    - 台湾节点
     - 日本节点
     - 新加坡节点
     - 美国节点
+    - 台湾节点
     - 韩国节点
     - 英国节点
     - 德国节点
@@ -262,14 +266,15 @@ policy_groups:
 - select:
     name: 国外社交
     policies:
-    - 香港优选
-    - 日本优选
-    - 美国优选
+    - 香港故转
+    - 日本故转
+    - 新加坡故转
+    - 美国故转
     - 香港节点
-    - 台湾节点
     - 日本节点
     - 新加坡节点
     - 美国节点
+    - 台湾节点
     - 韩国节点
     - 英国节点
     - 德国节点
@@ -280,14 +285,15 @@ policy_groups:
 - select:
     name: YouTube
     policies:
-    - 香港优选
-    - 日本优选
-    - 美国优选
+    - 香港故转
+    - 日本故转
+    - 新加坡故转
+    - 美国故转
     - 香港节点
-    - 台湾节点
     - 日本节点
     - 新加坡节点
     - 美国节点
+    - 台湾节点
     - 韩国节点
     - 英国节点
     - 德国节点
@@ -298,14 +304,15 @@ policy_groups:
 - select:
     name: Netflix
     policies:
-    - 香港优选
-    - 日本优选
-    - 美国优选
+    - 香港故转
+    - 日本故转
+    - 新加坡故转
+    - 美国故转
     - 香港节点
-    - 台湾节点
     - 日本节点
     - 新加坡节点
     - 美国节点
+    - 台湾节点
     - 韩国节点
     - 英国节点
     - 德国节点
@@ -316,14 +323,15 @@ policy_groups:
 - select:
     name: 迪士尼+
     policies:
-    - 香港优选
-    - 日本优选
-    - 美国优选
+    - 香港故转
+    - 日本故转
+    - 新加坡故转
+    - 美国故转
     - 香港节点
-    - 台湾节点
     - 日本节点
     - 新加坡节点
     - 美国节点
+    - 台湾节点
     - 韩国节点
     - 英国节点
     - 德国节点
@@ -334,14 +342,15 @@ policy_groups:
 - select:
     name: HBO
     policies:
-    - 香港优选
-    - 日本优选
-    - 美国优选
+    - 香港故转
+    - 日本故转
+    - 新加坡故转
+    - 美国故转
     - 香港节点
-    - 台湾节点
     - 日本节点
     - 新加坡节点
     - 美国节点
+    - 台湾节点
     - 韩国节点
     - 英国节点
     - 德国节点
@@ -353,14 +362,15 @@ policy_groups:
     name: Emby
     policies:
     - DIRECT
-    - 香港优选
-    - 日本优选
-    - 美国优选
+    - 香港故转
+    - 日本故转
+    - 新加坡故转
+    - 美国故转
     - 香港节点
-    - 台湾节点
     - 日本节点
     - 新加坡节点
     - 美国节点
+    - 台湾节点
     - 韩国节点
     - 英国节点
     - 德国节点
@@ -370,14 +380,15 @@ policy_groups:
 - select:
     name: Spotify
     policies:
-    - 香港优选
-    - 日本优选
-    - 美国优选
+    - 香港故转
+    - 日本故转
+    - 新加坡故转
+    - 美国故转
     - 香港节点
-    - 台湾节点
     - 日本节点
     - 新加坡节点
     - 美国节点
+    - 台湾节点
     - 韩国节点
     - 英国节点
     - 德国节点
@@ -388,8 +399,8 @@ policy_groups:
 - select:
     name: 巴哈姆特
     policies:
-    - 台湾节点
     - 香港节点
+    - 台湾节点
     - DIRECT
     icon: https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/Bahamut.png
 - select:
@@ -397,21 +408,22 @@ policy_groups:
     policies:
     - DIRECT
     - 香港节点
-    - 台湾节点
     - 新加坡节点
+    - 台湾节点
     - Proxy
     icon: https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/bilibili.png
 - select:
     name: 国外媒体
     policies:
-    - 香港优选
-    - 日本优选
-    - 美国优选
+    - 香港故转
+    - 日本故转
+    - 新加坡故转
+    - 美国故转
     - 香港节点
-    - 台湾节点
     - 日本节点
     - 新加坡节点
     - 美国节点
+    - 台湾节点
     - 韩国节点
     - 英国节点
     - 德国节点
@@ -422,14 +434,15 @@ policy_groups:
 - select:
     name: 特殊媒体
     policies:
-    - 香港优选
-    - 日本优选
-    - 美国优选
+    - 香港故转
+    - 日本故转
+    - 新加坡故转
+    - 美国故转
     - 香港节点
-    - 台湾节点
     - 日本节点
     - 新加坡节点
     - 美国节点
+    - 台湾节点
     - 韩国节点
     - 英国节点
     - 德国节点
@@ -443,37 +456,38 @@ policy_groups:
     - DIRECT
     - Proxy
     - 香港节点
-    - 台湾节点
     - 日本节点
     - 新加坡节点
     - 美国节点
+    - 台湾节点
     - 韩国节点
     icon: https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/StreamingSE.png
 - select:
     name: 海淘
     policies:
-    - 美国节点
-    - 日本节点
     - 香港节点
+    - 日本节点
+    - 新加坡节点
+    - 美国节点
+    - 台湾节点
+    - 韩国节点
     - 英国节点
     - 德国节点
-    - 新加坡节点
-    - 韩国节点
-    - 台湾节点
     - 其他地区
     - DIRECT
     icon: https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/Amazon.png
 - select:
     name: PayPal
     policies:
-    - 香港优选
-    - 日本优选
-    - 美国优选
+    - 香港故转
+    - 日本故转
+    - 新加坡故转
+    - 美国故转
     - 香港节点
-    - 台湾节点
     - 日本节点
     - 新加坡节点
     - 美国节点
+    - 台湾节点
     - 韩国节点
     - 英国节点
     - 德国节点
@@ -487,17 +501,17 @@ policy_groups:
     - DIRECT
     - Proxy
     - 香港节点
-    - 台湾节点
     - 日本节点
     - 新加坡节点
     - 美国节点
+    - 台湾节点
     - 韩国节点
     icon: https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/Apple.png
 - select:
     name: Apple Push
     policies:
-    - 日本节点
     - 香港节点
+    - 日本节点
     - 美国节点
     - DIRECT
     latency_test_url: https://www.apple.com/library/test/success.html
@@ -505,14 +519,15 @@ policy_groups:
 - select:
     name: Microsoft
     policies:
-    - 香港优选
-    - 日本优选
-    - 美国优选
+    - 香港故转
+    - 日本故转
+    - 新加坡故转
+    - 美国故转
     - 香港节点
-    - 台湾节点
     - 日本节点
     - 新加坡节点
     - 美国节点
+    - 台湾节点
     - 韩国节点
     - 英国节点
     - 德国节点
@@ -523,14 +538,15 @@ policy_groups:
 - select:
     name: OneDrive
     policies:
-    - 香港优选
-    - 日本优选
-    - 美国优选
+    - 香港故转
+    - 日本故转
+    - 新加坡故转
+    - 美国故转
     - 香港节点
-    - 台湾节点
     - 日本节点
     - 新加坡节点
     - 美国节点
+    - 台湾节点
     - 韩国节点
     - 英国节点
     - 德国节点
@@ -542,14 +558,15 @@ policy_groups:
 - select:
     name: GitHub
     policies:
-    - 香港优选
-    - 日本优选
-    - 美国优选
+    - 香港故转
+    - 日本故转
+    - 新加坡故转
+    - 美国故转
     - 香港节点
-    - 台湾节点
     - 日本节点
     - 新加坡节点
     - 美国节点
+    - 台湾节点
     - 韩国节点
     - 英国节点
     - 德国节点
@@ -560,14 +577,15 @@ policy_groups:
 - select:
     name: Docker
     policies:
-    - 香港优选
-    - 日本优选
-    - 美国优选
+    - 香港故转
+    - 日本故转
+    - 新加坡故转
+    - 美国故转
     - 香港节点
-    - 台湾节点
     - 日本节点
     - 新加坡节点
     - 美国节点
+    - 台湾节点
     - 韩国节点
     - 英国节点
     - 德国节点
@@ -578,14 +596,15 @@ policy_groups:
 - select:
     name: 游戏平台
     policies:
-    - 香港优选
-    - 日本优选
-    - 美国优选
+    - 香港故转
+    - 日本故转
+    - 新加坡故转
+    - 美国故转
     - 香港节点
-    - 台湾节点
     - 日本节点
     - 新加坡节点
     - 美国节点
+    - 台湾节点
     - 韩国节点
     - 英国节点
     - 德国节点
@@ -596,14 +615,15 @@ policy_groups:
 - select:
     name: CDN
     policies:
-    - 香港优选
-    - 日本优选
-    - 美国优选
+    - 香港故转
+    - 日本故转
+    - 新加坡故转
+    - 美国故转
     - 香港节点
-    - 台湾节点
     - 日本节点
     - 新加坡节点
     - 美国节点
+    - 台湾节点
     - 韩国节点
     - 英国节点
     - 德国节点
@@ -614,14 +634,15 @@ policy_groups:
 - select:
     name: 测速
     policies:
-    - 香港优选
-    - 日本优选
-    - 美国优选
+    - 香港故转
+    - 日本故转
+    - 新加坡故转
+    - 美国故转
     - 香港节点
-    - 台湾节点
     - 日本节点
     - 新加坡节点
     - 美国节点
+    - 台湾节点
     - 韩国节点
     - 英国节点
     - 德国节点
@@ -629,159 +650,6 @@ policy_groups:
     - Proxy
     - DIRECT
     icon: https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/Speedtest.png
-- auto_test:
-    name: 香港优选
-    policies:
-    - 香港
-    flatten: true
-    filter: (?i)^(?!.*(家用|家庭|家宽|\bISP\b)).+$
-    interval: 300
-    latency_test_url: http://www.qualcomm.cn/generate_204
-    tolerance: 50
-    icon: https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/Hong_Kong.png
-- auto_test:
-    name: 日本优选
-    policies:
-    - 日本
-    flatten: true
-    filter: (?i)^(?!.*(家用|家庭|家宽|\bISP\b)).+$
-    interval: 300
-    latency_test_url: http://www.qualcomm.cn/generate_204
-    tolerance: 50
-    icon: https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/Japan.png
-- auto_test:
-    name: 美国优选
-    policies:
-    - 美国
-    flatten: true
-    filter: (?i)^(?!.*(家用|家庭|家宽|\bISP\b)).+$
-    interval: 300
-    latency_test_url: http://www.qualcomm.cn/generate_204
-    tolerance: 50
-    icon: https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/United_States.png
-- select:
-    name: 香港节点
-    policies:
-    - 香港
-    flatten: true
-    latency_test_url: http://www.qualcomm.cn/generate_204
-    icon: https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/Hong_Kong.png
-- select:
-    name: 台湾节点
-    policies:
-    - 台湾
-    flatten: true
-    latency_test_url: http://www.qualcomm.cn/generate_204
-    icon: https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/Taiwan.png
-- select:
-    name: 日本节点
-    policies:
-    - 日本
-    flatten: true
-    latency_test_url: http://www.qualcomm.cn/generate_204
-    icon: https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/Japan.png
-- select:
-    name: 新加坡节点
-    policies:
-    - 新加坡
-    flatten: true
-    latency_test_url: http://www.qualcomm.cn/generate_204
-    icon: https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/Singapore.png
-- select:
-    name: 美国节点
-    policies:
-    - 美国
-    flatten: true
-    latency_test_url: http://www.qualcomm.cn/generate_204
-    icon: https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/United_States.png
-- select:
-    name: 韩国节点
-    policies:
-    - 韩国
-    flatten: true
-    latency_test_url: http://www.qualcomm.cn/generate_204
-    icon: https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/Korea.png
-- select:
-    name: 英国节点
-    policies:
-    - 英国
-    flatten: true
-    latency_test_url: http://www.qualcomm.cn/generate_204
-    icon: https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/United_Kingdom.png
-- select:
-    name: 德国节点
-    policies:
-    - 德国
-    flatten: true
-    latency_test_url: http://www.qualcomm.cn/generate_204
-    icon: https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/Germany.png
-- select:
-    name: 其他地区
-    policies:
-    - 其他
-    flatten: true
-    latency_test_url: http://www.qualcomm.cn/generate_204
-    icon: https://raw.githubusercontent.com/Orz-3/mini/master/Color/Static.png
-- select:
-    name: 家宽节点
-    policies:
-    - 家宽
-    flatten: true
-    latency_test_url: http://www.qualcomm.cn/generate_204
-    icon: https://raw.githubusercontent.com/allen0039/proxy-resource-hub/main/icons/home.png
-- select:
-    name: 全部节点
-    policies:
-    - All Server
-    flatten: true
-    latency_test_url: http://cp.cloudflare.com/generate_204
-    icon: https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/Server.png
-- external:
-    name: 拼好鸡
-    type: select
-    update_interval: 21600
-    urls:
-    - 获取到的订阅链接
-    block_quic: true
-    icon: https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/Bamboo.png
-    hidden: true
-- external:
-    name: 机场
-    type: select
-    update_interval: 21600
-    urls_disabled:
-    - 获取到的订阅链接
-    block_quic: true
-    icon: https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/Bamboo.png
-    hidden: true
-- external:
-    name: 自建
-    type: select
-    update_interval: 21600
-    urls_disabled:
-    - 获取到的订阅链接
-    block_quic: false
-    icon: https://raw.githubusercontent.com/Orz-3/mini/master/Alpha/Vpn.png
-    hidden: true
-- external:
-    name: 备用
-    type: select
-    update_interval: 21600
-    urls_disabled:
-    - 获取到的订阅链接
-    block_quic: true
-    icon: https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/Filter.png
-    hidden: true
-- select:
-    name: All Server
-    policies:
-    - 拼好鸡
-    - 机场
-    - 自建
-    - 备用
-    flatten: true
-    filter: (?i)^(?!.*(邀请|返利|循环|官网|客服|网站|网址|获取|订阅|流量|到期|机场|下次|版本|官址|备用|过期|已用|联系|邮箱|工单|交流群|官方群|用户群|群组|社群|群聊|贩卖|倒卖|防止|国内|(^|[^A-Za-z0-9])(USE|USED|TOTAL|EXPIRE|EMAIL|Panel)($|[^A-Za-z0-9])|\d{4}-\d{2}-\d{2})).+$
-    hidden: true
 - select:
     name: 家宽
     policies:
@@ -882,10 +750,166 @@ policy_groups:
     flatten: true
     filter: (?i)^(?!.*(家用|家庭|家宽|\bISP\b|🇭🇰|香港|Hong[ _-]?Kong|🇹🇼|台湾|台北|Taipei|🇯🇵|日本|川日|东京|大阪|泉日|沪日|深日|埼玉|Tokyo|Osaka|🇸🇬|新加坡|狮城|🇺🇸|🇺🇲|美国|波特兰|达拉斯|俄勒冈|凤凰城|费利蒙|硅谷|拉斯维加斯|洛杉矶|圣何塞|圣克拉拉|西雅图|芝加哥|🇰🇷|韩国|韓國|首尔|首爾|Seoul|🇬🇧|英国|倫敦|伦敦|London|🇩🇪|德国|德國|法兰克福|法蘭克福|柏林|慕尼黑|(^|[^A-Za-z0-9])(HK|HKG|TW|TWN|Tai|Taiwan|JP|JPN|Japan|SG|SGP|Singapore|US|USA|United[ _-]?States|States|KR|KOR|Korea|UK|GB|GBR|United[ _-]?Kingdom|DE|DEU|Germany|Deutschland|Frankfurt|Berlin|Munich)([ _-]?\d+)?($|[^A-Za-z0-9])|直连|回国|校园|游戏|🎮|邀请|返利|循环|官网|客服|网站|网址|获取|订阅|流量|到期|机场|下次|版本|官址|备用|过期|已用|联系|邮箱|工单|交流群|官方群|用户群|群组|社群|群聊|贩卖|倒卖|防止|国内|(^|[^A-Za-z0-9])(GAME|USE|USED|TOTAL|EXPIRE|EMAIL|Panel)($|[^A-Za-z0-9])|\d{4}-\d{2}-\d{2})).+$
     hidden: true
+- fallback:
+    name: 香港故转
+    policies:
+    - 香港
+    flatten: true
+    filter: (?i)^(?!.*(家用|家庭|家宽|\bISP\b)).+$
+    interval: 300
+    latency_test_url: http://www.qualcomm.cn/generate_204
+    icon: https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/Hong_Kong.png
+- fallback:
+    name: 日本故转
+    policies:
+    - 日本
+    flatten: true
+    filter: (?i)^(?!.*(家用|家庭|家宽|\bISP\b)).+$
+    interval: 300
+    latency_test_url: http://www.qualcomm.cn/generate_204
+    icon: https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/Japan.png
+- fallback:
+    name: 新加坡故转
+    policies:
+    - 新加坡
+    flatten: true
+    filter: (?i)^(?!.*(家用|家庭|家宽|\bISP\b)).+$
+    interval: 300
+    latency_test_url: http://www.qualcomm.cn/generate_204
+    icon: https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/Singapore.png
+- fallback:
+    name: 美国故转
+    policies:
+    - 美国
+    flatten: true
+    filter: (?i)^(?!.*(家用|家庭|家宽|\bISP\b)).+$
+    interval: 300
+    latency_test_url: http://www.qualcomm.cn/generate_204
+    icon: https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/United_States.png
+- select:
+    name: 香港节点
+    policies:
+    - 香港
+    flatten: true
+    latency_test_url: http://www.qualcomm.cn/generate_204
+    icon: https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/Hong_Kong.png
+- select:
+    name: 日本节点
+    policies:
+    - 日本
+    flatten: true
+    latency_test_url: http://www.qualcomm.cn/generate_204
+    icon: https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/Japan.png
+- select:
+    name: 新加坡节点
+    policies:
+    - 新加坡
+    flatten: true
+    latency_test_url: http://www.qualcomm.cn/generate_204
+    icon: https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/Singapore.png
+- select:
+    name: 美国节点
+    policies:
+    - 美国
+    flatten: true
+    latency_test_url: http://www.qualcomm.cn/generate_204
+    icon: https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/United_States.png
+- select:
+    name: 台湾节点
+    policies:
+    - 台湾
+    flatten: true
+    latency_test_url: http://www.qualcomm.cn/generate_204
+    icon: https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/Taiwan.png
+- select:
+    name: 韩国节点
+    policies:
+    - 韩国
+    flatten: true
+    latency_test_url: http://www.qualcomm.cn/generate_204
+    icon: https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/Korea.png
+- select:
+    name: 英国节点
+    policies:
+    - 英国
+    flatten: true
+    latency_test_url: http://www.qualcomm.cn/generate_204
+    icon: https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/United_Kingdom.png
+- select:
+    name: 德国节点
+    policies:
+    - 德国
+    flatten: true
+    latency_test_url: http://www.qualcomm.cn/generate_204
+    icon: https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/Germany.png
+- select:
+    name: 其他地区
+    policies:
+    - 其他
+    flatten: true
+    latency_test_url: http://www.qualcomm.cn/generate_204
+    icon: https://raw.githubusercontent.com/Orz-3/mini/master/Color/Static.png
+- select:
+    name: 家宽节点
+    policies:
+    - 家宽
+    flatten: true
+    latency_test_url: http://www.qualcomm.cn/generate_204
+    icon: https://raw.githubusercontent.com/allen0039/proxy-resource-hub/main/icons/home.png
+- select:
+    name: 全部节点
+    policies:
+    - All Server
+    flatten: true
+    latency_test_url: http://cp.cloudflare.com/generate_204
+    icon: https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/Server.png
+- select:
+    name: All Server
+    policies:
+    - 拼好鸡
+    - 机场
+    - 自建
+    - 备用
+    flatten: true
+    filter: (?i)^(?!.*(邀请|返利|循环|官网|客服|网站|网址|获取|订阅|流量|到期|机场|下次|版本|官址|备用|过期|已用|联系|邮箱|工单|交流群|官方群|用户群|群组|社群|群聊|贩卖|倒卖|防止|国内|(^|[^A-Za-z0-9])(USE|USED|TOTAL|EXPIRE|EMAIL|Panel)($|[^A-Za-z0-9])|\d{4}-\d{2}-\d{2})).+$
+    hidden: true
+- external:
+    name: 拼好鸡
+    type: select
+    update_interval: 21600
+    urls:
+    - 获取到的订阅链接
+    block_quic: true
+    icon: https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/Bamboo.png
+    hidden: true
+- external:
+    name: 机场
+    type: select
+    update_interval: 21600
+    urls_disabled:
+    - 获取到的订阅链接
+    block_quic: true
+    icon: https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/Bamboo.png
+    hidden: true
+- external:
+    name: 自建
+    type: select
+    update_interval: 21600
+    urls_disabled:
+    - 获取到的订阅链接
+    block_quic: false
+    icon: https://raw.githubusercontent.com/Orz-3/mini/master/Alpha/Vpn.png
+    hidden: true
+- external:
+    name: 备用
+    type: select
+    update_interval: 21600
+    urls_disabled:
+    - 获取到的订阅链接
+    block_quic: true
+    icon: https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/Filter.png
+    hidden: true
 rules:
-- domain:
-    match: doh.pub
-    policy: DIRECT
 - domain:
     match: dns.alidns.com
     policy: DIRECT
