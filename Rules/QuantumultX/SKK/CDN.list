@@ -3,9 +3,9 @@
 # Derived from https://github.com/SukkaW/Surge
 # Source: https://ruleset.skk.moe/List/domainset/cdn.conf
 # Source: https://ruleset.skk.moe/List/non_ip/cdn.conf
-# Upstream Last Updated: 2026-09-13T08:44:07.146Z (domainset)
+# Upstream Last Updated: 2026-09-18T14:58:18.360Z (domainset)
 # Upstream Last Updated: 2026-08-19T01:29:53.827Z (non_ip)
-# Rule count: 4745
+# Rule count: 4748
 
 host, 7h15.ru1353t.1s.m4d3.by.5ukk4w.skk.moe, proxy
 host, 0x0.st, proxy
@@ -353,6 +353,7 @@ host-suffix, sascdn.com, proxy
 host-suffix, sc-cdn.com, proxy
 host-suffix, scene7.com, proxy
 host-suffix, seecdn.com, proxy
+host-suffix, seecdn.net, proxy
 host-suffix, sftcdn.net, proxy
 host-suffix, shgcdn.com, proxy
 host-suffix, shields.io, proxy
@@ -570,7 +571,6 @@ host, th.bing.com, proxy
 host, tile.osm.be, proxy
 host-suffix, tile.osm.ch, proxy
 host, tn.vjav.com, proxy
-host-suffix, tripcdn.com, proxy
 host-suffix, ttcache.com, proxy
 host, turbo.build, proxy
 host-suffix, tutu1.space, proxy
@@ -1370,6 +1370,7 @@ host, static.fc2.com, proxy
 host, static.itch.io, proxy
 host, static.j51.net, proxy
 host, static.lwn.net, proxy
+host, static.okou.io, proxy
 host, static.okx.cab, proxy
 host, static.okx.com, proxy
 host, static.reo.dev, proxy
@@ -1817,6 +1818,7 @@ host, cdn.dribbble.com, proxy
 host-suffix, cdn.easyling.com, proxy
 host, cdn.ecomm.ui.com, proxy
 host, cdn.equalweb.com, proxy
+host, cdn.eye-able.com, proxy
 host, cdn.firebase.com, proxy
 host, cdn.foxycart.com, proxy
 host, cdn.getkoala.com, proxy
@@ -3716,6 +3718,7 @@ host, images-assets.nasa.gov, proxy
 host, images.contentstack.io, proxy
 host, images.hothardware.com, proxy
 host, images.newrepublic.com, proxy
+host, images.radio-canada.ca, proxy
 host, images.socialblade.com, proxy
 host, images.wsjcommerce.net, proxy
 host, images.wurstclient.net, proxy
