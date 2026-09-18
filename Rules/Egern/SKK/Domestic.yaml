@@ -4,7 +4,7 @@
 # Source: https://ruleset.skk.moe/List/non_ip/domestic.conf
 # Source: https://ruleset.skk.moe/List/ip/domestic.conf
 # Source: https://ruleset.skk.moe/List/ip/china_ip.conf
-# Rule count: 4771
+# Rule count: 4772
 
 no_resolve: true
 
@@ -795,6 +795,7 @@ domain_suffix_set:
   - "openinstall.io"
   - "oppomobile.com"
   - "qyerstatic.com"
+  - "rednotecdn.com"
   - "steamchina.com"
   - "tianyancha.com"
   - "toutiaoimg.com"
@@ -1665,6 +1666,7 @@ ip_cidr_set:
   - "103.9.8.0/22"
   - "103.9.252.0/22"
   - "103.10.84.0/22"
+  - "103.12.98.0/23"
   - "103.12.184.0/22"
   - "103.12.232.0/22"
   - "103.13.244.0/22"
@@ -3419,6 +3421,7 @@ ip_cidr_set:
   - "140.210.8.0/21"
   - "140.210.16.0/20"
   - "140.210.32.0/22"
+  - "140.210.40.0/23"
   - "140.210.65.0/24"
   - "140.210.67.0/24"
   - "140.210.69.0/24"
@@ -3497,13 +3500,11 @@ ip_cidr_set:
   - "154.8.48.0/20"
   - "154.8.128.0/17"
   - "154.89.32.0/20"
-  - "154.197.128.0/17"
   - "155.126.176.0/23"
   - "156.107.160.0/23"
   - "156.107.170.0/24"
   - "156.107.179.0/24"
   - "156.107.181.0/24"
-  - "156.224.128.0/17"
   - "156.227.239.0/24"
   - "156.232.9.0/24"
   - "156.232.10.0/23"
