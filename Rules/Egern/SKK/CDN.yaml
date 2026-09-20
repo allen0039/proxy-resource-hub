@@ -3,7 +3,7 @@
 # Derived from https://github.com/SukkaW/Surge
 # Source: https://ruleset.skk.moe/List/domainset/cdn.conf
 # Source: https://ruleset.skk.moe/List/non_ip/cdn.conf
-# Rule count: 4749
+# Rule count: 4755
 
 domain_set:
   - "7h15.ru1353t.1s.m4d3.by.5ukk4w.skk.moe"
@@ -1270,6 +1270,7 @@ domain_set:
   - "cdn.growthbook.io"
   - "cdn.headwayapp.co"
   - "cdn.himetrica.com"
+  - "cdn.infrawire.net"
   - "cdn.ipregistry.co"
   - "cdn.jetphotos.com"
   - "cdn.joinhoney.com"
@@ -1610,6 +1611,7 @@ domain_set:
   - "icons.ferndocs.com"
   - "icons.veryicon.com"
   - "iframe.nbcnews.com"
+  - "image-tc.galaxy.tf"
   - "image.jnislniv.xyz"
   - "image.yuntu.com.tw"
   - "image.yymanhua.com"
@@ -2028,6 +2030,7 @@ domain_set:
   - "thumbs2.sendvid.com"
   - "tile2.intervals.icu"
   - "tiles.mapillary.com"
+  - "tileserver.b10s.net"
   - "time.cloudflare.com"
   - "tuf-repo.github.com"
   - "ui.contentstack.com"
@@ -2488,6 +2491,7 @@ domain_set:
   - "static.typingclub.com"
   - "staticctf.ubisoft.com"
   - "themes.fourthwall.com"
+  - "tiles.flightaware.com"
   - "tiles.openfreemap.org"
   - "uploads.bikeindex.org"
   - "uploads.sitepoint.com"
@@ -2623,6 +2627,7 @@ domain_set:
   - "newassets.hcaptcha.com"
   - "nodeassets.nbcnews.com"
   - "parts.blog.livedoor.jp"
+  - "photos.flightaware.com"
   - "pic.onlinewebfonts.com"
   - "pkg-cdn.jetbrains.team"
   - "platform.instagram.com"
@@ -2738,6 +2743,7 @@ domain_set:
   - "cdn.prod.www.spiegel.de"
   - "cdn.ready-market.com.tw"
   - "cdn.worldvectorlogo.com"
+  - "cdn1.singteldigital.com"
   - "cdnstatic.porno-cum.com"
   - "cdnstatic.tencentcs.com"
   - "cms.worldpokerdeals.com"
