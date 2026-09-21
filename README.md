@@ -99,7 +99,7 @@ proxy-providers:
     interval: 46400
     health-check:
       enable: true
-      url: https://www.gstatic.com/generate_204
+      url: http://cp.cloudflare.com/generate_204
       interval: 300
     proxy: DIRECT
 
