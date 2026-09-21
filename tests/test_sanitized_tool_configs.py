@@ -885,7 +885,7 @@ default_proxy_group: Proxy
                 if "policy-path=" in line
             ]
             with self.subTest(name=name):
-                self.assertEqual(5, len(subscriptions))
+                self.assertEqual(4, len(subscriptions))
                 self.assertTrue(
                     all("update-interval=21600" in line for line in subscriptions)
                 )
@@ -1047,7 +1047,7 @@ default_proxy_group: Proxy
             for name in ("surge_mac_allen.conf", "surge_iphone_allen.conf")
         }
         apple_push_group = (
-            "Apple Push = select, 香港故转, 日本故转, 新加坡故转, 美国故转, 日本优选, 美国优选, 香港节点, 日本节点, 美国节点, DIRECT, "
+            "Apple Push = select, 香港故转, 日本故转, 新加坡故转, 美国故转, 香港节点, 日本节点, 美国节点, DIRECT, "
             "icon-url=https://fastly.jsdelivr.net/gh/fmz200/wool_scripts@main/"
             "icons/apps/Apple_Messages.png"
         )

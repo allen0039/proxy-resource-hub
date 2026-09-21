@@ -12,7 +12,7 @@ include_cellular_services: false
 include_local_networks: false
 hijack_dns:
 - '*:53'
-proxy_latency_test_url: http://detectportal.firefox.com/success.txt
+proxy_latency_test_url: http://cp.cloudflare.com/generate_204
 direct_latency_test_url: http://connectivitycheck.platform.hicloud.com/generate_204
 geoip_db_url: https://raw.githubusercontent.com/Loyalsoldier/geoip/release/Country-without-asn.mmdb
 asn_db_url: https://raw.githubusercontent.com/Loyalsoldier/geoip/release/GeoLite2-ASN.mmdb
@@ -514,7 +514,7 @@ policy_groups:
     - 日本节点
     - 美国节点
     - DIRECT
-    latency_test_url: https://www.apple.com/library/test/success.html
+    latency_test_url: http://cp.cloudflare.com/generate_204
     icon: https://fastly.jsdelivr.net/gh/fmz200/wool_scripts@main/icons/apps/Apple_Messages.png
 - select:
     name: Microsoft
@@ -757,7 +757,7 @@ policy_groups:
     flatten: true
     filter: (?i)^(?!.*(家用|家庭|家宽|\bISP\b)).+$
     interval: 300
-    latency_test_url: http://www.qualcomm.cn/generate_204
+    latency_test_url: http://cp.cloudflare.com/generate_204
     icon: https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/Hong_Kong.png
 - fallback:
     name: 日本故转
@@ -766,7 +766,7 @@ policy_groups:
     flatten: true
     filter: (?i)^(?!.*(家用|家庭|家宽|\bISP\b)).+$
     interval: 300
-    latency_test_url: http://www.qualcomm.cn/generate_204
+    latency_test_url: http://cp.cloudflare.com/generate_204
     icon: https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/Japan.png
 - fallback:
     name: 新加坡故转
@@ -775,7 +775,7 @@ policy_groups:
     flatten: true
     filter: (?i)^(?!.*(家用|家庭|家宽|\bISP\b)).+$
     interval: 300
-    latency_test_url: http://www.qualcomm.cn/generate_204
+    latency_test_url: http://cp.cloudflare.com/generate_204
     icon: https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/Singapore.png
 - fallback:
     name: 美国故转
@@ -784,77 +784,77 @@ policy_groups:
     flatten: true
     filter: (?i)^(?!.*(家用|家庭|家宽|\bISP\b)).+$
     interval: 300
-    latency_test_url: http://www.qualcomm.cn/generate_204
+    latency_test_url: http://cp.cloudflare.com/generate_204
     icon: https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/United_States.png
 - select:
     name: 香港节点
     policies:
     - 香港
     flatten: true
-    latency_test_url: http://www.qualcomm.cn/generate_204
+    latency_test_url: http://cp.cloudflare.com/generate_204
     icon: https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/Hong_Kong.png
 - select:
     name: 日本节点
     policies:
     - 日本
     flatten: true
-    latency_test_url: http://www.qualcomm.cn/generate_204
+    latency_test_url: http://cp.cloudflare.com/generate_204
     icon: https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/Japan.png
 - select:
     name: 新加坡节点
     policies:
     - 新加坡
     flatten: true
-    latency_test_url: http://www.qualcomm.cn/generate_204
+    latency_test_url: http://cp.cloudflare.com/generate_204
     icon: https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/Singapore.png
 - select:
     name: 美国节点
     policies:
     - 美国
     flatten: true
-    latency_test_url: http://www.qualcomm.cn/generate_204
+    latency_test_url: http://cp.cloudflare.com/generate_204
     icon: https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/United_States.png
 - select:
     name: 台湾节点
     policies:
     - 台湾
     flatten: true
-    latency_test_url: http://www.qualcomm.cn/generate_204
+    latency_test_url: http://cp.cloudflare.com/generate_204
     icon: https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/Taiwan.png
 - select:
     name: 韩国节点
     policies:
     - 韩国
     flatten: true
-    latency_test_url: http://www.qualcomm.cn/generate_204
+    latency_test_url: http://cp.cloudflare.com/generate_204
     icon: https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/Korea.png
 - select:
     name: 英国节点
     policies:
     - 英国
     flatten: true
-    latency_test_url: http://www.qualcomm.cn/generate_204
+    latency_test_url: http://cp.cloudflare.com/generate_204
     icon: https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/United_Kingdom.png
 - select:
     name: 德国节点
     policies:
     - 德国
     flatten: true
-    latency_test_url: http://www.qualcomm.cn/generate_204
+    latency_test_url: http://cp.cloudflare.com/generate_204
     icon: https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/Germany.png
 - select:
     name: 其他地区
     policies:
     - 其他
     flatten: true
-    latency_test_url: http://www.qualcomm.cn/generate_204
+    latency_test_url: http://cp.cloudflare.com/generate_204
     icon: https://raw.githubusercontent.com/Orz-3/mini/master/Color/Static.png
 - select:
     name: 家宽节点
     policies:
     - 家宽
     flatten: true
-    latency_test_url: http://www.qualcomm.cn/generate_204
+    latency_test_url: http://cp.cloudflare.com/generate_204
     icon: https://raw.githubusercontent.com/allen0039/proxy-resource-hub/main/icons/home.png
 - select:
     name: 全部节点
