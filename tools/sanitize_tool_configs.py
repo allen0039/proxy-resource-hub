@@ -61,6 +61,27 @@ def normalize_text(text: str) -> str:
     return "\n".join(line.rstrip() for line in normalized.splitlines()).rstrip() + "\n"
 
 
+def drop_local_only_blocks(text: str) -> str:
+    """Omit explicitly private configuration blocks from public templates."""
+    output: list[str] = []
+    in_block = False
+    for line in normalize_text(text).splitlines():
+        marker = line.strip()
+        if marker == "# LOCAL_ONLY_BEGIN":
+            if in_block:
+                raise SanitizationError("nested local-only block")
+            in_block = True
+        elif marker == "# LOCAL_ONLY_END":
+            if not in_block:
+                raise SanitizationError("unmatched local-only block end")
+            in_block = False
+        elif not in_block:
+            output.append(line)
+    if in_block:
+        raise SanitizationError("unclosed local-only block")
+    return normalize_text("\n".join(output))
+
+
 def section_name(line: str) -> str | None:
     stripped = line.strip()
     if stripped.startswith("[") and stripped.endswith("]"):
@@ -898,7 +919,7 @@ def generate(
         if not source_path.is_file():
             raise SanitizationError(f"missing private source category: {source_name}")
         outputs[output_name] = sanitizers[source_name](
-            source_path.read_text(encoding="utf-8")
+            drop_local_only_blocks(source_path.read_text(encoding="utf-8"))
         )
     if only is None:
         validate_sanitized_outputs(outputs)
