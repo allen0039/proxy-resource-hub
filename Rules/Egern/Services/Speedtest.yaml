@@ -2,7 +2,7 @@
 # SPDX-License-Identifier: AGPL-3.0-only
 # Derived from https://github.com/SukkaW/Surge
 # Source: https://ruleset.skk.moe/List/domainset/speedtest.conf
-# Rule count: 3403
+# Rule count: 3405
 
 domain_set:
   - "7h15.ru1353t.1s.m4d3.by.5ukk4w.skk.moe"
@@ -1294,6 +1294,7 @@ domain_set:
   - "ookla.p2.neptune.net.au"
   - "ookla.pgservicos.com.br"
   - "ookla.pgservicos.net.br"
+  - "ookla.soc.atharva.co.id"
   - "ookla.speedtest.cnix.cn"
   - "perf-01.ixn.as42689.net"
   - "prescott1.cabospeed.com"
@@ -2847,6 +2848,7 @@ domain_set:
   - "speedtest-cv-1.zoominternet.net"
   - "speedtest-dallas.swyftfiber.com"
   - "speedtest-dfw.dish-wireless.com"
+  - "speedtest-dsm.cowboyhosting.com"
   - "speedtest-eqx-sg1.ixtelecom.net"
   - "speedtest-hv-1.zoominternet.net"
   - "speedtest-iad.dish-wireless.com"

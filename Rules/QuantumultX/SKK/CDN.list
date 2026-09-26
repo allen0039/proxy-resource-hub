@@ -3,9 +3,9 @@
 # Derived from https://github.com/SukkaW/Surge
 # Source: https://ruleset.skk.moe/List/domainset/cdn.conf
 # Source: https://ruleset.skk.moe/List/non_ip/cdn.conf
-# Upstream Last Updated: 2026-09-23T12:32:35.310Z (domainset)
+# Upstream Last Updated: 2026-09-26T15:10:49.838Z (domainset)
 # Upstream Last Updated: 2026-08-19T01:29:53.827Z (non_ip)
-# Rule count: 4758
+# Rule count: 4759
 
 host, 7h15.ru1353t.1s.m4d3.by.5ukk4w.skk.moe, proxy
 host, 0x0.st, proxy
@@ -1206,6 +1206,7 @@ host-suffix, cursor-cdn.com, proxy
 host, d.newsweek.com, proxy
 host, dc-cdn.cdw.com, proxy
 host-suffix, descopecdn.com, proxy
+host, dma.canyon.com, proxy
 host-suffix, doppiocdn.live, proxy
 host-suffix, dummyimage.com, proxy
 host-suffix, ebaystatic.com, proxy
@@ -2332,7 +2333,6 @@ host, img3.airdroid.com, proxy
 host, img4.airdroid.com, proxy
 host, img6.airdroid.com, proxy
 host, imgcdn.cna.com.tw, proxy
-host-suffix, ipfs.ecolatam.com, proxy
 host, js.chilipiper.com, proxy
 host, js.convertflow.co, proxy
 host, js1.chargebee.com, proxy
@@ -2996,6 +2996,7 @@ host-suffix, media.amplience.net, proxy
 host, media.breitbart.com, proxy
 host, media.crazyshit.com, proxy
 host, media.glassdoor.com, proxy
+host, media.karousell.com, proxy
 host, media.newyorker.com, proxy
 host, media.shopimind.com, proxy
 host-suffix, media.strapiapp.com, proxy
