@@ -245,6 +245,7 @@ https://raw.githubusercontent.com/Tartarus2014/Loon-Script/master/Rule/GEOIP.lsr
 https://raw.githubusercontent.com/ACL4SSR/ACL4SSR/master/Clash/ProxyGFWlist.list, policy=Proxy, tag=GFWList, enabled=true
 
 [Plugin]
+https://raw.githubusercontent.com/w0ven/po0fw/main/loon/po0-firewall-whitelist.plugin, enabled=false
 https://kelee.one/Tool/Loon/Lpx/BlockAdvertisers.lpx, enabled=false
 https://yfamilys.com/plugin/adlite.plugin, enabled=false
 https://raw.githubusercontent.com/zqzess/rule_for_quantumultX/master/Loon/Plugin/FanQieNovel.plugin, enabled=false
