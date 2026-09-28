@@ -54,7 +54,7 @@ App Store 链接指向应用官方商店页面。部分应用可能未在所有�
 | Loon | 同上，对应 `Rules/Loon/` |
 | Egern | 同上，对应 `Rules/Egern/`，使用原生 YAML 规则 |
 
-家宽节点策略组按节点名称匹配“家宽”，作为 AI 和 Final 策略组的可选出口。仓库不包含真实节点、订阅地址或凭据；下载模板后仍需在本地填写私人订阅。
+家宽节点策略组按节点名称匹配“家宽”或以 `verizon` 结尾的名称（不区分大小写）；Egern 还保留“家用”“家庭”和独立 `ISP` 标签的匹配。地区故转、优选和其他地区组沿用家宽排除逻辑，排除这些 `verizon` 后缀节点。家宽节点可作为 AI 和 Final 策略组的出口。仓库不包含真实节点、订阅地址或凭据；下载模板后仍需在本地填写私人订阅。
 
 后续域名变更只在 `Rules/Source/allenrules/{direct,hk,us,jp,sg,de}.list` 中维护；文件名决定规则策略。GitHub Actions 会重新生成各客户端列表，客户端会按已配置的 86400 秒间隔更新这些资源。
 
@@ -144,8 +144,6 @@ secret: CHANGE_ME
 3. 备用订阅行以 `#` 开头；替换 URL 并删除 `#` 后才会启用。
 4. MITM 证书需要在 Surge 和系统中本地配置并信任。
 
-两份 Surge 模板已内置 [B 站 CC 字幕繁转简脚本](https://github.com/allen0039/proxy-scripts/blob/main/docs/bilibili-cc.md)及其 MITM 主机名，无需重复安装同名模块；启用功能后选择视频的繁体 CC 字幕轨道。
-
 Mac 和 iPhone 必须选择对应文件。公开模板不包含特定设备的来源 IP 直连规则；需要下载器直连保护时，请在私人副本中按实际设备地址配置。
 
 ### Quantumult X
@@ -204,8 +202,6 @@ policy_groups:
 3. 保留 `default_subscription_group: 拼好鸡` 和 `default_proxy_group: Proxy`。
 4. 公开模板不包含 MITM、脚本、模块、证书或本地节点；这些内容只能在私人副本中按需配置。
 5. 导入后更新订阅与远程规则，确认策略组均能正常引用。
-
-模板的 `[rewrite_remote]` 已启用 [B 站 CC 字幕繁转简重写](https://github.com/allen0039/proxy-scripts/blob/main/docs/bilibili-cc.md)。它与现有的「哔哩哔哩去广告」资源用途不同，两者均保留。使用字幕转换前需在设备上开启 HTTPS 解密并信任证书。
 
 ## 这套配置包含什么
 
