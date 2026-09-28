@@ -700,13 +700,23 @@ default_proxy_group: Proxy
                 self.assertEqual(1, len(home_lines))
                 self.assertIn(HOME_ICON_URL, home_lines[0])
                 if name == "quantumultx_allen.conf":
-                    self.assertIn("server-tag-regex=(?i)家宽", home_lines[0])
+                    self.assertIn("server-tag-regex=(?i)(家宽|verizon$)", home_lines[0])
                 elif name == "loon_allen.lcf":
                     self.assertIn("select,家宽,", home_lines[0])
-                    self.assertIn('家宽 = NameRegex, FilterKey = "^(?=.*家宽).*$"', text)
+                    self.assertIn('家宽 = NameRegex, FilterKey = "(?i)(家宽|verizon$)"', text)
                 else:
                     self.assertIn("select,", home_lines[0])
-                    self.assertIn("policy-regex-filter=(家宽)", home_lines[0])
+                    self.assertIn("policy-regex-filter=(?i)(家宽|verizon$)", home_lines[0])
+                if name == "loon_allen.lcf":
+                    expression = re.search(r'(?m)^家宽 = NameRegex, FilterKey = "([^"]+)"', text)[1]
+                else:
+                    expression = re.search(r'(?:server-tag-regex|policy-regex-filter)=([^,]+)', home_lines[0])[1]
+                for sample in ("美国 家宽 01", "美国01-verizon", "美国01-Verizon", "美国01-VERIZON"):
+                    with self.subTest(name=name, home=sample):
+                        self.assertRegex(sample, re.compile(expression))
+                for sample in ("普通节点", "verizon-US01", "美国01-verizon-备用"):
+                    with self.subTest(name=name, non_home=sample):
+                        self.assertNotRegex(sample, re.compile(expression))
 
         mihomo = yaml.safe_load(configs["mihomo_allen.yaml"])
         groups = {
@@ -718,7 +728,7 @@ default_proxy_group: Proxy
         home = groups[HOME_POLICY_NAME]
         self.assertEqual("select", home["type"])
         self.assertTrue(home["include-all"])
-        self.assertEqual("家宽", home["filter"])
+        self.assertEqual("(?i)(家宽|verizon$)", home["filter"])
         self.assertEqual(HOME_ICON_URL, home["icon"])
         self.assertIn(HOME_POLICY_NAME, groups["AI"]["proxies"])
         self.assertIn(HOME_POLICY_NAME, groups["Final"]["proxies"])
@@ -732,6 +742,16 @@ default_proxy_group: Proxy
         self.assertIn(HOME_POLICY_NAME, egern_groups)
         self.assertIn(HOME_POLICY_NAME, egern_groups["AI"]["policies"])
         self.assertIn(HOME_POLICY_NAME, egern_groups["Final"]["policies"])
+        for name, expression in (
+            ("mihomo_allen.yaml", home["filter"]),
+            ("egern_byallen.yaml", egern_groups["家宽"]["filter"]),
+        ):
+            for sample in ("美国 家宽 01", "美国01-verizon", "美国01-Verizon", "美国01-VERIZON"):
+                with self.subTest(name=name, home=sample):
+                    self.assertRegex(sample, re.compile(expression))
+            for sample in ("普通节点", "verizon-US01", "美国01-verizon-备用"):
+                with self.subTest(name=name, non_home=sample):
+                    self.assertNotRegex(sample, re.compile(expression))
 
     def test_committed_configs_place_aggregate_groups_after_home(self):
         configs = {
