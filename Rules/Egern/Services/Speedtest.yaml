@@ -2,7 +2,7 @@
 # SPDX-License-Identifier: AGPL-3.0-only
 # Derived from https://github.com/SukkaW/Surge
 # Source: https://ruleset.skk.moe/List/domainset/speedtest.conf
-# Rule count: 3406
+# Rule count: 3407
 
 domain_set:
   - "7h15.ru1353t.1s.m4d3.by.5ukk4w.skk.moe"
@@ -2867,6 +2867,7 @@ domain_set:
   - "speedtest-perth.optusnet.com.au"
   - "speedtest-phl.dish-wireless.com"
   - "speedtest-phx.dish-wireless.com"
+  - "speedtest-pl1.expresshost.cloud"
   - "speedtest-rd-1.zoominternet.net"
   - "speedtest-rs-1.zoominternet.net"
   - "speedtest-sea.dish-wireless.com"
