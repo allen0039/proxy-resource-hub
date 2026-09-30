@@ -3,9 +3,9 @@
 # Derived from https://github.com/SukkaW/Surge
 # Source: https://ruleset.skk.moe/List/domainset/download.conf
 # Source: https://ruleset.skk.moe/List/non_ip/download.conf
-# Upstream Last Updated: 2026-09-18T13:04:50.932Z (domainset)
+# Upstream Last Updated: 2026-09-30T06:20:11.062Z (domainset)
 # Upstream Last Updated: 2026-08-05T12:33:04.408Z (non_ip)
-# Rule count: 1979
+# Rule count: 1981
 
 host, 7h15.ru1353t.1s.m4d3.by.5ukk4w.skk.moe, proxy
 host-suffix, gcr.io, proxy
@@ -111,6 +111,7 @@ host, ctan.math.ca, proxy
 host, d2.myani.org, proxy
 host, deb.sury.org, proxy
 host, debian.a1.bg, proxy
+host, dl.heycue.io, proxy
 host, dl.pikpak.io, proxy
 host, ftp.agdsn.de, proxy
 host, ftp.antik.sk, proxy
@@ -626,6 +627,7 @@ host, dl.vibeisland.app, proxy
 host, dlcdnets.asus.com, proxy
 host, download.cnet.com, proxy
 host, download.gimp.org, proxy
+host, download.manus.im, proxy
 host, download.xbox.com, proxy
 host-suffix, fastly.docker.com, proxy
 host-suffix, files.ghostty.org, proxy
