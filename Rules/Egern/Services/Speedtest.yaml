@@ -2,7 +2,7 @@
 # SPDX-License-Identifier: AGPL-3.0-only
 # Derived from https://github.com/SukkaW/Surge
 # Source: https://ruleset.skk.moe/List/domainset/speedtest.conf
-# Rule count: 3409
+# Rule count: 3411
 
 domain_set:
   - "7h15.ru1353t.1s.m4d3.by.5ukk4w.skk.moe"
@@ -182,6 +182,7 @@ domain_set:
   - "sghome.govpro.app"
   - "sl-04.wemacom.net"
   - "sp1-de.delska.com"
+  - "sp1-nl.delska.com"
   - "sp1.asthriona.com"
   - "sp1.burstfire.net"
   - "sp1.contilnet.net"
@@ -1587,6 +1588,7 @@ domain_set:
   - "speedtest-uk.the.hosting"
   - "speedtest.aabroadband.in"
   - "speedtest.almatelecom.es"
+  - "speedtest.apnetbv.com.br"
   - "speedtest.bellaliant.net"
   - "speedtest.bellevueia.gov"
   - "speedtest.bluevalley.net"
