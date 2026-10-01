@@ -3,9 +3,9 @@
 # Derived from https://github.com/SukkaW/Surge
 # Source: https://ruleset.skk.moe/List/domainset/cdn.conf
 # Source: https://ruleset.skk.moe/List/non_ip/cdn.conf
-# Upstream Last Updated: 2026-09-30T06:20:11.061Z (domainset)
+# Upstream Last Updated: 2026-10-01T14:48:46.522Z (domainset)
 # Upstream Last Updated: 2026-08-19T01:29:53.827Z (non_ip)
-# Rule count: 4762
+# Rule count: 4764
 
 host, 7h15.ru1353t.1s.m4d3.by.5ukk4w.skk.moe, proxy
 host, 0x0.st, proxy
@@ -126,6 +126,7 @@ host-suffix, epimg.net, proxy
 host-suffix, erocdn.co, proxy
 host-suffix, eth.sucks, proxy
 host-suffix, f-cdn.com, proxy
+host-suffix, fal.media, proxy
 host-suffix, fbcdn.com, proxy
 host-suffix, fbcdn.net, proxy
 host-suffix, fbsbx.com, proxy
@@ -3872,6 +3873,7 @@ host-suffix, assets.digitalocean.com, proxy
 host, assets.lemonsqueezy.com, proxy
 host, assets.mcp.corespeed.io, proxy
 host, assets.science.nasa.gov, proxy
+host, assets.singaporeair.com, proxy
 host, assets.streamlinehq.com, proxy
 host, assets.xboxservices.com, proxy
 host, assets1.lottiefiles.com, proxy
