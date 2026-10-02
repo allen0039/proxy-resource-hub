@@ -157,7 +157,6 @@ policy_groups:
     - 新加坡故转
     - 美国故转
     - 专线节点
-    - 日本极速
     - 香港节点
     - 日本节点
     - 新加坡节点
@@ -178,7 +177,6 @@ policy_groups:
     - 新加坡故转
     - 美国故转
     - 专线节点
-    - 日本极速
     - 香港节点
     - 日本节点
     - 新加坡节点
@@ -200,7 +198,6 @@ policy_groups:
     - 新加坡故转
     - 美国故转
     - 专线节点
-    - 日本极速
     - 香港节点
     - 日本节点
     - 新加坡节点
@@ -222,7 +219,6 @@ policy_groups:
     - 新加坡故转
     - 美国故转
     - 专线节点
-    - 日本极速
     - 香港节点
     - 日本节点
     - 新加坡节点
@@ -243,7 +239,6 @@ policy_groups:
     - 新加坡故转
     - 美国故转
     - 专线节点
-    - 日本极速
     - 香港节点
     - 日本节点
     - 新加坡节点
@@ -264,7 +259,6 @@ policy_groups:
     - 新加坡故转
     - 美国故转
     - 专线节点
-    - 日本极速
     - 香港节点
     - 日本节点
     - 新加坡节点
@@ -285,7 +279,6 @@ policy_groups:
     - 新加坡故转
     - 美国故转
     - 专线节点
-    - 日本极速
     - 香港节点
     - 日本节点
     - 新加坡节点
@@ -306,7 +299,6 @@ policy_groups:
     - 新加坡故转
     - 美国故转
     - 专线节点
-    - 日本极速
     - 香港节点
     - 日本节点
     - 新加坡节点
@@ -327,7 +319,6 @@ policy_groups:
     - 新加坡故转
     - 美国故转
     - 专线节点
-    - 日本极速
     - 香港节点
     - 日本节点
     - 新加坡节点
@@ -348,7 +339,6 @@ policy_groups:
     - 新加坡故转
     - 美国故转
     - 专线节点
-    - 日本极速
     - 香港节点
     - 日本节点
     - 新加坡节点
@@ -369,7 +359,6 @@ policy_groups:
     - 新加坡故转
     - 美国故转
     - 专线节点
-    - 日本极速
     - 香港节点
     - 日本节点
     - 新加坡节点
@@ -391,7 +380,6 @@ policy_groups:
     - 新加坡故转
     - 美国故转
     - 专线节点
-    - 日本极速
     - 香港节点
     - 日本节点
     - 新加坡节点
@@ -412,7 +400,6 @@ policy_groups:
     - 新加坡故转
     - 美国故转
     - 专线节点
-    - 日本极速
     - 香港节点
     - 日本节点
     - 新加坡节点
@@ -449,7 +436,6 @@ policy_groups:
     - 新加坡故转
     - 美国故转
     - 专线节点
-    - 日本极速
     - 香港节点
     - 日本节点
     - 新加坡节点
@@ -470,7 +456,6 @@ policy_groups:
     - 新加坡故转
     - 美国故转
     - 专线节点
-    - 日本极速
     - 香港节点
     - 日本节点
     - 新加坡节点
@@ -517,7 +502,6 @@ policy_groups:
     - 新加坡故转
     - 美国故转
     - 专线节点
-    - 日本极速
     - 香港节点
     - 日本节点
     - 新加坡节点
@@ -559,7 +543,6 @@ policy_groups:
     - 新加坡故转
     - 美国故转
     - 专线节点
-    - 日本极速
     - 香港节点
     - 日本节点
     - 新加坡节点
@@ -580,7 +563,6 @@ policy_groups:
     - 新加坡故转
     - 美国故转
     - 专线节点
-    - 日本极速
     - 香港节点
     - 日本节点
     - 新加坡节点
@@ -602,7 +584,6 @@ policy_groups:
     - 新加坡故转
     - 美国故转
     - 专线节点
-    - 日本极速
     - 香港节点
     - 日本节点
     - 新加坡节点
@@ -623,7 +604,6 @@ policy_groups:
     - 新加坡故转
     - 美国故转
     - 专线节点
-    - 日本极速
     - 香港节点
     - 日本节点
     - 新加坡节点
@@ -644,7 +624,6 @@ policy_groups:
     - 新加坡故转
     - 美国故转
     - 专线节点
-    - 日本极速
     - 香港节点
     - 日本节点
     - 新加坡节点
@@ -665,7 +644,6 @@ policy_groups:
     - 新加坡故转
     - 美国故转
     - 专线节点
-    - 日本极速
     - 香港节点
     - 日本节点
     - 新加坡节点
@@ -686,7 +664,6 @@ policy_groups:
     - 新加坡故转
     - 美国故转
     - 专线节点
-    - 日本极速
     - 香港节点
     - 日本节点
     - 新加坡节点
@@ -799,7 +776,7 @@ policy_groups:
     flatten: true
     filter: (?i)^(?!.*(家用|家庭|家宽|verizon$|\bISP\b|🇭🇰|香港|Hong[ _-]?Kong|🇹🇼|台湾|台北|Taipei|🇯🇵|日本|川日|东京|大阪|泉日|沪日|深日|埼玉|Tokyo|Osaka|🇸🇬|新加坡|狮城|🇺🇸|🇺🇲|美国|波特兰|达拉斯|俄勒冈|凤凰城|费利蒙|硅谷|拉斯维加斯|洛杉矶|圣何塞|圣克拉拉|西雅图|芝加哥|🇰🇷|韩国|韓國|首尔|首爾|Seoul|🇬🇧|英国|倫敦|伦敦|London|🇩🇪|德国|德國|法兰克福|法蘭克福|柏林|慕尼黑|(^|[^A-Za-z0-9])(HK|HKG|TW|TWN|Tai|Taiwan|JP|JPN|Japan|SG|SGP|Singapore|US|USA|United[ _-]?States|States|KR|KOR|Korea|UK|GB|GBR|United[ _-]?Kingdom|DE|DEU|Germany|Deutschland|Frankfurt|Berlin|Munich)([ _-]?\d+)?($|[^A-Za-z0-9])|直连|回国|校园|游戏|🎮|邀请|返利|循环|官网|客服|网站|网址|获取|订阅|流量|到期|机场|下次|版本|官址|备用|过期|已用|联系|邮箱|工单|交流群|官方群|用户群|群组|社群|群聊|贩卖|倒卖|防止|国内|(^|[^A-Za-z0-9])(GAME|USE|USED|TOTAL|EXPIRE|EMAIL|Panel)($|[^A-Za-z0-9])|\d{4}-\d{2}-\d{2})).+$
     hidden: true
-- fallback:
+- select:
     name: 专线节点
     policies:
     - 拼好鸡
@@ -808,18 +785,8 @@ policy_groups:
     - 备用
     flatten: true
     filter: (?i)Tencent
-    interval: 300
     latency_test_url: http://cp.cloudflare.com/generate_204
     icon: https://raw.githubusercontent.com/allen0039/proxy-resource-hub/main/icons/lightning-3d.png
-- fallback:
-    name: 日本极速
-    policies:
-    - 日本
-    flatten: true
-    filter: (?i)(Tencent|DMIT\.SGW|DMIT\.JP\.Shinagawa)
-    interval: 300
-    latency_test_url: http://cp.cloudflare.com/generate_204
-    icon: https://raw.githubusercontent.com/Orz-3/mini/master/Color/JP.png
 - fallback:
     name: 香港故转
     policies:
@@ -866,7 +833,6 @@ policy_groups:
 - select:
     name: 日本节点
     policies:
-    - 日本极速
     - 日本
     flatten: true
     latency_test_url: http://cp.cloudflare.com/generate_204
