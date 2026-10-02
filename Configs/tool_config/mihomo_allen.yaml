@@ -130,13 +130,13 @@ dns:
     - 'stun.*.*.*.*.*'
     - 'lens.l.google.com'
     - 'stun.l.google.com'
-  # 公共域名、直连目标和节点入口统一阿里 DoH；DNS 不跟随业务分流。
+  # 公共域名、直连目标和节点入口统一使用两台阿里传统 DNS。
   respect-rules: false
-  default-nameserver: [223.5.5.5, 119.29.29.29]
-  proxy-server-nameserver: [https://dns.alidns.com/dns-query]
-  direct-nameserver: [https://dns.alidns.com/dns-query]
+  default-nameserver: [223.5.5.5, 223.6.6.6]
+  proxy-server-nameserver: [223.5.5.5, 223.6.6.6]
+  direct-nameserver: [223.5.5.5, 223.6.6.6]
   direct-nameserver-follow-policy: true
-  nameserver: [https://dns.alidns.com/dns-query]
+  nameserver: [223.5.5.5, 223.6.6.6]
   # 局域网/路由器域名交回系统，避免向公网解析器查询。
   nameserver-policy:
     '+.lan': system
@@ -212,45 +212,47 @@ dns:
 #     dialer-proxy: 线路中转
 
 proxy-groups:
-  - {name: Proxy, type: select, proxies: [香港故转, 日本故转, 新加坡故转, 美国故转, 香港节点, 日本节点, 新加坡节点, 美国节点, 台湾节点, 韩国节点, 英国节点, 德国节点, 其他地区, DIRECT, 全部节点], icon: 'https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/Proxy.png'}
-  - {name: Final, type: select, proxies: [香港故转, 日本故转, 新加坡故转, 美国故转, 香港节点, 日本节点, 新加坡节点, 美国节点, 台湾节点, 韩国节点, 英国节点, 德国节点, 其他地区, Proxy, DIRECT, 家宽节点], icon: 'https://raw.githubusercontent.com/Orz-3/mini/master/Color/Final.png'}
+  - {name: Proxy, type: select, proxies: [香港故转, 日本故转, 新加坡故转, 美国故转, 专线节点, 日本极速, 香港节点, 日本节点, 新加坡节点, 美国节点, 台湾节点, 韩国节点, 英国节点, 德国节点, 其他地区, DIRECT, 全部节点], icon: 'https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/Proxy.png'}
+  - {name: Final, type: select, proxies: [香港故转, 日本故转, 新加坡故转, 美国故转, 专线节点, 日本极速, 香港节点, 日本节点, 新加坡节点, 美国节点, 台湾节点, 韩国节点, 英国节点, 德国节点, 其他地区, Proxy, DIRECT, 家宽节点], icon: 'https://raw.githubusercontent.com/Orz-3/mini/master/Color/Final.png'}
 
-  - {name: Google, type: select, proxies: [香港故转, 日本故转, 新加坡故转, 美国故转, 香港节点, 日本节点, 新加坡节点, 美国节点, 台湾节点, 韩国节点, 英国节点, 德国节点, 其他地区, Proxy, DIRECT], icon: 'https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/Google_Search.png'}
+  - {name: Google, type: select, proxies: [香港故转, 日本故转, 新加坡故转, 美国故转, 专线节点, 日本极速, 香港节点, 日本节点, 新加坡节点, 美国节点, 台湾节点, 韩国节点, 英国节点, 德国节点, 其他地区, Proxy, DIRECT], icon: 'https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/Google_Search.png'}
   - name: AI
     type: select
-    proxies: [家宽节点, 香港故转, 日本故转, 新加坡故转, 美国故转, 香港节点, 日本节点, 新加坡节点, 美国节点, 台湾节点, 韩国节点, 英国节点, 德国节点, 其他地区, Proxy, DIRECT]
+    proxies: [家宽节点, 香港故转, 日本故转, 新加坡故转, 美国故转, 专线节点, 日本极速, 香港节点, 日本节点, 新加坡节点, 美国节点, 台湾节点, 韩国节点, 英国节点, 德国节点, 其他地区, Proxy, DIRECT]
     icon: 'https://raw.githubusercontent.com/erdongchanyo/icon/main/Policy-Filter/OpenAI.png'
 
-  - {name: Telegram, type: select, proxies: [香港故转, 日本故转, 新加坡故转, 美国故转, 香港节点, 日本节点, 新加坡节点, 美国节点, 台湾节点, 韩国节点, 英国节点, 德国节点, 其他地区, Proxy, DIRECT], icon: 'https://raw.githubusercontent.com/Orz-3/mini/master/Color/Telegram.png'}
-  - {name: TikTok, type: select, proxies: [香港故转, 日本故转, 新加坡故转, 美国故转, 香港节点, 日本节点, 新加坡节点, 美国节点, 台湾节点, 韩国节点, 英国节点, 德国节点, 其他地区, Proxy, DIRECT], icon: 'https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/TikTok.png'}
-  - {name: 国外社交, type: select, proxies: [香港故转, 日本故转, 新加坡故转, 美国故转, 香港节点, 日本节点, 新加坡节点, 美国节点, 台湾节点, 韩国节点, 英国节点, 德国节点, 其他地区, Proxy, DIRECT], icon: 'https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/Twitter.png'}
+  - {name: Telegram, type: select, proxies: [香港故转, 日本故转, 新加坡故转, 美国故转, 专线节点, 日本极速, 香港节点, 日本节点, 新加坡节点, 美国节点, 台湾节点, 韩国节点, 英国节点, 德国节点, 其他地区, Proxy, DIRECT], icon: 'https://raw.githubusercontent.com/Orz-3/mini/master/Color/Telegram.png'}
+  - {name: TikTok, type: select, proxies: [香港故转, 日本故转, 新加坡故转, 美国故转, 专线节点, 日本极速, 香港节点, 日本节点, 新加坡节点, 美国节点, 台湾节点, 韩国节点, 英国节点, 德国节点, 其他地区, Proxy, DIRECT], icon: 'https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/TikTok.png'}
+  - {name: 国外社交, type: select, proxies: [香港故转, 日本故转, 新加坡故转, 美国故转, 专线节点, 日本极速, 香港节点, 日本节点, 新加坡节点, 美国节点, 台湾节点, 韩国节点, 英国节点, 德国节点, 其他地区, Proxy, DIRECT], icon: 'https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/Twitter.png'}
 
-  - {name: YouTube, type: select, proxies: [香港故转, 日本故转, 新加坡故转, 美国故转, 香港节点, 日本节点, 新加坡节点, 美国节点, 台湾节点, 韩国节点, 英国节点, 德国节点, 其他地区, Proxy, DIRECT], icon: 'https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/YouTube.png'}
-  - {name: Netflix, type: select, proxies: [香港故转, 日本故转, 新加坡故转, 美国故转, 香港节点, 日本节点, 新加坡节点, 美国节点, 台湾节点, 韩国节点, 英国节点, 德国节点, 其他地区, Proxy, DIRECT], icon: 'https://raw.githubusercontent.com/erdongchanyo/icon/main/Policy-Filter/Netflix.png'}
-  - {name: 迪士尼+, type: select, proxies: [香港故转, 日本故转, 新加坡故转, 美国故转, 香港节点, 日本节点, 新加坡节点, 美国节点, 台湾节点, 韩国节点, 英国节点, 德国节点, 其他地区, Proxy, DIRECT], icon: 'https://raw.githubusercontent.com/erdongchanyo/icon/main/Policy-Filter/Disney+.png'}
-  - {name: HBO, type: select, proxies: [香港故转, 日本故转, 新加坡故转, 美国故转, 香港节点, 日本节点, 新加坡节点, 美国节点, 台湾节点, 韩国节点, 英国节点, 德国节点, 其他地区, Proxy, DIRECT], icon: 'https://raw.githubusercontent.com/erdongchanyo/icon/main/Policy-Filter/HBO.png'}
-  - {name: Emby, type: select, proxies: [DIRECT, 香港故转, 日本故转, 新加坡故转, 美国故转, 香港节点, 日本节点, 新加坡节点, 美国节点, 台湾节点, 韩国节点, 英国节点, 德国节点, 其他地区, Proxy], icon: 'https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/Emby.png'}
-  - {name: Spotify, type: select, proxies: [香港故转, 日本故转, 新加坡故转, 美国故转, 香港节点, 日本节点, 新加坡节点, 美国节点, 台湾节点, 韩国节点, 英国节点, 德国节点, 其他地区, Proxy, DIRECT], icon: 'https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/Spotify.png'}
+  - {name: YouTube, type: select, proxies: [香港故转, 日本故转, 新加坡故转, 美国故转, 专线节点, 日本极速, 香港节点, 日本节点, 新加坡节点, 美国节点, 台湾节点, 韩国节点, 英国节点, 德国节点, 其他地区, Proxy, DIRECT], icon: 'https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/YouTube.png'}
+  - {name: Netflix, type: select, proxies: [香港故转, 日本故转, 新加坡故转, 美国故转, 专线节点, 日本极速, 香港节点, 日本节点, 新加坡节点, 美国节点, 台湾节点, 韩国节点, 英国节点, 德国节点, 其他地区, Proxy, DIRECT], icon: 'https://raw.githubusercontent.com/erdongchanyo/icon/main/Policy-Filter/Netflix.png'}
+  - {name: 迪士尼+, type: select, proxies: [香港故转, 日本故转, 新加坡故转, 美国故转, 专线节点, 日本极速, 香港节点, 日本节点, 新加坡节点, 美国节点, 台湾节点, 韩国节点, 英国节点, 德国节点, 其他地区, Proxy, DIRECT], icon: 'https://raw.githubusercontent.com/erdongchanyo/icon/main/Policy-Filter/Disney+.png'}
+  - {name: HBO, type: select, proxies: [香港故转, 日本故转, 新加坡故转, 美国故转, 专线节点, 日本极速, 香港节点, 日本节点, 新加坡节点, 美国节点, 台湾节点, 韩国节点, 英国节点, 德国节点, 其他地区, Proxy, DIRECT], icon: 'https://raw.githubusercontent.com/erdongchanyo/icon/main/Policy-Filter/HBO.png'}
+  - {name: Emby, type: select, proxies: [DIRECT, 香港故转, 日本故转, 新加坡故转, 美国故转, 专线节点, 日本极速, 香港节点, 日本节点, 新加坡节点, 美国节点, 台湾节点, 韩国节点, 英国节点, 德国节点, 其他地区, RFC节点, Proxy], icon: 'https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/Emby.png'}
+  - {name: Spotify, type: select, proxies: [香港故转, 日本故转, 新加坡故转, 美国故转, 专线节点, 日本极速, 香港节点, 日本节点, 新加坡节点, 美国节点, 台湾节点, 韩国节点, 英国节点, 德国节点, 其他地区, Proxy, DIRECT], icon: 'https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/Spotify.png'}
   - {name: 巴哈姆特, type: select, proxies: [香港节点, 台湾节点, DIRECT], icon: 'https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/Bahamut.png'}
 
   - {name: 哔哩哔哩, type: select, proxies: [DIRECT, 香港节点, 新加坡节点, 台湾节点, Proxy], icon: 'https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/bilibili.png'}
-  - {name: 国外媒体, type: select, proxies: [香港故转, 日本故转, 新加坡故转, 美国故转, 香港节点, 日本节点, 新加坡节点, 美国节点, 台湾节点, 韩国节点, 英国节点, 德国节点, 其他地区, Proxy, DIRECT], icon: 'https://raw.githubusercontent.com/Orz-3/mini/master/Color/Streaming.png'}
-  - {name: 特殊媒体, type: select, proxies: [香港故转, 日本故转, 新加坡故转, 美国故转, 香港节点, 日本节点, 新加坡节点, 美国节点, 台湾节点, 韩国节点, 英国节点, 德国节点, 其他地区, Proxy, DIRECT], icon: 'https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/Streaming.png'}
+  - {name: 国外媒体, type: select, proxies: [香港故转, 日本故转, 新加坡故转, 美国故转, 专线节点, 日本极速, 香港节点, 日本节点, 新加坡节点, 美国节点, 台湾节点, 韩国节点, 英国节点, 德国节点, 其他地区, Proxy, DIRECT], icon: 'https://raw.githubusercontent.com/Orz-3/mini/master/Color/Streaming.png'}
+  - {name: 特殊媒体, type: select, proxies: [香港故转, 日本故转, 新加坡故转, 美国故转, 专线节点, 日本极速, 香港节点, 日本节点, 新加坡节点, 美国节点, 台湾节点, 韩国节点, 英国节点, 德国节点, 其他地区, Proxy, DIRECT], icon: 'https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/Streaming.png'}
   - {name: 国内媒体, type: select, proxies: [DIRECT, Proxy, 香港节点, 日本节点, 新加坡节点, 美国节点, 台湾节点, 韩国节点], icon: 'https://raw.githubusercontent.com/Orz-3/mini/master/Color/StreamingSE.png'}
 
   - {name: 海淘, type: select, proxies: [香港节点, 日本节点, 新加坡节点, 美国节点, 台湾节点, 韩国节点, 英国节点, 德国节点, 其他地区, DIRECT], icon: 'https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/Amazon.png'}
-  - {name: PayPal, type: select, proxies: [香港故转, 日本故转, 新加坡故转, 美国故转, 香港节点, 日本节点, 新加坡节点, 美国节点, 台湾节点, 韩国节点, 英国节点, 德国节点, 其他地区, Proxy, DIRECT], icon: 'https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/PayPal.png'}
+  - {name: PayPal, type: select, proxies: [香港故转, 日本故转, 新加坡故转, 美国故转, 专线节点, 日本极速, 香港节点, 日本节点, 新加坡节点, 美国节点, 台湾节点, 韩国节点, 英国节点, 德国节点, 其他地区, Proxy, DIRECT], icon: 'https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/PayPal.png'}
 
   - {name: Apple, type: select, proxies: [DIRECT, Proxy, 香港节点, 日本节点, 新加坡节点, 美国节点, 台湾节点, 韩国节点], icon: 'https://raw.githubusercontent.com/Orz-3/mini/master/Color/Apple.png'}
-  - {name: Microsoft, type: select, proxies: [香港故转, 日本故转, 新加坡故转, 美国故转, 香港节点, 日本节点, 新加坡节点, 美国节点, 台湾节点, 韩国节点, 英国节点, 德国节点, 其他地区, Proxy, DIRECT], icon: 'https://raw.githubusercontent.com/erdongchanyo/icon/main/Policy-Filter/Microsoft.png'}
-  - {name: OneDrive, type: select, proxies: [香港故转, 日本故转, 新加坡故转, 美国故转, 香港节点, 日本节点, 新加坡节点, 美国节点, 台湾节点, 韩国节点, 英国节点, 德国节点, 其他地区, Proxy, DIRECT, Microsoft], icon: 'https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/OneDrive.png'}
-  - {name: GitHub, type: select, proxies: [香港故转, 日本故转, 新加坡故转, 美国故转, 香港节点, 日本节点, 新加坡节点, 美国节点, 台湾节点, 韩国节点, 英国节点, 德国节点, 其他地区, Proxy, DIRECT], icon: 'https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/GitHub.png'}
-  - {name: Docker, type: select, proxies: [香港故转, 日本故转, 新加坡故转, 美国故转, 香港节点, 日本节点, 新加坡节点, 美国节点, 台湾节点, 韩国节点, 英国节点, 德国节点, 其他地区, Proxy, DIRECT], icon: 'https://raw.githubusercontent.com/allen0039/proxy-resource-hub/main/icons/docker.png?v=b5317ee'}
+  - {name: Microsoft, type: select, proxies: [香港故转, 日本故转, 新加坡故转, 美国故转, 专线节点, 日本极速, 香港节点, 日本节点, 新加坡节点, 美国节点, 台湾节点, 韩国节点, 英国节点, 德国节点, 其他地区, Proxy, DIRECT], icon: 'https://raw.githubusercontent.com/erdongchanyo/icon/main/Policy-Filter/Microsoft.png'}
+  - {name: OneDrive, type: select, proxies: [香港故转, 日本故转, 新加坡故转, 美国故转, 专线节点, 日本极速, 香港节点, 日本节点, 新加坡节点, 美国节点, 台湾节点, 韩国节点, 英国节点, 德国节点, 其他地区, Proxy, DIRECT, Microsoft], icon: 'https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/OneDrive.png'}
+  - {name: GitHub, type: select, proxies: [香港故转, 日本故转, 新加坡故转, 美国故转, 专线节点, 日本极速, 香港节点, 日本节点, 新加坡节点, 美国节点, 台湾节点, 韩国节点, 英国节点, 德国节点, 其他地区, Proxy, DIRECT], icon: 'https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/GitHub.png'}
+  - {name: Docker, type: select, proxies: [香港故转, 日本故转, 新加坡故转, 美国故转, 专线节点, 日本极速, 香港节点, 日本节点, 新加坡节点, 美国节点, 台湾节点, 韩国节点, 英国节点, 德国节点, 其他地区, Proxy, DIRECT], icon: 'https://raw.githubusercontent.com/allen0039/proxy-resource-hub/main/icons/docker.png?v=b5317ee'}
 
-  - {name: 游戏平台, type: select, proxies: [香港故转, 日本故转, 新加坡故转, 美国故转, 香港节点, 日本节点, 新加坡节点, 美国节点, 台湾节点, 韩国节点, 英国节点, 德国节点, 其他地区, Proxy, DIRECT], icon: 'https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/Game.png'}
-  - {name: CDN, type: select, proxies: [香港故转, 日本故转, 新加坡故转, 美国故转, 香港节点, 日本节点, 新加坡节点, 美国节点, 台湾节点, 韩国节点, 英国节点, 德国节点, 其他地区, Proxy, DIRECT], icon: 'https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/Cloudflare.png'}
-  - {name: 测速, type: select, proxies: [香港故转, 日本故转, 新加坡故转, 美国故转, 香港节点, 日本节点, 新加坡节点, 美国节点, 台湾节点, 韩国节点, 英国节点, 德国节点, 其他地区, Proxy, DIRECT], icon: 'https://raw.githubusercontent.com/erdongchanyo/icon/main/Policy-Filter/Speedtest.png'}
+  - {name: 游戏平台, type: select, proxies: [香港故转, 日本故转, 新加坡故转, 美国故转, 专线节点, 日本极速, 香港节点, 日本节点, 新加坡节点, 美国节点, 台湾节点, 韩国节点, 英国节点, 德国节点, 其他地区, Proxy, DIRECT], icon: 'https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/Game.png'}
+  - {name: CDN, type: select, proxies: [香港故转, 日本故转, 新加坡故转, 美国故转, 专线节点, 日本极速, 香港节点, 日本节点, 新加坡节点, 美国节点, 台湾节点, 韩国节点, 英国节点, 德国节点, 其他地区, Proxy, DIRECT], icon: 'https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/Cloudflare.png'}
+  - {name: 测速, type: select, proxies: [香港故转, 日本故转, 新加坡故转, 美国故转, 专线节点, 日本极速, 香港节点, 日本节点, 新加坡节点, 美国节点, 台湾节点, 韩国节点, 英国节点, 德国节点, 其他地区, Proxy, DIRECT], icon: 'https://raw.githubusercontent.com/erdongchanyo/icon/main/Policy-Filter/Speedtest.png'}
 
+  - {name: 专线节点, type: fallback, include-all: true, empty-fallback: DIRECT, url: 'http://cp.cloudflare.com/generate_204', interval: 300, filter: '(?i)Tencent', icon: 'https://raw.githubusercontent.com/allen0039/proxy-resource-hub/main/icons/lightning-3d.png'}
+  - {name: 日本极速, type: fallback, include-all: true, empty-fallback: DIRECT, url: 'http://cp.cloudflare.com/generate_204', interval: 300, filter: '(?i)((Tencent|DMIT\.SGW).*(🇯🇵|日本|川日|东京|大阪|泉日|埼玉|\b(JP|JPN|Japan)(\d+)?\b)|(🇯🇵|日本|川日|东京|大阪|泉日|埼玉|\b(JP|JPN|Japan)(\d+)?\b).*(Tencent|DMIT\.SGW)|DMIT\.JP\.Shinagawa)', exclude-filter: '(?i)(回国|校园|游戏|🎮|\bGAME\b)', icon: 'https://raw.githubusercontent.com/Orz-3/mini/master/Color/JP.png'}
   - {name: 香港故转, type: fallback, include-all: true, empty-fallback: DIRECT, url: 'http://cp.cloudflare.com/generate_204', interval: 300, filter: '(?i)(🇭🇰|香港|\b(HK|HKG|Hong)(\d+)?\b)', exclude-filter: '(?i)(家宽|verizon$|回国|校园|游戏|🎮|\bGAME\b)', icon: 'https://raw.githubusercontent.com/Orz-3/mini/master/Color/HK.png'}
   - {name: 日本故转, type: fallback, include-all: true, empty-fallback: DIRECT, url: 'http://cp.cloudflare.com/generate_204', interval: 300, filter: '(?i)(🇯🇵|日本|川日|东京|大阪|泉日|埼玉|\b(JP|JPN|Japan)(\d+)?\b)', exclude-filter: '(?i)(家宽|verizon$|回国|校园|游戏|🎮|\bGAME\b)', icon: 'https://raw.githubusercontent.com/Orz-3/mini/master/Color/JP.png'}
   - {name: 新加坡故转, type: fallback, url: 'http://cp.cloudflare.com/generate_204', interval: 300, include-all: true, empty-fallback: DIRECT, filter: '(?i)(🇸🇬|新加坡|狮城|\b(SG|SGP|Singapore)(\d+)?\b)', exclude-filter: '(?i)(家宽|verizon$|回国|校园|游戏|🎮|\bGAME\b)', icon: 'https://raw.githubusercontent.com/Orz-3/mini/master/Color/SG.png'}
@@ -258,7 +260,7 @@ proxy-groups:
   - {name: 美国故转, type: fallback, include-all: true, empty-fallback: DIRECT, url: 'http://cp.cloudflare.com/generate_204', interval: 300, filter: '(?i)(🇺🇸|🇺🇲|美国|波特兰|达拉斯|俄勒冈|凤凰城|费利蒙|硅谷|拉斯维加斯|洛杉矶|圣何塞|圣克拉拉|西雅图|芝加哥|\b(US|USA|United States)(\d+)?\b)', exclude-filter: '(?i)(家宽|verizon$|回国|校园|游戏|🎮|\bGAME\b)', icon: 'https://raw.githubusercontent.com/Orz-3/mini/master/Color/US.png'}
 
   - {name: 香港节点, type: select, include-all: true, empty-fallback: DIRECT, filter: '(?i)(🇭🇰|香港|\b(HK|HKG|Hong)(\d+)?\b)', exclude-filter: '(?i)(回国|校园|游戏|🎮|\bGAME\b)', icon: 'https://raw.githubusercontent.com/Orz-3/mini/master/Color/HK.png'}
-  - {name: 日本节点, type: select, include-all: true, empty-fallback: DIRECT, filter: '(?i)(🇯🇵|日本|川日|东京|大阪|泉日|埼玉|\b(JP|JPN|Japan)(\d+)?\b)', exclude-filter: '(?i)(回国|校园|游戏|🎮|\bGAME\b)', icon: 'https://raw.githubusercontent.com/Orz-3/mini/master/Color/JP.png'}
+  - {name: 日本节点, type: select, proxies: [日本极速], include-all: true, empty-fallback: DIRECT, filter: '(?i)(🇯🇵|日本|川日|东京|大阪|泉日|埼玉|\b(JP|JPN|Japan)(\d+)?\b)', exclude-filter: '(?i)(回国|校园|游戏|🎮|\bGAME\b)', icon: 'https://raw.githubusercontent.com/Orz-3/mini/master/Color/JP.png'}
   - {name: 新加坡节点, type: select, include-all: true, empty-fallback: DIRECT, filter: '(?i)(🇸🇬|新加坡|狮城|\b(SG|SGP|Singapore)(\d+)?\b)', exclude-filter: '(?i)(回国|校园|游戏|🎮|\bGAME\b)', icon: 'https://raw.githubusercontent.com/Orz-3/mini/master/Color/SG.png'}
   - {name: 美国节点, type: select, include-all: true, empty-fallback: DIRECT, filter: '(?i)(🇺🇸|🇺🇲|美国|波特兰|达拉斯|俄勒冈|凤凰城|费利蒙|硅谷|拉斯维加斯|洛杉矶|圣何塞|圣克拉拉|西雅图|芝加哥|\b(US|USA|United States)(\d+)?\b)', exclude-filter: '(?i)(回国|校园|游戏|🎮|\bGAME\b)', icon: 'https://raw.githubusercontent.com/Orz-3/mini/master/Color/US.png'}
   - {name: 台湾节点, type: select, include-all: true, empty-fallback: DIRECT, filter: '(?i)(🇹🇼|台湾|\b(TW|TWN|Tai|Taiwan)(\d+)?\b)', exclude-filter: '(?i)(回国|校园|游戏|🎮|\bGAME\b)', icon: 'https://raw.githubusercontent.com/Orz-3/mini/master/Color/TW.png'}
@@ -266,6 +268,7 @@ proxy-groups:
   - {name: 英国节点, type: select, include-all: true, empty-fallback: DIRECT, filter: '(?i)(🇬🇧|英国|伦敦|\b(UK|GB|GBR|United Kingdom)(\d+)?\b)', exclude-filter: '(?i)(回国|校园|游戏|🎮|\bGAME\b)', icon: 'https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/United_Kingdom.png'}
   - {name: 德国节点, type: select, include-all: true, empty-fallback: DIRECT, filter: '(?i)(🇩🇪|德国|德國|法兰克福|法蘭克福|柏林|慕尼黑|\b(DE|DEU|Germany|Deutschland|Frankfurt|Berlin|Munich)(\d+)?\b)', exclude-filter: '(?i)(回国|校园|游戏|🎮|\bGAME\b)', icon: 'https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/Germany.png'}
   - {name: 其他地区, type: select, include-all: true, empty-fallback: DIRECT, exclude-filter: '(?i)(家宽|verizon$|🇭🇰|香港|(^|[^A-Za-z0-9])(HK|HKG|Hong([ _-]?Kong)?)([ _-]?\d+)?($|[^A-Za-z0-9])|🇹🇼|台湾|台北|(^|[^A-Za-z0-9])(TW|TWN|Tai|Taiwan)([ _-]?\d+)?($|[^A-Za-z0-9])|🇯🇵|日本|川日|东京|大阪|泉日|沪日|深日|埼玉|(^|[^A-Za-z0-9])(JP|JPN|Japan)([ _-]?\d+)?($|[^A-Za-z0-9])|🇸🇬|新加坡|狮城|(^|[^A-Za-z0-9])(SG|SGP|Singapore)([ _-]?\d+)?($|[^A-Za-z0-9])|🇺🇸|🇺🇲|美国|波特兰|达拉斯|俄勒冈|凤凰城|费利蒙|硅谷|拉斯维加斯|洛杉矶|圣何塞|圣克拉拉|西雅图|芝加哥|(^|[^A-Za-z0-9])(US|USA|United[ _-]?States|States)([ _-]?\d+)?($|[^A-Za-z0-9])|🇰🇷|韩国|韓|韓國|首尔|首爾|(^|[^A-Za-z0-9])(KR|KOR|Korea)([ _-]?\d+)?($|[^A-Za-z0-9])|🇬🇧|英国|伦敦|(^|[^A-Za-z0-9])(UK|GB|GBR|United[ _-]?Kingdom)([ _-]?\d+)?($|[^A-Za-z0-9])|🇩🇪|德国|德國|法兰克福|法蘭克福|柏林|慕尼黑|(^|[^A-Za-z0-9])(DE|DEU|Germany|Deutschland|Frankfurt|Berlin|Munich)([ _-]?\d+)?($|[^A-Za-z0-9])|直连|回国|校园|游戏|🎮|邀请|返利|循环|官网|客服|网站|网址|获取|订阅|流量|到期|机场|下次|版本|官址|备用|过期|已用|联系|邮箱|工单|交流群|官方群|用户群|群组|社群|群聊|贩卖|倒卖|防止|国内|(^|[^A-Za-z0-9])(GAME|USE|USED|TOTAL|EXPIRE|EMAIL|Panel)($|[^A-Za-z0-9])|\d{4}-\d{2}-\d{2})', icon: 'https://raw.githubusercontent.com/Orz-3/mini/master/Color/Static.png'}
+  - {name: RFC节点, type: select, include-all: true, empty-fallback: DIRECT, filter: 'RFC', icon: 'https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/AfreecaTV.png'}
   - name: 家宽节点
     type: select
     include-all: true
@@ -284,6 +287,7 @@ rules:
   - DOMAIN-SUFFIX,052909.xyz,美国节点
   - DOMAIN-SUFFIX,mfallen.de,美国节点
   - DOMAIN-SUFFIX,api.flyapi.tech,美国节点
+  - DOMAIN-SUFFIX,nodeseek.com,日本节点
   - RULE-SET,custom_hk,香港节点
   - RULE-SET,custom_us,美国节点
   - RULE-SET,custom_jp,日本节点
@@ -292,7 +296,21 @@ rules:
   - RULE-SET,custom_direct,DIRECT
 
   # 2. Apple 与系统服务
-  # APNs 经代理节点会导致 iCloud 后台同步异常，必须先于通用 Apple 规则直连。
+  # Private Relay 精确端点优先于 iCloud 后缀直连。
+  - DOMAIN,mask.icloud.com,Apple
+  - DOMAIN,mask-h2.icloud.com,Apple
+  - DOMAIN,mask-api.icloud.com,Apple
+  - DOMAIN,mask-canary.icloud.com,Apple
+  - DOMAIN,mask.apple-dns.net,Apple
+  - DOMAIN,canary.mask.apple-dns.net,Apple
+  - DOMAIN-SUFFIX,icloud.com,DIRECT
+  - DOMAIN-SUFFIX,icloud-content.com,DIRECT
+  - DOMAIN-SUFFIX,me.com,DIRECT
+  - DOMAIN-SUFFIX,apple-cloudkit.com,DIRECT
+  - DOMAIN-SUFFIX,apple-livephotoskit.com,DIRECT
+  - DOMAIN-SUFFIX,apzones.com,DIRECT
+  - DOMAIN-SUFFIX,apple-dns.net,DIRECT
+  # 此平台保留原有 APNs 直连策略；iPhone 客户端单独使用 Apple Push 策略。
   - DOMAIN-SUFFIX,push.apple.com,DIRECT
   - DOMAIN-SUFFIX,apple-relay.apple.com,Apple
 
@@ -304,6 +322,7 @@ rules:
   # 4. AI 与媒体服务
   # Gemini 首页保留本地精确兜底；完整端点由远程 Gemini 规则统一维护。
   - DOMAIN,gemini.google.com,Google
+  - DOMAIN,rfc.uhdnow.com,RFC节点
   - DOMAIN-SUFFIX,ytimg.com,YouTube
   - DOMAIN-SUFFIX,safebrowsing.google.com,Google
 
