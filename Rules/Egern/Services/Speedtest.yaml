@@ -2,7 +2,7 @@
 # SPDX-License-Identifier: AGPL-3.0-only
 # Derived from https://github.com/SukkaW/Surge
 # Source: https://ruleset.skk.moe/List/domainset/speedtest.conf
-# Rule count: 3411
+# Rule count: 3414
 
 domain_set:
   - "7h15.ru1353t.1s.m4d3.by.5ukk4w.skk.moe"
@@ -853,6 +853,7 @@ domain_set:
   - "speedtest.as53597.net"
   - "speedtest.asmfibra.es"
   - "speedtest.atccomm.net"
+  - "speedtest.b3online.es"
   - "speedtest.bkfiber.com"
   - "speedtest.blacksun.ca"
   - "speedtest.blizznet.at"
@@ -2852,6 +2853,7 @@ domain_set:
   - "speedtest-chi.dish-wireless.com"
   - "speedtest-cv-1.zoominternet.net"
   - "speedtest-dallas.swyftfiber.com"
+  - "speedtest-de1.expresshost.cloud"
   - "speedtest-dfw.dish-wireless.com"
   - "speedtest-dsm.cowboyhosting.com"
   - "speedtest-eqx-sg1.ixtelecom.net"
@@ -3311,6 +3313,7 @@ domain_suffix_set:
   - "wifiman.com"
   - "speed.pfm.gg"
   - "speed.tng.de"
+  - "speedtest.sg"
   - "srvr.bell.ca"
   - "ookla.rcp.net"
   - "speedtest.net"
