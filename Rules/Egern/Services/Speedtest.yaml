@@ -2,7 +2,7 @@
 # SPDX-License-Identifier: AGPL-3.0-only
 # Derived from https://github.com/SukkaW/Surge
 # Source: https://ruleset.skk.moe/List/domainset/speedtest.conf
-# Rule count: 3414
+# Rule count: 3415
 
 domain_set:
   - "7h15.ru1353t.1s.m4d3.by.5ukk4w.skk.moe"
@@ -1502,6 +1502,7 @@ domain_set:
   - "teste.oriontelecom.link"
   - "teste.reatelecom.com.br"
   - "teste.speednetpa.net.br"
+  - "topnet.brsserver.com.br"
   - "vaspeedtest.rackdog.com"
   - "velocidade.4wnet.com.br"
   - "velocidade.hrcfiber.com"
