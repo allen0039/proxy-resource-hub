@@ -2,7 +2,7 @@
 # SPDX-License-Identifier: AGPL-3.0-only
 # Derived from https://github.com/SukkaW/Surge
 # Source: https://ruleset.skk.moe/List/domainset/speedtest.conf
-# Rule count: 3415
+# Rule count: 3416
 
 domain_set:
   - "7h15.ru1353t.1s.m4d3.by.5ukk4w.skk.moe"
@@ -2556,6 +2556,7 @@ domain_set:
   - "speed-miss.systemlifeline.com"
   - "speed.alliedcorporation.co.in"
   - "speed.bitnettecnologia.com.br"
+  - "speed01.mil01.cmp.hb-bkbn.net"
   - "speednet-atn.brsserver.com.br"
   - "speedtest-adl.optusnet.com.au"
   - "speedtest-alm-nl.as215248.net"
