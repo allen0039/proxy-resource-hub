@@ -1015,6 +1015,9 @@ rules:
 - domain_suffix:
     match: apple-dns.net
     policy: DIRECT
+- rule_set:
+    match: https://raw.githubusercontent.com/Repcz/Tool/X/Egern/Rules/iCloud.yaml
+    policy: DIRECT
 - domain_suffix:
     match: push.apple.com
     policy: Apple Push
