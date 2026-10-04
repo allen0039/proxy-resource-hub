@@ -309,6 +309,8 @@ rules:
   - DOMAIN-SUFFIX,apple-livephotoskit.com,DIRECT
   - DOMAIN-SUFFIX,apzones.com,DIRECT
   - DOMAIN-SUFFIX,apple-dns.net,DIRECT
+  # blackmatrix7 的 Clash 原生规则补充本地 iCloud 直连兜底。
+  - RULE-SET,icloud,DIRECT
   # 此平台保留原有 APNs 直连策略；iPhone 客户端单独使用 Apple Push 策略。
   - DOMAIN-SUFFIX,push.apple.com,DIRECT
   - DOMAIN-SUFFIX,apple-relay.apple.com,Apple
@@ -409,6 +411,7 @@ rules:
 # 规则集：每个 rule-provider 显式声明更新周期、behavior 和格式，避免转换器丢失 YAML 合并字段。
 # 新增 provider 后需在 rules 中引用；domain、ipcidr 与 classical 应匹配规则内容。
 rule-providers:
+  icloud: { type: http, interval: 86400, behavior: classical, format: yaml, url: "https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/rule/Clash/iCloud/iCloud.yaml" }
   # anti-ad: { type: http, interval: 86400, behavior: domain, format: yaml, path: ./ruleset/anti-ad.yaml, url: "https://raw.githubusercontent.com/privacy-protection-tools/anti-AD/master/anti-ad-clash.yaml" }
   custom_direct: { type: http, interval: 86400, behavior: classical, format: text, url: "https://raw.githubusercontent.com/allen0039/proxy-resource-hub/main/Rules/Mihomo/Custom/direct.list" }
   custom_hk: { type: http, interval: 86400, behavior: classical, format: text, url: "https://raw.githubusercontent.com/allen0039/proxy-resource-hub/main/Rules/Mihomo/Regional/hk.list" }

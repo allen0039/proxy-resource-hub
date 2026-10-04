@@ -197,9 +197,9 @@ FINAL,Final
 https://raw.githubusercontent.com/privacy-protection-tools/anti-AD/master/anti-ad-surge.txt, policy=REJECT, tag=anti-AD基础去广告, enabled=false
 # UU远程：仅适用于 Loon for Mac，默认关闭；需要时删除下一行开头的 # 后启用。
 # https://raw.githubusercontent.com/allen0039/proxy-resource-hub/main/Rules/Loon/Custom/uuyuancheng.list, policy=DIRECT, tag=UU远程（仅Mac）, enabled=true
-# Apple Private Relay 必须先于 iCloud 直连规则。
+# Private Relay 必须先于 blackmatrix7 的 Loon 原生 iCloud 直连规则。
 https://raw.githubusercontent.com/allen0039/proxy-resource-hub/main/Rules/Apple/PrivateRelay.list, policy=Apple, tag=Apple Private Relay, enabled=true
-https://raw.githubusercontent.com/allen0039/proxy-resource-hub/main/Rules/Apple/iCloud.list, policy=DIRECT, tag=iCloud直连, enabled=true
+https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/rule/Loon/iCloud/iCloud.list, policy=DIRECT, tag=iCloud直连, enabled=true
 https://raw.githubusercontent.com/allen0039/proxy-resource-hub/main/Rules/Loon/Regional/hk.list, policy=香港节点, tag=地区分流·香港, enabled=true
 https://raw.githubusercontent.com/allen0039/proxy-resource-hub/main/Rules/Loon/Regional/us.list, policy=美国节点, tag=地区分流·美国, enabled=true
 https://raw.githubusercontent.com/allen0039/proxy-resource-hub/main/Rules/Loon/Regional/jp.list, policy=日本节点, tag=地区分流·日本, enabled=true
