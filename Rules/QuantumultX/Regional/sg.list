@@ -3,3 +3,4 @@
 host-keyword, javdb, proxy
 host-keyword, javlibrary, proxy
 host-keyword, avbase, proxy
+host-suffix, jdbstatic.com, proxy
