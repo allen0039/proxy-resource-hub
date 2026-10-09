@@ -3,9 +3,9 @@
 # Derived from https://github.com/SukkaW/Surge
 # Source: https://ruleset.skk.moe/List/domainset/download.conf
 # Source: https://ruleset.skk.moe/List/non_ip/download.conf
-# Upstream Last Updated: 2026-09-30T06:20:11.062Z (domainset)
+# Upstream Last Updated: 2026-10-08T10:17:55.635Z (domainset)
 # Upstream Last Updated: 2026-08-05T12:33:04.408Z (non_ip)
-# Rule count: 1981
+# Rule count: 1982
 
 host, 7h15.ru1353t.1s.m4d3.by.5ukk4w.skk.moe, proxy
 host-suffix, gcr.io, proxy
@@ -1023,6 +1023,7 @@ host, opensource.xtdv.net, proxy
 host, packages.termux.dev, proxy
 host, pubmirror.plutex.de, proxy
 host, release.runcloud.io, proxy
+host, releases.claude.com, proxy
 host, replicate.npmjs.com, proxy
 host, repo.extreme-ix.org, proxy
 host-suffix, s3-website.cloud.ru, proxy

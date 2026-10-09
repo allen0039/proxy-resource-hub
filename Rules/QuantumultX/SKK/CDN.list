@@ -3,9 +3,9 @@
 # Derived from https://github.com/SukkaW/Surge
 # Source: https://ruleset.skk.moe/List/domainset/cdn.conf
 # Source: https://ruleset.skk.moe/List/non_ip/cdn.conf
-# Upstream Last Updated: 2026-10-01T14:48:46.522Z (domainset)
-# Upstream Last Updated: 2026-08-19T01:29:53.827Z (non_ip)
-# Rule count: 4764
+# Upstream Last Updated: 2026-10-08T10:17:55.635Z (domainset)
+# Upstream Last Updated: 2026-10-08T10:17:52.439Z (non_ip)
+# Rule count: 4769
 
 host, 7h15.ru1353t.1s.m4d3.by.5ukk4w.skk.moe, proxy
 host, 0x0.st, proxy
@@ -1786,6 +1786,7 @@ host, assets.stash.com, proxy
 host, assets.toot.cafe, proxy
 host, assets.twitch.tv, proxy
 host, assets.upload.io, proxy
+host, assets.vanta.com, proxy
 host, assets.vogue.com, proxy
 host, assets.volvo.com, proxy
 host, assets.xmind.net, proxy
@@ -2357,6 +2358,7 @@ host, media.nownews.com, proxy
 host-suffix, media.zestyio.com, proxy
 host-suffix, mediadelivery.net, proxy
 host-suffix, monitor.azure.com, proxy
+host, n.approveit.today, proxy
 host, netlify.apollo.io, proxy
 host-suffix, notion-static.com, proxy
 host, ocsp.comodoca.com, proxy
@@ -4397,6 +4399,7 @@ host, player-frontend.cnevids.com, proxy
 host, prego-cache.prod.sketch.com, proxy
 host, public-pages.cbinsights.com, proxy
 host, resources-live.sketch.cloud, proxy
+host, rum-ingest.us1.signalfx.com, proxy
 host, safebrowsing.googleapis.com, proxy
 host, sessions-bugsnag.docker.com, proxy
 host-suffix, siteintercept.qualtrics.com, proxy
@@ -4406,6 +4409,7 @@ host, static-homepage-en.pluto.tv, proxy
 host, static-mh.content.disney.io, proxy
 host, static-production.npmjs.com, proxy
 host, static-webfonts.myfonts.com, proxy
+host, static.acm.account.sony.com, proxy
 host, static.captcha-delivery.com, proxy
 host, sts.online.visualstudio.com, proxy
 host, tvdownloaddw-a.akamaihd.net, proxy
@@ -4771,3 +4775,4 @@ host-wildcard, fastly-*.allmovie.com, proxy
 host-wildcard, cdn*.porn87.com, proxy
 host-wildcard, cdn*.pornhost.com, proxy
 host-wildcard, cdn*.boysfood.com, proxy
+host-wildcard, rum-ingest.*.signalfx.com, proxy
