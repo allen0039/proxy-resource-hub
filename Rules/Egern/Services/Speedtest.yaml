@@ -2,7 +2,7 @@
 # SPDX-License-Identifier: AGPL-3.0-only
 # Derived from https://github.com/SukkaW/Surge
 # Source: https://ruleset.skk.moe/List/domainset/speedtest.conf
-# Rule count: 3425
+# Rule count: 3427
 
 domain_set:
   - "7h15.ru1353t.1s.m4d3.by.5ukk4w.skk.moe"
@@ -778,6 +778,7 @@ domain_set:
   - "guwahati.neconnect.in"
   - "hiztesti.codit.com.tr"
   - "hiztesti.turbo.net.tr"
+  - "hoyalclub.synology.me"
   - "ind-nperf.verizon.net"
   - "joplin1.cabospeed.com"
   - "karapinar.flix.net.tr"
@@ -2000,6 +2001,7 @@ domain_set:
   - "speedtest-sg.napinfo.co.id"
   - "speedtest-sin.melbicom.net"
   - "speedtest-sjc.sectrify.com"
+  - "speedtest-sjdm.newworld.ph"
   - "speedtest-tek.teksavvy.com"
   - "speedtest-txg.infinirc.net"
   - "speedtest-val.masmovil.com"
