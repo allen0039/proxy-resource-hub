@@ -2,7 +2,7 @@
 # SPDX-License-Identifier: AGPL-3.0-only
 # Derived from https://github.com/SukkaW/Surge
 # Source: https://ruleset.skk.moe/List/non_ip/ai.conf
-# Rule count: 53
+# Rule count: 56
 
 domain_set:
   - "7h15.ru1353t.1s.m4d3.by.5ukk4w.skk.moe"
@@ -12,10 +12,13 @@ domain_set:
   - "api.jetbrains.ai"
   - "jules.google.com"
   - "antigravity.google"
+  - "server.codeium.com"
   - "aida.googleapis.com"
+  - "inference.codeium.com"
   - "antigravity-unleash.goog"
   - "gateway.ai.cloudflare.com"
   - "aisandbox-pa.googleapis.com"
+  - "server.self-serve.windsurf.com"
   - "robinfrontend-pa.googleapis.com"
   - "alkalicore-pa.clients6.google.com"
   - "daily-cloudcode-pa.googleapis.com"
