@@ -2,7 +2,7 @@
 # SPDX-License-Identifier: AGPL-3.0-only
 # Derived from https://github.com/SukkaW/Surge
 # Source: https://ruleset.skk.moe/List/domainset/speedtest.conf
-# Rule count: 3429
+# Rule count: 3430
 
 domain_set:
   - "7h15.ru1353t.1s.m4d3.by.5ukk4w.skk.moe"
@@ -273,6 +273,7 @@ domain_set:
   - "hk.mymonitor.space"
   - "kh1.chtm.hinet.net"
   - "one.speed.c4g7.com"
+  - "ookla.argsment.com"
   - "ookla.as400442.net"
   - "ookla.bigredne.com"
   - "ookla.delhitel.net"
