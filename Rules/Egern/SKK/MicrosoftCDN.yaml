@@ -2,7 +2,7 @@
 # SPDX-License-Identifier: AGPL-3.0-only
 # Derived from https://github.com/SukkaW/Surge
 # Source: https://ruleset.skk.moe/List/non_ip/microsoft_cdn.conf
-# Rule count: 54
+# Rule count: 53
 
 domain_set:
   - "7h15.ru1353t.1s.m4d3.by.5ukk4w.skk.moe"
@@ -13,7 +13,6 @@ domain_set:
   - "statics.teams.cdn.office.net"
 domain_suffix_set:
   - "sdx.microsoft.com"
-  - "download.microsoft.com"
   - "b.c2r.ts.cdn.office.net"
   - "ctldl.windowsupdate.com"
   - "f.c2r.ts.cdn.office.net"
