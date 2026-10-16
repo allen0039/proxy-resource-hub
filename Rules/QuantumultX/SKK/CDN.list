@@ -3,9 +3,9 @@
 # Derived from https://github.com/SukkaW/Surge
 # Source: https://ruleset.skk.moe/List/domainset/cdn.conf
 # Source: https://ruleset.skk.moe/List/non_ip/cdn.conf
-# Upstream Last Updated: 2026-10-15T09:44:19.404Z (domainset)
+# Upstream Last Updated: 2026-10-16T09:01:45.667Z (domainset)
 # Upstream Last Updated: 2026-10-08T10:17:52.439Z (non_ip)
-# Rule count: 4774
+# Rule count: 4776
 
 host, 7h15.ru1353t.1s.m4d3.by.5ukk4w.skk.moe, proxy
 host, 0x0.st, proxy
@@ -3582,6 +3582,7 @@ host, sequoia.cdn-apple.com, proxy
 host, services.linkfire.com, proxy
 host, sig.grumpybumpers.com, proxy
 host, siloh-ns1.plutotv.net, proxy
+host, sl3-cdn.karousell.com, proxy
 host, speedmedia2.jfrog.com, proxy
 host-suffix, ssl-images-amazon.com, proxy
 host, st3.depositphotos.com, proxy
@@ -3764,6 +3765,7 @@ host, media.steampowered.com, proxy
 host, megapx-assets.dcard.tw, proxy
 host-suffix, misskeyusercontent.com, proxy
 host, moderate.cleantalk.org, proxy
+host, mweb-cdn.karousell.com, proxy
 host-suffix, nel.measure.office.net, proxy
 host, newassets.hcaptcha.com, proxy
 host, nodeassets.nbcnews.com, proxy
