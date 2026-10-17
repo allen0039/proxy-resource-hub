@@ -44,4 +44,7 @@ open-meteo.com
 runwayml.com
 notebooklm.google.com
 
+# 中转站
+flyapi.tech
+
 
