@@ -3,7 +3,7 @@
 # Derived from https://github.com/SukkaW/Surge
 # Source: https://ruleset.skk.moe/List/domainset/cdn.conf
 # Source: https://ruleset.skk.moe/List/non_ip/cdn.conf
-# Rule count: 4779
+# Rule count: 4781
 
 domain_set:
   - "7h15.ru1353t.1s.m4d3.by.5ukk4w.skk.moe"
@@ -1130,6 +1130,7 @@ domain_set:
   - "media3.giphy.com"
   - "media4.giphy.com"
   - "meteorclient.com"
+  - "metrics.manus.im"
   - "ocsp.godaddy.com"
   - "ocsp.sectigo.com"
   - "origin.picgo.net"
@@ -2830,6 +2831,7 @@ domain_set:
   - "server.arcgisonline.com"
   - "static-assets.juksy.com"
   - "static-images.remax.com"
+  - "static-page.tp-link.com"
   - "static.chrome-stats.com"
   - "static.fastboostcdn.com"
   - "static.filestackapi.com"
