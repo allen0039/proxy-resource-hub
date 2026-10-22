@@ -548,7 +548,27 @@ def sanitize_egern(text: str) -> str:
                     raise SanitizationError("egern: subscription URL list is invalid")
                 payload[url_key] = [SUBSCRIPTION_URL_PLACEHOLDER for _ in urls]
 
-    sanitized = "# Allen 维护 - Egern 配置\n" + yaml.safe_dump(
+    header = "# Allen 维护 - Egern 配置\n"
+    if parsed.get("include_apns") is False:
+        # safe_load drops source comments; emit a fixed, credential-free guide.
+        header += """# APNs 默认关闭：include_all_networks 和 include_apns 均为 false。
+# 开启时将这两个字段改为 true；蜂窝与本地网络接管仍保持 false。
+# 在 policy_groups 列表中加入以下策略组（删除示例行的 # 和紧随其后的空格）：
+# - select:
+#     name: Apple Push
+#     policies:
+#     - 香港节点
+#     - 日本节点
+#     - 美国节点
+#     - DIRECT
+# 然后将 rules 中 push.apple.com 的 policy 从 DIRECT 改为 Apple Push，
+# 并在 rules 的通用 Apple 规则之前加入以下远程规则（不要放在 default 之后）：
+# - rule_set:
+#     match: https://raw.githubusercontent.com/Repcz/Tool/X/Egern/Rules/APNs.yaml
+#     policy: Apple Push
+# 重新加载配置后，在 Apple Push 组中手动选择出口。
+"""
+    sanitized = header + yaml.safe_dump(
         parsed,
         allow_unicode=True,
         sort_keys=False,

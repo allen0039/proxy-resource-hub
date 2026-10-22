@@ -1,7 +1,7 @@
 # Generated from Rules/Source/PT/Domain.txt by tools/generate_rules.py. Do not edit.
 
 domain_suffix_set:
-  # Allen 的 PT 站点（默认：直连）
+  # Allen 的 PT 站点（默认：日本节点）
   - agsvpt.com
   - audiences.me
   - btschool.club

@@ -59,8 +59,6 @@ SUPPORTED_AI_REGION_ORDER = [
     '新加坡节点',
     '美国节点',
     '台湾节点',
-    '韩国节点',
-    '英国节点',
     '德国节点',
     '其他地区',
 ]
@@ -586,7 +584,7 @@ default_proxy_group: Proxy
                 outputs[name], r"Personal/Domain\.list,DIRECT(?:,|\n)"
             )
             self.assertEqual(1, outputs[name].count(SURGE_PT_URL))
-            self.assertIn(f"RULE-SET,{SURGE_PT_URL},DIRECT", outputs[name])
+            self.assertIn(f"RULE-SET,{SURGE_PT_URL},日本节点", outputs[name])
         self.assertRegex(
             outputs["quantumultx_allen.conf"],
             r"direct-ai\.list[^\n]*force-policy=direct",
@@ -598,7 +596,7 @@ default_proxy_group: Proxy
         self.assertEqual(1, outputs["quantumultx_allen.conf"].count(QX_PT_URL))
         self.assertRegex(
             outputs["quantumultx_allen.conf"],
-            r"Rules/QuantumultX/PT/Domain\.list[^\n]*force-policy=direct",
+            r"Rules/QuantumultX/PT/Domain\.list[^\n]*force-policy=日本节点",
         )
         self.assertRegex(
             outputs["loon_allen.lcf"], r"direct-ai\.list[^\n]*policy=DIRECT"
@@ -609,7 +607,7 @@ default_proxy_group: Proxy
         self.assertEqual(1, outputs["loon_allen.lcf"].count(LOON_PT_URL))
         self.assertRegex(
             outputs["loon_allen.lcf"],
-            r"Rules/Loon/PT/Domain\.list[^\n]*policy=DIRECT",
+            r"Rules/Loon/PT/Domain\.list[^\n]*policy=日本节点",
         )
         mihomo = yaml.safe_load(outputs["mihomo_allen.yaml"])
         self.assertEqual(1, mihomo["rules"].count("RULE-SET,direct-ai,DIRECT"))
@@ -618,9 +616,9 @@ default_proxy_group: Proxy
         self.assertEqual(
             1, mihomo["rules"].count("RULE-SET,personal_domain,DIRECT")
         )
-        self.assertEqual(1, mihomo["rules"].count("RULE-SET,pt_domain,DIRECT"))
+        self.assertEqual(1, mihomo["rules"].count("RULE-SET,pt_domain,日本节点"))
         self.assertLess(
-            mihomo["rules"].index("RULE-SET,pt_domain,DIRECT"),
+            mihomo["rules"].index("RULE-SET,pt_domain,日本节点"),
             mihomo["rules"].index("RULE-SET,pt_cn_domain,DIRECT"),
         )
         self.assertEqual(MIHOMO_PT_URL, mihomo["rule-providers"]["pt_domain"]["url"])
@@ -816,7 +814,7 @@ default_proxy_group: Proxy
         }
         titles = {
             "egern_byallen.yaml": "# Allen 维护 - Egern 配置",
-            "surge_iphone_allen.conf": "# Allen 维护 - Surge iPhone 配置",
+            "surge_iphone_allen.conf": "# Allen 维护 - Surge iPhone 配置（原生 APNs 版）",
             "surge_mac_allen.conf": "# Allen 维护 - Surge Mac 配置",
             "loon_allen.lcf": "# Allen 维护 - Loon 配置",
             "quantumultx_allen.conf": "# Allen 维护 - Quantumult X 配置",
@@ -871,6 +869,8 @@ default_proxy_group: Proxy
                 line.strip()
                 for line in body
                 if line.lstrip().startswith(("#", ";"))
+                # Keep the documented, disabled APNs examples in policy sections.
+                if not re.match(r"^# (?:可选 APNs|Apple Push =|static=Apple Push,)", line.strip())
             ]
             with self.subTest(name=name):
                 if allowed_pattern is None:
@@ -1061,65 +1061,51 @@ default_proxy_group: Proxy
         self.assertNotRegex(qx, r"(?:^|,\s*)force-policy=(?:Proxy|代理)(?:,|$)")
         self.assertRegex(qx, r"(?:^|,\s*)force-policy=proxy(?:,|$)")
 
-    def test_committed_configs_share_optimized_apns_routing(self):
-        configs = {
-            name: (OUTPUT_DIR / name).read_text(encoding="utf-8")
-            for name in ("surge_mac_allen.conf", "surge_iphone_allen.conf")
-        }
-        apple_push_group = (
-            "Apple Push = select, 香港故转, 日本故转, 新加坡故转, 美国故转, 香港节点, 日本节点, 美国节点, DIRECT, "
-            "icon-url=https://fastly.jsdelivr.net/gh/fmz200/wool_scripts@main/"
-            "icons/apps/Apple_Messages.png"
-        )
-        local_rule = "DOMAIN-SUFFIX,push.apple.com,Apple Push"
-        remote_rule = (
-            "RULE-SET,https://raw.githubusercontent.com/QuixoticHeart/rule-set/"
-            "refs/heads/ruleset/loon/apns.list,Apple Push"
-        )
+    def test_committed_configs_enable_apns_proxy_only_on_mac(self):
+        def active(text):
+            return "\n".join(line for line in text.splitlines() if not line.lstrip().startswith("#"))
 
-        for name, text in configs.items():
-            with self.subTest(name=name):
-                self.assertEqual(text.count(apple_push_group), 1)
-                self.assertEqual(text.count(local_rule), 1)
-                self.assertEqual(text.count(remote_rule), 1)
-                self.assertLess(text.index(local_rule), text.index(remote_rule))
-                self.assertNotIn("DOMAIN-SUFFIX,push.apple.com,香港节点", text)
-                self.assertNotIn("IP-CIDR,17.0.0.0/8,Apple Push", text)
+        mac = active((OUTPUT_DIR / "surge_mac_allen.conf").read_text(encoding="utf-8"))
+        self.assertIn("Apple Push = select,", mac)
+        self.assertIn("DOMAIN-SUFFIX,push.apple.com,Apple Push", mac)
+        self.assertNotIn("include-apns", mac)
+        iphone_text = (OUTPUT_DIR / "surge_iphone_allen.conf").read_text(encoding="utf-8")
+        iphone = active(iphone_text)
+        self.assertIn("include-all-networks = false", iphone)
+        self.assertIn("include-apns = false", iphone)
+        self.assertIn("DOMAIN-SUFFIX,push.apple.com,DIRECT", iphone)
+        self.assertNotIn("Apple Push", iphone)
+        self.assertIn("# Apple Push = select,", iphone_text)
 
-        self.assertNotIn("include-all-networks = true", configs["surge_mac_allen.conf"])
-        self.assertNotIn("include-apns = true", configs["surge_mac_allen.conf"])
-        self.assertEqual(
-            configs["surge_iphone_allen.conf"].count("include-all-networks = true"),
-            1,
-        )
-        self.assertEqual(
-            configs["surge_iphone_allen.conf"].count("include-apns = true"),
-            1,
-        )
+        loon_text = (OUTPUT_DIR / "loon_allen.lcf").read_text(encoding="utf-8")
+        self.assertNotIn("Apple Push", active(loon_text))
+        self.assertIn("DOMAIN-SUFFIX,push.apple.com,DIRECT", active(loon_text))
+        self.assertIn("# Apple Push = select,", loon_text)
+        self.assertIn("bypass-tun = 17.0.0.0/8,", loon_text)
 
-        loon = (OUTPUT_DIR / "loon_allen.lcf").read_text(encoding="utf-8")
-        self.assertEqual(
-            loon.count(
-                "Apple Push = select,香港优选,日本优选,新加坡优选,美国优选,香港节点,日本节点,美国节点,DIRECT,"
-            ),
-            1,
-        )
+        qx_text = (OUTPUT_DIR / "quantumultx_allen.conf").read_text(encoding="utf-8")
+        qx = active(qx_text)
+        self.assertNotIn("Apple Push", qx)
+        self.assertIn("host-suffix, push.apple.com, direct", qx)
+        self.assertIn("# static=Apple Push,", qx_text)
+        self.assertIn("excluded_routes=17.0.0.0/8,", qx_text)
 
-        qx = (OUTPUT_DIR / "quantumultx_allen.conf").read_text(encoding="utf-8")
-        self.assertEqual(
-            qx.count(
-                "static=Apple Push, 香港故转, 日本故转, 新加坡故转, 美国故转, 香港节点, 日本节点, 美国节点, direct, "
-            ),
-            1,
-        )
+        egern_text = (OUTPUT_DIR / "egern_byallen.yaml").read_text(encoding="utf-8")
+        egern = yaml.safe_load(egern_text)
+        self.assertIs(egern["include_all_networks"], False)
+        self.assertIs(egern["include_apns"], False)
+        self.assertNotIn("Apple Push", active(egern_text))
+        self.assertIn("#     name: Apple Push", egern_text)
+        self.assertIn("#     policy: Apple Push", egern_text)
+
         for group_name in (
             "香港节点",
             '日本节点',
             '新加坡节点',
             '美国节点',
             '台湾节点',
-            "韩国节点",
-            "英国节点",
+            "德国节点",
+            "其他地区",
         ):
             self.assertRegex(qx, rf"(?m)^static={group_name},")
             self.assertNotRegex(
