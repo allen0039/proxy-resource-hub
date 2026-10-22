@@ -69,6 +69,10 @@ App Store 链接指向应用官方商店页面。部分应用可能未在所有�
 | Loon | [loon_allen.lcf](loon_allen.lcf) · [Raw 下载](https://raw.githubusercontent.com/allen0039/proxy-resource-hub/main/Configs/tool_config/loon_allen.lcf) | Loon 配置 |
 | Egern | [egern_byallen.yaml](egern_byallen.yaml) · [Raw 下载](https://raw.githubusercontent.com/allen0039/proxy-resource-hub/main/Configs/tool_config/egern_byallen.yaml) | Egern YAML 配置 |
 
+## APNs 默认行为
+
+仅 `surge_mac_allen.conf` 默认启用 Apple Push 代理；`surge_iphone_allen.conf`、Egern、Loon、Quantumult X 和 Mihomo 默认关闭 APNs 专用代理设置，保留直连兜底。需要开启时按各配置内的 APNs 注释设置，并重新加载配置。私人配置中的 `Surge-iPhone-apns.conf` 是单独保留的接管版本。Loon 和 Quantumult X 的 `17.0.0.0/8` 隧道绕过也会影响此网段的其他 Apple 服务。
+
 ## 三分钟完成配置
 
 ### 第一步：下载并创建私人副本
@@ -207,10 +211,13 @@ policy_groups:
 
 - 通用入口：Surge、Loon 和 Mihomo 使用 `Proxy`；Quantumult X 使用内置小写 `proxy`；各客户端同时保留 `Final` 和直连策略。
 - 地区优选：香港、日本、新加坡、美国自动测速。
-- 地区节点：香港、台湾、日本、新加坡、美国、韩国、英国、德国。
+- 地区节点：香港、日本、新加坡、美国、台湾、德国；英国、韩国普通节点并入 `其他地区`。
 - 业务分流：Google、AI、YouTube、Telegram、Netflix、Emby、GitHub、Microsoft、Apple、TikTok、测速、CDN 等。
-- 默认直连：PT 站点、个人域名、公益 AI 和部分国内服务。
+- PT 站点：仓库自有 `PT/Domain` 规则默认使用 `日本节点`。
+- 默认直连：个人域名、公益 AI 和部分国内服务。
 - 远程资源：AI、PT、个人域名、CDN、媒体、游戏平台和常用服务规则。
+
+`其他地区` 有节点时只显示筛选后的节点，不添加常驻 `DIRECT` 或额外的兜底策略组。Mihomo 保留 `empty-fallback: DIRECT`，仅在空组时使用直连；Surge 使用原生空组回退到 `DIRECT` 的行为，可能产生一次警告。Egern、Loon、Quantumult X 已撤回之前误加的常驻直连，但仅空组直连占位尚未确认，不能承诺与前两款等价。
 
 `api.github.com` 由本地精确规则固定交给 GitHub 策略。宽泛的 GitHub 和 Cloudflare 本地覆盖规则已移除；AI 专属端点由仓库自有 AI 订阅优先接管，既有第三方 AI 订阅继续作为补充。
 

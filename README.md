@@ -36,7 +36,7 @@
 | AI 服务 | OpenAI、Claude、Gemini 等 AI 服务 | `AI` 或自定义 AI 策略 |
 | 公益 AI | 指定公益 AI 站点 | 直连 |
 | 个人域名 | 个人维护的域名 | 直连 |
-| PT 站点 | 经确认的 PT 站点域名 | 直连 |
+| PT 站点 | 经确认的 PT 站点域名 | `日本节点` |
 | 海淘购物 | Amazon、eBay、REI、Backcountry 与户外品牌商城 | `海淘购物` 或自定义手动策略 |
 | SKK CDN | CDN 与静态资源域名 | `CDN` |
 | SKK Download | 下载域名规则 | 仅自动维护，六份模板当前未启用 |
@@ -213,7 +213,7 @@ PT 规则当前包含 36 个经确认的站点域名。书签中明确排除的�
 
 ### 单独添加规则订阅
 
-以下示例使用 PT 规则并默认直连。策略名称可以替换，但必须确保对应策略已经存在。
+以下示例使用 PT 规则并默认通过 `日本节点` 策略组连接。策略名称可以替换，但必须确保对应策略已经存在。
 
 #### Apple Push 代理与 iCloud 直连
 
@@ -254,28 +254,28 @@ rule-providers:
     interval: 86400
 
 rules:
-  - RULE-SET,pt_domain,DIRECT
+  - RULE-SET,pt_domain,日本节点
 ```
 
 #### Surge
 
 ```ini
 [Rule]
-RULE-SET,https://raw.githubusercontent.com/allen0039/proxy-resource-hub/main/Rules/Surge/PT/Domain.list,DIRECT
+RULE-SET,https://raw.githubusercontent.com/allen0039/proxy-resource-hub/main/Rules/Surge/PT/Domain.list,日本节点
 ```
 
 #### Quantumult X
 
 ```ini
 [filter_remote]
-https://raw.githubusercontent.com/allen0039/proxy-resource-hub/main/Rules/QuantumultX/PT/Domain.list, tag=PT站点, force-policy=direct, update-interval=86400, opt-parser=false, enabled=true
+https://raw.githubusercontent.com/allen0039/proxy-resource-hub/main/Rules/QuantumultX/PT/Domain.list, tag=PT站点, force-policy=日本节点, update-interval=86400, opt-parser=false, enabled=true
 ```
 
 #### Loon
 
 ```ini
 [Remote Rule]
-https://raw.githubusercontent.com/allen0039/proxy-resource-hub/main/Rules/Loon/PT/Domain.list, policy=DIRECT, tag=PT站点, enabled=true
+https://raw.githubusercontent.com/allen0039/proxy-resource-hub/main/Rules/Loon/PT/Domain.list, policy=日本节点, tag=PT站点, enabled=true
 ```
 
 ### Custom / Regional 自定义路由订阅

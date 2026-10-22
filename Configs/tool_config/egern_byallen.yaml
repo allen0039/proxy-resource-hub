@@ -1,4 +1,20 @@
 # Allen 维护 - Egern 配置
+# APNs 默认关闭：include_all_networks 和 include_apns 均为 false。
+# 开启时将这两个字段改为 true；蜂窝与本地网络接管仍保持 false。
+# 在 policy_groups 列表中加入以下策略组（删除示例行的 # 和紧随其后的空格）：
+# - select:
+#     name: Apple Push
+#     policies:
+#     - 香港节点
+#     - 日本节点
+#     - 美国节点
+#     - DIRECT
+# 然后将 rules 中 push.apple.com 的 policy 从 DIRECT 改为 Apple Push，
+# 并在 rules 的通用 Apple 规则之前加入以下远程规则（不要放在 default 之后）：
+# - rule_set:
+#     match: https://raw.githubusercontent.com/Repcz/Tool/X/Egern/Rules/APNs.yaml
+#     policy: Apple Push
+# 重新加载配置后，在 Apple Push 组中手动选择出口。
 ipv6: false
 http_port: 8585
 socks_port: 1235
@@ -6,8 +22,8 @@ allow_external_connections: false
 vif_only: false
 hide_vpn_icon: false
 close_connections_on_policy_change: true
-include_all_networks: true
-include_apns: true
+include_all_networks: false
+include_apns: false
 include_cellular_services: false
 include_local_networks: false
 hijack_dns:
@@ -162,8 +178,6 @@ policy_groups:
     - 新加坡节点
     - 美国节点
     - 台湾节点
-    - 韩国节点
-    - 英国节点
     - 德国节点
     - 其他地区
     - DIRECT
@@ -182,8 +196,6 @@ policy_groups:
     - 新加坡节点
     - 美国节点
     - 台湾节点
-    - 韩国节点
-    - 英国节点
     - 德国节点
     - 其他地区
     - Proxy
@@ -203,8 +215,6 @@ policy_groups:
     - 新加坡节点
     - 美国节点
     - 台湾节点
-    - 韩国节点
-    - 英国节点
     - 德国节点
     - 其他地区
     - Proxy
@@ -224,8 +234,6 @@ policy_groups:
     - 新加坡节点
     - 美国节点
     - 台湾节点
-    - 韩国节点
-    - 英国节点
     - 德国节点
     - 其他地区
     - Proxy
@@ -244,8 +252,6 @@ policy_groups:
     - 新加坡节点
     - 美国节点
     - 台湾节点
-    - 韩国节点
-    - 英国节点
     - 德国节点
     - 其他地区
     - Proxy
@@ -264,8 +270,6 @@ policy_groups:
     - 新加坡节点
     - 美国节点
     - 台湾节点
-    - 韩国节点
-    - 英国节点
     - 德国节点
     - 其他地区
     - Proxy
@@ -284,8 +288,6 @@ policy_groups:
     - 新加坡节点
     - 美国节点
     - 台湾节点
-    - 韩国节点
-    - 英国节点
     - 德国节点
     - 其他地区
     - Proxy
@@ -304,8 +306,6 @@ policy_groups:
     - 新加坡节点
     - 美国节点
     - 台湾节点
-    - 韩国节点
-    - 英国节点
     - 德国节点
     - 其他地区
     - Proxy
@@ -324,8 +324,6 @@ policy_groups:
     - 新加坡节点
     - 美国节点
     - 台湾节点
-    - 韩国节点
-    - 英国节点
     - 德国节点
     - 其他地区
     - Proxy
@@ -344,8 +342,6 @@ policy_groups:
     - 新加坡节点
     - 美国节点
     - 台湾节点
-    - 韩国节点
-    - 英国节点
     - 德国节点
     - 其他地区
     - Proxy
@@ -364,8 +360,6 @@ policy_groups:
     - 新加坡节点
     - 美国节点
     - 台湾节点
-    - 韩国节点
-    - 英国节点
     - 德国节点
     - 其他地区
     - Proxy
@@ -385,8 +379,6 @@ policy_groups:
     - 新加坡节点
     - 美国节点
     - 台湾节点
-    - 韩国节点
-    - 英国节点
     - 德国节点
     - 其他地区
     - RFC节点
@@ -405,8 +397,6 @@ policy_groups:
     - 新加坡节点
     - 美国节点
     - 台湾节点
-    - 韩国节点
-    - 英国节点
     - 德国节点
     - 其他地区
     - Proxy
@@ -441,8 +431,6 @@ policy_groups:
     - 新加坡节点
     - 美国节点
     - 台湾节点
-    - 韩国节点
-    - 英国节点
     - 德国节点
     - 其他地区
     - Proxy
@@ -461,8 +449,6 @@ policy_groups:
     - 新加坡节点
     - 美国节点
     - 台湾节点
-    - 韩国节点
-    - 英国节点
     - 德国节点
     - 其他地区
     - Proxy
@@ -478,7 +464,7 @@ policy_groups:
     - 新加坡节点
     - 美国节点
     - 台湾节点
-    - 韩国节点
+    - 其他地区
     icon: https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/StreamingSE.png
 - select:
     name: 海淘
@@ -488,8 +474,6 @@ policy_groups:
     - 新加坡节点
     - 美国节点
     - 台湾节点
-    - 韩国节点
-    - 英国节点
     - 德国节点
     - 其他地区
     - DIRECT
@@ -507,8 +491,6 @@ policy_groups:
     - 新加坡节点
     - 美国节点
     - 台湾节点
-    - 韩国节点
-    - 英国节点
     - 德国节点
     - 其他地区
     - Proxy
@@ -524,17 +506,8 @@ policy_groups:
     - 新加坡节点
     - 美国节点
     - 台湾节点
-    - 韩国节点
+    - 其他地区
     icon: https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/Apple.png
-- select:
-    name: Apple Push
-    policies:
-    - 香港节点
-    - 日本节点
-    - 美国节点
-    - DIRECT
-    latency_test_url: http://cp.cloudflare.com/generate_204
-    icon: https://fastly.jsdelivr.net/gh/fmz200/wool_scripts@main/icons/apps/Apple_Messages.png
 - select:
     name: Microsoft
     policies:
@@ -548,8 +521,6 @@ policy_groups:
     - 新加坡节点
     - 美国节点
     - 台湾节点
-    - 韩国节点
-    - 英国节点
     - 德国节点
     - 其他地区
     - Proxy
@@ -568,8 +539,6 @@ policy_groups:
     - 新加坡节点
     - 美国节点
     - 台湾节点
-    - 韩国节点
-    - 英国节点
     - 德国节点
     - 其他地区
     - Proxy
@@ -589,8 +558,6 @@ policy_groups:
     - 新加坡节点
     - 美国节点
     - 台湾节点
-    - 韩国节点
-    - 英国节点
     - 德国节点
     - 其他地区
     - Proxy
@@ -609,8 +576,6 @@ policy_groups:
     - 新加坡节点
     - 美国节点
     - 台湾节点
-    - 韩国节点
-    - 英国节点
     - 德国节点
     - 其他地区
     - Proxy
@@ -629,8 +594,6 @@ policy_groups:
     - 新加坡节点
     - 美国节点
     - 台湾节点
-    - 韩国节点
-    - 英国节点
     - 德国节点
     - 其他地区
     - Proxy
@@ -649,8 +612,6 @@ policy_groups:
     - 新加坡节点
     - 美国节点
     - 台湾节点
-    - 韩国节点
-    - 英国节点
     - 德国节点
     - 其他地区
     - Proxy
@@ -669,8 +630,6 @@ policy_groups:
     - 新加坡节点
     - 美国节点
     - 台湾节点
-    - 韩国节点
-    - 英国节点
     - 德国节点
     - 其他地区
     - Proxy
@@ -717,16 +676,6 @@ policy_groups:
     filter: (?i)^(?!.*(回国|校园|游戏|🎮|\bGAME\b)).*(🇯🇵|日本|川日|东京|大阪|泉日|沪日|深日|埼玉|Tokyo|Osaka|(^|[^A-Za-z0-9])(JP|JPN|Japan)([ _-]?\d+)?($|[^A-Za-z0-9])).*$
     hidden: true
 - select:
-    name: 韩国
-    policies:
-    - 拼好鸡
-    - 机场
-    - 自建
-    - 备用
-    flatten: true
-    filter: (?i)^(?!.*(回国|校园|游戏|🎮|\bGAME\b)).*(🇰🇷|韩国|韓國|首尔|首爾|Seoul|(^|[^A-Za-z0-9])(KR|KOR|Korea)([ _-]?\d+)?($|[^A-Za-z0-9])).*$
-    hidden: true
-- select:
     name: 美国
     policies:
     - 拼好鸡
@@ -747,16 +696,6 @@ policy_groups:
     filter: (?i)^(?!.*(回国|校园|游戏|🎮|\bGAME\b)).*(🇸🇬|新加坡|狮城|(^|[^A-Za-z0-9])(SG|SGP|Singapore)([ _-]?\d+)?($|[^A-Za-z0-9])).*$
     hidden: true
 - select:
-    name: 英国
-    policies:
-    - 拼好鸡
-    - 机场
-    - 自建
-    - 备用
-    flatten: true
-    filter: (?i)^(?!.*(回国|校园|游戏|🎮|\bGAME\b)).*(🇬🇧|英国|倫敦|伦敦|London|(^|[^A-Za-z0-9])(UK|GB|GBR|United[ _-]?Kingdom)([ _-]?\d+)?($|[^A-Za-z0-9])).*$
-    hidden: true
-- select:
     name: 德国
     policies:
     - 拼好鸡
@@ -774,7 +713,7 @@ policy_groups:
     - 自建
     - 备用
     flatten: true
-    filter: (?i)^(?!.*(家用|家庭|家宽|verizon$|\bISP\b|🇭🇰|香港|Hong[ _-]?Kong|🇹🇼|台湾|台北|Taipei|🇯🇵|日本|川日|东京|大阪|泉日|沪日|深日|埼玉|Tokyo|Osaka|🇸🇬|新加坡|狮城|🇺🇸|🇺🇲|美国|波特兰|达拉斯|俄勒冈|凤凰城|费利蒙|硅谷|拉斯维加斯|洛杉矶|圣何塞|圣克拉拉|西雅图|芝加哥|🇰🇷|韩国|韓國|首尔|首爾|Seoul|🇬🇧|英国|倫敦|伦敦|London|🇩🇪|德国|德國|法兰克福|法蘭克福|柏林|慕尼黑|(^|[^A-Za-z0-9])(HK|HKG|TW|TWN|Tai|Taiwan|JP|JPN|Japan|SG|SGP|Singapore|US|USA|United[ _-]?States|States|KR|KOR|Korea|UK|GB|GBR|United[ _-]?Kingdom|DE|DEU|Germany|Deutschland|Frankfurt|Berlin|Munich)([ _-]?\d+)?($|[^A-Za-z0-9])|直连|回国|校园|游戏|🎮|邀请|返利|循环|官网|客服|网站|网址|获取|订阅|流量|到期|机场|下次|版本|官址|备用|过期|已用|联系|邮箱|工单|交流群|官方群|用户群|群组|社群|群聊|贩卖|倒卖|防止|国内|(^|[^A-Za-z0-9])(GAME|USE|USED|TOTAL|EXPIRE|EMAIL|Panel)($|[^A-Za-z0-9])|\d{4}-\d{2}-\d{2})).+$
+    filter: (?i)^(?!.*(家用|家庭|家宽|verizon$|\bISP\b|🇭🇰|香港|Hong[ _-]?Kong|🇹🇼|台湾|台北|Taipei|🇯🇵|日本|川日|东京|大阪|泉日|沪日|深日|埼玉|Tokyo|Osaka|🇸🇬|新加坡|狮城|🇺🇸|🇺🇲|美国|波特兰|达拉斯|俄勒冈|凤凰城|费利蒙|硅谷|拉斯维加斯|洛杉矶|圣何塞|圣克拉拉|西雅图|芝加哥|🇩🇪|德国|德國|法兰克福|法蘭克福|柏林|慕尼黑|(^|[^A-Za-z0-9])(HK|HKG|TW|TWN|Tai|Taiwan|JP|JPN|Japan|SG|SGP|Singapore|US|USA|United[ _-]?States|States|DE|DEU|Germany|Deutschland|Frankfurt|Berlin|Munich)([ _-]?\d+)?($|[^A-Za-z0-9])|直连|回国|校园|游戏|🎮|邀请|返利|循环|官网|客服|网站|网址|获取|订阅|流量|到期|机场|下次|版本|官址|备用|过期|已用|联系|邮箱|工单|交流群|官方群|用户群|群组|社群|群聊|贩卖|倒卖|防止|国内|(^|[^A-Za-z0-9])(GAME|USE|USED|TOTAL|EXPIRE|EMAIL|Panel)($|[^A-Za-z0-9])|\d{4}-\d{2}-\d{2})).+$
     hidden: true
 - select:
     name: 专线节点
@@ -858,20 +797,6 @@ policy_groups:
     flatten: true
     latency_test_url: http://cp.cloudflare.com/generate_204
     icon: https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/Taiwan.png
-- select:
-    name: 韩国节点
-    policies:
-    - 韩国
-    flatten: true
-    latency_test_url: http://cp.cloudflare.com/generate_204
-    icon: https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/Korea.png
-- select:
-    name: 英国节点
-    policies:
-    - 英国
-    flatten: true
-    latency_test_url: http://cp.cloudflare.com/generate_204
-    icon: https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/United_Kingdom.png
 - select:
     name: 德国节点
     policies:
@@ -1020,7 +945,28 @@ rules:
     policy: DIRECT
 - domain_suffix:
     match: push.apple.com
-    policy: Apple Push
+    policy: DIRECT
+- domain_suffix:
+    match: taobao.com
+    policy: DIRECT
+- domain_suffix:
+    match: taobao.org
+    policy: DIRECT
+- domain_suffix:
+    match: tmall.com
+    policy: DIRECT
+- domain_suffix:
+    match: tbcdn.cn
+    policy: DIRECT
+- domain_suffix:
+    match: taobaocdn.com
+    policy: DIRECT
+- domain_suffix:
+    match: alicdn.com
+    policy: DIRECT
+- domain_suffix:
+    match: aliapp.org
+    policy: DIRECT
 - domain_suffix:
     match: apple-relay.apple.com
     policy: Apple
@@ -1094,9 +1040,6 @@ rules:
     match: https://raw.githubusercontent.com/allen0039/proxy-resource-hub/main/Rules/Egern/Custom/direct.yaml
     policy: DIRECT
 - rule_set:
-    match: https://raw.githubusercontent.com/Repcz/Tool/X/Egern/Rules/APNs.yaml
-    policy: Apple Push
-- rule_set:
     match: https://raw.githubusercontent.com/allen0039/proxy-resource-hub/main/Rules/Egern/Services/ChinaTelecom.yaml
     policy: DIRECT
 - rule_set:
@@ -1110,7 +1053,7 @@ rules:
     policy: DIRECT
 - rule_set:
     match: https://raw.githubusercontent.com/allen0039/proxy-resource-hub/main/Rules/Egern/PT/Domain.yaml
-    policy: DIRECT
+    policy: 日本节点
 - and:
     match:
     - protocol:
