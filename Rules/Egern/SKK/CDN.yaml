@@ -3,7 +3,7 @@
 # Derived from https://github.com/SukkaW/Surge
 # Source: https://ruleset.skk.moe/List/domainset/cdn.conf
 # Source: https://ruleset.skk.moe/List/non_ip/cdn.conf
-# Rule count: 4783
+# Rule count: 4791
 
 domain_set:
   - "7h15.ru1353t.1s.m4d3.by.5ukk4w.skk.moe"
@@ -79,6 +79,7 @@ domain_set:
   - "node.green"
   - "o.n1mp.org"
   - "p.sda1.dev"
+  - "pic2.99.co"
   - "pixoraa.cc"
   - "r.bing.com"
   - "s3.m.0x.mk"
@@ -677,6 +678,7 @@ domain_set:
   - "api.bintray.com"
   - "api.weather.com"
   - "asset.chase.com"
+  - "assets-v2.99.co"
   - "assets.about.me"
   - "assets.bbhub.io"
   - "assets.canny.io"
@@ -684,6 +686,7 @@ domain_set:
   - "assets.clibo.tw"
   - "assets.game8.co"
   - "assets.goat.com"
+  - "assets.grab.com"
   - "assets.habr.com"
   - "assets.jable.tv"
   - "assets.kagi.com"
@@ -1789,6 +1792,7 @@ domain_set:
   - "assets-cdn.jable.tv"
   - "assets-cdn.porn.com"
   - "assets-docs.dify.ai"
+  - "assets-static.99.co"
   - "assets-www.xbox.com"
   - "assets.adobedtm.com"
   - "assets.airbuddy.app"
@@ -2827,6 +2831,7 @@ domain_set:
   - "s3media.squarespace.com"
   - "safebrowsing.google.com"
   - "screenshots.webflow.com"
+  - "scribe-web-sdk.grab.com"
   - "scripts.dailymail.co.uk"
   - "server.arcgisonline.com"
   - "static-assets.juksy.com"
@@ -3218,6 +3223,7 @@ domain_set:
   - "static-webfonts.myfonts.com"
   - "static.acm.account.sony.com"
   - "static.captcha-delivery.com"
+  - "static1.straitstimes.com.sg"
   - "sts.online.visualstudio.com"
   - "tvdownloaddw-a.akamaihd.net"
   - "typescript.visualstudio.com"
@@ -3456,6 +3462,7 @@ domain_set:
   - "edgecdn-embza6g8cacagcbn.z01.azurefd.net"
   - "cdn.mcauto-images-production.sendgrid.net"
   - "cf-images.ap-northeast-1.prod.boltdns.net"
+  - "cf-images.ap-southeast-1.prod.boltdns.net"
   - "marfeelexperimentsexperienceengine.mrf.io"
   - "prod-streaming-video-msn-com.akamaized.net"
   - "talon-website-prod.ecosec.on.epicgames.com"
@@ -4792,3 +4799,4 @@ domain_wildcard_set:
   - "cdn*.pornhost.com"
   - "cdn*.boysfood.com"
   - "rum-ingest.*.signalfx.com"
+  - "cf-images.*.prod.boltdns.net"
