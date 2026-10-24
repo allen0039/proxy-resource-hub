@@ -4,7 +4,7 @@
 # Source: https://ruleset.skk.moe/List/non_ip/domestic.conf
 # Source: https://ruleset.skk.moe/List/ip/domestic.conf
 # Source: https://ruleset.skk.moe/List/ip/china_ip.conf
-# Rule count: 4762
+# Rule count: 4765
 
 no_resolve: true
 
@@ -4432,7 +4432,10 @@ ip_cidr_set:
   - "211.161.221.0/24"
   - "211.161.224.0/20"
   - "211.162.0.0/21"
-  - "211.162.64.0/20"
+  - "211.162.64.0/23"
+  - "211.162.66.0/24"
+  - "211.162.68.0/22"
+  - "211.162.72.0/21"
   - "211.162.119.0/24"
   - "211.162.120.0/21"
   - "211.162.200.0/22"

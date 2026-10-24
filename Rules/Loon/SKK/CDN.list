@@ -3,9 +3,9 @@
 # Derived from https://github.com/SukkaW/Surge
 # Source: https://ruleset.skk.moe/List/domainset/cdn.conf
 # Source: https://ruleset.skk.moe/List/non_ip/cdn.conf
-# Upstream Last Updated: 2026-10-23T06:28:09.470Z (domainset)
+# Upstream Last Updated: 2026-10-24T15:36:57.910Z (domainset)
 # Upstream Last Updated: 2026-10-23T06:28:09.042Z (non_ip)
-# Rule count: 4791
+# Rule count: 4793
 
 DOMAIN,7h15.ru1353t.1s.m4d3.by.5ukk4w.skk.moe
 DOMAIN,0x0.st
@@ -2316,6 +2316,7 @@ DOMAIN,image.ap-mail.org
 DOMAIN,image.civitai.com
 DOMAIN,image.comicbz.com
 DOMAIN,image.freepik.com
+DOMAIN,image.gameapps.hk
 DOMAIN,image.mgstage.com
 DOMAIN,image.prntscr.com
 DOMAIN,image.xmanhua.net
@@ -2759,6 +2760,7 @@ DOMAIN,static.snaptube.in
 DOMAIN,static.srcspot.com
 DOMAIN,static.svc.litv.tv
 DOMAIN,static.tp-link.com
+DOMAIN,static.truemed.com
 DOMAIN,static.uptimia.com
 DOMAIN,static.workday.com
 DOMAIN,static.xgroovy.com
