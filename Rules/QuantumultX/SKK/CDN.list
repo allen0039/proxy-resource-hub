@@ -3,9 +3,9 @@
 # Derived from https://github.com/SukkaW/Surge
 # Source: https://ruleset.skk.moe/List/domainset/cdn.conf
 # Source: https://ruleset.skk.moe/List/non_ip/cdn.conf
-# Upstream Last Updated: 2026-10-24T15:36:57.910Z (domainset)
+# Upstream Last Updated: 2026-10-25T14:57:54.006Z (domainset)
 # Upstream Last Updated: 2026-10-23T06:28:09.042Z (non_ip)
-# Rule count: 4793
+# Rule count: 4781
 
 host, 7h15.ru1353t.1s.m4d3.by.5ukk4w.skk.moe, proxy
 host, 0x0.st, proxy
@@ -657,7 +657,6 @@ host-suffix, chasecdn.com, proxy
 host-suffix, cloudlin.vip, proxy
 host-suffix, corsproxy.io, proxy
 host-suffix, crossbell.io, proxy
-host, css.4jpg.top, proxy
 host, data.peer.as, proxy
 host, david-dm.org, proxy
 host-suffix, dditsadn.com, proxy
@@ -1031,7 +1030,6 @@ host, pics.vpdmm.cc, proxy
 host-suffix, picsum.photos, proxy
 host-suffix, place-hold.it, proxy
 host, pomf2.lain.la, proxy
-host, proxy.cors.sh, proxy
 host, r2.dejavu.moe, proxy
 host, r2cdn.c7d.dev, proxy
 host-suffix, randomuser.me, proxy
@@ -1090,7 +1088,6 @@ host-suffix, webinfcdn.net, proxy
 host-suffix, wixstatic.com, proxy
 host-suffix, workoscdn.com, proxy
 host-suffix, wowmodels.com, proxy
-host, www.10086.win, proxy
 host, www.acgpix.de, proxy
 host-suffix, xdaimages.com, proxy
 host-suffix, xhpingcdn.com, proxy
@@ -1125,7 +1122,6 @@ host-suffix, bytebucket.org, proxy
 host, c.animaapp.com, proxy
 host, c.marsflag.com, proxy
 host, c.navattic.com, proxy
-host, c1.patreon.com, proxy
 host, c4.patreon.com, proxy
 host, c5.patreon.com, proxy
 host, c6.patreon.com, proxy
@@ -1307,7 +1303,6 @@ host-suffix, liangzipic.com, proxy
 host-suffix, live-video.net, proxy
 host-suffix, media-imdb.com, proxy
 host-suffix, media.ci-en.jp, proxy
-host, media.evolv.ai, proxy
 host, media.masto.nu, proxy
 host, media.mstdn.io, proxy
 host, media.trakt.tv, proxy
@@ -1449,7 +1444,6 @@ host, assets.time.com, proxy
 host, assets.yande.re, proxy
 host, assets.zpic.biz, proxy
 host, attach.setn.com, proxy
-host, avts.wmlabs.net, proxy
 host-suffix, bestfreecdn.com, proxy
 host-suffix, bleepstatic.com, proxy
 host-suffix, bp.blogspot.com, proxy
@@ -1806,7 +1800,6 @@ host-suffix, bootstrapcdn.com, proxy
 host-suffix, bugly.qcloud.com, proxy
 host, bundlephobia.com, proxy
 host, cache.ip-api.com, proxy
-host, cache.sgvafs.com, proxy
 host-suffix, capcutstatic.com, proxy
 host, cdn-1.porn87.com, proxy
 host, cdn-1.strava.com, proxy
@@ -1856,7 +1849,6 @@ host, cdn.playwire.com, proxy
 host, cdn.roboflow.com, proxy
 host, cdn.roseperl.com, proxy
 host, cdn.scaleflex.it, proxy
-host, cdn.seedance2.ai, proxy
 host-suffix, cdn.signalfx.com, proxy
 host, cdn.simplesat.io, proxy
 host, cdn.skymavis.com, proxy
@@ -2425,6 +2417,7 @@ host, static.anysex.com, proxy
 host, static.bbci.co.uk, proxy
 host, static.beebom.com, proxy
 host, static.buffer.com, proxy
+host, static.capcom.com, proxy
 host, static.carfax.com, proxy
 host, static.chaika.moe, proxy
 host, static.change.org, proxy
@@ -2476,7 +2469,6 @@ host-suffix, travel-assets.com, proxy
 host, uhf.microsoft.com, proxy
 host, v2.listenloop.com, proxy
 host-suffix, videodelivery.net, proxy
-host, w2.influxdata.com, proxy
 host, wa.arounddeal.com, proxy
 host, wa1.aninoapps.com, proxy
 host-suffix, walmartimages.com, proxy
@@ -2642,7 +2634,6 @@ host, img.fastcybers.com, proxy
 host, img.hellofresh.com, proxy
 host, img.sparknotes.com, proxy
 host, imgproxy.windy.com, proxy
-host, imgrs.apkcombo.com, proxy
 host, imgs3.hcaptcha.com, proxy
 host-suffix, intercomassets.com, proxy
 host-suffix, ipfs-gateway.cloud, proxy
@@ -2794,7 +2785,6 @@ host, videos.elephas.app, proxy
 host, videos.ohentai.org, proxy
 host, videos2.edclub.com, proxy
 host, vids.imagepost.com, proxy
-host, walter-r2.trakt.tv, proxy
 host-suffix, warnermediacdn.com, proxy
 host, web-cdn.bitrise.io, proxy
 host, webp.frostming.com, proxy
@@ -3102,7 +3092,6 @@ host, static.zerochan.net, proxy
 host, storageapi.fleek.co, proxy
 host, sync.getpublica.com, proxy
 host, tag.unifyintent.com, proxy
-host, tags.nationwide.com, proxy
 host, thumb.wikimedia.org, proxy
 host, thumbnails.padre.gg, proxy
 host, thumbs.onlyfans.com, proxy
@@ -3182,9 +3171,9 @@ host, cdn.boostcommerce.io, proxy
 host, cdn.botframework.com, proxy
 host, cdn.buymeacoffee.com, proxy
 host, cdn.c1.amplience.net, proxy
+host, cdn.capcom-unity.com, proxy
 host, cdn.clever-cloud.com, proxy
 host, cdn.cnx-software.com, proxy
-host, cdn.downdetector.com, proxy
 host, cdn.dynamicyield.com, proxy
 host, cdn.fastcomments.com, proxy
 host, cdn.forms.office.net, proxy
@@ -3379,8 +3368,6 @@ host, statics.simpshub.com, proxy
 host, stats.codesandbox.io, proxy
 host, status.canarymail.io, proxy
 host-suffix, steamusercontent.com, proxy
-host, storage.synctrack.io, proxy
-host, storageapi.fleek.one, proxy
 host, storageapi2.fleek.co, proxy
 host-suffix, superfiliate-cdn.com, proxy
 host-suffix, superhumanstatic.com, proxy
@@ -3481,7 +3468,9 @@ host, cdn11.bigcommerce.com, proxy
 host, cdn2-imgix.macpaw.com, proxy
 host, cdn2.downdetector.com, proxy
 host, cdn2.unrealengine.com, proxy
+host, cdn3.downdetector.com, proxy
 host, cdn3.unrealengine.com, proxy
+host, cdn4.downdetector.com, proxy
 host, cdn77.boyfriendtv.com, proxy
 host, cdna.pcpartpicker.com, proxy
 host, cdne-pics.youjizz.com, proxy
@@ -3574,7 +3563,6 @@ host, oneocsp.microsoft.com, proxy
 host, opensignal.cdnbye.com, proxy
 host, organizer.bizzabo.com, proxy
 host-suffix, parsecusercontent.com, proxy
-host, participants.evolv.ai, proxy
 host, pictures-cdn.porn.com, proxy
 host, pixel-cdn.default.com, proxy
 host, platform.theverge.com, proxy
@@ -3920,6 +3908,7 @@ host, cdn-static-1.medium.com, proxy
 host, cdn-uicons.flaticon.com, proxy
 host, cdn.northropgrumman.com, proxy
 host, cdn.prod.www.spiegel.de, proxy
+host, cdn.promo.capcomusa.com, proxy
 host, cdn.ready-market.com.tw, proxy
 host-suffix, cdn.survey.medallia.com, proxy
 host, cdn.worldvectorlogo.com, proxy
@@ -4217,6 +4206,7 @@ host, hub-assets.displaycal.net, proxy
 host, hv-monsterdb-data.skk.moe, proxy
 host, im.np-payment-gateway.com, proxy
 host, image-forwarder.notaku.so, proxy
+host, image.icon-gen.svc.ui.com, proxy
 host, image.p-c2-x.abema-tv.com, proxy
 host, images.microcms-assets.io, proxy
 host, images.opencollective.com, proxy
@@ -4226,6 +4216,7 @@ host, lastfm.freetls.fastly.net, proxy
 host, lift-ai-js.marketlinc.com, proxy
 host, logos.speedtestcustom.com, proxy
 host, lzd-img-global.slatic.net, proxy
+host, manifest.prod.boltdns.net, proxy
 host, marketing.thingiverse.com, proxy
 host, mir-s3-cdn-cf.behance.net, proxy
 host, mixin-images.zeromesh.net, proxy
@@ -4271,9 +4262,6 @@ host, trekcdnprod.azureedge.net, proxy
 host, tuf-repo-cdn.sigstore.dev, proxy
 host, ubistatic2-a.akamaihd.net, proxy
 host, unlimited-cdn.waifu2x.net, proxy
-host, v-tiles1.downdetector.com, proxy
-host, v-tiles2.downdetector.com, proxy
-host, v-tiles3.downdetector.com, proxy
 host, vz-2222604c-50b.b-cdn.net, proxy
 host, vz-c0fe498e-5ab.b-cdn.net, proxy
 host, web-assets.esetstatic.com, proxy
