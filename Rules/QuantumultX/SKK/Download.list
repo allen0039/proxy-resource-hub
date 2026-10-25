@@ -3,9 +3,9 @@
 # Derived from https://github.com/SukkaW/Surge
 # Source: https://ruleset.skk.moe/List/domainset/download.conf
 # Source: https://ruleset.skk.moe/List/non_ip/download.conf
-# Upstream Last Updated: 2026-10-20T10:31:49.716Z (domainset)
+# Upstream Last Updated: 2026-10-25T14:53:23.056Z (domainset)
 # Upstream Last Updated: 2026-08-05T12:33:04.408Z (non_ip)
-# Rule count: 1982
+# Rule count: 1979
 
 host, 7h15.ru1353t.1s.m4d3.by.5ukk4w.skk.moe, proxy
 host-suffix, gcr.io, proxy
@@ -139,7 +139,6 @@ host-suffix, fuwamofu.com, proxy
 host, gotest.tools, proxy
 host, lib.ugent.be, proxy
 host, mir.linux.kg, proxy
-host, mirror.0x.sg, proxy
 host, mirror.5i.fi, proxy
 host, mirror.a1.mk, proxy
 host-suffix, mirror.ac.ke, proxy
@@ -836,7 +835,6 @@ host, mirror.isoc.org.il, proxy
 host, mirror.karneval.cz, proxy
 host, mirror.katapult.io, proxy
 host, mirror.liquidrp.de, proxy
-host, mirror.marcusn.net, proxy
 host, mirror.papua.go.id, proxy
 host, mirror.previder.nl, proxy
 host, mirror.reverse.net, proxy
@@ -1022,6 +1020,7 @@ host, mirrors.xtom.com.hk, proxy
 host, opensource.xtdv.net, proxy
 host, packages.termux.dev, proxy
 host, pubmirror.plutex.de, proxy
+host, registry.gitlab.com, proxy
 host, release.runcloud.io, proxy
 host, releases.claude.com, proxy
 host, replicate.npmjs.com, proxy
@@ -1284,7 +1283,6 @@ host, downloads.majestic.com, proxy
 host, downloads.portainer.io, proxy
 host, enterprise.proxmox.com, proxy
 host, fdroid.tetaneutral.net, proxy
-host, ftp.tsukuba.wide.ad.jp, proxy
 host, ftpmirror1.infania.net, proxy
 host, gog-cdn-fastly.gog.com, proxy
 host, i18n.prismlauncher.org, proxy
@@ -1354,7 +1352,6 @@ host, vfat.classicreload.com, proxy
 host, vn-mirrors.techhost.vn, proxy
 host-suffix, wup.eshop.nintendo.net, proxy
 host, www.gutscheinrausch.de, proxy
-host, www2.aomeisoftware.com, proxy
 host, apache.ip-connect.vn.ua, proxy
 host, apache.miloslavbrada.cz, proxy
 host, archive.raspberrypi.com, proxy
