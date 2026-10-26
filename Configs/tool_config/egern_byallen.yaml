@@ -168,11 +168,6 @@ policy_groups:
 - select:
     name: Proxy
     policies:
-    - 香港故转
-    - 日本故转
-    - 新加坡故转
-    - 美国故转
-    - 专线节点
     - 香港节点
     - 日本节点
     - 新加坡节点
@@ -180,17 +175,14 @@ policy_groups:
     - 台湾节点
     - 德国节点
     - 其他地区
+    - 日本故转
+    - 美国故转
     - DIRECT
     - 全部节点
     icon: https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/Proxy.png
 - select:
     name: Final
     policies:
-    - 香港故转
-    - 日本故转
-    - 新加坡故转
-    - 美国故转
-    - 专线节点
     - 香港节点
     - 日本节点
     - 新加坡节点
@@ -198,18 +190,15 @@ policy_groups:
     - 台湾节点
     - 德国节点
     - 其他地区
+    - 家宽节点
+    - 日本故转
+    - 美国故转
     - Proxy
     - DIRECT
-    - 家宽节点
     icon: https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/Final.png
 - select:
     name: Google
     policies:
-    - 香港故转
-    - 日本故转
-    - 新加坡故转
-    - 美国故转
-    - 专线节点
     - 香港节点
     - 日本节点
     - 新加坡节点
@@ -217,6 +206,8 @@ policy_groups:
     - 台湾节点
     - 德国节点
     - 其他地区
+    - 日本故转
+    - 美国故转
     - Proxy
     - DIRECT
     icon: https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/Google_Search.png
@@ -224,11 +215,6 @@ policy_groups:
     name: AI
     policies:
     - 家宽节点
-    - 香港故转
-    - 日本故转
-    - 新加坡故转
-    - 美国故转
-    - 专线节点
     - 香港节点
     - 日本节点
     - 新加坡节点
@@ -236,17 +222,14 @@ policy_groups:
     - 台湾节点
     - 德国节点
     - 其他地区
+    - 日本故转
+    - 美国故转
     - Proxy
     - DIRECT
     icon: https://raw.githubusercontent.com/chxm1023/Script_X/main/icon/ChatGPT/ChatGPT4.png
 - select:
     name: Telegram
     policies:
-    - 香港故转
-    - 日本故转
-    - 新加坡故转
-    - 美国故转
-    - 专线节点
     - 香港节点
     - 日本节点
     - 新加坡节点
@@ -254,17 +237,13 @@ policy_groups:
     - 台湾节点
     - 德国节点
     - 其他地区
+    - 日本故转
+    - 美国故转
     - Proxy
-    - DIRECT
     icon: https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/Telegram.png
 - select:
     name: TikTok
     policies:
-    - 香港故转
-    - 日本故转
-    - 新加坡故转
-    - 美国故转
-    - 专线节点
     - 香港节点
     - 日本节点
     - 新加坡节点
@@ -272,17 +251,14 @@ policy_groups:
     - 台湾节点
     - 德国节点
     - 其他地区
+    - 日本故转
+    - 美国故转
     - Proxy
     - DIRECT
     icon: https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/TikTok.png
 - select:
     name: 国外社交
     policies:
-    - 香港故转
-    - 日本故转
-    - 新加坡故转
-    - 美国故转
-    - 专线节点
     - 香港节点
     - 日本节点
     - 新加坡节点
@@ -290,17 +266,14 @@ policy_groups:
     - 台湾节点
     - 德国节点
     - 其他地区
+    - 日本故转
+    - 美国故转
     - Proxy
     - DIRECT
     icon: https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/Twitter.png
 - select:
     name: YouTube
     policies:
-    - 香港故转
-    - 日本故转
-    - 新加坡故转
-    - 美国故转
-    - 专线节点
     - 香港节点
     - 日本节点
     - 新加坡节点
@@ -308,17 +281,14 @@ policy_groups:
     - 台湾节点
     - 德国节点
     - 其他地区
+    - 日本故转
+    - 美国故转
     - Proxy
     - DIRECT
     icon: https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/YouTube.png
 - select:
     name: Netflix
     policies:
-    - 香港故转
-    - 日本故转
-    - 新加坡故转
-    - 美国故转
-    - 专线节点
     - 香港节点
     - 日本节点
     - 新加坡节点
@@ -326,54 +296,15 @@ policy_groups:
     - 台湾节点
     - 德国节点
     - 其他地区
+    - 日本故转
+    - 美国故转
     - Proxy
     - DIRECT
     icon: https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/Netflix.png
 - select:
-    name: 迪士尼+
-    policies:
-    - 香港故转
-    - 日本故转
-    - 新加坡故转
-    - 美国故转
-    - 专线节点
-    - 香港节点
-    - 日本节点
-    - 新加坡节点
-    - 美国节点
-    - 台湾节点
-    - 德国节点
-    - 其他地区
-    - Proxy
-    - DIRECT
-    icon: https://raw.githubusercontent.com/erdongchanyo/icon/main/Policy-Filter/Disney+.png
-- select:
-    name: HBO
-    policies:
-    - 香港故转
-    - 日本故转
-    - 新加坡故转
-    - 美国故转
-    - 专线节点
-    - 香港节点
-    - 日本节点
-    - 新加坡节点
-    - 美国节点
-    - 台湾节点
-    - 德国节点
-    - 其他地区
-    - Proxy
-    - DIRECT
-    icon: https://raw.githubusercontent.com/erdongchanyo/icon/main/Policy-Filter/HBO.png
-- select:
     name: Emby
     policies:
     - DIRECT
-    - 香港故转
-    - 日本故转
-    - 新加坡故转
-    - 美国故转
-    - 专线节点
     - 香港节点
     - 日本节点
     - 新加坡节点
@@ -381,17 +312,14 @@ policy_groups:
     - 台湾节点
     - 德国节点
     - 其他地区
+    - 日本故转
+    - 美国故转
     - RFC节点
     - Proxy
     icon: https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/Emby.png
 - select:
     name: Spotify
     policies:
-    - 香港故转
-    - 日本故转
-    - 新加坡故转
-    - 美国故转
-    - 专线节点
     - 香港节点
     - 日本节点
     - 新加坡节点
@@ -399,6 +327,8 @@ policy_groups:
     - 台湾节点
     - 德国节点
     - 其他地区
+    - 日本故转
+    - 美国故转
     - Proxy
     - DIRECT
     icon: https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/Spotify.png
@@ -421,11 +351,6 @@ policy_groups:
 - select:
     name: 国外媒体
     policies:
-    - 香港故转
-    - 日本故转
-    - 新加坡故转
-    - 美国故转
-    - 专线节点
     - 香港节点
     - 日本节点
     - 新加坡节点
@@ -433,17 +358,14 @@ policy_groups:
     - 台湾节点
     - 德国节点
     - 其他地区
+    - 日本故转
+    - 美国故转
     - Proxy
     - DIRECT
     icon: https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/ForeignMedia.png
 - select:
     name: 特殊媒体
     policies:
-    - 香港故转
-    - 日本故转
-    - 新加坡故转
-    - 美国故转
-    - 专线节点
     - 香港节点
     - 日本节点
     - 新加坡节点
@@ -451,6 +373,8 @@ policy_groups:
     - 台湾节点
     - 德国节点
     - 其他地区
+    - 日本故转
+    - 美国故转
     - Proxy
     - DIRECT
     icon: https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/Streaming.png
@@ -481,11 +405,6 @@ policy_groups:
 - select:
     name: PayPal
     policies:
-    - 香港故转
-    - 日本故转
-    - 新加坡故转
-    - 美国故转
-    - 专线节点
     - 香港节点
     - 日本节点
     - 新加坡节点
@@ -493,6 +412,8 @@ policy_groups:
     - 台湾节点
     - 德国节点
     - 其他地区
+    - 日本故转
+    - 美国故转
     - Proxy
     - DIRECT
     icon: https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/PayPal.png
@@ -511,11 +432,6 @@ policy_groups:
 - select:
     name: Microsoft
     policies:
-    - 香港故转
-    - 日本故转
-    - 新加坡故转
-    - 美国故转
-    - 专线节点
     - 香港节点
     - 日本节点
     - 新加坡节点
@@ -523,17 +439,14 @@ policy_groups:
     - 台湾节点
     - 德国节点
     - 其他地区
+    - 日本故转
+    - 美国故转
     - Proxy
     - DIRECT
     icon: https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/Microsoft.png
 - select:
     name: OneDrive
     policies:
-    - 香港故转
-    - 日本故转
-    - 新加坡故转
-    - 美国故转
-    - 专线节点
     - 香港节点
     - 日本节点
     - 新加坡节点
@@ -541,6 +454,8 @@ policy_groups:
     - 台湾节点
     - 德国节点
     - 其他地区
+    - 日本故转
+    - 美国故转
     - Proxy
     - DIRECT
     - Microsoft
@@ -548,11 +463,6 @@ policy_groups:
 - select:
     name: GitHub
     policies:
-    - 香港故转
-    - 日本故转
-    - 新加坡故转
-    - 美国故转
-    - 专线节点
     - 香港节点
     - 日本节点
     - 新加坡节点
@@ -560,17 +470,14 @@ policy_groups:
     - 台湾节点
     - 德国节点
     - 其他地区
+    - 日本故转
+    - 美国故转
     - Proxy
     - DIRECT
     icon: https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/GitHub.png
 - select:
     name: Docker
     policies:
-    - 香港故转
-    - 日本故转
-    - 新加坡故转
-    - 美国故转
-    - 专线节点
     - 香港节点
     - 日本节点
     - 新加坡节点
@@ -578,17 +485,14 @@ policy_groups:
     - 台湾节点
     - 德国节点
     - 其他地区
+    - 日本故转
+    - 美国故转
     - Proxy
     - DIRECT
     icon: https://raw.githubusercontent.com/allen0039/proxy-resource-hub/main/icons/docker.png?v=b5317ee
 - select:
     name: 游戏平台
     policies:
-    - 香港故转
-    - 日本故转
-    - 新加坡故转
-    - 美国故转
-    - 专线节点
     - 香港节点
     - 日本节点
     - 新加坡节点
@@ -596,17 +500,14 @@ policy_groups:
     - 台湾节点
     - 德国节点
     - 其他地区
+    - 日本故转
+    - 美国故转
     - Proxy
     - DIRECT
     icon: https://github.com/shindgewongxj/WHATSINStash/raw/main/icon/applegamecenter.png
 - select:
     name: CDN
     policies:
-    - 香港故转
-    - 日本故转
-    - 新加坡故转
-    - 美国故转
-    - 专线节点
     - 香港节点
     - 日本节点
     - 新加坡节点
@@ -614,17 +515,14 @@ policy_groups:
     - 台湾节点
     - 德国节点
     - 其他地区
+    - 日本故转
+    - 美国故转
     - Proxy
     - DIRECT
     icon: https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/Cloudflare.png
 - select:
     name: 测速
     policies:
-    - 香港故转
-    - 日本故转
-    - 新加坡故转
-    - 美国故转
-    - 专线节点
     - 香港节点
     - 日本节点
     - 新加坡节点
@@ -632,6 +530,8 @@ policy_groups:
     - 台湾节点
     - 德国节点
     - 其他地区
+    - 日本故转
+    - 美国故转
     - Proxy
     - DIRECT
     icon: https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/Speedtest.png
@@ -715,26 +615,6 @@ policy_groups:
     flatten: true
     filter: (?i)^(?!.*(家用|家庭|家宽|verizon$|\bISP\b|🇭🇰|香港|Hong[ _-]?Kong|🇹🇼|台湾|台北|Taipei|🇯🇵|日本|川日|东京|大阪|泉日|沪日|深日|埼玉|Tokyo|Osaka|🇸🇬|新加坡|狮城|🇺🇸|🇺🇲|美国|波特兰|达拉斯|俄勒冈|凤凰城|费利蒙|硅谷|拉斯维加斯|洛杉矶|圣何塞|圣克拉拉|西雅图|芝加哥|🇩🇪|德国|德國|法兰克福|法蘭克福|柏林|慕尼黑|(^|[^A-Za-z0-9])(HK|HKG|TW|TWN|Tai|Taiwan|JP|JPN|Japan|SG|SGP|Singapore|US|USA|United[ _-]?States|States|DE|DEU|Germany|Deutschland|Frankfurt|Berlin|Munich)([ _-]?\d+)?($|[^A-Za-z0-9])|直连|回国|校园|游戏|🎮|邀请|返利|循环|官网|客服|网站|网址|获取|订阅|流量|到期|机场|下次|版本|官址|备用|过期|已用|联系|邮箱|工单|交流群|官方群|用户群|群组|社群|群聊|贩卖|倒卖|防止|国内|(^|[^A-Za-z0-9])(GAME|USE|USED|TOTAL|EXPIRE|EMAIL|Panel)($|[^A-Za-z0-9])|\d{4}-\d{2}-\d{2})).+$
     hidden: true
-- select:
-    name: 专线节点
-    policies:
-    - 拼好鸡
-    - 机场
-    - 自建
-    - 备用
-    flatten: true
-    filter: (?i)Tencent
-    latency_test_url: http://cp.cloudflare.com/generate_204
-    icon: https://raw.githubusercontent.com/allen0039/proxy-resource-hub/main/icons/lightning-3d.png
-- fallback:
-    name: 香港故转
-    policies:
-    - 香港
-    flatten: true
-    filter: (?i)^(?!.*(家用|家庭|家宽|verizon$|\bISP\b)).+$
-    interval: 300
-    latency_test_url: http://cp.cloudflare.com/generate_204
-    icon: https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/Hong_Kong.png
 - fallback:
     name: 日本故转
     policies:
@@ -744,15 +624,6 @@ policy_groups:
     interval: 300
     latency_test_url: http://cp.cloudflare.com/generate_204
     icon: https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/Japan.png
-- fallback:
-    name: 新加坡故转
-    policies:
-    - 新加坡
-    flatten: true
-    filter: (?i)^(?!.*(家用|家庭|家宽|verizon$|\bISP\b)).+$
-    interval: 300
-    latency_test_url: http://cp.cloudflare.com/generate_204
-    icon: https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/Singapore.png
 - fallback:
     name: 美国故转
     policies:
@@ -890,6 +761,9 @@ rules:
     match: stun
     policy: REJECT
 - domain_suffix:
+    match: push.apple.com
+    policy: DIRECT
+- domain_suffix:
     match: 052909.xyz
     policy: 美国节点
 - domain_suffix:
@@ -902,125 +776,114 @@ rules:
     match: nodeseek.com
     policy: 日本节点
 - domain:
-    match: mask.icloud.com
-    policy: Apple
-- domain:
-    match: mask-h2.icloud.com
-    policy: Apple
-- domain:
-    match: mask-api.icloud.com
-    policy: Apple
-- domain:
-    match: mask-canary.icloud.com
-    policy: Apple
-- domain:
-    match: mask.apple-dns.net
-    policy: Apple
-- domain:
-    match: canary.mask.apple-dns.net
-    policy: Apple
-- domain_suffix:
-    match: icloud.com
-    policy: DIRECT
-- domain_suffix:
-    match: icloud-content.com
-    policy: DIRECT
-- domain_suffix:
-    match: me.com
-    policy: DIRECT
-- domain_suffix:
-    match: apple-cloudkit.com
-    policy: DIRECT
-- domain_suffix:
-    match: apple-livephotoskit.com
-    policy: DIRECT
-- domain_suffix:
-    match: apzones.com
-    policy: DIRECT
-- domain_suffix:
-    match: apple-dns.net
-    policy: DIRECT
-- rule_set:
-    match: https://raw.githubusercontent.com/Repcz/Tool/X/Egern/Rules/iCloud.yaml
-    policy: DIRECT
-- domain_suffix:
-    match: push.apple.com
-    policy: DIRECT
-- domain_suffix:
-    match: taobao.com
-    policy: DIRECT
-- domain_suffix:
-    match: taobao.org
-    policy: DIRECT
-- domain_suffix:
-    match: tmall.com
-    policy: DIRECT
-- domain_suffix:
-    match: tbcdn.cn
-    policy: DIRECT
-- domain_suffix:
-    match: taobaocdn.com
-    policy: DIRECT
-- domain_suffix:
-    match: alicdn.com
-    policy: DIRECT
-- domain_suffix:
-    match: aliapp.org
-    policy: DIRECT
-- domain_suffix:
-    match: apple-relay.apple.com
-    policy: Apple
-- domain_suffix:
-    match: github.io
-    policy: GitHub
-- domain_suffix:
-    match: githubassets.com
-    policy: GitHub
-- domain:
-    match: api.github.com
-    policy: GitHub
-- domain:
-    match: gemini.google.com
-    policy: Google
-- domain:
     match: rfc.uhdnow.com
     policy: RFC节点
 - domain_suffix:
-    match: safebrowsing.google.com
-    policy: Google
+    match: ggpht.com
+    policy: YouTube
 - domain_suffix:
     match: ytimg.com
     policy: YouTube
-- domain:
-    match: lcs-cops.adobe.io
+- domain_suffix:
+    match: amdc.m.taobao.com
     policy: DIRECT
 - domain_suffix:
-    match: hstatic.io
-    policy: REJECT
-- domain_suffix:
-    match: adobestats.io
-    policy: REJECT
-- domain_suffix:
-    match: adobe.io
-    policy: REJECT
+    match: amdcopen.m.taobao.com
+    policy: DIRECT
 - domain:
-    match: ntb.lanjie100.com
-    policy: REJECT
+    match: httpdns.alicdn.com
+    policy: DIRECT
+- domain_suffix:
+    match: httpdns.aliyuncs.com
+    policy: DIRECT
 - domain:
-    match: msmp.abchina.com.cn
-    policy: REJECT
-- ip_cidr:
-    match: 95.161.76.100/31
-    policy: REJECT
-    no_resolve: true
-- ip_cidr:
-    match: 180.76.76.200/32
-    policy: REJECT
-    no_resolve: true
+    match: httpdns-sc.aliyuncs.com
+    policy: DIRECT
+- domain:
+    match: httpdns-api.aliyuncs.com
+    policy: DIRECT
+- domain:
+    match: httpdns.danuoyi.tbcache.com
+    policy: DIRECT
 - ip_cidr:
     match: 203.107.1.0/24
-    policy: REJECT
+    policy: DIRECT
     no_resolve: true
+- domain:
+    match: httpdns.bilivideo.com
+    policy: DIRECT
+- domain:
+    match: httpdns.meituan.com
+    policy: DIRECT
+- domain:
+    match: httpdnsvip.meituan.com
+    policy: DIRECT
+- domain:
+    match: httpdnsmultiapi.meituan.com
+    policy: DIRECT
+- domain:
+    match: httpdnsmultiapivip.meituan.com
+    policy: DIRECT
+- domain_suffix:
+    match: httpdns.c.163.com
+    policy: DIRECT
+- domain:
+    match: httpdns.music.163.com
+    policy: DIRECT
+- domain_suffix:
+    match: httpdns.n.netease.com
+    policy: DIRECT
+- domain:
+    match: httpdns.baidu.com
+    policy: DIRECT
+- domain:
+    match: httpdns.baidubce.com
+    policy: DIRECT
+- domain:
+    match: httpsdns.baidu.com
+    policy: DIRECT
+- domain:
+    match: httpdns.volces.com
+    policy: DIRECT
+- domain:
+    match: httpdns.volcengineapi.com
+    policy: DIRECT
+- domain:
+    match: dns.jd.com
+    policy: DIRECT
+- domain:
+    match: dns.weibo.cn
+    policy: DIRECT
+- domain:
+    match: dns.weixin.qq.com
+    policy: DIRECT
+- domain:
+    match: dns.weixin.qq.com.cn
+    policy: DIRECT
+- ip_cidr:
+    match: 10.0.0.0/8
+    policy: DIRECT
+    no_resolve: true
+- ip_cidr:
+    match: 127.0.0.0/8
+    policy: DIRECT
+    no_resolve: true
+- ip_cidr:
+    match: 172.16.0.0/12
+    policy: DIRECT
+    no_resolve: true
+- ip_cidr:
+    match: 192.168.0.0/16
+    policy: DIRECT
+    no_resolve: true
+- ip_cidr:
+    match: 169.254.0.0/16
+    policy: DIRECT
+    no_resolve: true
+- rule_set:
+    match: https://raw.githubusercontent.com/allen0039/proxy-resource-hub/main/Rules/Egern/SKK/LAN.yaml
+    policy: DIRECT
+    update_interval: 86400
 - rule_set:
     match: https://raw.githubusercontent.com/allen0039/proxy-resource-hub/main/Rules/Egern/Regional/hk.yaml
     policy: 香港节点
@@ -1040,12 +903,6 @@ rules:
     match: https://raw.githubusercontent.com/allen0039/proxy-resource-hub/main/Rules/Egern/Custom/direct.yaml
     policy: DIRECT
 - rule_set:
-    match: https://raw.githubusercontent.com/allen0039/proxy-resource-hub/main/Rules/Egern/Services/ChinaTelecom.yaml
-    policy: DIRECT
-- rule_set:
-    match: https://raw.githubusercontent.com/allen0039/proxy-resource-hub/main/Rules/Egern/Google/gemini.yaml
-    policy: Google
-- rule_set:
     match: https://raw.githubusercontent.com/allen0039/proxy-resource-hub/main/Rules/Egern/AI/direct-ai.yaml
     policy: DIRECT
 - rule_set:
@@ -1054,6 +911,181 @@ rules:
 - rule_set:
     match: https://raw.githubusercontent.com/allen0039/proxy-resource-hub/main/Rules/Egern/PT/Domain.yaml
     policy: 日本节点
+- rule_set:
+    match: https://raw.githubusercontent.com/allen0039/proxy-resource-hub/main/Rules/Egern/Services/ChinaTelecom.yaml
+    policy: DIRECT
+- domain_suffix:
+    match: pool.ntp.org
+    policy: DIRECT
+- domain:
+    match: mask.icloud.com
+    policy: Apple
+- domain:
+    match: mask-h2.icloud.com
+    policy: Apple
+- domain:
+    match: mask-api.icloud.com
+    policy: Apple
+- domain:
+    match: mask-canary.icloud.com
+    policy: Apple
+- domain:
+    match: mask.apple-dns.net
+    policy: Apple
+- domain:
+    match: canary.mask.apple-dns.net
+    policy: Apple
+- domain_suffix:
+    match: apple-dns.net
+    policy: DIRECT
+- rule_set:
+    match: https://raw.githubusercontent.com/Repcz/Tool/X/Egern/Rules/iCloud.yaml
+    policy: DIRECT
+- rule_set:
+    match: https://raw.githubusercontent.com/Repcz/Tool/X/Egern/Rules/APNs.yaml
+    policy: DIRECT
+- domain_suffix:
+    match: apple-relay.apple.com
+    policy: Apple
+- rule_set:
+    match: https://raw.githubusercontent.com/Repcz/Tool/X/Egern/Rules/Ads_SukkaW.yaml
+    policy: REJECT
+    update_interval: 86400
+- domain:
+    match: 7h15.ru1353t.1s.m4d3.by.5ukk4w.skk.moe
+    policy: REJECT
+- domain_suffix:
+    match: bvmlt.top
+    policy: REJECT
+- domain_suffix:
+    match: gjfzpt.cn
+    policy: REJECT
+- domain_suffix:
+    match: p2cdn.com
+    policy: REJECT
+- domain_suffix:
+    match: uhabo.com
+    policy: REJECT
+- domain_suffix:
+    match: xycdn.com
+    policy: REJECT
+- domain_suffix:
+    match: yfcdn.net
+    policy: REJECT
+- domain_suffix:
+    match: yfp2p.net
+    policy: REJECT
+- domain_suffix:
+    match: bsccdn.net
+    policy: REJECT
+- domain_suffix:
+    match: p2p.qq.com
+    policy: REJECT
+- domain_suffix:
+    match: ppio.cloud
+    policy: REJECT
+- domain_suffix:
+    match: szbdyd.com
+    policy: REJECT
+- domain_suffix:
+    match: saxysec.com
+    policy: REJECT
+- domain_suffix:
+    match: yfcloud.com
+    policy: REJECT
+- domain_suffix:
+    match: kuiniuca.com
+    policy: REJECT
+- domain_suffix:
+    match: p2p.huya.com
+    policy: REJECT
+- domain_suffix:
+    match: pkoplink.com
+    policy: REJECT
+- domain_suffix:
+    match: cdnnodedns.cn
+    policy: REJECT
+- domain_suffix:
+    match: p2ptun.qq.com
+    policy: REJECT
+- domain_suffix:
+    match: tianwenca.com
+    policy: REJECT
+- domain_suffix:
+    match: mountaintoys.cn
+    policy: REJECT
+- domain_suffix:
+    match: nexusedgeio.com
+    policy: REJECT
+- domain_suffix:
+    match: onethingpcs.com
+    policy: REJECT
+- domain_suffix:
+    match: pcdn.yximgs.com
+    policy: REJECT
+- domain_suffix:
+    match: ietheivaicai.com
+    policy: REJECT
+- domain:
+    match: stun.douyucdn.cn
+    policy: REJECT
+- domain_suffix:
+    match: mcdn.bilivideo.cn
+    policy: REJECT
+- domain:
+    match: stun1.douyucdn.cn
+    policy: REJECT
+- domain_suffix:
+    match: p2plog.douyucdn.cn
+    policy: REJECT
+- domain_suffix:
+    match: p2perrorlog.douyucdn.cn
+    policy: REJECT
+- domain_suffix:
+    match: p2pupdate.gamedl.qq.com
+    policy: REJECT
+- domain_suffix:
+    match: p2pupgrade.gamedl.qq.com
+    policy: REJECT
+- domain:
+    match: livewebbs2pcdn.msstatic.com
+    policy: REJECT
+- domain:
+    match: qn-cdnfile1pcdn.msstatic.com
+    policy: REJECT
+- domain:
+    match: upos-sz-302kodo.bilivideo.com
+    policy: REJECT
+- domain:
+    match: upos-sz-302ppio.bilivideo.com
+    policy: REJECT
+- domain_keyword:
+    match: -p2p.pull.yximgs.com
+    policy: REJECT
+- domain_keyword:
+    match: -p2p-v2.pull.yximgs.com
+    policy: REJECT
+- domain_wildcard:
+    match: p2p*.qq.com
+    policy: REJECT
+- domain_wildcard:
+    match: p2p-*.douyucdn.cn
+    policy: REJECT
+- domain_wildcard:
+    match: p2pchunk-*.douyucdn.cn
+    policy: REJECT
+- domain_wildcard:
+    match: dyp2p-*.douyucdn.cn
+    policy: REJECT
+- domain_wildcard:
+    match: p2plive-*.douyucdn.cn
+    policy: REJECT
+- domain_wildcard:
+    match: stun*.douyucdn.cn
+    policy: REJECT
+- domain_wildcard:
+    match: upos-sz-302*.bilivideo.com
+    policy: REJECT
 - and:
     match:
     - protocol:
@@ -1061,42 +1093,1683 @@ rules:
     - domain_suffix:
         match: googlevideo.com
     policy: REJECT
-- rule_set:
-    match: https://raw.githubusercontent.com/allen0039/proxy-resource-hub/main/Rules/Egern/SKK/Reject.yaml
+- domain:
+    match: lcs-cops.adobe.io
+    policy: DIRECT
+- domain_suffix:
+    match: hstatic.io
     policy: REJECT
+- domain_suffix:
+    match: adobestats.io
+    policy: REJECT
+- domain_suffix:
+    match: adobe.io
+    policy: REJECT
+- domain:
+    match: ntb.lanjie100.com
+    policy: REJECT
+- domain:
+    match: msmp.abchina.com.cn
+    policy: REJECT
+- ip_cidr:
+    match: 180.76.76.200/32
+    policy: REJECT
+    no_resolve: true
 - rule_set:
-    match: https://raw.githubusercontent.com/allen0039/proxy-resource-hub/main/Rules/Egern/Services/Speedtest.yaml
+    match: https://raw.githubusercontent.com/Repcz/Tool/X/Egern/Rules/Bilibili.yaml
+    policy: 哔哩哔哩
+- domain:
+    match: 0gr4uqmtt8y41hcjsgrzdrc31.ourdvsss.com
+    policy: 国内媒体
+- domain:
+    match: 0gr4uqmtt8y41hcjsgrzdrc3s.ourdvsss.com
+    policy: 国内媒体
+- domain:
+    match: 0gr4uqmtt8y41hcjsgrzdrc3z.ourdvsss.com
+    policy: 国内媒体
+- domain:
+    match: 0gr4uqmtt8y41hcjsgrzdrctt.ourdvsss.com
+    policy: 国内媒体
+- domain:
+    match: 0gr4uqmtt8y41hcjsgrzdrctu.ourdvsss.com
+    policy: 国内媒体
+- domain:
+    match: 0gr4uqmtt8y41hcjz8yzdnc31.ourdvsss.com
+    policy: 国内媒体
+- domain:
+    match: 0gr4uqmtt8y41hcjz8yzdnc3t.ourdvsss.com
+    policy: 国内媒体
+- domain:
+    match: 0gr4uqmtt8y41hcjzgazdrpba.ourdvsss.com
+    policy: 国内媒体
+- domain:
+    match: 0gr4uqmtt8y41hcjzgazdrpbz.ourdvsss.com
+    policy: 国内媒体
+- domain:
+    match: 0gr4uqmtt8y41hcjzgazdrpjt.ourdvsss.com
+    policy: 国内媒体
+- domain:
+    match: 0gr5dgmttgha1hcj38yzdncb3.ourdvsss.com
+    policy: 国内媒体
+- domain:
+    match: 112-81-125-43.dhost.00cdn.com
+    policy: 国内媒体
+- domain:
+    match: 113-219-145-1.ksyungslb.com
+    policy: 国内媒体
+- domain:
+    match: 114-236-92-129.ksyungslb.com
+    policy: 国内媒体
+- domain:
+    match: 180-101-74-1.ksyungslb.com
+    policy: 国内媒体
+- domain:
+    match: 1geadrmttge3nhcjwgazdope.ourdvsss.com
+    policy: 国内媒体
+- domain:
+    match: 1geadrmttge3nhcjwgwzdqqe.ourdvsss.com
+    policy: 国内媒体
+- domain:
+    match: 1gr3uomttgr31hcjo8yzdnco.ourdvsss.com
+    policy: 国内媒体
+- domain:
+    match: 1gr3uomttgr31hcjo8yzdnpy.ourdvsss.com
+    policy: 国内媒体
+- domain:
+    match: 1gr3uomttgr31hcjtgezdkcy.ourdvsss.com
+    policy: 国内媒体
+- domain:
+    match: 1gr4uqmtt8y41hcjigazdqca.ourdvsss.com
+    policy: 国内媒体
+- domain:
+    match: 1gr4uqmtt8y41hcjigazdqce.ourdvsss.com
+    policy: 国内媒体
+- domain:
+    match: 1gr4uqmtt8y41hcjigazdqco.ourdvsss.com
+    policy: 国内媒体
+- domain:
+    match: 1gr4uqmtt8y41hcjigazdqpo.ourdvsss.com
+    policy: 国内媒体
+- domain:
+    match: 1gr4uqmtt8y41hcjzgwzdkqe.ourdvsss.com
+    policy: 国内媒体
+- domain:
+    match: 1gr5dgmttgha1hcj38yzdcca.ourdvsss.com
+    policy: 国内媒体
+- domain:
+    match: 1gr5dgmttgha1hcj38yzdcco.ourdvsss.com
+    policy: 国内媒体
+- domain:
+    match: 1gr5dgmttgha1hcj38yzdkca.ourdvsss.com
+    policy: 国内媒体
+- domain:
+    match: 1gr5dgmttgha1hcj38yzdkco.ourdvsss.com
+    policy: 国内媒体
+- domain:
+    match: 1gr5dgmttgha1hcj38yzdkpe.ourdvsss.com
+    policy: 国内媒体
+- domain:
+    match: 1gr5dgmttgha1hcj38yzdkpy.ourdvsss.com
+    policy: 国内媒体
+- domain:
+    match: 1gr5dgmttgha1hcj38yzdkqy.ourdvsss.com
+    policy: 国内媒体
+- domain:
+    match: 1gr5dgmttgha1hcj3gczdcpa.ourdvsss.com
+    policy: 国内媒体
+- domain:
+    match: 1gr5dgmttgha1hcj3gczdcpe.ourdvsss.com
+    policy: 国内媒体
+- domain:
+    match: 1gr5dgmttgha1hcj3gczdcpo.ourdvsss.com
+    policy: 国内媒体
+- domain:
+    match: 1gr5dgmttgha1hcj3gczdcqy.ourdvsss.com
+    policy: 国内媒体
+- domain:
+    match: 1gr5dgmttgha1hcttgrzdnpo.ourdvsss.com
+    policy: 国内媒体
+- domain:
+    match: 1graukmttga4nhcjtgozdgce.ourdvsss.com
+    policy: 国内媒体
+- domain:
+    match: 218-91-225-1.ksyungslb.com
+    policy: 国内媒体
+- domain:
+    match: 219-155-150-1.ksyungslb.com
+    policy: 国内媒体
+- domain:
+    match: 222-188-6-1.ksyungslb.com
+    policy: 国内媒体
+- domain:
+    match: 36-104-134-1.ksyungslb.com
+    policy: 国内媒体
+- domain:
+    match: 36-25-252-1.ksyungslb.com
+    policy: 国内媒体
+- domain:
+    match: 3ge3drmttga5nhcbqge3ur.ourdvsss.com
+    policy: 国内媒体
+- domain:
+    match: 3geauymtsgrzdnqbofa5do.ourdvsss.com
+    policy: 国内媒体
+- domain:
+    match: 3geauymtsgrzdnqbofa5dy.ourdvsss.com
+    policy: 国内媒体
+- domain:
+    match: 3geauymtsgrzdrcbzfahue.ourdvsss.com
+    policy: 国内媒体
+- domain:
+    match: 3geauymtsgrzdrcbzfahuk.ourdvsss.com
+    policy: 国内媒体
+- domain:
+    match: 4go41hcjtgazdoctqge4o.ourdvsss.com
+    policy: 国内媒体
+- domain:
+    match: 00713915daab0be43def5c338c02c80b.dlied1.cdntips.net
+    policy: 国内媒体
+- domain:
+    match: 17caa75e77d31e1f5a7841e0b3374569.dlied1.cdntips.net
+    policy: 国内媒体
+- domain:
+    match: apd-pcdnvodstat.teg.tencent-cloud.net
+    policy: 国内媒体
+- domain:
+    match: api.iplay.163.com
+    policy: 国内媒体
+- domain:
+    match: aqqmusic.tc.qq.com
+    policy: 国内媒体
+- domain:
+    match: dldir1.qq.com
+    policy: 国内媒体
+- domain:
+    match: iacc.qq.com
+    policy: 国内媒体
+- domain:
+    match: ins-eeww7kom.ias.tencent-cloud.net
+    policy: 国内媒体
+- domain:
+    match: ios.video.mpush.qq.com
+    policy: 国内媒体
+- domain:
+    match: mam.netease.com
+    policy: 国内媒体
+- domain:
+    match: moo.qq.com
+    policy: 国内媒体
+- domain:
+    match: rdelivery.qq.com
+    policy: 国内媒体
+- domain:
+    match: ts.qq.com
+    policy: 国内媒体
+- domain:
+    match: v.streaming.qq.com
+    policy: 国内媒体
+- domain:
+    match: video-public-1258344701.shiply-cdn.qq.com
+    policy: 国内媒体
+- domain:
+    match: video-search-1258344701.shiply-cdn.qq.com
+    policy: 国内媒体
+- domain:
+    match: video-vip-1258344701.shiply-cdn.qq.com
+    policy: 国内媒体
+- domain:
+    match: yoo.gtimg.com
+    policy: 国内媒体
+- domain_suffix:
+    match: acg.tv
+    policy: 国内媒体
+- domain_suffix:
+    match: acgvideo.com
+    policy: 国内媒体
+- domain_suffix:
+    match: animetamashi.cn
+    policy: 国内媒体
+- domain_suffix:
+    match: animetamashi.com
+    policy: 国内媒体
+- domain_suffix:
+    match: anitama.cn
+    policy: 国内媒体
+- domain_suffix:
+    match: anitama.net
+    policy: 国内媒体
+- domain_suffix:
+    match: b23.tv
+    policy: 国内媒体
+- domain_suffix:
+    match: baka.im
+    policy: 国内媒体
+- domain_suffix:
+    match: bigfun.cn
+    policy: 国内媒体
+- domain_suffix:
+    match: bigfunapp.cn
+    policy: 国内媒体
+- domain_suffix:
+    match: bili22.cn
+    policy: 国内媒体
+- domain_suffix:
+    match: bili2233.cn
+    policy: 国内媒体
+- domain_suffix:
+    match: bili23.cn
+    policy: 国内媒体
+- domain_suffix:
+    match: bili33.cn
+    policy: 国内媒体
+- domain_suffix:
+    match: biliapi.com
+    policy: 国内媒体
+- domain_suffix:
+    match: biliapi.net
+    policy: 国内媒体
+- domain_suffix:
+    match: bilibili.cc
+    policy: 国内媒体
+- domain_suffix:
+    match: bilibili.cn
+    policy: 国内媒体
+- domain_suffix:
+    match: bilibili.co
+    policy: 国内媒体
+- domain_suffix:
+    match: bilibili.com
+    policy: 国内媒体
+- domain_suffix:
+    match: bilibili.net
+    policy: 国内媒体
+- domain_suffix:
+    match: bilibili.tv
+    policy: 国内媒体
+- domain_suffix:
+    match: bilibiligame.cn
+    policy: 国内媒体
+- domain_suffix:
+    match: bilibiligame.co
+    policy: 国内媒体
+- domain_suffix:
+    match: bilibiligame.net
+    policy: 国内媒体
+- domain_suffix:
+    match: bilibilipay.cn
+    policy: 国内媒体
+- domain_suffix:
+    match: bilibilipay.com
+    policy: 国内媒体
+- domain_suffix:
+    match: bilicdn1.com
+    policy: 国内媒体
+- domain_suffix:
+    match: bilicdn2.com
+    policy: 国内媒体
+- domain_suffix:
+    match: bilicdn3.com
+    policy: 国内媒体
+- domain_suffix:
+    match: bilicdn4.com
+    policy: 国内媒体
+- domain_suffix:
+    match: bilicdn5.com
+    policy: 国内媒体
+- domain_suffix:
+    match: bilicomics.com
+    policy: 国内媒体
+- domain_suffix:
+    match: biligame.cn
+    policy: 国内媒体
+- domain_suffix:
+    match: biligame.co
+    policy: 国内媒体
+- domain_suffix:
+    match: biligame.com
+    policy: 国内媒体
+- domain_suffix:
+    match: biligame.net
+    policy: 国内媒体
+- domain_suffix:
+    match: biligo.com
+    policy: 国内媒体
+- domain_suffix:
+    match: biliimg.com
+    policy: 国内媒体
+- domain_suffix:
+    match: biliintl.co
+    policy: 国内媒体
+- domain_suffix:
+    match: biliintl.com
+    policy: 国内媒体
+- domain_suffix:
+    match: biliplus.com
+    policy: 国内媒体
+- domain_suffix:
+    match: bilivideo.cn
+    policy: 国内媒体
+- domain_suffix:
+    match: bilivideo.com
+    policy: 国内媒体
+- domain_suffix:
+    match: bilivideo.net
+    policy: 国内媒体
+- domain_suffix:
+    match: corari.com
+    policy: 国内媒体
+- domain_suffix:
+    match: dreamcast.hk
+    policy: 国内媒体
+- domain_suffix:
+    match: dyhgames.com
+    policy: 国内媒体
+- domain_suffix:
+    match: hdslb.com
+    policy: 国内媒体
+- domain_suffix:
+    match: hdslb.com.w.kunlunhuf.com
+    policy: 国内媒体
+- domain_suffix:
+    match: hdslb.com.w.kunlunpi.com
+    policy: 国内媒体
+- domain_suffix:
+    match: hdslb.net
+    policy: 国内媒体
+- domain_suffix:
+    match: hdslb.org
+    policy: 国内媒体
+- domain_suffix:
+    match: im9.com
+    policy: 国内媒体
+- domain_suffix:
+    match: maoercdn.com
+    policy: 国内媒体
+- domain_suffix:
+    match: mcbbs.net
+    policy: 国内媒体
+- domain_suffix:
+    match: mincdn.com
+    policy: 国内媒体
+- domain_suffix:
+    match: sharejoytech.com
+    policy: 国内媒体
+- domain_suffix:
+    match: smtcdns.net
+    policy: 国内媒体
+- domain_suffix:
+    match: upos-hz-mirrorakam.akamaized.net
+    policy: 国内媒体
+- domain_suffix:
+    match: uposdash-302-bilivideo.yfcdn.net
+    policy: 国内媒体
+- domain_suffix:
+    match: yo9.com
+    policy: 国内媒体
+- domain_suffix:
+    match: cctv.cn
+    policy: 国内媒体
+- domain_suffix:
+    match: cctv.com
+    policy: 国内媒体
+- domain_suffix:
+    match: cctvlib.cn
+    policy: 国内媒体
+- domain_suffix:
+    match: cctvlib.com.cn
+    policy: 国内媒体
+- domain_suffix:
+    match: cctvlibrary.cn
+    policy: 国内媒体
+- domain_suffix:
+    match: cctvlibrary.com.cn
+    policy: 国内媒体
+- domain_suffix:
+    match: cctvpic.com
+    policy: 国内媒体
+- domain_suffix:
+    match: cctvpro.cn
+    policy: 国内媒体
+- domain_suffix:
+    match: cctvpro.com.cn
+    policy: 国内媒体
+- domain_suffix:
+    match: chinaepg.cn
+    policy: 国内媒体
+- domain_suffix:
+    match: chinalive.com
+    policy: 国内媒体
+- domain_suffix:
+    match: citv.net.cn
+    policy: 国内媒体
+- domain_suffix:
+    match: cnms.net.cn
+    policy: 国内媒体
+- domain_suffix:
+    match: cntv.cn
+    policy: 国内媒体
+- domain_suffix:
+    match: cntv.com.cn
+    policy: 国内媒体
+- domain_suffix:
+    match: cntvwb.cn
+    policy: 国内媒体
+- domain_suffix:
+    match: gjgbdszt.cn
+    policy: 国内媒体
+- domain_suffix:
+    match: gjgbdszt.com.cn
+    policy: 国内媒体
+- domain_suffix:
+    match: gjgbdszt.net.cn
+    policy: 国内媒体
+- domain_suffix:
+    match: ipanda.cn
+    policy: 国内媒体
+- domain_suffix:
+    match: ipanda.com
+    policy: 国内媒体
+- domain_suffix:
+    match: ipanda.com.cn
+    policy: 国内媒体
+- domain_suffix:
+    match: ipanda.net
+    policy: 国内媒体
+- domain_suffix:
+    match: livechina.cn
+    policy: 国内媒体
+- domain_suffix:
+    match: livechina.com
+    policy: 国内媒体
+- domain_suffix:
+    match: olympicchannelchina.cn
+    policy: 国内媒体
+- domain_suffix:
+    match: tvcc.cn
+    policy: 国内媒体
+- domain_suffix:
+    match: tvcc.com.cn
+    policy: 国内媒体
+- domain_suffix:
+    match: xn--fiq53l6wcx3kp9bc7joo6apn8a.cn
+    policy: 国内媒体
+- domain_suffix:
+    match: xn--fiq53l6wcx3kp9bc7joo6apn8a.xn--fiqs8s
+    policy: 国内媒体
+- domain_suffix:
+    match: xn--fiq53l90et9fpncc7joo6apn8a.cn
+    policy: 国内媒体
+- domain_suffix:
+    match: xn--kprv4ewxfr9cpxcc7joo6apn8a.cn
+    policy: 国内媒体
+- domain_suffix:
+    match: xn--kprv4ewxfr9cpxcc7joo6apn8a.xn--fiqs8s
+    policy: 国内媒体
+- domain_suffix:
+    match: zggbdszt.cn
+    policy: 国内媒体
+- domain_suffix:
+    match: zggbdszt.com.cn
+    policy: 国内媒体
+- domain_suffix:
+    match: zggbdszt.net.cn
+    policy: 国内媒体
+- domain_suffix:
+    match: zygbdszt.net.cn
+    policy: 国内媒体
+- domain_suffix:
+    match: 0co3geye.cn
+    policy: 国内媒体
+- domain_suffix:
+    match: 1.letvlive.com
+    policy: 国内媒体
+- domain_suffix:
+    match: 2.letvlive.com
+    policy: 国内媒体
+- domain_suffix:
+    match: 2isbbess.cn
+    policy: 国内媒体
+- domain_suffix:
+    match: 33lwhaoinc.cn
+    policy: 国内媒体
+- domain_suffix:
+    match: 52mtkvideo.cn
+    policy: 国内媒体
+- domain_suffix:
+    match: 56.com
+    policy: 国内媒体
+- domain_suffix:
+    match: 71.am
+    policy: 国内媒体
+- domain_suffix:
+    match: 71.am.com
+    policy: 国内媒体
+- domain_suffix:
+    match: 71edge.com
+    policy: 国内媒体
+- domain_suffix:
+    match: 71edge.net
+    policy: 国内媒体
+- domain_suffix:
+    match: 9xsecndns.cn
+    policy: 国内媒体
+- domain_suffix:
+    match: acfun.cn
+    policy: 国内媒体
+- domain_suffix:
+    match: acfun.com
+    policy: 国内媒体
+- domain_suffix:
+    match: acfun.tv
+    policy: 国内媒体
+- domain_suffix:
+    match: ads1.lfengmobile.com
+    policy: 国内媒体
+- domain_suffix:
+    match: afp.pplive.com
+    policy: 国内媒体
+- domain_suffix:
+    match: ai.xiaomi.com
+    policy: 国内媒体
+- domain_suffix:
+    match: aianno.cn
+    policy: 国内媒体
+- domain_suffix:
+    match: aianno.com
+    policy: 国内媒体
+- domain_suffix:
+    match: aiqiyicloud-mgmt.com
+    policy: 国内媒体
+- domain_suffix:
+    match: aiqiyicloud.com
+    policy: 国内媒体
+- domain_suffix:
+    match: aiqiyicloud.net
+    policy: 国内媒体
+- domain_suffix:
+    match: aixifan.com
+    policy: 国内媒体
+- domain_suffix:
+    match: androidgo.duapp.com
+    policy: 国内媒体
+- domain_suffix:
+    match: api.game.letvstore.com
+    policy: 国内媒体
+- domain_suffix:
+    match: b82yxres.cn
+    policy: 国内媒体
+- domain_suffix:
+    match: baiying.com
+    policy: 国内媒体
+- domain_suffix:
+    match: cdn.zampdsp.com
+    policy: 国内媒体
+- domain_suffix:
+    match: cibntv.net
+    policy: 国内媒体
+- domain_suffix:
+    match: cm.fancyapi.com
+    policy: 国内媒体
+- domain_suffix:
+    match: cmvideo.cn
+    policy: 国内媒体
+- domain_suffix:
+    match: dmhmusic.com
+    policy: 国内媒体
+- domain_suffix:
+    match: domesticmedia.cc
+    policy: 国内媒体
+- domain_suffix:
+    match: domesticmedia.cn
+    policy: 国内媒体
+- domain_suffix:
+    match: domesticmedia.co
+    policy: 国内媒体
+- domain_suffix:
+    match: domesticmedia.com
+    policy: 国内媒体
+- domain_suffix:
+    match: domesticmedia.net
+    policy: 国内媒体
+- domain_suffix:
+    match: domesticmedia.tv
+    policy: 国内媒体
+- domain_suffix:
+    match: domesticmediagame.cn
+    policy: 国内媒体
+- domain_suffix:
+    match: domesticmediagame.co
+    policy: 国内媒体
+- domain_suffix:
+    match: domesticmediagame.net
+    policy: 国内媒体
+- domain_suffix:
+    match: domesticmediapay.cn
+    policy: 国内媒体
+- domain_suffix:
+    match: domesticmediapay.com
+    policy: 国内媒体
+- domain_suffix:
+    match: e8h2ty.tdum.alibaba.com
+    policy: 国内媒体
+- domain_suffix:
+    match: gamenow.club
+    policy: 国内媒体
+- domain_suffix:
+    match: gitv.cn
+    policy: 国内媒体
+- domain_suffix:
+    match: gitv.tv
+    policy: 国内媒体
+- domain_suffix:
+    match: hifuntv.com
+    policy: 国内媒体
+- domain_suffix:
+    match: hitv.com
+    policy: 国内媒体
+- domain_suffix:
+    match: hunaniptv.com
+    policy: 国内媒体
+- domain_suffix:
+    match: hunantv.com
+    policy: 国内媒体
+- domain_suffix:
+    match: i.qq.com
+    policy: 国内媒体
+- domain_suffix:
+    match: ibkstore.com
+    policy: 国内媒体
+- domain_suffix:
+    match: imgo.tv
+    policy: 国内媒体
+- domain_suffix:
+    match: iq.com
+    policy: 国内媒体
+- domain_suffix:
+    match: iqiyi.com
+    policy: 国内媒体
+- domain_suffix:
+    match: iqiyi.demo.uwp
+    policy: 国内媒体
+- domain_suffix:
+    match: iqiyiedge.com
+    policy: 国内媒体
+- domain_suffix:
+    match: iqiyiedge.net
+    policy: 国内媒体
+- domain_suffix:
+    match: iqiyipic.com
+    policy: 国内媒体
+- domain_suffix:
+    match: itc.cn
+    policy: 国内媒体
+- domain_suffix:
+    match: ixigua.com
+    policy: 国内媒体
+- domain_suffix:
+    match: jiangbing.cn
+    policy: 国内媒体
+- domain_suffix:
+    match: jstucdn.com
+    policy: 国内媒体
+- domain_suffix:
+    match: koowo.com
+    policy: 国内媒体
+- domain_suffix:
+    match: kugou.com
+    policy: 国内媒体
+- domain_suffix:
+    match: kumiao.com
+    policy: 国内媒体
+- domain_suffix:
+    match: kumiao.tv
+    policy: 国内媒体
+- domain_suffix:
+    match: kuwo.cn
+    policy: 国内媒体
+- domain_suffix:
+    match: kuxiaomiao.cn
+    policy: 国内媒体
+- domain_suffix:
+    match: kuxiaomiao.com
+    policy: 国内媒体
+- domain_suffix:
+    match: kuxiaomiao.com.cn
+    policy: 国内媒体
+- domain_suffix:
+    match: kuxiaomiao.net
+    policy: 国内媒体
+- domain_suffix:
+    match: le.com
+    policy: 国内媒体
+- domain_suffix:
+    match: letv.com
+    policy: 国内媒体
+- domain_suffix:
+    match: mgtv.com
+    policy: 国内媒体
+- domain_suffix:
+    match: migu.cn
+    policy: 国内媒体
+- domain_suffix:
+    match: miguvideo.com
+    policy: 国内媒体
+- domain_suffix:
+    match: mmstat.com
+    policy: 国内媒体
+- domain_suffix:
+    match: music.126.net
+    policy: 国内媒体
+- domain_suffix:
+    match: music.163.com
+    policy: 国内媒体
+- domain_suffix:
+    match: music.qq.com
+    policy: 国内媒体
+- domain_suffix:
+    match: music.tc.qq.com
+    policy: 国内媒体
+- domain_suffix:
+    match: music.xiaomi.com
+    policy: 国内媒体
+- domain_suffix:
+    match: noxagile.duapp.com
+    policy: 国内媒体
+- domain_suffix:
+    match: ns6mitkxo.cn
+    policy: 国内媒体
+- domain_suffix:
+    match: p-bstarstatic.akamaized.net
+    policy: 国内媒体
+- domain_suffix:
+    match: p.bstarstatic.com
+    policy: 国内媒体
+- domain_suffix:
+    match: pgdt.gtimg.cn
+    policy: 国内媒体
+- domain_suffix:
+    match: pplive.cn
+    policy: 国内媒体
+- domain_suffix:
+    match: pps.tv
+    policy: 国内媒体
+- domain_suffix:
+    match: ppsimg.com
+    policy: 国内媒体
+- domain_suffix:
+    match: ppstream.cn
+    policy: 国内媒体
+- domain_suffix:
+    match: ppstream.com
+    policy: 国内媒体
+- domain_suffix:
+    match: ppstream.com.cn
+    policy: 国内媒体
+- domain_suffix:
+    match: ppstream.net
+    policy: 国内媒体
+- domain_suffix:
+    match: ppstream.net.cn
+    policy: 国内媒体
+- domain_suffix:
+    match: ppsurl.com
+    policy: 国内媒体
+- domain_suffix:
+    match: pptv.com
+    policy: 国内媒体
+- domain_suffix:
+    match: qianqian.com
+    policy: 国内媒体
+- domain_suffix:
+    match: qiyi.cn
+    policy: 国内媒体
+- domain_suffix:
+    match: qiyi.com
+    policy: 国内媒体
+- domain_suffix:
+    match: qiyipic.com
+    policy: 国内媒体
+- domain_suffix:
+    match: qqmusic.qq.com
+    policy: 国内媒体
+- domain_suffix:
+    match: qqvideo.gtimg.com
+    policy: 国内媒体
+- domain_suffix:
+    match: qy.com
+    policy: 国内媒体
+- domain_suffix:
+    match: qy.net
+    policy: 国内媒体
+- domain_suffix:
+    match: s.zampdsp.com
+    policy: 国内媒体
+- domain_suffix:
+    match: sk2cdsnw.cn
+    policy: 国内媒体
+- domain_suffix:
+    match: snssdk.com
+    policy: 国内媒体
+- domain_suffix:
+    match: sogoodtech1.cn
+    policy: 国内媒体
+- domain_suffix:
+    match: sohu.com
+    policy: 国内媒体
+- domain_suffix:
+    match: sohu.com.cn
+    policy: 国内媒体
+- domain_suffix:
+    match: soku.com
+    policy: 国内媒体
+- domain_suffix:
+    match: suike.cn
+    policy: 国内媒体
+- domain_suffix:
+    match: taihe.com
+    policy: 国内媒体
+- domain_suffix:
+    match: tazai.com
+    policy: 国内媒体
+- domain_suffix:
+    match: tencentmusic.com
+    policy: 国内媒体
+- domain_suffix:
+    match: tudou.com
+    policy: 国内媒体
+- domain_suffix:
+    match: ukoo.com.cn
+    policy: 国内媒体
+- domain_suffix:
+    match: upos-bstar-mirrorakam.akamaized.net
+    policy: 国内媒体
+- domain_suffix:
+    match: upos-bstar1-mirrorakam.akamaized.net
+    policy: 国内媒体
+- domain_suffix:
+    match: v-56.com
+    policy: 国内媒体
+- domain_suffix:
+    match: v.qq.com
+    policy: 国内媒体
+- domain_suffix:
+    match: v.smtcdns.com
+    policy: 国内媒体
+- domain_suffix:
+    match: v1d.szbdyd.com
+    policy: 国内媒体
+- domain_suffix:
+    match: video.qq.com
+    policy: 国内媒体
+- domain_suffix:
+    match: videojj.com
+    policy: 国内媒体
+- domain_suffix:
+    match: wenyupages.com
+    policy: 国内媒体
+- domain_suffix:
+    match: wingsmobiletek.cn
+    policy: 国内媒体
+- domain_suffix:
+    match: wwc.alicdn.com
+    policy: 国内媒体
+- domain_suffix:
+    match: xiami.com
+    policy: 国内媒体
+- domain_suffix:
+    match: xiami.net
+    policy: 国内媒体
+- domain_suffix:
+    match: y.qq.com
+    policy: 国内媒体
+- domain_suffix:
+    match: ykimg.com
+    policy: 国内媒体
+- domain_suffix:
+    match: yodou.com
+    policy: 国内媒体
+- domain_suffix:
+    match: yoku.net.cn
+    policy: 国内媒体
+- domain_suffix:
+    match: yoqoo.com
+    policy: 国内媒体
+- domain_suffix:
+    match: yoqoo.net
+    policy: 国内媒体
+- domain_suffix:
+    match: yoqoo.net.cn
+    policy: 国内媒体
+- domain_suffix:
+    match: yoqoo.tv
+    policy: 国内媒体
+- domain_suffix:
+    match: youku.com
+    policy: 国内媒体
+- domain_suffix:
+    match: youku.com.cn
+    policy: 国内媒体
+- domain_suffix:
+    match: youku.org
+    policy: 国内媒体
+- domain_suffix:
+    match: youqoo.net
+    policy: 国内媒体
+- domain_suffix:
+    match: zamplus.com
+    policy: 国内媒体
+- domain_suffix:
+    match: zimuzu.io
+    policy: 国内媒体
+- domain_suffix:
+    match: zimuzu.tv
+    policy: 国内媒体
+- domain_suffix:
+    match: zmz2019.com
+    policy: 国内媒体
+- domain_suffix:
+    match: zmzapi.com
+    policy: 国内媒体
+- domain_suffix:
+    match: zmzapi.net
+    policy: 国内媒体
+- domain_suffix:
+    match: zmzfile.com
+    policy: 国内媒体
+- domain_keyword:
+    match: bilibili
+    policy: 国内媒体
+- domain_keyword:
+    match: qiyi
+    policy: 国内媒体
+- user_agent:
+    match: '*bili*'
+    policy: 国内媒体
+- user_agent:
+    match: Bilibili*
+    policy: 国内媒体
+- user_agent:
+    match: bili*
+    policy: 国内媒体
+- user_agent:
+    match: bili-inter*
+    policy: 国内媒体
+- user_agent:
+    match: '%E4%BC%98%E9%85%B7*'
+    policy: 国内媒体
+- user_agent:
+    match: '%E5%92%AA%E5%92%95%E8%A7%86%E9%A2%91'
+    policy: 国内媒体
+- user_agent:
+    match: '%E7%BD%91%E6%98%93%E4%BA%91%E9%9F%B3%E4%B9%90'
+    policy: 国内媒体
+- user_agent:
+    match: '%E7%BD%91%E6%98%93%E4%BA%91%E9%9F%B3%E4%B9%90*'
+    policy: 国内媒体
+- user_agent:
+    match: '%E9%85%B7%E6%88%91%E9%9F%B3%E4%B9%90*'
+    policy: 国内媒体
+- user_agent:
+    match: '*QIYI*'
+    policy: 国内媒体
+- user_agent:
+    match: AcFun*
+    policy: 国内媒体
+- user_agent:
+    match: DomesticMedia*
+    policy: 国内媒体
+- user_agent:
+    match: MGTV*
+    policy: 国内媒体
+- user_agent:
+    match: MOO%E9%9F%B3%E4%B9%90*
+    policy: 国内媒体
+- user_agent:
+    match: MOO*
+    policy: 国内媒体
+- user_agent:
+    match: MiguVideo*
+    policy: 国内媒体
+- user_agent:
+    match: NeteaseMusic*
+    policy: 国内媒体
+- user_agent:
+    match: PPStream*
+    policy: 国内媒体
+- user_agent:
+    match: QIYI*
+    policy: 国内媒体
+- user_agent:
+    match: QQ%E9%9F%B3%E4%B9%90
+    policy: 国内媒体
+- user_agent:
+    match: QQ%e9%9f%b3%e4%b9%90*
+    policy: 国内媒体
+- user_agent:
+    match: QQMusic*
+    policy: 国内媒体
+- user_agent:
+    match: QYPlayer*
+    policy: 国内媒体
+- user_agent:
+    match: TencentMidasConnect*
+    policy: 国内媒体
+- user_agent:
+    match: YYeTs*
+    policy: 国内媒体
+- user_agent:
+    match: Youku*
+    policy: 国内媒体
+- user_agent:
+    match: baiduyinyue
+    policy: 国内媒体
+- user_agent:
+    match: bilibili*
+    policy: 国内媒体
+- user_agent:
+    match: iQiYi*
+    policy: 国内媒体
+- user_agent:
+    match: iQiyi*
+    policy: 国内媒体
+- user_agent:
+    match: live4iphone*
+    policy: 国内媒体
+- user_agent:
+    match: qqlive4iphone*
+    policy: 国内媒体
+- user_agent:
+    match: walkman*
+    policy: 国内媒体
+- user_agent:
+    match: xiami*
+    policy: 国内媒体
+- user_agent:
+    match: youku*
+    policy: 国内媒体
+- ip_cidr:
+    match: 101.224.0.0/13
+    policy: 国内媒体
+    no_resolve: true
+- ip_cidr:
+    match: 101.71.154.241/32
+    policy: 国内媒体
+    no_resolve: true
+- ip_cidr:
+    match: 103.126.92.132/31
+    policy: 国内媒体
+    no_resolve: true
+- ip_cidr:
+    match: 103.44.56.0/22
+    policy: 国内媒体
+    no_resolve: true
+- ip_cidr:
+    match: 103.5.34.153/32
+    policy: 国内媒体
+    no_resolve: true
+- ip_cidr:
+    match: 104.109.129.153/32
+    policy: 国内媒体
+    no_resolve: true
+- ip_cidr:
+    match: 106.11.0.0/16
+    policy: 国内媒体
+    no_resolve: true
+- ip_cidr:
+    match: 106.75.74.76/32
+    policy: 国内媒体
+    no_resolve: true
+- ip_cidr:
+    match: 110.238.107.47/32
+    policy: 国内媒体
+    no_resolve: true
+- ip_cidr:
+    match: 111.206.25.147/32
+    policy: 国内媒体
+    no_resolve: true
+- ip_cidr:
+    match: 112.13.119.17/32
+    policy: 国内媒体
+    no_resolve: true
+- ip_cidr:
+    match: 112.13.122.1/32
+    policy: 国内媒体
+    no_resolve: true
+- ip_cidr:
+    match: 115.236.118.33/32
+    policy: 国内媒体
+    no_resolve: true
+- ip_cidr:
+    match: 115.236.121.1/32
+    policy: 国内媒体
+    no_resolve: true
+- ip_cidr:
+    match: 118.24.63.156/32
+    policy: 国内媒体
+    no_resolve: true
+- ip_cidr:
+    match: 118.26.120.0/24
+    policy: 国内媒体
+    no_resolve: true
+- ip_cidr:
+    match: 118.26.32.0/23
+    policy: 国内媒体
+    no_resolve: true
+- ip_cidr:
+    match: 119.176.0.0/12
+    policy: 国内媒体
+    no_resolve: true
+- ip_cidr:
+    match: 119.29.29.29/32
+    policy: 国内媒体
+    no_resolve: true
+- ip_cidr:
+    match: 119.3.238.64/32
+    policy: 国内媒体
+    no_resolve: true
+- ip_cidr:
+    match: 120.92.108.182/32
+    policy: 国内媒体
+    no_resolve: true
+- ip_cidr:
+    match: 120.92.113.99/32
+    policy: 国内媒体
+    no_resolve: true
+- ip_cidr:
+    match: 120.92.153.217/32
+    policy: 国内媒体
+    no_resolve: true
+- ip_cidr:
+    match: 128.1.62.200/31
+    policy: 国内媒体
+    no_resolve: true
+- ip_cidr:
+    match: 134.175.207.130/32
+    policy: 国内媒体
+    no_resolve: true
+- ip_cidr:
+    match: 150.116.92.250/32
+    policy: 国内媒体
+    no_resolve: true
+- ip_cidr:
+    match: 164.52.76.18/32
+    policy: 国内媒体
+    no_resolve: true
+- ip_cidr:
+    match: 193.112.159.225/32
+    policy: 国内媒体
+    no_resolve: true
+- ip_cidr:
+    match: 203.107.1.0/24
+    policy: 国内媒体
+    no_resolve: true
+- ip_cidr:
+    match: 203.211.4.169/32
+    policy: 国内媒体
+    no_resolve: true
+- ip_cidr:
+    match: 203.211.4.193/32
+    policy: 国内媒体
+    no_resolve: true
+- ip_cidr:
+    match: 203.74.95.131/32
+    policy: 国内媒体
+    no_resolve: true
+- ip_cidr:
+    match: 203.74.95.139/32
+    policy: 国内媒体
+    no_resolve: true
+- ip_cidr:
+    match: 203.74.95.153/32
+    policy: 国内媒体
+    no_resolve: true
+- ip_cidr:
+    match: 210.201.32.11/32
+    policy: 国内媒体
+    no_resolve: true
+- ip_cidr:
+    match: 210.201.32.8/32
+    policy: 国内媒体
+    no_resolve: true
+- ip_cidr:
+    match: 210.71.227.200/32
+    policy: 国内媒体
+    no_resolve: true
+- ip_cidr:
+    match: 210.71.227.202/32
+    policy: 国内媒体
+    no_resolve: true
+- ip_cidr:
+    match: 223.252.199.66/31
+    policy: 国内媒体
+    no_resolve: true
+- ip_cidr:
+    match: 23.211.15.99/32
+    policy: 国内媒体
+    no_resolve: true
+- ip_cidr:
+    match: 23.40.241.251/32
+    policy: 国内媒体
+    no_resolve: true
+- ip_cidr:
+    match: 23.40.242.10/32
+    policy: 国内媒体
+    no_resolve: true
+- ip_cidr:
+    match: 23.53.32.88/32
+    policy: 国内媒体
+    no_resolve: true
+- ip_cidr:
+    match: 39.105.63.80/32
+    policy: 国内媒体
+    no_resolve: true
+- ip_cidr:
+    match: 45.254.48.1/32
+    policy: 国内媒体
+    no_resolve: true
+- ip_cidr:
+    match: 45.43.32.234/32
+    policy: 国内媒体
+    no_resolve: true
+- ip_cidr:
+    match: 47.100.127.239/32
+    policy: 国内媒体
+    no_resolve: true
+- ip_cidr:
+    match: 58.49.111.117/32
+    policy: 国内媒体
+    no_resolve: true
+- ip_cidr:
+    match: 58.49.111.79/32
+    policy: 国内媒体
+    no_resolve: true
+- ip_cidr:
+    match: 58.49.111.95/32
+    policy: 国内媒体
+    no_resolve: true
+- ip_cidr:
+    match: 59.111.160.195/32
+    policy: 国内媒体
+    no_resolve: true
+- ip_cidr:
+    match: 59.111.160.197/32
+    policy: 国内媒体
+    no_resolve: true
+- ip_cidr:
+    match: 59.111.181.35/32
+    policy: 国内媒体
+    no_resolve: true
+- ip_cidr:
+    match: 59.111.181.38/32
+    policy: 国内媒体
+    no_resolve: true
+- ip_cidr:
+    match: 59.111.181.60/32
+    policy: 国内媒体
+    no_resolve: true
+- ip_cidr6:
+    match: ::ffff:113.248.172.245/128
+    policy: 国内媒体
+    no_resolve: true
+- ip_cidr6:
+    match: ::ffff:114.235.96.186/128
+    policy: 国内媒体
+    no_resolve: true
+- ip_cidr6:
+    match: ::ffff:115.236.128.112/128
+    policy: 国内媒体
+    no_resolve: true
+- ip_cidr6:
+    match: ::ffff:115.236.128.120/128
+    policy: 国内媒体
+    no_resolve: true
+- ip_cidr6:
+    match: ::ffff:115.236.128.24/128
+    policy: 国内媒体
+    no_resolve: true
+- ip_cidr6:
+    match: ::ffff:115.236.128.80/128
+    policy: 国内媒体
+    no_resolve: true
+- ip_cidr6:
+    match: ::ffff:117.64.75.196/128
+    policy: 国内媒体
+    no_resolve: true
+- ip_cidr6:
+    match: ::ffff:117.68.200.210/128
+    policy: 国内媒体
+    no_resolve: true
+- ip_cidr6:
+    match: ::ffff:117.87.144.24/128
+    policy: 国内媒体
+    no_resolve: true
+- ip_cidr6:
+    match: ::ffff:121.56.126.255/128
+    policy: 国内媒体
+    no_resolve: true
+- ip_cidr6:
+    match: ::ffff:124.73.198.81/128
+    policy: 国内媒体
+    no_resolve: true
+- ip_cidr6:
+    match: ::ffff:124.73.200.142/128
+    policy: 国内媒体
+    no_resolve: true
+- ip_cidr6:
+    match: ::ffff:175.6.84.30/128
+    policy: 国内媒体
+    no_resolve: true
+- ip_cidr6:
+    match: ::ffff:175.6.84.96/128
+    policy: 国内媒体
+    no_resolve: true
+- ip_cidr6:
+    match: ::ffff:183.161.144.133/128
+    policy: 国内媒体
+    no_resolve: true
+- ip_cidr6:
+    match: ::ffff:183.161.144.230/128
+    policy: 国内媒体
+    no_resolve: true
+- ip_cidr6:
+    match: ::ffff:183.161.149.105/128
+    policy: 国内媒体
+    no_resolve: true
+- ip_cidr6:
+    match: ::ffff:198.18.5.138/128
+    policy: 国内媒体
+    no_resolve: true
+- ip_cidr6:
+    match: ::ffff:198.18.6.81/128
+    policy: 国内媒体
+    no_resolve: true
+- ip_cidr6:
+    match: ::ffff:198.18.6.83/128
+    policy: 国内媒体
+    no_resolve: true
+- ip_cidr6:
+    match: ::ffff:223.240.191.238/128
+    policy: 国内媒体
+    no_resolve: true
+- ip_cidr6:
+    match: ::ffff:27.157.209.46/128
+    policy: 国内媒体
+    no_resolve: true
+- ip_cidr6:
+    match: ::ffff:58.217.232.117/128
+    policy: 国内媒体
+    no_resolve: true
+- ip_cidr6:
+    match: ::ffff:58.217.232.68/128
+    policy: 国内媒体
+    no_resolve: true
+- ip_cidr6:
+    match: ::ffff:58.217.232.79/128
+    policy: 国内媒体
+    no_resolve: true
+- ip_cidr6:
+    match: ::ffff:58.58.0.90/128
+    policy: 国内媒体
+    no_resolve: true
+- ip_cidr6:
+    match: ::ffff:60.171.183.161/128
+    policy: 国内媒体
+    no_resolve: true
+- ip_cidr6:
+    match: ::ffff:60.171.183.186/128
+    policy: 国内媒体
+    no_resolve: true
+- ip_cidr6:
+    match: ::ffff:60.171.183.98/128
+    policy: 国内媒体
+    no_resolve: true
+- domain_suffix:
+    match: jd.hk
+    policy: DIRECT
+- domain_suffix:
+    match: dns.la
+    policy: DIRECT
+- domain_suffix:
+    match: mrw.so
+    policy: DIRECT
+- domain_suffix:
+    match: id6.com
+    policy: DIRECT
+- domain_suffix:
+    match: tool.lu
+    policy: DIRECT
+- domain_suffix:
+    match: gitee.io
+    policy: DIRECT
+- domain_suffix:
+    match: 360in.com
+    policy: DIRECT
+- domain_suffix:
+    match: 71.am.com
+    policy: DIRECT
+- domain_suffix:
+    match: dcloud.io
+    policy: DIRECT
+- domain_suffix:
+    match: douban.fm
+    policy: DIRECT
+- domain_suffix:
+    match: futu5.com
+    policy: DIRECT
+- domain_suffix:
+    match: klook.com
+    policy: DIRECT
+- domain_suffix:
+    match: maoyun.tv
+    policy: DIRECT
+- domain_suffix:
+    match: sifou.com
+    policy: DIRECT
+- domain_suffix:
+    match: xycdn.com
+    policy: DIRECT
+- domain_suffix:
+    match: battle.net
+    policy: DIRECT
+- domain_suffix:
+    match: futunn.com
+    policy: DIRECT
+- domain:
+    match: i.dell.com
+    policy: DIRECT
+- domain_suffix:
+    match: jianshu.io
+    policy: DIRECT
+- domain_suffix:
+    match: lancdn.com
+    policy: DIRECT
+- domain_suffix:
+    match: netease.im
+    policy: DIRECT
+- domain_suffix:
+    match: realme.com
+    policy: DIRECT
+- domain_suffix:
+    match: sinajs.com
+    policy: DIRECT
+- domain_suffix:
+    match: snssdk.com
+    policy: DIRECT
+- domain_suffix:
+    match: szbdyd.com
+    policy: DIRECT
+- domain:
+    match: viayoo.com
+    policy: DIRECT
+- domain_suffix:
+    match: daocloud.io
+    policy: DIRECT
+- domain:
+    match: dl.ubnt.com
+    policy: DIRECT
+- domain_suffix:
+    match: landian.vip
+    policy: DIRECT
+- domain_suffix:
+    match: oneplus.net
+    policy: DIRECT
+- domain_suffix:
+    match: tnkjmec.com
+    policy: DIRECT
+- domain_suffix:
+    match: udqqimg.com
+    policy: DIRECT
+- domain_suffix:
+    match: zhangzs.com
+    policy: DIRECT
+- domain_suffix:
+    match: baidubcr.com
+    policy: DIRECT
+- domain_suffix:
+    match: blizzard.com
+    policy: DIRECT
+- domain_suffix:
+    match: bulicdn2.com
+    policy: DIRECT
+- domain_suffix:
+    match: jstarkan.com
+    policy: DIRECT
+- domain_suffix:
+    match: qhupdate.com
+    policy: DIRECT
+- domain_suffix:
+    match: sevencdn.com
+    policy: DIRECT
+- domain_suffix:
+    match: cloudglab.com
+    policy: DIRECT
+- domain_suffix:
+    match: meitustat.com
+    policy: DIRECT
+- domain_suffix:
+    match: opstatics.com
+    policy: DIRECT
+- domain_suffix:
+    match: wmsjsteam.com
+    policy: DIRECT
+- domain_suffix:
+    match: 4008823823.com
+    policy: DIRECT
+- domain_suffix:
+    match: air-matters.io
+    policy: DIRECT
+- domain:
+    match: app.viayoo.com
+    policy: DIRECT
+- domain_suffix:
+    match: onlinedown.com
+    policy: DIRECT
+- domain_suffix:
+    match: openinstall.io
+    policy: DIRECT
+- domain:
+    match: res.viayoo.com
+    policy: DIRECT
+- domain:
+    match: www.viayoo.com
+    policy: DIRECT
+- domain_suffix:
+    match: xiaoxiaapi.com
+    policy: DIRECT
+- domain_suffix:
+    match: baidustatic.com
+    policy: DIRECT
+- domain:
+    match: config.ubnt.com
+    policy: DIRECT
+- domain_suffix:
+    match: landiannews.com
+    policy: DIRECT
+- domain_suffix:
+    match: steamserver.net
+    policy: DIRECT
+- domain_suffix:
+    match: dl.pinyuncloud.com
+    policy: DIRECT
+- domain:
+    match: time.xtracloud.net
+    policy: DIRECT
+- domain_suffix:
+    match: cm.steampowered.com
+    policy: DIRECT
+- domain:
+    match: ocsp.globalsign.com
+    policy: DIRECT
+- domain:
+    match: ocsp2.globalsign.com
+    policy: DIRECT
+- domain:
+    match: cn.download.nvidia.com
+    policy: DIRECT
+- domain_suffix:
+    match: dl.delivery.mp.microsoft.com
+    policy: DIRECT
+- domain_wildcard:
+    match: qhimgs?.com
+    policy: DIRECT
+- user_agent:
+    match: '%E4%BC%98%E9%85%B7*'
+    policy: DIRECT
+- user_agent:
+    match: '%E6%89%8B%E6%9C%BA%E6%B7%98%E5%AE%9D*'
+    policy: DIRECT
+- user_agent:
+    match: TeslaMap
+    policy: DIRECT
+- rule_set:
+    match: https://raw.githubusercontent.com/QuixoticHeart/rule-set/ruleset/egern/cn.yaml
+    policy: DIRECT
+    update_interval: 86400
+- rule_set:
+    match: https://raw.githubusercontent.com/QuixoticHeart/rule-set/ruleset/egern/speedtest.yaml
     policy: 测速
-- rule_set:
-    match: https://raw.githubusercontent.com/allen0039/proxy-resource-hub/main/Rules/Egern/SKK/LAN.yaml
-    policy: DIRECT
-- rule_set:
-    match: https://raw.githubusercontent.com/allen0039/proxy-resource-hub/main/Rules/Egern/SKK/Domestic.yaml
-    policy: DIRECT
+    update_interval: 86400
 - rule_set:
     match: https://raw.githubusercontent.com/allen0039/proxy-resource-hub/main/Rules/Egern/SKK/AppleCN.yaml
     policy: DIRECT
+    update_interval: 86400
 - rule_set:
     match: https://raw.githubusercontent.com/allen0039/proxy-resource-hub/main/Rules/Egern/SKK/MicrosoftCDN.yaml
     policy: DIRECT
+    update_interval: 86400
+- rule_set:
+    match: https://raw.githubusercontent.com/allen0039/proxy-resource-hub/main/Rules/Egern/Google/gemini.yaml
+    policy: Google
+- domain_suffix:
+    match: safebrowsing.google.com
+    policy: Google
+- domain_suffix:
+    match: github.io
+    policy: GitHub
+- domain_suffix:
+    match: githubassets.com
+    policy: GitHub
+- domain:
+    match: api.github.com
+    policy: GitHub
+- domain_suffix:
+    match: cursor.com
+    policy: AI
+- domain_suffix:
+    match: claudeusercontent.com
+    policy: AI
+- domain_suffix:
+    match: chatgpt.livekit.cloud
+    policy: AI
+- domain_suffix:
+    match: aicode.googleapis.com
+    policy: AI
 - rule_set:
     match: https://raw.githubusercontent.com/allen0039/proxy-resource-hub/main/Rules/Egern/AI/ai.yaml
     policy: AI
 - rule_set:
     match: https://raw.githubusercontent.com/allen0039/proxy-resource-hub/main/Rules/Egern/SKK/AI.yaml
     policy: AI
-- rule_set:
-    match: https://raw.githubusercontent.com/allen0039/proxy-resource-hub/main/Rules/Egern/AI/AIGC.yaml
-    policy: AI
-- rule_set:
-    match: https://raw.githubusercontent.com/Repcz/Tool/X/Egern/Rules/YouTube.yaml
-    policy: YouTube
-- rule_set:
-    match: https://raw.githubusercontent.com/allen0039/proxy-resource-hub/main/Rules/Egern/Google/Google.yaml
-    policy: Google
-- rule_set:
-    match: https://raw.githubusercontent.com/Repcz/Tool/X/Egern/Rules/Apple.yaml
-    policy: Apple
+    update_interval: 86400
 - rule_set:
     match: https://raw.githubusercontent.com/Repcz/Tool/X/Egern/Rules/Github.yaml
     policy: GitHub
@@ -1104,17 +2777,42 @@ rules:
     match: https://raw.githubusercontent.com/allen0039/proxy-resource-hub/main/Rules/Egern/Services/Docker.yaml
     policy: Docker
 - rule_set:
+    match: https://raw.githubusercontent.com/Repcz/Tool/X/Egern/Rules/YouTube.yaml
+    policy: YouTube
+- rule_set:
+    match: https://raw.githubusercontent.com/Repcz/Tool/X/Egern/Rules/OneDrive.yaml
+    policy: OneDrive
+- rule_set:
+    match: https://raw.githubusercontent.com/Repcz/Tool/X/Egern/Rules/TikTok.yaml
+    policy: TikTok
+- rule_set:
     match: https://raw.githubusercontent.com/Repcz/Tool/X/Egern/Rules/Netflix.yaml
     policy: Netflix
+- rule_set:
+    match: https://raw.githubusercontent.com/Repcz/Tool/X/Egern/Rules/Emby.yaml
+    policy: Emby
+- rule_set:
+    match: https://raw.githubusercontent.com/Repcz/Tool/X/Egern/Rules/Disney.yaml
+    policy: 国外媒体
+- rule_set:
+    match: https://raw.githubusercontent.com/Repcz/Tool/X/Egern/Rules/HBO.yaml
+    policy: 国外媒体
 - rule_set:
     match: https://raw.githubusercontent.com/Repcz/Tool/X/Egern/Rules/Bahamut.yaml
     policy: 巴哈姆特
 - rule_set:
-    match: https://raw.githubusercontent.com/allen0039/proxy-resource-hub/main/Rules/Egern/Media/ChinaMedia.yaml
-    policy: 国内媒体
+    match: https://raw.githubusercontent.com/Repcz/Tool/X/Egern/Rules/Porn.yaml
+    policy: 特殊媒体
 - rule_set:
-    match: https://raw.githubusercontent.com/Repcz/Tool/X/Egern/Rules/Telegram.yaml
+    match: https://raw.githubusercontent.com/Repcz/Tool/X/Egern/Rules/PayPal.yaml
+    policy: PayPal
+- rule_set:
+    match: https://raw.githubusercontent.com/Repcz/Tool/X/Egern/Rules/Spotify.yaml
+    policy: Spotify
+- rule_set:
+    match: https://raw.githubusercontent.com/Repcz/Tool/X/Egern/Rules/Telegram_NoIP.yaml
     policy: Telegram
+    update_interval: 86400
 - rule_set:
     match: https://raw.githubusercontent.com/Repcz/Tool/X/Egern/Rules/Twitter.yaml
     policy: 国外社交
@@ -1130,64 +2828,101 @@ rules:
 - rule_set:
     match: https://raw.githubusercontent.com/allen0039/proxy-resource-hub/main/Rules/Egern/Social/WhatsApp.yaml
     policy: 国外社交
+- user_agent:
+    match: '%E4%BA%91%E7%AB%AF%E7%A1%AC%E7%9B%98*'
+    policy: Google
+- user_agent:
+    match: '*com.google.Drive*'
+    policy: Google
+- user_agent:
+    match: Google.Drive*
+    policy: Google
 - rule_set:
-    match: https://raw.githubusercontent.com/Repcz/Tool/X/Egern/Rules/Emby.yaml
-    policy: Emby
+    match: https://raw.githubusercontent.com/QuixoticHeart/rule-set/ruleset/egern/google.yaml
+    policy: Google
+    update_interval: 86400
 - rule_set:
-    match: https://raw.githubusercontent.com/Repcz/Tool/X/Egern/Rules/Disney.yaml
-    policy: 迪士尼+
-- rule_set:
-    match: https://raw.githubusercontent.com/Repcz/Tool/X/Egern/Rules/HBO.yaml
-    policy: HBO
-- rule_set:
-    match: https://raw.githubusercontent.com/Repcz/Tool/X/Egern/Rules/Bilibili.yaml
-    policy: 哔哩哔哩
-- rule_set:
-    match: https://raw.githubusercontent.com/Repcz/Tool/X/Egern/Rules/Porn.yaml
-    policy: 特殊媒体
-- rule_set:
-    match: https://raw.githubusercontent.com/Repcz/Tool/X/Egern/Rules/PayPal.yaml
-    policy: PayPal
-- rule_set:
-    match: https://raw.githubusercontent.com/Repcz/Tool/X/Egern/Rules/Spotify.yaml
-    policy: Spotify
-- rule_set:
-    match: https://raw.githubusercontent.com/Repcz/Tool/X/Egern/Rules/TikTok.yaml
-    policy: TikTok
-- rule_set:
-    match: https://raw.githubusercontent.com/Repcz/Tool/X/Egern/Rules/OneDrive.yaml
-    policy: OneDrive
-- rule_set:
-    match: https://raw.githubusercontent.com/Repcz/Tool/X/Egern/Rules/Steam.yaml
+    match: https://raw.githubusercontent.com/Repcz/Tool/X/Egern/Rules/Game.yaml
     policy: 游戏平台
 - rule_set:
     match: https://raw.githubusercontent.com/allen0039/proxy-resource-hub/main/Rules/Egern/Games/Sony.yaml
     policy: 游戏平台
 - rule_set:
-    match: https://raw.githubusercontent.com/Repcz/Tool/X/Egern/Rules/Game.yaml
+    match: https://raw.githubusercontent.com/Repcz/Tool/X/Egern/Rules/Steam.yaml
     policy: 游戏平台
-- rule_set:
-    match: https://raw.githubusercontent.com/Repcz/Tool/X/Egern/Rules/Microsoft.yaml
+- domain_keyword:
+    match: hotmail
     policy: Microsoft
 - rule_set:
-    match: https://raw.githubusercontent.com/allen0039/proxy-resource-hub/main/Rules/Egern/SKK/CDN.yaml
-    policy: CDN
+    match: https://raw.githubusercontent.com/QuixoticHeart/rule-set/ruleset/egern/microsoft.yaml
+    policy: Microsoft
+    update_interval: 86400
 - rule_set:
-    match: https://raw.githubusercontent.com/allen0039/proxy-resource-hub/main/Rules/Egern/Media/GlobalMedia.yaml
-    policy: 国外媒体
+    match: https://raw.githubusercontent.com/QuixoticHeart/rule-set/ruleset/egern/apple.yaml
+    policy: Apple
+    update_interval: 86400
+- domain_suffix:
+    match: media-amazon.com
+    policy: 海淘
 - rule_set:
-    match: https://raw.githubusercontent.com/allen0039/proxy-resource-hub/main/Rules/Egern/SKK/Stream.yaml
+    match: https://raw.githubusercontent.com/Repcz/Tool/X/Egern/Rules/ProxyMedia.yaml
     policy: 国外媒体
+    update_interval: 86400
 - rule_set:
     match: https://raw.githubusercontent.com/allen0039/proxy-resource-hub/main/Rules/Egern/shop/shopping.yaml
     policy: 海淘
 - rule_set:
+    match: https://raw.githubusercontent.com/allen0039/proxy-resource-hub/main/Rules/Egern/SKK/CDN.yaml
+    policy: CDN
+- asn:
+    match: '62041'
+    policy: Telegram
+    no_resolve: true
+- asn:
+    match: '62014'
+    policy: Telegram
+    no_resolve: true
+- asn:
+    match: '59930'
+    policy: Telegram
+    no_resolve: true
+- asn:
+    match: '44907'
+    policy: Telegram
+    no_resolve: true
+- asn:
+    match: '211157'
+    policy: Telegram
+    no_resolve: true
+- rule_set:
+    match: https://raw.githubusercontent.com/Repcz/Tool/X/Egern/Rules/Telegram.yaml
+    policy: Telegram
+    update_interval: 86400
+- domain_suffix:
+    match: 'no'
+    policy: Proxy
+- rule_set:
+    match: https://raw.githubusercontent.com/Repcz/Tool/X/Egern/Rules/Proxy.yaml
+    policy: Proxy
+    update_interval: 86400
+- rule_set:
     match: https://raw.githubusercontent.com/Repcz/Tool/X/Egern/Rules/ProxyGFW.yaml
     policy: Proxy
+- ip_cidr:
+    match: 140.205.1.0/24
+    policy: DIRECT
+    no_resolve: true
+- ip_cidr:
+    match: 162.14.0.0/18
+    policy: DIRECT
+    no_resolve: true
+- rule_set:
+    match: https://raw.githubusercontent.com/QuixoticHeart/rule-set/ruleset/egern/cncidr.yaml
+    policy: DIRECT
+    update_interval: 86400
 - geoip:
     match: CN
     policy: DIRECT
-    no_resolve: true
 - default:
     policy: Final
 modules:
