@@ -221,7 +221,9 @@ policy_groups:
 
 `api.github.com` 由本地精确规则固定交给 GitHub 策略。宽泛的 GitHub 和 Cloudflare 本地覆盖规则已移除；AI 专属端点由仓库自有 AI 订阅优先接管，既有第三方 AI 订阅继续作为补充。
 
-Loon 的 AI、测速和 Game 补充规则使用 Blackmatrix 的 Loon 原生列表。无法通过当前网络更新的 Kelee 插件保留为 `enabled=false`，避免导入后持续产生资源更新错误。
+Loon 业务规则使用完整的原生经典列表，SKK 经典规则使用官方直链；没有直接订阅纯域名集。Quantumult X 的原生列表保持 `opt-parser=false`，SKK Surge 格式由已配置的 KOP-XIAO 解析器转换。Loon 基础广告使用 anti-AD 加 SKK 经典补充；QX 基础广告使用 Repcz 原生 Ads_SukkaW，PCDN 单独保留。QX 的 PCDN、微软下载和 AI 采用官方 Clash 经典输出，Apple 和流媒体采用原生 QX 来源，避免订阅含不支持条件的列表。`SurgeAligned` 未发布路径已从所有活动配置移除，不再需要发布这批生成文件。
+
+Egern 使用已发布的原生 YAML：SKK 基础广告采用 Repcz 的 `Ads_SukkaW.yaml`（未混入高级 reject-drop 和独立广告 IP 总集），局域网、Apple 国内、微软 CDN 和 AI 继续使用已发布的仓库资源，国内域名、测速、Apple、Microsoft、Google 和中国 IP 使用 QuixoticHeart。国内媒体及小型兼容差异内置在配置中，避免依赖带有非官方进程字段的旧输出。Telegram ASN/IP 位于具体业务和 CDN 之后、含 IP 的通用代理总集之前。
 
 `Download` 规则仍在仓库中自动维护，但这六份模板没有启用 Download 策略组，避免国外下载域名被过度分流。
 
@@ -295,6 +297,10 @@ git diff --stat
 
 检查通过后，将公开模板、对应测试和说明一起提交，通过 PR 合并；再在本地 `main` 执行 `git pull --ff-only`。只处理单个客户端时可追加 `--only Surge-iPhone.conf`，该选项可重复使用。
 
+替换规则源后运行 `python3 tools/check_remote_rules.py`；可用 `--cache-dir /tmp/rule-http` 保存实取内容。新增自有规则地址时须先发布对应文件。它会向活动规则的真实地址发送 HTTP 请求；全部可下载后再分发配置。该检查不会用本地同名文件替代网络下载，也不会读取节点订阅或证书区块。QX 还需执行 `python3 tools/check_qx_config.py --cache-dir /tmp/qx-http --report /tmp/qx-audit.json`：它会真实运行配置中的解析器，任何跳过通知都会导致检查失败，并检查原生语法和策略引用。
+
 **同步判定是“个人配置经过公开模板转换后相同”，不是私人文件逐字相同。** 转换替换订阅和凭据，移除私人节点、证书及设备/IP 专属规则，并统一格式。另有两个明确的公开模板例外：Loon 插件默认关闭；Egern 不发布 MITM、脚本和本地节点区块。它们不是普通分流差异；个人配置保留原设置，命令不会回写私人文件。DNS、策略组和其余分流设置随个人配置同步。
 
 GitHub Actions 无法读取你电脑上的私人配置，因此私人配置变化后需要运行上述命令；远端的定时任务只更新公开规则。
+
+QX 的哔哩哔哩重写使用现有解析器的 `replace` 参数，将上游七处失效的 Blackmatrix7 脚本引用替换为重写作者仓库中的 `js/backup/bilibili_plus.js`，同时保留原始匹配锚点。变更订阅地址后需要重新导入配置；只更新原有资源不会替换地址。

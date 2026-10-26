@@ -3,6 +3,8 @@ from __future__ import annotations
 import importlib.util
 import tempfile
 import unittest
+
+import config_routing as routing
 from pathlib import Path
 
 import yaml
@@ -144,57 +146,17 @@ class EgernRuleUpdaterTests(unittest.TestCase):
         self.assertNotIn("git add .", workflow)
 
     def test_public_egern_config_has_surge_parity_order_and_owned_url_closure(self):
-        config_path = ROOT / "Configs/tool_config/egern_byallen.yaml"
-        config = yaml.safe_load(config_path.read_text(encoding="utf-8"))
-        rules = config["rules"]
-        active_rule_sets = [
-            payload
-            for rule in rules
-            for kind, payload in rule.items()
-            if kind == "rule_set" and not payload.get("disabled", False)
-        ]
-        matches = [payload["match"] for payload in active_rule_sets]
-        markers = [
-            "Rules/Egern/Custom/direct.yaml",
-            "Rules/Egern/SKK/Reject.yaml",
-            "Rules/Egern/Services/Speedtest.yaml",
-            "Rules/Egern/SKK/LAN.yaml",
-            "Rules/Egern/SKK/Domestic.yaml",
-            "Rules/Egern/SKK/AppleCN.yaml",
-            "Rules/Egern/SKK/MicrosoftCDN.yaml",
-            "Rules/Egern/SKK/AI.yaml",
-            "Rules/Egern/AI/AIGC.yaml",
-            "Rules/Egern/Google/Google.yaml",
-            "Rules/Egern/Games/Sony.yaml",
-            "Rules/Egern/SKK/CDN.yaml",
-            "Rules/Egern/Media/GlobalMedia.yaml",
-            "Rules/Egern/SKK/Stream.yaml",
-        ]
-        positions = [
-            next(index for index, match in enumerate(matches) if marker in match)
-            for marker in markers
-        ]
-        self.assertEqual(positions, sorted(positions))
-
-        owned_prefix = (
-            "https://raw.githubusercontent.com/allen0039/"
-            "proxy-resource-hub/main/"
-        )
-        for match in matches:
-            if match.startswith(owned_prefix):
-                self.assertTrue((ROOT / match.removeprefix(owned_prefix)).is_file())
-
-        and_rules = [rule["and"] for rule in rules if "and" in rule]
-        self.assertEqual(1, len(and_rules))
-        self.assertEqual("REJECT", and_rules[0]["policy"])
-        self.assertEqual(
-            [
-                {"protocol": {"match": "udp"}},
-                {"domain_suffix": {"match": "googlevideo.com"}},
-            ],
-            and_rules[0]["match"],
-        )
-
+        name='egern_byallen.yaml'
+        routing.assert_stage_order(self,name)
+        routing.assert_compatibility(self,name)
+        for url,_ in routing.remote(name):
+            if url.startswith(routing.BASE):
+                self.assertTrue((ROOT/url.removeprefix(routing.BASE)).is_file())
+        rules=yaml.safe_load(routing.read(name))['rules']
+        compound=[r['and'] for r in rules if 'and' in r]
+        self.assertEqual(len(compound),1)
+        self.assertEqual(compound[0]['policy'],'REJECT')
+        self.assertEqual(compound[0]['match'],[{'protocol':{'match':'udp'}},{'domain_suffix':{'match':'googlevideo.com'}}])
 
 if __name__ == "__main__":
     unittest.main()
