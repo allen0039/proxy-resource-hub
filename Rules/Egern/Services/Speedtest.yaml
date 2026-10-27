@@ -2,7 +2,7 @@
 # SPDX-License-Identifier: AGPL-3.0-only
 # Derived from https://github.com/SukkaW/Surge
 # Source: https://ruleset.skk.moe/List/domainset/speedtest.conf
-# Rule count: 3457
+# Rule count: 3459
 
 domain_set:
   - "7h15.ru1353t.1s.m4d3.by.5ukk4w.skk.moe"
@@ -1155,6 +1155,7 @@ domain_set:
   - "speedtest.keiminem.com"
   - "speedtest.komogoto.com"
   - "speedtest.layra.web.tr"
+  - "speedtest.lecrintv.com"
   - "speedtest.me.mycci.net"
   - "speedtest.meghlink.com"
   - "speedtest.meric.net.tr"
@@ -3211,6 +3212,7 @@ domain_set:
   - "speedtest4.fastfortechnologies.com"
   - "speedtestmera.vs.mythic-beasts.com"
   - "speedtestpnp.infolinkbroadband.com"
+  - "srv01-speedtest-pa5.ptr.corenix.fr"
   - "st-balikesir-1.turksatkablo.com.tr"
   - "st-eskisehir-1.turksatkablo.com.tr"
   - "st-gaziantep-1.turksatkablo.com.tr"
