@@ -2,7 +2,7 @@
 # SPDX-License-Identifier: AGPL-3.0-only
 # Derived from https://github.com/SukkaW/Surge
 # Source: https://ruleset.skk.moe/List/domainset/speedtest.conf
-# Rule count: 3459
+# Rule count: 3461
 
 domain_set:
   - "7h15.ru1353t.1s.m4d3.by.5ukk4w.skk.moe"
@@ -2056,6 +2056,7 @@ domain_set:
   - "speedtest.heartofiowa.coop"
   - "speedtest.inovewifi.com.br"
   - "speedtest.jcnettelecom.com"
+  - "speedtest.jdtelecom.com.br"
   - "speedtest.jonasdevries.net"
   - "speedtest.kappenhagen.tech"
   - "speedtest.kouten.barcelona"
@@ -3249,6 +3250,7 @@ domain_set:
   - "duliajan-speedtest.arrowebonline.com"
   - "ookla-autazes.amazoniasat-isp.com.br"
   - "santaclara-speedtest.utopiafiber.com"
+  - "speedtest-34-1g.mustafasevinc.com.tr"
   - "speedtest-ist-34-node.netzone.com.tr"
   - "speedtest-lenexa.resoundnetworks.com"
   - "speedtest-london-east.vodafone.co.uk"
