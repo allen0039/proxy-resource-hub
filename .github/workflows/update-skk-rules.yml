@@ -43,5 +43,5 @@ jobs:
           fi
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
-          git commit -m "Update SKK CDN and Download rules"
+          git commit -m "Update native SKK client rules"
           git push

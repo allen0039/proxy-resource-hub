@@ -482,6 +482,36 @@ rule-providers:
         self.assertEqual("example.com", parsed["proxies"][0]["server"])
         self.assertIn(PUBLIC_RULE_URL, result)
 
+    def test_mihomo_replaces_tailscale_auth_key(self):
+        sanitizer = load_sanitizer()
+        source = f"""proxy-providers:
+  PersonalName:
+    url: \"{PRIVATE_URL}\"
+    type: http
+proxies:
+  - name: Tailscale
+    type: tailscale
+    hostname: mihomo
+    auth-key: tskey-auth-abcdefghijklmnopqrstuvwxyz123456
+proxy-groups:
+  - name: Proxy
+    type: select
+    use: [PersonalName]
+rules:
+  - MATCH,Proxy
+rule-providers:
+  direct-ai:
+    type: http
+    behavior: classical
+    format: text
+    url: {PUBLIC_RULE_URL}
+secret: CHANGE_ME
+"""
+        result = sanitizer.sanitize_mihomo(source)
+        self.assertNotIn("tskey-auth-abcdefghijklmnopqrstuvwxyz123456", result)
+        self.assertIn("auth-key: CHANGE_ME", result)
+        sanitizer.validate_client_structure("mihomo_allen.yaml", result)
+
     def test_egern_replaces_subscription_urls_and_rejects_sensitive_sections(self):
         sanitizer = load_sanitizer()
         source = f"""policy_groups:
