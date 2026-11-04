@@ -47,6 +47,18 @@ proxy-providers:
 #      interval: 300
 #    proxy: DIRECT
 
+# 内置 Tailscale 出站。未填写 auth-key 时，首次连接会在日志中输出登录链接。
+proxies:
+  - name: Tailscale
+    type: tailscale
+    hostname: mihomo
+    state-dir: ./tailscale-mihomo
+    ephemeral: false
+    udp: true
+    accept-routes: true
+    ip-version: ipv4-prefer
+    auth-key: CHANGE_ME
+
 # 全局配置
 global-ua: clash.meta
 port: 7890
@@ -114,6 +126,7 @@ dns:
     - '+.lan'
     - '+.local'
     - '+.localhost'
+    - '+.ts.net'
     - '+.msftconnecttest.com'
     - '+.msftncsi.com'
     - '+.push.apple.com'
@@ -139,6 +152,7 @@ dns:
   nameserver: [223.5.5.5, 223.6.6.6]
   # 局域网/路由器域名交回系统，避免向公网解析器查询。
   nameserver-policy:
+    '+.ts.net': 'ts://Tailscale'
     '+.lan': system
     '+.local': system
     'router.asus.com': system
@@ -254,9 +268,15 @@ proxy-groups:
 rules:
   # 按顺序匹配：主动覆盖 → 兼容放行 → 基础拦截 → 国内媒体/直连 → 境外业务 → 通用分流 → IP/FINAL。
 
+  # === Tailscale 内置出站 ===
+  # 家庭子网由 Tailscale 子网路由器发布后走 Tailnet；控制面保持 DIRECT，避免递归。
+  - DOMAIN-SUFFIX,ts.net,Tailscale
+  - DOMAIN-SUFFIX,tailscale.com,DIRECT
+
   # === 1. 用户主动覆盖 ===
   # 这些覆盖是用户主动设置：保留先于地区和个人站点规则的优先级。
   - DOMAIN-SUFFIX,private-service-3.invalid,美国节点
+  - DOMAIN-SUFFIX,private-service-2.invalid,日本节点
   - DOMAIN-SUFFIX,private-service-4.invalid,美国节点
   - DOMAIN-SUFFIX,api.flyapi.tech,美国节点
   - DOMAIN-SUFFIX,nodeseek.com,日本节点

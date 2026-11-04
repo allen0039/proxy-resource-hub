@@ -36,6 +36,7 @@ LONG_BASE64_RE = re.compile(
 PRIVATE_QUERY_RE = re.compile(
     r"(?i)https?://[^\s,]*(?:token|password|passwd|secret|auth|key)="
 )
+TS_AUTH_KEY_RE = re.compile(r"(?i)\btskey-(?:auth|api|oauth)-[A-Za-z0-9_-]{20,}\b")
 IP_ROUTING_RULE_RE = re.compile(
     r"^\s*(?:[#;]\s*)?(?:-\s*)?(?:IP-CIDR6?|IP6-CIDR)\s*,"
     r"\s*[^,\s]+\s*,\s*([^,\s]+)",
@@ -424,6 +425,7 @@ def _sanitize_mihomo_proxy_scalars(text: str) -> str:
         "certificate": "CHANGE_ME",
         "token": "CHANGE_ME",
         "key": "CHANGE_ME",
+        "auth-key": "CHANGE_ME",
     }
 
     for line in lines:
@@ -431,7 +433,7 @@ def _sanitize_mihomo_proxy_scalars(text: str) -> str:
             current = line.split(":", 1)[0].strip().casefold()
         if current == "proxies":
             match = re.match(
-                r"^(\s+(?:-\s+)?)(server|uuid|password|private-key|certificate|token|key)(:\s*).*$",
+                r"^(\s+(?:-\s+)?)(server|uuid|password|private-key|certificate|token|key|auth-key)(:\s*).*$",
                 line,
             )
             if match:
@@ -728,6 +730,9 @@ def _validate_mihomo(filename: str, text: str) -> None:
             raise SanitizationError(
                 f"{filename}: provider download policy must use built-in DIRECT"
             )
+    for proxy in proxies:
+        if isinstance(proxy, dict) and "auth-key" in proxy and proxy["auth-key"] != "CHANGE_ME":
+            raise SanitizationError(f"{filename}: Tailscale auth-key is not sanitized")
     if parsed.get("secret") != "CHANGE_ME":
         raise SanitizationError(f"{filename}: controller secret is not sanitized")
 
@@ -890,6 +895,8 @@ def validate_common_patterns(filename: str, text: str) -> None:
         raise SanitizationError(f"{filename}: long base64 material remains")
     if PRIVATE_QUERY_RE.search(text):
         raise SanitizationError(f"{filename}: credential query parameter remains")
+    if TS_AUTH_KEY_RE.search(text):
+        raise SanitizationError(f"{filename}: Tailscale auth-key remains")
     if any(_is_nonpublic_ip_routing_rule(line) for line in text.splitlines()):
         raise SanitizationError(
             f"{filename}: address-specific proxy routing rule remains"

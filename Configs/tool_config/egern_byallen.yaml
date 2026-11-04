@@ -767,6 +767,9 @@ rules:
     match: private-service-3.invalid
     policy: 美国节点
 - domain_suffix:
+    match: private-service-2.invalid
+    policy: 日本节点
+- domain_suffix:
     match: private-service-4.invalid
     policy: 美国节点
 - domain_suffix:

@@ -122,6 +122,18 @@ def assert_stage_order(test, name):
 def assert_canonical_local(test, name):
     required = set(local('surge_iphone_allen.conf'))
     actual = local(name)
+    # Tailscale is intentionally supported only by the Mihomo and Surge
+    # templates; QX, Loon and Egern use their native/system clients instead.
+    if not name.startswith(('mihomo', 'surge_')):
+        required = {
+            rule for rule in required
+            if rule[:2] not in {('DOMAIN-SUFFIX', 'ts.net'), ('DOMAIN-SUFFIX', 'tailscale.com')}
+        }
+    elif name.startswith('mihomo'):
+        required = {
+            (rule[0], rule[1], 'Tailscale' if rule == ('DOMAIN-SUFFIX', 'ts.net', 'Tailnet') else rule[2])
+            for rule in required
+        }
     missing = required - set(actual)
     test.assertFalse(missing, f'{name}: missing {len(missing)} canonical local overrides')
     for rule in required:
