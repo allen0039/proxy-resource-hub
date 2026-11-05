@@ -144,6 +144,11 @@ def _is_nonpublic_ip_routing_rule(line: str) -> bool:
     if match is None:
         return False
     policy = match.group(1).casefold()
+    # Exact host routes are commonly device or server-specific. Keep broader
+    # private-network direct rules, but omit /32 and /128 direct exceptions
+    # from public templates.
+    if policy == "direct" and re.search(r"\/(?:32|128)(?:,|\s|$)", line):
+        return True
     return policy != "direct" and not policy.startswith("reject")
 
 

@@ -61,50 +61,50 @@ local.adguard.org = server:system
 [Remote Proxy]
 # 订阅使用说明：
 # 1. [Remote Proxy] 每行格式为“订阅名 = URL,参数”，请将 URL 替换为自己的订阅地址。
-# 2. enabled=true 加载该订阅，enabled=false 暂不加载；当前仅启用 拼好鸡。
+# 2. enabled=true 加载该订阅，enabled=false 暂不加载；当前启用 拼好鸡和白菜灵车。
 # 3. skip-cert-verify=false 保持证书校验；地区组为空时检查 [Remote Filter] 与节点名称。
 # 4. Loon 配置文件不提供订阅刷新周期字段；请在 App 的节点订阅设置中选择每 6 小时更新。
 拼好鸡 = 获取到的订阅链接,udp=true,block-quic=true,fast-open=default,vmess-aead=true,skip-cert-verify=false,enabled=true,flexible-sni=false,img-url=https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/Bamboo.png
-机场 = 获取到的订阅链接,udp=true,block-quic=true,fast-open=default,vmess-aead=true,skip-cert-verify=false,enabled=false,flexible-sni=false,img-url=https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/Bamboo.png
+机场 = 获取到的订阅链接,udp=true,block-quic=true,fast-open=default,vmess-aead=true,skip-cert-verify=false,enabled=true,flexible-sni=false,img-url=https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/Bamboo.png
 自建 = 获取到的订阅链接,udp=true,block-quic=false,fast-open=default,vmess-aead=true,skip-cert-verify=false,enabled=false,flexible-sni=false,img-url=https://raw.githubusercontent.com/Orz-3/mini/master/Alpha/Vpn.png
 备用 = 获取到的订阅链接,udp=true,block-quic=true,fast-open=default,vmess-aead=true,skip-cert-verify=false,enabled=false,flexible-sni=false,img-url=https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/Filter.png
 
 [Proxy Group]
-Proxy = select,香港节点,日本节点,新加坡节点,美国节点,台湾节点,德国节点,其他地区,日本优选,美国优选,DIRECT,全部节点,img-url = https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/Proxy.png
-Final = select,香港节点,日本节点,新加坡节点,美国节点,台湾节点,德国节点,其他地区,家宽节点,日本优选,美国优选,Proxy,DIRECT,img-url = https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/Final.png
+Proxy = select,香港节点,日本节点,新加坡节点,美国节点,台湾节点,欧洲节点,其他地区,日本优选,美国优选,DIRECT,全部节点,img-url = https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/Proxy.png
+Final = select,香港节点,日本节点,新加坡节点,美国节点,台湾节点,欧洲节点,其他地区,家宽节点,日本优选,美国优选,Proxy,DIRECT,img-url = https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/Final.png
 
-Google = select,香港节点,日本节点,新加坡节点,美国节点,台湾节点,德国节点,其他地区,日本优选,美国优选,Proxy,DIRECT,img-url = https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/Google_Search.png
-AI = select,家宽节点,香港节点,日本节点,新加坡节点,美国节点,台湾节点,德国节点,其他地区,日本优选,美国优选,Proxy,DIRECT,img-url = https://raw.githubusercontent.com/chxm1023/Script_X/main/icon/ChatGPT/ChatGPT4.png
+Google = select,香港节点,日本节点,新加坡节点,美国节点,台湾节点,欧洲节点,其他地区,日本优选,美国优选,Proxy,DIRECT,img-url = https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/Google_Search.png
+AI = select,家宽节点,香港节点,日本节点,新加坡节点,美国节点,台湾节点,欧洲节点,其他地区,日本优选,美国优选,Proxy,DIRECT,img-url = https://raw.githubusercontent.com/chxm1023/Script_X/main/icon/ChatGPT/ChatGPT4.png
 
-Telegram = select,香港节点,日本节点,新加坡节点,美国节点,台湾节点,德国节点,其他地区,日本优选,美国优选,Proxy,img-url = https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/Telegram.png
-TikTok = select,香港节点,日本节点,新加坡节点,美国节点,台湾节点,德国节点,其他地区,日本优选,美国优选,Proxy,DIRECT,img-url = https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/TikTok.png
-国外社交 = select,香港节点,日本节点,新加坡节点,美国节点,台湾节点,德国节点,其他地区,日本优选,美国优选,Proxy,DIRECT,img-url = https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/Twitter.png
+Telegram = select,香港节点,日本节点,新加坡节点,美国节点,台湾节点,欧洲节点,其他地区,日本优选,美国优选,Proxy,img-url = https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/Telegram.png
+TikTok = select,香港节点,日本节点,新加坡节点,美国节点,台湾节点,欧洲节点,其他地区,日本优选,美国优选,Proxy,DIRECT,img-url = https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/TikTok.png
+国外社交 = select,香港节点,日本节点,新加坡节点,美国节点,台湾节点,欧洲节点,其他地区,日本优选,美国优选,Proxy,DIRECT,img-url = https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/Twitter.png
 
-YouTube = select,香港节点,日本节点,新加坡节点,美国节点,台湾节点,德国节点,其他地区,日本优选,美国优选,Proxy,DIRECT,img-url = https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/YouTube.png
-Netflix = select,香港节点,日本节点,新加坡节点,美国节点,台湾节点,德国节点,其他地区,日本优选,美国优选,Proxy,DIRECT,img-url = https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/Netflix.png
-Emby = select,DIRECT,香港节点,日本节点,新加坡节点,美国节点,台湾节点,德国节点,其他地区,日本优选,美国优选,RFC节点,Proxy,img-url = https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/Emby.png
-Spotify = select,香港节点,日本节点,新加坡节点,美国节点,台湾节点,德国节点,其他地区,日本优选,美国优选,Proxy,DIRECT,img-url = https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/Spotify.png
+YouTube = select,香港节点,日本节点,新加坡节点,美国节点,台湾节点,欧洲节点,其他地区,日本优选,美国优选,Proxy,DIRECT,img-url = https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/YouTube.png
+Netflix = select,香港节点,日本节点,新加坡节点,美国节点,台湾节点,欧洲节点,其他地区,日本优选,美国优选,Proxy,DIRECT,img-url = https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/Netflix.png
+Emby = select,DIRECT,香港节点,日本节点,新加坡节点,美国节点,台湾节点,欧洲节点,其他地区,日本优选,美国优选,RFC节点,Proxy,img-url = https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/Emby.png
+Spotify = select,香港节点,日本节点,新加坡节点,美国节点,台湾节点,欧洲节点,其他地区,日本优选,美国优选,Proxy,DIRECT,img-url = https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/Spotify.png
 巴哈姆特 = select,香港节点,台湾节点,DIRECT,img-url = https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/Bahamut.png
 
 哔哩哔哩 = select,DIRECT,香港节点,新加坡节点,台湾节点,Proxy,img-url = https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/bilibili.png
-国外媒体 = select,香港节点,日本节点,新加坡节点,美国节点,台湾节点,德国节点,其他地区,日本优选,美国优选,Proxy,DIRECT,img-url = https://raw.githubusercontent.com/Orz-3/mini/master/Color/Streaming.png
-特殊媒体 = select,香港节点,日本节点,新加坡节点,美国节点,台湾节点,德国节点,其他地区,日本优选,美国优选,Proxy,DIRECT,img-url = https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/Streaming.png
+国外媒体 = select,香港节点,日本节点,新加坡节点,美国节点,台湾节点,欧洲节点,其他地区,日本优选,美国优选,Proxy,DIRECT,img-url = https://raw.githubusercontent.com/Orz-3/mini/master/Color/Streaming.png
+特殊媒体 = select,香港节点,日本节点,新加坡节点,美国节点,台湾节点,欧洲节点,其他地区,日本优选,美国优选,Proxy,DIRECT,img-url = https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/Streaming.png
 国内媒体 = select,DIRECT,Proxy,香港节点,日本节点,新加坡节点,美国节点,台湾节点,其他地区,img-url = https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/StreamingSE.png
 
-海淘 = select,香港节点,日本节点,新加坡节点,美国节点,台湾节点,德国节点,其他地区,DIRECT,img-url = https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/Amazon.png
-PayPal = select,香港节点,日本节点,新加坡节点,美国节点,台湾节点,德国节点,其他地区,日本优选,美国优选,Proxy,DIRECT,img-url = https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/PayPal.png
+海淘 = select,香港节点,日本节点,新加坡节点,美国节点,台湾节点,欧洲节点,其他地区,DIRECT,img-url = https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/Amazon.png
+PayPal = select,香港节点,日本节点,新加坡节点,美国节点,台湾节点,欧洲节点,其他地区,日本优选,美国优选,Proxy,DIRECT,img-url = https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/PayPal.png
 
 Apple = select,DIRECT,Proxy,香港节点,日本节点,新加坡节点,美国节点,台湾节点,其他地区,img-url = https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/Apple.png
 # 可选 APNs 代理策略；默认关闭。
 # Apple Push = select,香港节点,日本节点,新加坡节点,美国节点,日本优选,美国优选,DIRECT,img-url = https://fastly.jsdelivr.net/gh/fmz200/wool_scripts@main/icons/apps/Apple_Messages.png
-Microsoft = select,香港节点,日本节点,新加坡节点,美国节点,台湾节点,德国节点,其他地区,日本优选,美国优选,Proxy,DIRECT,img-url = https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/Microsoft.png
-OneDrive = select,香港节点,日本节点,新加坡节点,美国节点,台湾节点,德国节点,其他地区,日本优选,美国优选,Proxy,DIRECT,Microsoft,img-url = https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/OneDrive.png
-GitHub = select,香港节点,日本节点,新加坡节点,美国节点,台湾节点,德国节点,其他地区,日本优选,美国优选,Proxy,DIRECT,img-url = https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/GitHub.png
-Docker = select,香港节点,日本节点,新加坡节点,美国节点,台湾节点,德国节点,其他地区,日本优选,美国优选,Proxy,DIRECT,img-url = https://raw.githubusercontent.com/allen0039/proxy-resource-hub/main/icons/docker.png?v=b5317ee
+Microsoft = select,香港节点,日本节点,新加坡节点,美国节点,台湾节点,欧洲节点,其他地区,日本优选,美国优选,Proxy,DIRECT,img-url = https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/Microsoft.png
+OneDrive = select,香港节点,日本节点,新加坡节点,美国节点,台湾节点,欧洲节点,其他地区,日本优选,美国优选,Proxy,DIRECT,Microsoft,img-url = https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/OneDrive.png
+GitHub = select,香港节点,日本节点,新加坡节点,美国节点,台湾节点,欧洲节点,其他地区,日本优选,美国优选,Proxy,DIRECT,img-url = https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/GitHub.png
+Docker = select,香港节点,日本节点,新加坡节点,美国节点,台湾节点,欧洲节点,其他地区,日本优选,美国优选,Proxy,DIRECT,img-url = https://raw.githubusercontent.com/allen0039/proxy-resource-hub/main/icons/docker.png?v=b5317ee
 
-游戏平台 = select,香港节点,日本节点,新加坡节点,美国节点,台湾节点,德国节点,其他地区,日本优选,美国优选,Proxy,DIRECT,img-url = https://github.com/shindgewongxj/WHATSINStash/raw/main/icon/applegamecenter.png
-CDN = select,香港节点,日本节点,新加坡节点,美国节点,台湾节点,德国节点,其他地区,日本优选,美国优选,Proxy,DIRECT,img-url = https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/Cloudflare.png
-测速 = select,香港节点,日本节点,新加坡节点,美国节点,台湾节点,德国节点,其他地区,日本优选,美国优选,Proxy,DIRECT,img-url = https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/Speedtest.png
+游戏平台 = select,香港节点,日本节点,新加坡节点,美国节点,台湾节点,欧洲节点,其他地区,日本优选,美国优选,Proxy,DIRECT,img-url = https://github.com/shindgewongxj/WHATSINStash/raw/main/icon/applegamecenter.png
+CDN = select,香港节点,日本节点,新加坡节点,美国节点,台湾节点,欧洲节点,其他地区,日本优选,美国优选,Proxy,DIRECT,img-url = https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/Cloudflare.png
+测速 = select,香港节点,日本节点,新加坡节点,美国节点,台湾节点,欧洲节点,其他地区,日本优选,美国优选,Proxy,DIRECT,img-url = https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/Speedtest.png
 
 日本优选 = url-test,日本优选筛选,url = http://cp.cloudflare.com/generate_204,interval = 300,tolerance = 50,img-url = https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/Japan.png
 美国优选 = url-test,美国优选筛选,url = http://cp.cloudflare.com/generate_204,interval = 300,tolerance = 50,img-url = https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/United_States.png
@@ -114,7 +114,7 @@ CDN = select,香港节点,日本节点,新加坡节点,美国节点,台湾节点
 新加坡节点 = select,新加坡,url = http://cp.cloudflare.com/generate_204,img-url = https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/Singapore.png
 美国节点 = select,美国,url = http://cp.cloudflare.com/generate_204,img-url = https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/United_States.png
 台湾节点 = select,台湾,url = http://cp.cloudflare.com/generate_204,img-url = https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/Taiwan.png
-德国节点 = select,德国,url = http://cp.cloudflare.com/generate_204,img-url = https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/Germany.png
+欧洲节点 = select,欧洲,url = http://cp.cloudflare.com/generate_204,img-url = https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/Germany.png
 其他地区 = select,其他,url = http://cp.cloudflare.com/generate_204,img-url = https://raw.githubusercontent.com/Orz-3/mini/master/Color/Static.png
 RFC节点 = select,RFC,url = http://cp.cloudflare.com/generate_204,img-url = https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/AfreecaTV.png
 家宽节点 = select,家宽,url = http://cp.cloudflare.com/generate_204,img-url = https://raw.githubusercontent.com/allen0039/proxy-resource-hub/main/icons/home.png
@@ -122,8 +122,8 @@ RFC节点 = select,RFC,url = http://cp.cloudflare.com/generate_204,img-url = htt
 
 [Remote Filter]
 # 根据节点名称筛选地区，并排除回国、校园和游戏节点。
-All Server = NameRegex, FilterKey = "^(?=.*(.*))(?!.*((?i)邀请|返利|循环|官网|客服|网站|网址|获取|订阅|流量|到期|机场|下次|版本|官址|备用|到期|过期|已用|联系|邮箱|工单|群|贩卖|倒卖|防止|国内|🎮|(\b(GAME|USE|USED|TOTAL|EXPIRE|EMAIL|Panel)\b|(\d{4}-\d{2}-\d{2}|\dG)))).*$"
-RFC = NameRegex, FilterKey = "RFC"
+All Server = NameRegex, FilterKey = "(?i)^(?!.*(直连|邀请|返利|循环|官网|客服|网站|网址|获取|订阅|流量|剩余流量|套餐到期|流量重置|到期|机场|下次|版本|官址|备用|过期|已用|联系|邮箱|工单|群|交流群|官方群|用户群|群组|社群|群聊|贩卖|倒卖|防止|国内|Traffic|Expire|Reset|USE|USED|TOTAL|EMAIL|Panel|GAME|\d{4}-\d{2}-\d{2}|\dG|Tailscale)).+$"
+RFC = NameRegex, FilterKey = "(?i)^(?=.*RFC)(?!.*(直连|邀请|返利|循环|官网|客服|网站|网址|获取|订阅|流量|剩余流量|套餐到期|流量重置|到期|机场|下次|版本|官址|备用|过期|已用|联系|邮箱|工单|群|交流群|官方群|用户群|群组|社群|群聊|贩卖|倒卖|防止|国内|Traffic|Expire|Reset|USE|USED|TOTAL|EMAIL|Panel|GAME|\d{4}-\d{2}-\d{2}|\dG)).+$"
 家宽 = NameRegex, FilterKey = "(?i)(家宽|verizon$)"
 日本优选筛选 = NameRegex, FilterKey = "^(?=.*((?i)🇯🇵|日本|川日|东京|大阪|泉日|埼玉|(\b(JP|JPN|Japan)(\d+)?\b)))(?!.*((?i)家宽|verizon$|回国|校园|游戏|🎮|(\b(GAME)\b))).*$"
 美国优选筛选 = NameRegex, FilterKey = "^(?=.*((?i)🇺🇸|美国|波特兰|达拉斯|俄勒冈|凤凰城|费利蒙|硅谷|拉斯维加斯|洛杉矶|圣何塞|圣克拉拉|西雅图|芝加哥|(\b(US|USA|United States)(\d+)?\b)))(?!.*((?i)家宽|verizon$|回国|校园|游戏|🎮|(\b(GAME)\b))).*$"
@@ -132,8 +132,8 @@ RFC = NameRegex, FilterKey = "RFC"
 日本 = NameRegex, FilterKey = "^(?=.*((?i)🇯🇵|日本|川日|东京|大阪|泉日|埼玉|(\b(JP|JPN|Japan)(\d+)?\b)))(?!.*((?i)回国|校园|游戏|🎮|(\b(GAME)\b))).*$"
 美国 = NameRegex, FilterKey = "^(?=.*((?i)🇺🇸|美国|波特兰|达拉斯|俄勒冈|凤凰城|费利蒙|硅谷|拉斯维加斯|洛杉矶|圣何塞|圣克拉拉|西雅图|芝加哥|(\b(US|USA|United States)(\d+)?\b)))(?!.*((?i)回国|校园|游戏|🎮|(\b(GAME)\b))).*$"
 新加坡 = NameRegex, FilterKey = "^(?=.*((?i)🇸🇬|新加坡|狮城|(\b(SG|SGP|Singapore)(\d+)?\b)))(?!.*((?i)回国|校园|游戏|🎮|(\b(GAME)\b))).*$"
-德国 = NameRegex, FilterKey = "^(?=.*((?i)🇩🇪|德国|德國|法兰克福|法蘭克福|柏林|慕尼黑|(\b(DE|DEU|Germany|Deutschland|Frankfurt|Berlin|Munich)(\d+)?\b)))(?!.*((?i)回国|校园|游戏|🎮|(\b(GAME)\b))).*$"
-其他 = NameRegex, FilterKey = "(?i)^(?!.*(家宽|verizon$|🇭🇰|香港|(^|[^A-Za-z0-9])(HK|HKG|Hong([ _-]?Kong)?)([ _-]?\d+)?($|[^A-Za-z0-9])|🇹🇼|台湾|台北|(^|[^A-Za-z0-9])(TW|TWN|Tai|Taiwan)([ _-]?\d+)?($|[^A-Za-z0-9])|🇯🇵|日本|川日|东京|大阪|泉日|沪日|深日|埼玉|(^|[^A-Za-z0-9])(JP|JPN|Japan)([ _-]?\d+)?($|[^A-Za-z0-9])|🇸🇬|新加坡|狮城|(^|[^A-Za-z0-9])(SG|SGP|Singapore)([ _-]?\d+)?($|[^A-Za-z0-9])|🇺🇸|🇺🇲|美国|波特兰|达拉斯|俄勒冈|凤凰城|费利蒙|硅谷|拉斯维加斯|洛杉矶|圣何塞|圣克拉拉|西雅图|芝加哥|(^|[^A-Za-z0-9])(US|USA|United[ _-]?States|States)([ _-]?\d+)?($|[^A-Za-z0-9])|🇩🇪|德国|德國|法兰克福|法蘭克福|柏林|慕尼黑|(^|[^A-Za-z0-9])(DE|DEU|Germany|Deutschland|Frankfurt|Berlin|Munich)([ _-]?\d+)?($|[^A-Za-z0-9])|直连|回国|校园|游戏|🎮|邀请|返利|循环|官网|客服|网站|网址|获取|订阅|流量|到期|机场|下次|版本|官址|备用|过期|已用|联系|邮箱|工单|交流群|官方群|用户群|群组|社群|群聊|贩卖|倒卖|防止|国内|(^|[^A-Za-z0-9])(GAME|USE|USED|TOTAL|EXPIRE|EMAIL|Panel)($|[^A-Za-z0-9])|\d{4}-\d{2}-\d{2})).+$"
+欧洲 = NameRegex, FilterKey = "(?i)^(?:(?:🇩🇪|🇬🇧|🇫🇷|🇳🇱|🇨🇭|🇸🇪|🇳🇴|🇫🇮|🇩🇰|🇪🇸|🇮🇹|🇵🇹|🇮🇪|🇧🇪|🇦🇹|🇵🇱|🇨🇿|🇭🇺|🇷🇴|🇧🇬|🇬🇷|🇷🇸|🇭🇷|🇸🇮|🇸🇰|🇺🇦|🇪🇪|🇱🇻|🇱🇹|🇮🇸|🇱🇺|🇲🇹|🇨🇾|🇦🇱|🇷🇺).*|.*(?:>>|>|→)\s*.*(?:(?:🇩🇪|🇬🇧|🇫🇷|🇳🇱|🇨🇭|🇸🇪|🇳🇴|🇫🇮|🇩🇰|🇪🇸|🇮🇹|🇵🇹|🇮🇪|🇧🇪|🇦🇹|🇵🇱|🇨🇿|🇭🇺|🇷🇴|🇧🇬|🇬🇷|🇷🇸|🇭🇷|🇸🇮|🇸🇰|🇺🇦|🇪🇪|🇱🇻|🇱🇹|🇮🇸|🇱🇺|🇲🇹|🇨🇾|🇦🇱|🇷🇺|Deutschland|Germany|France|Netherlands|Holland|Switzerland|Sweden|Norway|Finland|Denmark|United[ _-]?Kingdom|England|Spain|Italy|Portugal|Ireland|Belgium|Austria|Poland|Czech|Hungary|Romania|Bulgaria|Greece|Serbia|Croatia|Slovenia|Slovakia|Ukraine|Estonia|Latvia|Lithuania|Iceland|Luxembourg|Malta|Cyprus|Albania|Russia|欧洲|歐洲|欧盟|歐盟|Europe|European|德国|德國|法兰克福|法蘭克福|柏林|慕尼黑|英国|英國|伦敦|曼彻斯特|伯明翰|法国|法國|巴黎|马赛|里昂|荷兰|荷蘭|阿姆斯特丹|鹿特丹|瑞士|苏黎世|日内瓦|瑞典|斯德哥尔摩|挪威|奥斯陆|芬兰|芬蘭|赫尔辛基|丹麦|丹麥|哥本哈根|西班牙|马德里|巴塞罗那|意大利|罗马|米兰|葡萄牙|里斯本|爱尔兰|愛爾蘭|都柏林|比利时|比利時|布鲁塞尔|布魯塞爾|奥地利|奧地利|维也纳|維也納|波兰|波蘭|华沙|華沙|捷克|布拉格|匈牙利|布达佩斯|布達佩斯|罗马尼亚|羅馬尼亞|布加勒斯特|保加利亚|保加利亞|索非亚|索菲亚|希腊|希臘|雅典|塞尔维亚|塞爾維亞|贝尔格莱德|貝爾格萊德|克罗地亚|克羅地亞|萨格勒布|薩格勒布|斯洛文尼亚|斯洛文尼亞|卢布尔雅那|盧布爾雅那|斯洛伐克|布拉迪斯拉发|布拉迪斯拉發|乌克兰|烏克蘭|基辅|基輔|爱沙尼亚|愛沙尼亞|塔林|拉脱维亚|拉脫維亞|里加|立陶宛|维尔纽斯|維爾紐斯|冰岛|冰島|雷克雅未克|卢森堡|盧布爾|马耳他|馬耳他|塞浦路斯|賽普勒斯|阿尔巴尼亚|阿爾巴尼亞|俄罗斯|俄羅斯|莫斯科|圣彼得堡|聖彼得堡|DE|DEU|FR|FRA|NL|NLD|CH|CHE|SE|SWE|NO|NOR|FI|FIN|DK|DNK|GB|GBR|UK|ES|ESP|IT|ITA|PT|PRT|IE|IRL|BE|BEL|AT|AUT|PL|POL|CZ|CZE|HU|HUN|RO|ROU|BG|BGR|GR|GRC|RS|SRB|HR|HRV|SI|SVN|SK|SVK|UA|UKR|EE|EST|LV|LVA|LT|LTU|IS|ISL|LU|LUX|MT|MLT|CY|CYP|AL|ALB|RU|RUS))$|.*(?:^|[._ -])(?:Deutschland|Germany|France|Netherlands|Holland|Switzerland|Sweden|Norway|Finland|Denmark|United[ _-]?Kingdom|England|Spain|Italy|Portugal|Ireland|Belgium|Austria|Poland|Czech|Hungary|Romania|Bulgaria|Greece|Serbia|Croatia|Slovenia|Slovakia|Ukraine|Estonia|Latvia|Lithuania|Iceland|Luxembourg|Malta|Cyprus|Albania|Russia|欧洲|歐洲|欧盟|歐盟|Europe|European|德国|德國|法兰克福|法蘭克福|柏林|慕尼黑|英国|英國|伦敦|曼彻斯特|伯明翰|法国|法國|巴黎|马赛|里昂|荷兰|荷蘭|阿姆斯特丹|鹿特丹|瑞士|苏黎世|日内瓦|瑞典|斯德哥尔摩|挪威|奥斯陆|芬兰|芬蘭|赫尔辛基|丹麦|丹麥|哥本哈根|西班牙|马德里|巴塞罗那|意大利|罗马|米兰|葡萄牙|里斯本|爱尔兰|愛爾蘭|都柏林|比利时|比利時|布鲁塞尔|布魯塞爾|奥地利|奧地利|维也纳|維也納|波兰|波蘭|华沙|華沙|捷克|布拉格|匈牙利|布达佩斯|布達佩斯|罗马尼亚|羅馬尼亞|布加勒斯特|保加利亚|保加利亞|索非亚|索菲亚|希腊|希臘|雅典|塞尔维亚|塞爾維亞|贝尔格莱德|貝爾格萊德|克罗地亚|克羅地亞|萨格勒布|薩格勒布|斯洛文尼亚|斯洛文尼亞|卢布尔雅那|盧布爾雅那|斯洛伐克|布拉迪斯拉发|布拉迪斯拉發|乌克兰|烏克蘭|基辅|基輔|爱沙尼亚|愛沙尼亞|塔林|拉脱维亚|拉脫維亞|里加|立陶宛|维尔纽斯|維爾紐斯|冰岛|冰島|雷克雅未克|卢森堡|盧布爾|马耳他|馬耳他|塞浦路斯|賽普勒斯|阿尔巴尼亚|阿爾巴尼亞|俄罗斯|俄羅斯|莫斯科|圣彼得堡|聖彼得堡|DE|DEU|FR|FRA|NL|NLD|CH|CHE|SE|SWE|NO|NOR|FI|FIN|DK|DNK|GB|GBR|UK|ES|ESP|IT|ITA|PT|PRT|IE|IRL|BE|BEL|AT|AUT|PL|POL|CZ|CZE|HU|HUN|RO|ROU|BG|BGR|GR|GRC|RS|SRB|HR|HRV|SI|SVN|SK|SVK|UA|UKR|EE|EST|LV|LVA|LT|LTU|IS|ISL|LU|LUX|MT|MLT|CY|CYP|AL|ALB|RU|RUS)$)$"
+其他 = NameRegex, FilterKey = "(?i)^(?!.*Tailscale)(?!(?:(?:🇩🇪|🇬🇧|🇫🇷|🇳🇱|🇨🇭|🇸🇪|🇳🇴|🇫🇮|🇩🇰|🇪🇸|🇮🇹|🇵🇹|🇮🇪|🇧🇪|🇦🇹|🇵🇱|🇨🇿|🇭🇺|🇷🇴|🇧🇬|🇬🇷|🇷🇸|🇭🇷|🇸🇮|🇸🇰|🇺🇦|🇪🇪|🇱🇻|🇱🇹|🇮🇸|🇱🇺|🇲🇹|🇨🇾|🇦🇱|🇷🇺).*|.*(?:>>|>|→)\s*.*(?:(?:🇩🇪|🇬🇧|🇫🇷|🇳🇱|🇨🇭|🇸🇪|🇳🇴|🇫🇮|🇩🇰|🇪🇸|🇮🇹|🇵🇹|🇮🇪|🇧🇪|🇦🇹|🇵🇱|🇨🇿|🇭🇺|🇷🇴|🇧🇬|🇬🇷|🇷🇸|🇭🇷|🇸🇮|🇸🇰|🇺🇦|🇪🇪|🇱🇻|🇱🇹|🇮🇸|🇱🇺|🇲🇹|🇨🇾|🇦🇱|🇷🇺|Deutschland|Germany|France|Netherlands|Holland|Switzerland|Sweden|Norway|Finland|Denmark|United[ _-]?Kingdom|England|Spain|Italy|Portugal|Ireland|Belgium|Austria|Poland|Czech|Hungary|Romania|Bulgaria|Greece|Serbia|Croatia|Slovenia|Slovakia|Ukraine|Estonia|Latvia|Lithuania|Iceland|Luxembourg|Malta|Cyprus|Albania|Russia|欧洲|歐洲|欧盟|歐盟|Europe|European|德国|德國|法兰克福|法蘭克福|柏林|慕尼黑|英国|英國|伦敦|曼彻斯特|伯明翰|法国|法國|巴黎|马赛|里昂|荷兰|荷蘭|阿姆斯特丹|鹿特丹|瑞士|苏黎世|日内瓦|瑞典|斯德哥尔摩|挪威|奥斯陆|芬兰|芬蘭|赫尔辛基|丹麦|丹麥|哥本哈根|西班牙|马德里|巴塞罗那|意大利|罗马|米兰|葡萄牙|里斯本|爱尔兰|愛爾蘭|都柏林|比利时|比利時|布鲁塞尔|布魯塞爾|奥地利|奧地利|维也纳|維也納|波兰|波蘭|华沙|華沙|捷克|布拉格|匈牙利|布达佩斯|布達佩斯|罗马尼亚|羅馬尼亞|布加勒斯特|保加利亚|保加利亞|索非亚|索菲亚|希腊|希臘|雅典|塞尔维亚|塞爾維亞|贝尔格莱德|貝爾格萊德|克罗地亚|克羅地亞|萨格勒布|薩格勒布|斯洛文尼亚|斯洛文尼亞|卢布尔雅那|盧布爾雅那|斯洛伐克|布拉迪斯拉发|布拉迪斯拉發|乌克兰|烏克蘭|基辅|基輔|爱沙尼亚|愛沙尼亞|塔林|拉脱维亚|拉脫維亞|里加|立陶宛|维尔纽斯|維爾紐斯|冰岛|冰島|雷克雅未克|卢森堡|盧布爾|马耳他|馬耳他|塞浦路斯|賽普勒斯|阿尔巴尼亚|阿爾巴尼亞|俄罗斯|俄羅斯|莫斯科|圣彼得堡|聖彼得堡|DE|DEU|FR|FRA|NL|NLD|CH|CHE|SE|SWE|NO|NOR|FI|FIN|DK|DNK|GB|GBR|UK|ES|ESP|IT|ITA|PT|PRT|IE|IRL|BE|BEL|AT|AUT|PL|POL|CZ|CZE|HU|HUN|RO|ROU|BG|BGR|GR|GRC|RS|SRB|HR|HRV|SI|SVN|SK|SVK|UA|UKR|EE|EST|LV|LVA|LT|LTU|IS|ISL|LU|LUX|MT|MLT|CY|CYP|AL|ALB|RU|RUS))$|.*(?:^|[._ -])(?:Deutschland|Germany|France|Netherlands|Holland|Switzerland|Sweden|Norway|Finland|Denmark|United[ _-]?Kingdom|England|Spain|Italy|Portugal|Ireland|Belgium|Austria|Poland|Czech|Hungary|Romania|Bulgaria|Greece|Serbia|Croatia|Slovenia|Slovakia|Ukraine|Estonia|Latvia|Lithuania|Iceland|Luxembourg|Malta|Cyprus|Albania|Russia|欧洲|歐洲|欧盟|歐盟|Europe|European|德国|德國|法兰克福|法蘭克福|柏林|慕尼黑|英国|英國|伦敦|曼彻斯特|伯明翰|法国|法國|巴黎|马赛|里昂|荷兰|荷蘭|阿姆斯特丹|鹿特丹|瑞士|苏黎世|日内瓦|瑞典|斯德哥尔摩|挪威|奥斯陆|芬兰|芬蘭|赫尔辛基|丹麦|丹麥|哥本哈根|西班牙|马德里|巴塞罗那|意大利|罗马|米兰|葡萄牙|里斯本|爱尔兰|愛爾蘭|都柏林|比利时|比利時|布鲁塞尔|布魯塞爾|奥地利|奧地利|维也纳|維也納|波兰|波蘭|华沙|華沙|捷克|布拉格|匈牙利|布达佩斯|布達佩斯|罗马尼亚|羅馬尼亞|布加勒斯特|保加利亚|保加利亞|索非亚|索菲亚|希腊|希臘|雅典|塞尔维亚|塞爾維亞|贝尔格莱德|貝爾格萊德|克罗地亚|克羅地亞|萨格勒布|薩格勒布|斯洛文尼亚|斯洛文尼亞|卢布尔雅那|盧布爾雅那|斯洛伐克|布拉迪斯拉发|布拉迪斯拉發|乌克兰|烏克蘭|基辅|基輔|爱沙尼亚|愛沙尼亞|塔林|拉脱维亚|拉脫維亞|里加|立陶宛|维尔纽斯|維爾紐斯|冰岛|冰島|雷克雅未克|卢森堡|盧布爾|马耳他|馬耳他|塞浦路斯|賽普勒斯|阿尔巴尼亚|阿爾巴尼亞|俄罗斯|俄羅斯|莫斯科|圣彼得堡|聖彼得堡|DE|DEU|FR|FRA|NL|NLD|CH|CHE|SE|SWE|NO|NOR|FI|FIN|DK|DNK|GB|GBR|UK|ES|ESP|IT|ITA|PT|PRT|IE|IRL|BE|BEL|AT|AUT|PL|POL|CZ|CZE|HU|HUN|RO|ROU|BG|BGR|GR|GRC|RS|SRB|HR|HRV|SI|SVN|SK|SVK|UA|UKR|EE|EST|LV|LVA|LT|LTU|IS|ISL|LU|LUX|MT|MLT|CY|CYP|AL|ALB|RU|RUS)$)$)(?!.*(家宽|verizon$|🇭🇰|香港|(^|[^A-Za-z0-9])(HK|HKG|Hong([ _-]?Kong)?)([ _-]?\d+)?($|[^A-Za-z0-9])|🇹🇼|台湾|台北|(^|[^A-Za-z0-9])(TW|TWN|Tai|Taiwan)([ _-]?\d+)?($|[^A-Za-z0-9])|🇯🇵|日本|川日|东京|大阪|泉日|沪日|深日|埼玉|(^|[^A-Za-z0-9])(JP|JPN|Japan)([ _-]?\d+)?($|[^A-Za-z0-9])|🇸🇬|新加坡|狮城|(^|[^A-Za-z0-9])(SG|SGP|Singapore)([ _-]?\d+)?($|[^A-Za-z0-9])|🇺🇸|🇺🇲|美国|波特兰|达拉斯|俄勒冈|凤凰城|费利蒙|硅谷|拉斯维加斯|洛杉矶|圣何塞|圣克拉拉|西雅图|芝加哥|(^|[^A-Za-z0-9])(US|USA|United[ _-]?States|States)([ _-]?\d+)?($|[^A-Za-z0-9])|直连|回国|校园|游戏|🎮|邀请|返利|循环|官网|客服|网站|网址|获取|订阅|流量|到期|机场|下次|版本|官址|备用|过期|已用|联系|邮箱|工单|交流群|官方群|用户群|群组|社群|群聊|贩卖|倒卖|防止|国内|(^|[^A-Za-z0-9])(GAME|USE|USED|TOTAL|EXPIRE|EMAIL|Panel)($|[^A-Za-z0-9])|\d{4}-\d{2}-\d{2})).+"
 
 [Rule]
 # 本地兼容放行优先；远程业务之间的顺序在 Remote Rule 中维护。
@@ -141,6 +141,8 @@ DOMAIN,dns.alidns.com,DIRECT
 DOMAIN-SUFFIX,push.apple.com,DIRECT
 DOMAIN,wetype.weixin.qq.com,DIRECT
 # 按顺序匹配：主动覆盖 → 兼容放行 → 基础拦截 → 国内媒体/直连 → 境外业务 → 通用分流 → IP/FINAL。
+# 局域网网段直连，避免被代理策略接管。
+IP-CIDR,192.168.50.0/24,DIRECT,no-resolve
 
 # === 1. 用户主动覆盖 ===
 # 这些覆盖是用户主动设置：保留先于地区和个人站点规则的优先级。
@@ -258,7 +260,7 @@ https://raw.githubusercontent.com/allen0039/proxy-resource-hub/main/Rules/Loon/R
 https://raw.githubusercontent.com/allen0039/proxy-resource-hub/main/Rules/Loon/Regional/us.list, policy=美国节点, tag=地区分流·美国, enabled=true
 https://raw.githubusercontent.com/allen0039/proxy-resource-hub/main/Rules/Loon/Regional/jp.list, policy=日本节点, tag=地区分流·日本, enabled=true
 https://raw.githubusercontent.com/allen0039/proxy-resource-hub/main/Rules/Loon/Regional/sg.list, policy=新加坡节点, tag=地区分流·新加坡, enabled=true
-https://raw.githubusercontent.com/allen0039/proxy-resource-hub/main/Rules/Loon/Regional/de.list, policy=德国节点, tag=地区分流·德国, enabled=true
+https://raw.githubusercontent.com/allen0039/proxy-resource-hub/main/Rules/Loon/Regional/de.list, policy=欧洲节点, tag=地区分流·欧洲, enabled=true
 https://raw.githubusercontent.com/allen0039/proxy-resource-hub/main/Rules/Loon/Custom/direct.list, policy=DIRECT, tag=地区分流·直连, enabled=true
 https://raw.githubusercontent.com/allen0039/proxy-resource-hub/main/Rules/Loon/AI/direct-ai.list, policy=DIRECT, tag=公益AI, enabled=true
 https://raw.githubusercontent.com/allen0039/proxy-resource-hub/main/Rules/Loon/Personal/Domain.list, policy=DIRECT, tag=个人域名, enabled=true

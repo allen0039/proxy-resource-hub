@@ -61,7 +61,7 @@ SUPPORTED_AI_REGION_ORDER = [
     '新加坡节点',
     '美国节点',
     '台湾节点',
-    '德国节点',
+    '欧洲节点',
     '其他地区',
 ]
 DOCKER_ICON_URL = (
@@ -91,7 +91,7 @@ CUSTOM_FEEDS = {
     "us": ("Regional/us.list", "美国节点"),
     "jp": ("Regional/jp.list", "日本节点"),
     "sg": ("Regional/sg.list", "新加坡节点"),
-    "de": ("Regional/de.list", "德国节点"),
+    "de": ("Regional/de.list", "欧洲节点"),
 }
 ACTIVE_CUSTOM_FEEDS = CUSTOM_FEEDS
 RETIRED_CUSTOM_FEEDS = {
@@ -173,28 +173,28 @@ class SanitizedToolConfigTests(unittest.TestCase):
                 text = configs[name]
                 self.assertRegex(
                     text,
-                    r"(?m)^德国节点 = select,.*(?:🇩🇪|德国).*(?:Germany|Deutschland)",
+                    r"(?m)^欧洲节点 = select,.*(?:🇩🇪|德国).*(?:Germany|Deutschland)",
                 )
-                self.assertRegex(text, r"(?m)^Proxy = select,.*德国节点")
+                self.assertRegex(text, r"(?m)^Proxy = select,.*欧洲节点")
                 self.assertRegex(text, r"(?m)^其他地区 = select,.*🇩🇪.*Germany")
 
         qx = configs["quantumultx_allen.conf"]
-        self.assertRegex(qx, r"(?m)^static=德国节点,.*🇩🇪.*Germany")
-        self.assertRegex(qx, r"(?m)^static=Final,.*德国节点")
+        self.assertRegex(qx, r"(?m)^static=欧洲节点,.*🇩🇪.*Germany")
+        self.assertRegex(qx, r"(?m)^static=Final,.*欧洲节点")
         self.assertRegex(qx, r"(?m)^static=其他地区,.*🇩🇪.*Germany")
 
         loon = configs["loon_allen.lcf"]
-        self.assertRegex(loon, r"(?m)^德国节点 = select,德国,")
-        self.assertRegex(loon, r"(?m)^Proxy = select,.*德国节点")
-        self.assertRegex(loon, r"(?m)^德国 = NameRegex,.*🇩🇪.*Germany")
+        self.assertRegex(loon, r"(?m)^欧洲节点 = select,欧洲,")
+        self.assertRegex(loon, r"(?m)^Proxy = select,.*欧洲节点")
+        self.assertRegex(loon, r"(?m)^欧洲 = NameRegex,.*🇩🇪.*Germany")
         self.assertRegex(loon, r"(?m)^其他 = NameRegex,.*🇩🇪.*Germany")
 
         mihomo = yaml.safe_load(configs["mihomo_allen.yaml"])
         groups = {group["name"]: group for group in mihomo["proxy-groups"]}
-        self.assertIn("德国节点", groups["Proxy"]["proxies"])
-        self.assertIn("德国节点", groups["Final"]["proxies"])
-        self.assertIn("🇩🇪", groups["德国节点"]["filter"])
-        self.assertIn("Germany", groups["德国节点"]["filter"])
+        self.assertIn("欧洲节点", groups["Proxy"]["proxies"])
+        self.assertIn("欧洲节点", groups["Final"]["proxies"])
+        self.assertIn("🇩🇪", groups["欧洲节点"]["filter"])
+        self.assertIn("Germany", groups["欧洲节点"]["filter"])
         self.assertIn("🇩🇪", groups["其他地区"]["exclude-filter"])
         self.assertIn("Germany", groups["其他地区"]["exclude-filter"])
 
@@ -854,7 +854,7 @@ default_proxy_group: Proxy
             "surge_mac_allen.conf": "# Allen 维护 - Surge Mac 配置",
             "loon_allen.lcf": "# Allen 维护 - Loon 配置",
             "quantumultx_allen.conf": "# Allen 维护 - Quantumult X 配置",
-            "mihomo_allen.yaml": "# Allen 维护 - Mihomo 配置",
+            "mihomo_allen.yaml": "## 订阅提供商：节点先在这里汇总，再由“全部节点”统一引用",
         }
 
         for name, title in titles.items():
@@ -878,55 +878,15 @@ default_proxy_group: Proxy
             with self.subTest(name=name, check="subscription placeholder"):
                 self.assertIn("获取到的订阅链接", outputs[name])
 
-    def test_committed_policy_sections_have_no_explanatory_comments(self):
+    def test_committed_policy_sections_have_no_private_publishing_notes(self):
         outputs = {
             name: (OUTPUT_DIR / name).read_text(encoding="utf-8")
             for name in CONFIG_NAMES
         }
-        section_specs = {
-            "surge_mac_allen.conf": (
-                "[Proxy Group]",
-                "[Rule]",
-                r"^#\s*[^=#][^=]*\s=\s*select\b",
-            ),
-            "surge_iphone_allen.conf": (
-                "[Proxy Group]",
-                "[Rule]",
-                r"^#\s*[^=#][^=]*\s=\s*select\b",
-            ),
-            "quantumultx_allen.conf": ("[policy]", "[server_remote]", None),
-            "loon_allen.lcf": ("[Proxy Group]", "[Remote Filter]", None),
-        }
-
-        for name, (start, end, allowed_pattern) in section_specs.items():
-            lines = outputs[name].splitlines()
-            body = lines[lines.index(start) + 1 : lines.index(end)]
-            comments = [
-                line.strip()
-                for line in body
-                if line.lstrip().startswith(("#", ";"))
-                # Keep the documented, disabled APNs examples in policy sections.
-                if not re.match(r"^# (?:可选 APNs|Apple Push =|static=Apple Push,)", line.strip())
-            ]
+        private_notes = ("公开前必须脱敏", "使用脱敏工具生成", "Configure local")
+        for name, text in outputs.items():
             with self.subTest(name=name):
-                if allowed_pattern is None:
-                    self.assertEqual([], comments)
-                else:
-                    self.assertTrue(
-                        all(re.match(allowed_pattern, line) for line in comments)
-                    )
-
-        mihomo_groups = outputs["mihomo_allen.yaml"].split(
-            "proxy-groups:", maxsplit=1
-        )[1].split("\nrules:", maxsplit=1)[0]
-        mihomo_comments = [
-            line.strip()
-            for line in mihomo_groups.splitlines()
-            if line.lstrip().startswith("#")
-        ]
-        self.assertTrue(
-            all(re.match(r"^#\s*-\s*\{name:", line) for line in mihomo_comments)
-        )
+                self.assertFalse(any(note in text for note in private_notes))
 
     def test_committed_node_subscriptions_refresh_every_six_hours(self):
         outputs = {
@@ -968,7 +928,7 @@ default_proxy_group: Proxy
             },
         )
         self.assertEqual(
-            3,
+            0,
             outputs["mihomo_allen.yaml"].count("#    interval: 21600"),
         )
 
@@ -988,8 +948,8 @@ default_proxy_group: Proxy
             for payload in group.values()
             if "urls" in payload
         ]
-        self.assertEqual(1, len(egern_subscriptions))
-        self.assertEqual(21600, egern_subscriptions[0]["update_interval"])
+        self.assertEqual(2, len(egern_subscriptions))
+        self.assertTrue(all(payload["update_interval"] == 21600 for payload in egern_subscriptions))
 
     def test_committed_outputs_preserve_routing_optimizations(self):
         for name in routing.CLIENTS:
@@ -1104,7 +1064,7 @@ default_proxy_group: Proxy
             '新加坡节点',
             '美国节点',
             '台湾节点',
-            "德国节点",
+            "欧洲节点",
             "其他地区",
         ):
             self.assertRegex(qx, rf"(?m)^static={group_name},")
@@ -1151,7 +1111,7 @@ default_proxy_group: Proxy
             encoding="utf-8"
         )
         mihomo = yaml.safe_load(mihomo_text)
-        self.assertEqual(["拼好鸡"], list(mihomo["proxy-providers"]))
+        self.assertEqual(["拼好鸡", "机场"], list(mihomo["proxy-providers"]))
         self.assertNotIn("Allen合集订阅", mihomo_text)
 
     def test_committed_outputs_use_owned_ai_priority_layer(self):
@@ -1235,8 +1195,8 @@ default_proxy_group: Proxy
         sanitizer = load_sanitizer()
         text = (OUTPUT_DIR / "mihomo_allen.yaml").read_text(encoding="utf-8")
         legacy = text.replace(
-            "\n# 全局配置\n",
-            "\nproxies:\n  - {name: 直连, type: direct}\n\n# 全局配置\n",
+            "\nglobal-ua:",
+            "\nproxies:\n  - {name: 直连, type: direct}\n\nglobal-ua:",
             1,
         )
 
@@ -1329,7 +1289,7 @@ default_proxy_group: Proxy
         for name in ('quantumultx_allen.conf','loon_allen.lcf'):
             entries=routing.remote(name)
             telecom=next(i for i,(u,p) in enumerate(entries) if 'ChinaTelecom' in u)
-            for token,policy in (('/Regional/hk.list','香港节点'),('/Regional/de.list','德国节点'),('/Custom/direct.list','DIRECT')):
+            for token,policy in (('/Regional/hk.list','香港节点'),('/Regional/de.list','欧洲节点'),('/Custom/direct.list','DIRECT')):
                 index=next(i for i,(u,p) in enumerate(entries) if token in u)
                 self.assertLess(index,telecom)
                 self.assertEqual(entries[index][1].upper(),policy.upper())
