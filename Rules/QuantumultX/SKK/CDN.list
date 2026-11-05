@@ -3,9 +3,9 @@
 # Derived from https://github.com/SukkaW/Surge
 # Source: https://ruleset.skk.moe/List/domainset/cdn.conf
 # Source: https://ruleset.skk.moe/List/non_ip/cdn.conf
-# Upstream Last Updated: 2026-10-28T16:04:31.071Z (domainset)
+# Upstream Last Updated: 2026-11-04T07:38:37.836Z (domainset)
 # Upstream Last Updated: 2026-10-23T06:28:09.042Z (non_ip)
-# Rule count: 4783
+# Rule count: 4784
 
 host, 7h15.ru1353t.1s.m4d3.by.5ukk4w.skk.moe, proxy
 host, 0x0.st, proxy
@@ -4613,6 +4613,7 @@ host, static.institution.grammarly.com, proxy
 host, static.registration.bluehost.com, proxy
 host-suffix, w-credentialless-staticblitz.com, proxy
 host, assets-growth-common.circleci.com, proxy
+host, assets.temporary-phone-number.com, proxy
 host, consumersiteimages.trustpilot.net, proxy
 host, firebase-settings.crashlytics.com, proxy
 host, firebaselogging-pa.googleapis.com, proxy

@@ -2,7 +2,7 @@
 # SPDX-License-Identifier: AGPL-3.0-only
 # Derived from https://github.com/SukkaW/Surge
 # Source: https://ruleset.skk.moe/List/domainset/speedtest.conf
-# Rule count: 3468
+# Rule count: 3470
 
 domain_set:
   - "7h15.ru1353t.1s.m4d3.by.5ukk4w.skk.moe"
@@ -785,6 +785,7 @@ domain_set:
   - "duncan1.cabospeed.com"
   - "ellsworth.from-ks.com"
   - "fibertest.soipl.co.in"
+  - "fra-de-008.xvperf.net"
   - "guwahati.neconnect.in"
   - "hiztesti.codit.com.tr"
   - "hiztesti.turbo.net.tr"
@@ -1560,6 +1561,7 @@ domain_set:
   - "ookla.radishnetworks.net"
   - "ookla.sy1.neptune.net.au"
   - "ookla1.ccspublichost.com"
+  - "ooklaspdtstsvr.zitel.com"
   - "reflector.aberythmic.com"
   - "riorancho1.cabospeed.com"
   - "seacaftest.aptalaska.net"
