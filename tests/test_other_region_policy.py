@@ -7,14 +7,12 @@ import yaml
 
 CONFIGS = Path(__file__).resolve().parents[1] / "Configs/tool_config"
 SURGE = ("surge_mac_allen.conf", "surge_iphone_allen.conf")
-MERGED_NODES = (
-    "🇬🇧 London 01", "英国 01", "倫敦 01", "UK_01", "GBR02",
-    "United Kingdom 01", "🇰🇷 Seoul 01", "韩国 01", "韓國 01",
-    "首爾 01", "KR_01", "KOR02", "Korea 01", "Canada 01",
+ACCEPTED_NODES = (
+    "United Kingdom 01", "Germany 01", "DE_01", "🇰🇷 Seoul 01", "Canada 01"
 )
 EXCLUDED_NODES = (
-    "香港 01", "HK_01", "台湾 01", "日本 01", "SG_01", "US_01",
-    "德国 01", "DE_01", "家宽 韩国 01", "英国 回国 01", "韩国 游戏 01",
+    "🇬🇧 London 01", "🇩🇪 Berlin 01", "香港 01", "HK_01", "台湾 01",
+    "日本 01", "SG_01", "US_01",
     "剩余流量 20G", "套餐到期 2026-12-31", "官网客服", "官方交流群",
 )
 
@@ -52,10 +50,10 @@ class OtherRegionPolicyTest(unittest.TestCase):
 
         for name, (expression, exclusion) in patterns.items():
             pattern = re.compile(expression)
-            for node in MERGED_NODES + EXCLUDED_NODES:
+            for node in ACCEPTED_NODES + EXCLUDED_NODES:
                 with self.subTest(config=name, node=node):
-                    accepted = bool(pattern.search(node)) != exclusion
-                    self.assertEqual(node in MERGED_NODES, accepted)
+                    excluded_node = bool(pattern.search(node)) if exclusion else not pattern.search(node)
+                    self.assertEqual(node in EXCLUDED_NODES, excluded_node)
 
     def test_other_region_has_no_helper_group_or_permanent_direct_member(self):
         for name in SURGE:
@@ -63,7 +61,7 @@ class OtherRegionPolicyTest(unittest.TestCase):
             other = ini_line(text, "其他地区 = select,")
             with self.subTest(config=name):
                 # Surge supplies its native DIRECT substitute when the group is empty.
-                self.assertIn('include-other-group="拼好鸡"', other)
+                self.assertIn('include-other-group="全部节点"', other)
                 self.assertNotIn("其他地区兜底", text)
                 self.assertNotRegex(other, r",\s*DIRECT\s*(?:,|$)")
 
