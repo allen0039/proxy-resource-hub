@@ -1,6 +1,8 @@
 # Generated from Rules/Source/AI/direct-ai.txt by tools/generate_rules.py. Do not edit.
 
 domain_suffix_set:
+  # DeepSeek API / Web 服务直连，覆盖通用 AI 代理规则
+  - deepseek.com
   # Allen 维护的公益 AI 服务
   - abrdns.com
   - anyrouter.top

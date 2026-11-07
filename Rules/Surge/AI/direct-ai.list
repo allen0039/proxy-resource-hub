@@ -5,3 +5,7 @@ DOMAIN-SUFFIX,abrdns.com
 DOMAIN-SUFFIX,muyuan.do
 DOMAIN-SUFFIX,7r.fit
 DOMAIN-SUFFIX,muapi.cn
+
+
+# DeepSeek API / Web 服务直连，覆盖通用 AI 代理规则
+DOMAIN-SUFFIX,deepseek.com
