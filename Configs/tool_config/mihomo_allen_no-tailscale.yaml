@@ -1,0 +1,1115 @@
+# 使用前请先替换下方第一个“获取到的订阅链接”；其余订阅可按需启用。
+# 不要把带 token、密码或个人节点信息的链接提交到公开仓库。
+## 订阅提供商：节点先在这里汇总，再由“全部节点”统一引用
+proxy-providers:
+  拼好鸡:
+    url: "获取到的订阅链接"
+    type: http
+    interval: 21600
+    filter: ^(?!.*(拒绝|直连|群|邀请|返利|循环|官网|客服|网站|网址|获取|订阅|流量|到期|机场|下次|版本|官址|备用|过期|已用|联系|邮箱|工单|贩卖|通知|倒卖|防止|国内|地址|频道|无法|说明|提示|特别|访问|支持|教程|关注|更新|作者|加入|USE|USED|TOTAL|EXPIRE|EMAIL|Panel|Channel|Author|traffic))
+    health-check:
+      enable: true
+      url: http://cp.cloudflare.com/generate_204
+      interval: 900
+    proxy: DIRECT
+  机场:
+    url: "获取到的订阅链接"
+    type: http
+    interval: 21600
+    filter: ^(?!.*(拒绝|直连|群|邀请|返利|循环|官网|客服|网站|网址|获取|订阅|流量|剩余流量|套餐到期|流量重置|到期|机场|下次|版本|官址|备用|过期|已用|联系|邮箱|工单|贩卖|通知|倒卖|防止|国内|地址|频道|无法|说明|提示|特别|访问|支持|教程|关注|更新|作者|加入|USE|USED|TOTAL|EXPIRE|EMAIL|Panel|Channel|Author|traffic|Traffic|Expire|Reset))
+    health-check:
+      enable: true
+      url: http://cp.cloudflare.com/generate_204
+      interval: 300
+    proxy: DIRECT
+# 本版本不包含 Tailscale 出口和策略组；需要 Tailscale 请改用启用版。
+## 本地固定出口已禁用；需要 Tailscale 请使用 mihomo_byallen.yaml
+global-ua: clash.meta
+port: 7890
+socks-port: 7891
+redir-port: 7892
+mixed-port: 7893
+tproxy-port: 7894
+allow-lan: true
+bind-address: '*'
+ipv6: false
+unified-delay: true
+tcp-concurrent: true
+log-level: warning
+find-process-mode: 'off'
+profile:
+  store-selected: true
+  store-fake-ip: true
+external-controller: 0.0.0.0:9090
+# 请改成自己的强随机口令；external-controller 对局域网开放时尤其要避免使用简单密码。
+secret: CHANGE_ME
+external-ui: ui
+external-ui-name: zashboard
+external-ui-url: https://github.com/Zephyruso/zashboard/archive/refs/heads/gh-pages.zip
+sniffer:
+  enable: true
+  sniff:
+    HTTP:
+      ports:
+        - 80
+        - 8080-8880
+      override-destination: true
+    TLS:
+      ports:
+        - 443
+        - 8443
+    QUIC:
+      ports:
+        - 443
+        - 8443
+  skip-domain:
+    - +.baidu.com
+    - Mijia Cloud
+    - +.push.apple.com
+    - +.wechat.com
+    - +.qpic.cn
+    - +.qq.com
+    - +.wechatapp.com
+    - +.apple.com
+    - +.oray.com
+    - +.sunlogin.net
+    - +.vivox.com
+tun:
+  enable: true
+  stack: mixed
+  dns-hijack:
+    - any:53
+    - tcp://any:53
+  auto-route: true
+  auto-redirect: true
+  auto-detect-interface: true
+dns:
+  enable: true
+  listen: 0.0.0.0:53
+  ipv6: false
+  use-system-hosts: true
+  use-hosts: true
+  enhanced-mode: fake-ip
+  fake-ip-range: 198.18.0.1/16
+  fake-ip-filter:
+    - +.lan
+    - +.local
+    - +.localhost
+    - +.ts.net
+    - +.msftconnecttest.com
+    - +.msftncsi.com
+    - +.push.apple.com
+    - +.wechat.com
+    - +.qpic.cn
+    - +.qq.com
+    - +.wechatapp.com
+    - time.*.com
+    - ntp.*.com
+    - '*.m-team.cc'
+    - stun.*.*
+    - stun.*.*.*
+    - stun.*.*.*.*
+    - stun.*.*.*.*.*
+    - lens.l.google.com
+    - stun.l.google.com
+  respect-rules: false
+  default-nameserver:
+    - 223.5.5.5
+    - 223.6.6.6
+  proxy-server-nameserver:
+    - 223.5.5.5
+    - 223.6.6.6
+  direct-nameserver:
+    - 223.5.5.5
+    - 223.6.6.6
+  direct-nameserver-follow-policy: true
+  nameserver:
+    - 223.5.5.5
+    - 223.6.6.6
+  nameserver-policy:
+    # +.ts.net: ts://Tailscale  # 已禁用 Tailscale
+    +.lan: system
+    +.local: system
+    router.asus.com: system
+    www.miwifi.com: system
+    miwifi.com: system
+    router.synology.com: system
+    tplogin.cn: system
+    melogin.cn: system
+    falogin.cn: system
+    tplinklogin.net: system
+    orbilogin.com: system
+    routerlogin.net: system
+    injections.adguard.org: system
+    local.adguard.org: system
+    +.bogon: system
+## 策略组
+proxy-groups:
+  - name: Proxy
+    type: select
+    proxies:
+      - 香港节点
+      - 日本节点
+      - 新加坡节点
+      - 美国节点
+      - 台湾节点
+      - 欧洲节点
+      - 其他地区
+      - 日本故转
+      - 美国故转
+      - DIRECT
+      - 全部节点
+    icon: https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/Proxy.png
+  - name: Final
+    type: select
+    proxies:
+      - 香港节点
+      - 日本节点
+      - 新加坡节点
+      - 美国节点
+      - 台湾节点
+      - 欧洲节点
+      - 其他地区
+      - 家宽节点
+      - 日本故转
+      - 美国故转
+      - Proxy
+      - DIRECT
+    icon: https://raw.githubusercontent.com/Orz-3/mini/master/Color/Final.png
+  - name: Google
+    type: select
+    proxies:
+      - 香港节点
+      - 日本节点
+      - 新加坡节点
+      - 美国节点
+      - 台湾节点
+      - 欧洲节点
+      - 其他地区
+      - 日本故转
+      - 美国故转
+      - Proxy
+      - DIRECT
+    icon: https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/Google_Search.png
+  - name: AI
+    type: select
+    proxies:
+      - 家宽节点
+      - 香港节点
+      - 日本节点
+      - 新加坡节点
+      - 美国节点
+      - 台湾节点
+      - 欧洲节点
+      - 其他地区
+      - 日本故转
+      - 美国故转
+      - Proxy
+      - DIRECT
+    icon: https://raw.githubusercontent.com/erdongchanyo/icon/main/Policy-Filter/OpenAI.png
+  - name: Telegram
+    type: select
+    proxies:
+      - 香港节点
+      - 日本节点
+      - 新加坡节点
+      - 美国节点
+      - 台湾节点
+      - 欧洲节点
+      - 其他地区
+      - 日本故转
+      - 美国故转
+      - Proxy
+    icon: https://raw.githubusercontent.com/Orz-3/mini/master/Color/Telegram.png
+  - name: TikTok
+    type: select
+    proxies:
+      - 香港节点
+      - 日本节点
+      - 新加坡节点
+      - 美国节点
+      - 台湾节点
+      - 欧洲节点
+      - 其他地区
+      - 日本故转
+      - 美国故转
+      - Proxy
+      - DIRECT
+    icon: https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/TikTok.png
+  - name: 国外社交
+    type: select
+    proxies:
+      - 香港节点
+      - 日本节点
+      - 新加坡节点
+      - 美国节点
+      - 台湾节点
+      - 欧洲节点
+      - 其他地区
+      - 日本故转
+      - 美国故转
+      - Proxy
+      - DIRECT
+    icon: https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/Twitter.png
+  - name: YouTube
+    type: select
+    proxies:
+      - 香港节点
+      - 日本节点
+      - 新加坡节点
+      - 美国节点
+      - 台湾节点
+      - 欧洲节点
+      - 其他地区
+      - 日本故转
+      - 美国故转
+      - Proxy
+      - DIRECT
+    icon: https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/YouTube.png
+  - name: Netflix
+    type: select
+    proxies:
+      - 香港节点
+      - 日本节点
+      - 新加坡节点
+      - 美国节点
+      - 台湾节点
+      - 欧洲节点
+      - 其他地区
+      - 日本故转
+      - 美国故转
+      - Proxy
+      - DIRECT
+    icon: https://raw.githubusercontent.com/erdongchanyo/icon/main/Policy-Filter/Netflix.png
+  - name: Emby
+    type: select
+    proxies:
+      - DIRECT
+      - 香港节点
+      - 日本节点
+      - 新加坡节点
+      - 美国节点
+      - 台湾节点
+      - 欧洲节点
+      - 其他地区
+      - 日本故转
+      - 美国故转
+      - RFC节点
+      - Proxy
+    icon: https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/Emby.png
+  - name: Spotify
+    type: select
+    proxies:
+      - 香港节点
+      - 日本节点
+      - 新加坡节点
+      - 美国节点
+      - 台湾节点
+      - 欧洲节点
+      - 其他地区
+      - 日本故转
+      - 美国故转
+      - Proxy
+      - DIRECT
+    icon: https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/Spotify.png
+  - name: 巴哈姆特
+    type: select
+    proxies:
+      - 香港节点
+      - 台湾节点
+      - DIRECT
+    icon: https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/Bahamut.png
+  - name: 哔哩哔哩
+    type: select
+    proxies:
+      - DIRECT
+      - 香港节点
+      - 新加坡节点
+      - 台湾节点
+      - Proxy
+    icon: https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/bilibili.png
+  - name: 国外媒体
+    type: select
+    proxies:
+      - 香港节点
+      - 日本节点
+      - 新加坡节点
+      - 美国节点
+      - 台湾节点
+      - 欧洲节点
+      - 其他地区
+      - 日本故转
+      - 美国故转
+      - Proxy
+      - DIRECT
+    icon: https://raw.githubusercontent.com/Orz-3/mini/master/Color/Streaming.png
+  - name: 特殊媒体
+    type: select
+    proxies:
+      - 香港节点
+      - 日本节点
+      - 新加坡节点
+      - 美国节点
+      - 台湾节点
+      - 欧洲节点
+      - 其他地区
+      - 日本故转
+      - 美国故转
+      - Proxy
+      - DIRECT
+    icon: https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/Streaming.png
+  - name: 国内媒体
+    type: select
+    proxies:
+      - DIRECT
+      - Proxy
+      - 香港节点
+      - 日本节点
+      - 新加坡节点
+      - 美国节点
+      - 台湾节点
+      - 其他地区
+    icon: https://raw.githubusercontent.com/Orz-3/mini/master/Color/StreamingSE.png
+  - name: 海淘
+    type: select
+    proxies:
+      - 香港节点
+      - 日本节点
+      - 新加坡节点
+      - 美国节点
+      - 台湾节点
+      - 欧洲节点
+      - 其他地区
+      - DIRECT
+    icon: https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/Amazon.png
+  - name: PayPal
+    type: select
+    proxies:
+      - 香港节点
+      - 日本节点
+      - 新加坡节点
+      - 美国节点
+      - 台湾节点
+      - 欧洲节点
+      - 其他地区
+      - 日本故转
+      - 美国故转
+      - Proxy
+      - DIRECT
+    icon: https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/PayPal.png
+  - name: Apple
+    type: select
+    proxies:
+      - DIRECT
+      - Proxy
+      - 香港节点
+      - 日本节点
+      - 新加坡节点
+      - 美国节点
+      - 台湾节点
+      - 其他地区
+    icon: https://raw.githubusercontent.com/Orz-3/mini/master/Color/Apple.png
+  - name: Microsoft
+    type: select
+    proxies:
+      - 香港节点
+      - 日本节点
+      - 新加坡节点
+      - 美国节点
+      - 台湾节点
+      - 欧洲节点
+      - 其他地区
+      - 日本故转
+      - 美国故转
+      - Proxy
+      - DIRECT
+    icon: https://raw.githubusercontent.com/erdongchanyo/icon/main/Policy-Filter/Microsoft.png
+  - name: OneDrive
+    type: select
+    proxies:
+      - 香港节点
+      - 日本节点
+      - 新加坡节点
+      - 美国节点
+      - 台湾节点
+      - 欧洲节点
+      - 其他地区
+      - 日本故转
+      - 美国故转
+      - Proxy
+      - DIRECT
+      - Microsoft
+    icon: https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/OneDrive.png
+  - name: GitHub
+    type: select
+    proxies:
+      - 香港节点
+      - 日本节点
+      - 新加坡节点
+      - 美国节点
+      - 台湾节点
+      - 欧洲节点
+      - 其他地区
+      - 日本故转
+      - 美国故转
+      - Proxy
+      - DIRECT
+    icon: https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/GitHub.png
+  - name: Docker
+    type: select
+    proxies:
+      - 香港节点
+      - 日本节点
+      - 新加坡节点
+      - 美国节点
+      - 台湾节点
+      - 欧洲节点
+      - 其他地区
+      - 日本故转
+      - 美国故转
+      - Proxy
+      - DIRECT
+    icon: https://raw.githubusercontent.com/allen0039/proxy-resource-hub/main/icons/docker.png?v=b5317ee
+  - name: 游戏平台
+    type: select
+    proxies:
+      - 香港节点
+      - 日本节点
+      - 新加坡节点
+      - 美国节点
+      - 台湾节点
+      - 欧洲节点
+      - 其他地区
+      - 日本故转
+      - 美国故转
+      - Proxy
+      - DIRECT
+    icon: https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/Game.png
+  - name: CDN
+    type: select
+    proxies:
+      - 香港节点
+      - 日本节点
+      - 新加坡节点
+      - 美国节点
+      - 台湾节点
+      - 欧洲节点
+      - 其他地区
+      - 日本故转
+      - 美国故转
+      - Proxy
+      - DIRECT
+    icon: https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/Cloudflare.png
+  - name: 测速
+    type: select
+    proxies:
+      - 香港节点
+      - 日本节点
+      - 新加坡节点
+      - 美国节点
+      - 台湾节点
+      - 欧洲节点
+      - 其他地区
+      - 日本故转
+      - 美国故转
+      - Proxy
+      - DIRECT
+    icon: https://raw.githubusercontent.com/erdongchanyo/icon/main/Policy-Filter/Speedtest.png
+  - name: 日本故转
+    type: fallback
+    use:
+      - 拼好鸡
+    empty-fallback: DIRECT
+    url: http://cp.cloudflare.com/generate_204
+    interval: 300
+    filter: (?i)(🇯🇵|日本|川日|东京|大阪|泉日|埼玉|\b(JP|JPN|Japan)(\d+)?\b)
+    exclude-filter: (?i)(家宽|verizon$|回国|校园|游戏|🎮|\bGAME\b)
+    icon: https://raw.githubusercontent.com/Orz-3/mini/master/Color/JP.png
+  - name: 美国故转
+    type: fallback
+    use:
+      - 拼好鸡
+    empty-fallback: DIRECT
+    url: http://cp.cloudflare.com/generate_204
+    interval: 300
+    filter: (?i)(🇺🇸|🇺🇲|美国|波特兰|达拉斯|俄勒冈|凤凰城|费利蒙|硅谷|拉斯维加斯|洛杉矶|圣何塞|圣克拉拉|西雅图|芝加哥|\b(US|USA|United States)(\d+)?\b)
+    exclude-filter: (?i)(家宽|verizon$|回国|校园|游戏|🎮|\bGAME\b)
+    icon: https://raw.githubusercontent.com/Orz-3/mini/master/Color/US.png
+  - name: 香港节点
+    type: select
+    include-all: true
+    empty-fallback: DIRECT
+    filter: (?i)(🇭🇰|香港|\b(HK|HKG|Hong)(\d+)?\b)
+    exclude-filter: (?i)(回国|校园|游戏|🎮|\bGAME\b|Tailscale|剩余流量|套餐到期|流量重置|Traffic|Expire|Reset|USE|USED|TOTAL|EMAIL|Panel|\d{4}-\d{2}-\d{2}|\dG)
+    icon: https://raw.githubusercontent.com/Orz-3/mini/master/Color/HK.png
+  - name: 日本节点
+    type: select
+    include-all: true
+    empty-fallback: DIRECT
+    filter: (?i)(🇯🇵|日本|川日|东京|大阪|泉日|埼玉|\b(JP|JPN|Japan)(\d+)?\b)
+    exclude-filter: (?i)(回国|校园|游戏|🎮|\bGAME\b|Tailscale|剩余流量|套餐到期|流量重置|Traffic|Expire|Reset|USE|USED|TOTAL|EMAIL|Panel|\d{4}-\d{2}-\d{2}|\dG)
+    icon: https://raw.githubusercontent.com/Orz-3/mini/master/Color/JP.png
+  - name: 新加坡节点
+    type: select
+    include-all: true
+    empty-fallback: DIRECT
+    filter: (?i)(🇸🇬|新加坡|狮城|\b(SG|SGP|Singapore)(\d+)?\b)
+    exclude-filter: (?i)(回国|校园|游戏|🎮|\bGAME\b|Tailscale|剩余流量|套餐到期|流量重置|Traffic|Expire|Reset|USE|USED|TOTAL|EMAIL|Panel|\d{4}-\d{2}-\d{2}|\dG)
+    icon: https://raw.githubusercontent.com/Orz-3/mini/master/Color/SG.png
+  - name: 美国节点
+    type: select
+    include-all: true
+    empty-fallback: DIRECT
+    filter: (?i)(🇺🇸|🇺🇲|美国|波特兰|达拉斯|俄勒冈|凤凰城|费利蒙|硅谷|拉斯维加斯|洛杉矶|圣何塞|圣克拉拉|西雅图|芝加哥|\b(US|USA|United States)(\d+)?\b)
+    exclude-filter: (?i)(回国|校园|游戏|🎮|\bGAME\b|Tailscale|剩余流量|套餐到期|流量重置|Traffic|Expire|Reset|USE|USED|TOTAL|EMAIL|Panel|\d{4}-\d{2}-\d{2}|\dG)
+    icon: https://raw.githubusercontent.com/Orz-3/mini/master/Color/US.png
+  - name: 台湾节点
+    type: select
+    include-all: true
+    empty-fallback: DIRECT
+    filter: (?i)(🇹🇼|台湾|\b(TW|TWN|Tai|Taiwan)(\d+)?\b)
+    exclude-filter: (?i)(回国|校园|游戏|🎮|\bGAME\b|Tailscale|剩余流量|套餐到期|流量重置|Traffic|Expire|Reset|USE|USED|TOTAL|EMAIL|Panel|\d{4}-\d{2}-\d{2}|\dG)
+    icon: https://raw.githubusercontent.com/Orz-3/mini/master/Color/TW.png
+  - name: 欧洲节点
+    type: select
+    include-all: true
+    empty-fallback: DIRECT
+    filter: (?i)^(?:(?:🇩🇪|🇬🇧|🇫🇷|🇳🇱|🇨🇭|🇸🇪|🇳🇴|🇫🇮|🇩🇰|🇪🇸|🇮🇹|🇵🇹|🇮🇪|🇧🇪|🇦🇹|🇵🇱|🇨🇿|🇭🇺|🇷🇴|🇧🇬|🇬🇷|🇷🇸|🇭🇷|🇸🇮|🇸🇰|🇺🇦|🇪🇪|🇱🇻|🇱🇹|🇮🇸|🇱🇺|🇲🇹|🇨🇾|🇦🇱|🇷🇺).*|.*(?:>>|>|→)\s*.*(?:(?:🇩🇪|🇬🇧|🇫🇷|🇳🇱|🇨🇭|🇸🇪|🇳🇴|🇫🇮|🇩🇰|🇪🇸|🇮🇹|🇵🇹|🇮🇪|🇧🇪|🇦🇹|🇵🇱|🇨🇿|🇭🇺|🇷🇴|🇧🇬|🇬🇷|🇷🇸|🇭🇷|🇸🇮|🇸🇰|🇺🇦|🇪🇪|🇱🇻|🇱🇹|🇮🇸|🇱🇺|🇲🇹|🇨🇾|🇦🇱|🇷🇺|Deutschland|Germany|France|Netherlands|Holland|Switzerland|Sweden|Norway|Finland|Denmark|United[
+      _-]?Kingdom|England|Spain|Italy|Portugal|Ireland|Belgium|Austria|Poland|Czech|Hungary|Romania|Bulgaria|Greece|Serbia|Croatia|Slovenia|Slovakia|Ukraine|Estonia|Latvia|Lithuania|Iceland|Luxembourg|Malta|Cyprus|Albania|Russia|欧洲|歐洲|欧盟|歐盟|Europe|European|德国|德國|法兰克福|法蘭克福|柏林|慕尼黑|英国|英國|伦敦|曼彻斯特|伯明翰|法国|法國|巴黎|马赛|里昂|荷兰|荷蘭|阿姆斯特丹|鹿特丹|瑞士|苏黎世|日内瓦|瑞典|斯德哥尔摩|挪威|奥斯陆|芬兰|芬蘭|赫尔辛基|丹麦|丹麥|哥本哈根|西班牙|马德里|巴塞罗那|意大利|罗马|米兰|葡萄牙|里斯本|爱尔兰|愛爾蘭|都柏林|比利时|比利時|布鲁塞尔|布魯塞爾|奥地利|奧地利|维也纳|維也納|波兰|波蘭|华沙|華沙|捷克|布拉格|匈牙利|布达佩斯|布達佩斯|罗马尼亚|羅馬尼亞|布加勒斯特|保加利亚|保加利亞|索非亚|索菲亚|希腊|希臘|雅典|塞尔维亚|塞爾維亞|贝尔格莱德|貝爾格萊德|克罗地亚|克羅地亞|萨格勒布|薩格勒布|斯洛文尼亚|斯洛文尼亞|卢布尔雅那|盧布爾雅那|斯洛伐克|布拉迪斯拉发|布拉迪斯拉發|乌克兰|烏克蘭|基辅|基輔|爱沙尼亚|愛沙尼亞|塔林|拉脱维亚|拉脫維亞|里加|立陶宛|维尔纽斯|維爾紐斯|冰岛|冰島|雷克雅未克|卢森堡|盧布爾|马耳他|馬耳他|塞浦路斯|賽普勒斯|阿尔巴尼亚|阿爾巴尼亞|俄罗斯|俄羅斯|莫斯科|圣彼得堡|聖彼得堡|DE|DEU|FR|FRA|NL|NLD|CH|CHE|SE|SWE|NO|NOR|FI|FIN|DK|DNK|GB|GBR|UK|ES|ESP|IT|ITA|PT|PRT|IE|IRL|BE|BEL|AT|AUT|PL|POL|CZ|CZE|HU|HUN|RO|ROU|BG|BGR|GR|GRC|RS|SRB|HR|HRV|SI|SVN|SK|SVK|UA|UKR|EE|EST|LV|LVA|LT|LTU|IS|ISL|LU|LUX|MT|MLT|CY|CYP|AL|ALB|RU|RUS))$|.*(?:^|[._
+      -])(?:Deutschland|Germany|France|Netherlands|Holland|Switzerland|Sweden|Norway|Finland|Denmark|United[ _-]?Kingdom|England|Spain|Italy|Portugal|Ireland|Belgium|Austria|Poland|Czech|Hungary|Romania|Bulgaria|Greece|Serbia|Croatia|Slovenia|Slovakia|Ukraine|Estonia|Latvia|Lithuania|Iceland|Luxembourg|Malta|Cyprus|Albania|Russia|欧洲|歐洲|欧盟|歐盟|Europe|European|德国|德國|法兰克福|法蘭克福|柏林|慕尼黑|英国|英國|伦敦|曼彻斯特|伯明翰|法国|法國|巴黎|马赛|里昂|荷兰|荷蘭|阿姆斯特丹|鹿特丹|瑞士|苏黎世|日内瓦|瑞典|斯德哥尔摩|挪威|奥斯陆|芬兰|芬蘭|赫尔辛基|丹麦|丹麥|哥本哈根|西班牙|马德里|巴塞罗那|意大利|罗马|米兰|葡萄牙|里斯本|爱尔兰|愛爾蘭|都柏林|比利时|比利時|布鲁塞尔|布魯塞爾|奥地利|奧地利|维也纳|維也納|波兰|波蘭|华沙|華沙|捷克|布拉格|匈牙利|布达佩斯|布達佩斯|罗马尼亚|羅馬尼亞|布加勒斯特|保加利亚|保加利亞|索非亚|索菲亚|希腊|希臘|雅典|塞尔维亚|塞爾維亞|贝尔格莱德|貝爾格萊德|克罗地亚|克羅地亞|萨格勒布|薩格勒布|斯洛文尼亚|斯洛文尼亞|卢布尔雅那|盧布爾雅那|斯洛伐克|布拉迪斯拉发|布拉迪斯拉發|乌克兰|烏克蘭|基辅|基輔|爱沙尼亚|愛沙尼亞|塔林|拉脱维亚|拉脫維亞|里加|立陶宛|维尔纽斯|維爾紐斯|冰岛|冰島|雷克雅未克|卢森堡|盧布爾|马耳他|馬耳他|塞浦路斯|賽普勒斯|阿尔巴尼亚|阿爾巴尼亞|俄罗斯|俄羅斯|莫斯科|圣彼得堡|聖彼得堡|DE|DEU|FR|FRA|NL|NLD|CH|CHE|SE|SWE|NO|NOR|FI|FIN|DK|DNK|GB|GBR|UK|ES|ESP|IT|ITA|PT|PRT|IE|IRL|BE|BEL|AT|AUT|PL|POL|CZ|CZE|HU|HUN|RO|ROU|BG|BGR|GR|GRC|RS|SRB|HR|HRV|SI|SVN|SK|SVK|UA|UKR|EE|EST|LV|LVA|LT|LTU|IS|ISL|LU|LUX|MT|MLT|CY|CYP|AL|ALB|RU|RUS)$)$
+    exclude-filter: (?i)(回国|校园|游戏|🎮|\bGAME\b|Tailscale)
+    icon: https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/Germany.png
+  - name: 其他地区
+    type: select
+    include-all: true
+    empty-fallback: DIRECT
+    exclude-filter: (?i)(Tailscale|(?:(?:(?:🇩🇪|🇬🇧|🇫🇷|🇳🇱|🇨🇭|🇸🇪|🇳🇴|🇫🇮|🇩🇰|🇪🇸|🇮🇹|🇵🇹|🇮🇪|🇧🇪|🇦🇹|🇵🇱|🇨🇿|🇭🇺|🇷🇴|🇧🇬|🇬🇷|🇷🇸|🇭🇷|🇸🇮|🇸🇰|🇺🇦|🇪🇪|🇱🇻|🇱🇹|🇮🇸|🇱🇺|🇲🇹|🇨🇾|🇦🇱|🇷🇺).*|.*(?:>>|>|→)\s*.*(?:(?:🇩🇪|🇬🇧|🇫🇷|🇳🇱|🇨🇭|🇸🇪|🇳🇴|🇫🇮|🇩🇰|🇪🇸|🇮🇹|🇵🇹|🇮🇪|🇧🇪|🇦🇹|🇵🇱|🇨🇿|🇭🇺|🇷🇴|🇧🇬|🇬🇷|🇷🇸|🇭🇷|🇸🇮|🇸🇰|🇺🇦|🇪🇪|🇱🇻|🇱🇹|🇮🇸|🇱🇺|🇲🇹|🇨🇾|🇦🇱|🇷🇺|Deutschland|Germany|France|Netherlands|Holland|Switzerland|Sweden|Norway|Finland|Denmark|United[
+      _-]?Kingdom|England|Spain|Italy|Portugal|Ireland|Belgium|Austria|Poland|Czech|Hungary|Romania|Bulgaria|Greece|Serbia|Croatia|Slovenia|Slovakia|Ukraine|Estonia|Latvia|Lithuania|Iceland|Luxembourg|Malta|Cyprus|Albania|Russia|欧洲|歐洲|欧盟|歐盟|Europe|European|德国|德國|法兰克福|法蘭克福|柏林|慕尼黑|英国|英國|伦敦|曼彻斯特|伯明翰|法国|法國|巴黎|马赛|里昂|荷兰|荷蘭|阿姆斯特丹|鹿特丹|瑞士|苏黎世|日内瓦|瑞典|斯德哥尔摩|挪威|奥斯陆|芬兰|芬蘭|赫尔辛基|丹麦|丹麥|哥本哈根|西班牙|马德里|巴塞罗那|意大利|罗马|米兰|葡萄牙|里斯本|爱尔兰|愛爾蘭|都柏林|比利时|比利時|布鲁塞尔|布魯塞爾|奥地利|奧地利|维也纳|維也納|波兰|波蘭|华沙|華沙|捷克|布拉格|匈牙利|布达佩斯|布達佩斯|罗马尼亚|羅馬尼亞|布加勒斯特|保加利亚|保加利亞|索非亚|索菲亚|希腊|希臘|雅典|塞尔维亚|塞爾維亞|贝尔格莱德|貝爾格萊德|克罗地亚|克羅地亞|萨格勒布|薩格勒布|斯洛文尼亚|斯洛文尼亞|卢布尔雅那|盧布爾雅那|斯洛伐克|布拉迪斯拉发|布拉迪斯拉發|乌克兰|烏克蘭|基辅|基輔|爱沙尼亚|愛沙尼亞|塔林|拉脱维亚|拉脫維亞|里加|立陶宛|维尔纽斯|維爾紐斯|冰岛|冰島|雷克雅未克|卢森堡|盧布爾|马耳他|馬耳他|塞浦路斯|賽普勒斯|阿尔巴尼亚|阿爾巴尼亞|俄罗斯|俄羅斯|莫斯科|圣彼得堡|聖彼得堡|DE|DEU|FR|FRA|NL|NLD|CH|CHE|SE|SWE|NO|NOR|FI|FIN|DK|DNK|GB|GBR|UK|ES|ESP|IT|ITA|PT|PRT|IE|IRL|BE|BEL|AT|AUT|PL|POL|CZ|CZE|HU|HUN|RO|ROU|BG|BGR|GR|GRC|RS|SRB|HR|HRV|SI|SVN|SK|SVK|UA|UKR|EE|EST|LV|LVA|LT|LTU|IS|ISL|LU|LUX|MT|MLT|CY|CYP|AL|ALB|RU|RUS))$|.*(?:^|[._
+      -])(?:Deutschland|Germany|France|Netherlands|Holland|Switzerland|Sweden|Norway|Finland|Denmark|United[ _-]?Kingdom|England|Spain|Italy|Portugal|Ireland|Belgium|Austria|Poland|Czech|Hungary|Romania|Bulgaria|Greece|Serbia|Croatia|Slovenia|Slovakia|Ukraine|Estonia|Latvia|Lithuania|Iceland|Luxembourg|Malta|Cyprus|Albania|Russia|欧洲|歐洲|欧盟|歐盟|Europe|European|德国|德國|法兰克福|法蘭克福|柏林|慕尼黑|英国|英國|伦敦|曼彻斯特|伯明翰|法国|法國|巴黎|马赛|里昂|荷兰|荷蘭|阿姆斯特丹|鹿特丹|瑞士|苏黎世|日内瓦|瑞典|斯德哥尔摩|挪威|奥斯陆|芬兰|芬蘭|赫尔辛基|丹麦|丹麥|哥本哈根|西班牙|马德里|巴塞罗那|意大利|罗马|米兰|葡萄牙|里斯本|爱尔兰|愛爾蘭|都柏林|比利时|比利時|布鲁塞尔|布魯塞爾|奥地利|奧地利|维也纳|維也納|波兰|波蘭|华沙|華沙|捷克|布拉格|匈牙利|布达佩斯|布達佩斯|罗马尼亚|羅馬尼亞|布加勒斯特|保加利亚|保加利亞|索非亚|索菲亚|希腊|希臘|雅典|塞尔维亚|塞爾維亞|贝尔格莱德|貝爾格萊德|克罗地亚|克羅地亞|萨格勒布|薩格勒布|斯洛文尼亚|斯洛文尼亞|卢布尔雅那|盧布爾雅那|斯洛伐克|布拉迪斯拉发|布拉迪斯拉發|乌克兰|烏克蘭|基辅|基輔|爱沙尼亚|愛沙尼亞|塔林|拉脱维亚|拉脫維亞|里加|立陶宛|维尔纽斯|維爾紐斯|冰岛|冰島|雷克雅未克|卢森堡|盧布爾|马耳他|馬耳他|塞浦路斯|賽普勒斯|阿尔巴尼亚|阿爾巴尼亞|俄罗斯|俄羅斯|莫斯科|圣彼得堡|聖彼得堡|DE|DEU|FR|FRA|NL|NLD|CH|CHE|SE|SWE|NO|NOR|FI|FIN|DK|DNK|GB|GBR|UK|ES|ESP|IT|ITA|PT|PRT|IE|IRL|BE|BEL|AT|AUT|PL|POL|CZ|CZE|HU|HUN|RO|ROU|BG|BGR|GR|GRC|RS|SRB|HR|HRV|SI|SVN|SK|SVK|UA|UKR|EE|EST|LV|LVA|LT|LTU|IS|ISL|LU|LUX|MT|MLT|CY|CYP|AL|ALB|RU|RUS)$)|🇭🇰|香港|(^|[^A-Za-z0-9])(HK|HKG|Hong([
+      _-]?Kong)?)([ _-]?\d+)?($|[^A-Za-z0-9])|🇹🇼|台湾|台北|(^|[^A-Za-z0-9])(TW|TWN|Tai|Taiwan)([ _-]?\d+)?($|[^A-Za-z0-9])|🇯🇵|日本|川日|东京|大阪|泉日|沪日|深日|埼玉|(^|[^A-Za-z0-9])(JP|JPN|Japan)([
+      _-]?\d+)?($|[^A-Za-z0-9])|🇸🇬|新加坡|狮城|(^|[^A-Za-z0-9])(SG|SGP|Singapore)([ _-]?\d+)?($|[^A-Za-z0-9])|🇺🇸|🇺🇲|美国|波特兰|达拉斯|俄勒冈|凤凰城|费利蒙|硅谷|拉斯维加斯|洛杉矶|圣何塞|圣克拉拉|西雅图|芝加哥|(^|[^A-Za-z0-9])(US|USA|United[
+      _-]?States|States)([ _-]?\d+)?($|[^A-Za-z0-9])|家宽|verizon$|直连|邀请|返利|循环|官网|客服|网站|网址|获取|订阅|流量|剩余流量|套餐到期|流量重置|到期|机场|下次|版本|官址|备用|过期|已用|联系|邮箱|工单|群|交流群|官方群|用户群|群组|社群|群聊|贩卖|倒卖|防止|国内|Traffic|Expire|Reset|USE|USED|TOTAL|EMAIL|Panel|GAME|\d{4}-\d{2}-\d{2}|\dG))
+    icon: https://raw.githubusercontent.com/Orz-3/mini/master/Color/Static.png
+  - name: RFC节点
+    type: select
+    use:
+      - 拼好鸡
+      - 机场
+    empty-fallback: DIRECT
+    filter: RFC
+    icon: https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/AfreecaTV.png
+  - name: 家宽节点
+    type: select
+    include-all: true
+    empty-fallback: DIRECT
+    filter: (?i)(家宽|verizon$)
+    icon: https://raw.githubusercontent.com/allen0039/proxy-resource-hub/main/icons/home.png
+  - name: 全部节点
+    type: select
+    include-all: true
+    empty-fallback: DIRECT
+    exclude-filter: (?i)(Tailscale|直连|邀请|返利|循环|官网|客服|网站|网址|获取|订阅|流量|剩余流量|套餐到期|流量重置|到期|机场|下次|版本|官址|备用|过期|已用|联系|邮箱|工单|群|交流群|官方群|用户群|群组|社群|群聊|贩卖|倒卖|防止|国内|Traffic|Expire|Reset|USE|USED|TOTAL|EMAIL|Panel|GAME|\d{4}-\d{2}-\d{2}|\dG)
+    icon: https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/Server.png
+## 分流规则
+rules:
+#  - DOMAIN-SUFFIX,ts.net,Tailscale  # 已禁用 Tailscale
+  - IP-CIDR,192.168.50.0/24,DIRECT,no-resolve  # 局域网网段，禁用 Tailscale 时直连
+  - DOMAIN-SUFFIX,tailscale.com,DIRECT
+  - DOMAIN-SUFFIX,052909.xyz,美国节点
+  - DOMAIN-SUFFIX,allennas.de,日本节点
+  - DOMAIN-SUFFIX,mfallen.de,美国节点
+  - DOMAIN-SUFFIX,api.flyapi.tech,美国节点
+  - DOMAIN-SUFFIX,nodeseek.com,日本节点
+  - DOMAIN,rfc.uhdnow.com,RFC节点
+  - DOMAIN-SUFFIX,ggpht.com,YouTube
+  - DOMAIN-SUFFIX,ytimg.com,YouTube
+  - DOMAIN-SUFFIX,amdc.m.taobao.com,DIRECT
+  - DOMAIN-SUFFIX,amdcopen.m.taobao.com,DIRECT
+  - DOMAIN,httpdns.alicdn.com,DIRECT
+  - DOMAIN-SUFFIX,httpdns.aliyuncs.com,DIRECT
+  - DOMAIN,httpdns-sc.aliyuncs.com,DIRECT
+  - DOMAIN,httpdns-api.aliyuncs.com,DIRECT
+  - DOMAIN,httpdns.danuoyi.tbcache.com,DIRECT
+  - IP-CIDR,203.107.1.0/24,DIRECT,no-resolve
+  - DOMAIN,httpdns.bilivideo.com,DIRECT
+  - DOMAIN,httpdns.meituan.com,DIRECT
+  - DOMAIN,httpdnsvip.meituan.com,DIRECT
+  - DOMAIN,httpdnsmultiapi.meituan.com,DIRECT
+  - DOMAIN,httpdnsmultiapivip.meituan.com,DIRECT
+  - DOMAIN-SUFFIX,httpdns.c.163.com,DIRECT
+  - DOMAIN,httpdns.music.163.com,DIRECT
+  - DOMAIN-SUFFIX,httpdns.n.netease.com,DIRECT
+  - DOMAIN,httpdns.baidu.com,DIRECT
+  - DOMAIN,httpdns.baidubce.com,DIRECT
+  - DOMAIN,httpsdns.baidu.com,DIRECT
+  - DOMAIN,httpdns.volces.com,DIRECT
+  - DOMAIN,httpdns.volcengineapi.com,DIRECT
+  - DOMAIN,dns.jd.com,DIRECT
+  - DOMAIN,dns.weibo.cn,DIRECT
+  - DOMAIN,dns.weixin.qq.com,DIRECT
+  - DOMAIN,dns.weixin.qq.com.cn,DIRECT
+  - RULE-SET,private_ip,DIRECT,no-resolve
+  - RULE-SET,r02_lan,DIRECT
+  - RULE-SET,custom_hk,香港节点
+  - RULE-SET,custom_us,美国节点
+  - RULE-SET,custom_jp,日本节点
+  - RULE-SET,custom_sg,新加坡节点
+  - RULE-SET,custom_de,欧洲节点
+  - RULE-SET,custom_direct,DIRECT
+  - RULE-SET,direct-ai,DIRECT
+  - RULE-SET,personal_domain,DIRECT
+  - RULE-SET,pt_domain,日本节点
+  - RULE-SET,china_telecom,DIRECT,no-resolve
+  - DOMAIN-SUFFIX,pool.ntp.org,DIRECT
+  - RULE-SET,r13_PrivateRelay,Apple
+  - DOMAIN-SUFFIX,apple-dns.net,DIRECT
+  - RULE-SET,icloud,DIRECT,no-resolve
+  - DOMAIN-SUFFIX,push.apple.com,DIRECT
+  - DOMAIN-SUFFIX,apple-relay.apple.com,Apple
+  - RULE-SET,r15_reject,REJECT
+  - RULE-SET,r16_reject,REJECT,no-resolve
+  - RULE-SET,r17_reject-no-drop,REJECT
+  - DOMAIN,lcs-cops.adobe.io,DIRECT
+  - DOMAIN-SUFFIX,hstatic.io,REJECT
+  - DOMAIN-SUFFIX,adobestats.io,REJECT
+  - DOMAIN-SUFFIX,adobe.io,REJECT
+  - DOMAIN,ntb.lanjie100.com,REJECT
+  - DOMAIN,msmp.abchina.com.cn,REJECT
+  - IP-CIDR,180.76.76.200/32,REJECT,no-resolve
+  - RULE-SET,biliintl_domain,哔哩哔哩,no-resolve
+  - RULE-SET,cn_media_domain,国内媒体,no-resolve
+  - RULE-SET,r20_domestic,DIRECT
+  - RULE-SET,speedtest_domain,测速
+  - RULE-SET,r22_apple_cdn,DIRECT
+  - RULE-SET,r23_microsoft_cdn,DIRECT,no-resolve
+  - RULE-SET,apple_cn_domain,DIRECT,no-resolve
+  - RULE-SET,gemini,Google
+  - DOMAIN-SUFFIX,safebrowsing.google.com,Google
+  - DOMAIN-SUFFIX,github.io,GitHub
+  - DOMAIN-SUFFIX,githubassets.com,GitHub
+  - DOMAIN,api.github.com,GitHub
+  - DOMAIN-SUFFIX,cursor.com,AI
+  - DOMAIN-SUFFIX,claudeusercontent.com,AI
+  - DOMAIN-SUFFIX,chatgpt.livekit.cloud,AI
+  - DOMAIN-SUFFIX,aicode.googleapis.com,AI
+  - RULE-SET,ai_priority,AI
+  - RULE-SET,ai,AI,no-resolve
+  - RULE-SET,github_domain,GitHub,no-resolve
+  - RULE-SET,docker,Docker,no-resolve
+  - RULE-SET,youtube_domain,YouTube,no-resolve
+  - RULE-SET,onedrive_domain,OneDrive,no-resolve
+  - RULE-SET,tiktok_domain,TikTok,no-resolve
+  - RULE-SET,netflix_domain,Netflix,no-resolve
+  - RULE-SET,emby_domain,Emby,no-resolve
+  - RULE-SET,disney_domain,国外媒体,no-resolve
+  - RULE-SET,hbo_domain,国外媒体,no-resolve
+  - RULE-SET,bahamut_domain,巴哈姆特,no-resolve
+  - RULE-SET,porn_domain,特殊媒体,no-resolve
+  - RULE-SET,paypal_domain,PayPal,no-resolve
+  - RULE-SET,spotify_domain,Spotify,no-resolve
+  - RULE-SET,telegram_domain,Telegram,no-resolve
+  - RULE-SET,twitter_domain,国外社交,no-resolve
+  - RULE-SET,facebook_domain,国外社交,no-resolve
+  - RULE-SET,instagram_domain,国外社交,no-resolve
+  - RULE-SET,threads_domain,国外社交,no-resolve
+  - RULE-SET,whatsapp_domain,国外社交,no-resolve
+  - RULE-SET,google_domain,Google,no-resolve
+  - RULE-SET,epic_domain,游戏平台,no-resolve
+  - RULE-SET,sony_domain,游戏平台,no-resolve
+  - RULE-SET,games_domain,游戏平台,no-resolve
+  - RULE-SET,nintendo_domain,游戏平台,no-resolve
+  - RULE-SET,microsoft_domain,Microsoft,no-resolve
+  - RULE-SET,apple_domain,Apple,no-resolve
+  - DOMAIN-SUFFIX,media-amazon.com,海淘
+  - RULE-SET,global_media_domain,国外媒体,no-resolve
+  - RULE-SET,shopping_domain,海淘
+  - RULE-SET,cdn_domain,CDN
+  - RULE-SET,cdn_skk,CDN,no-resolve
+  - RULE-SET,geolocation-!cn,Proxy,no-resolve
+  - RULE-SET,r59_gfw,Proxy,no-resolve
+  - RULE-SET,telegram_asn,Telegram
+  - RULE-SET,telegram_ip,Telegram
+  - RULE-SET,r62_domestic,DIRECT
+  - RULE-SET,cn_ip,DIRECT
+  - RULE-SET,private_ip,DIRECT,no-resolve
+  - GEOIP,CN,DIRECT
+  - MATCH,Final
+rule-providers:
+  private_ip:
+    type: http
+    interval: 86400
+    behavior: ipcidr
+    format: mrs
+    url: https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/refs/heads/meta/geo/geoip/private.mrs
+  r02_lan:
+    type: http
+    interval: 86400
+    behavior: classical
+    format: text
+    url: https://ruleset.skk.moe/Clash/non_ip/lan.txt
+  custom_hk:
+    type: http
+    interval: 86400
+    behavior: classical
+    format: text
+    url: https://raw.githubusercontent.com/allen0039/proxy-resource-hub/main/Rules/Mihomo/Regional/hk.list
+  custom_us:
+    type: http
+    interval: 86400
+    behavior: classical
+    format: text
+    url: https://raw.githubusercontent.com/allen0039/proxy-resource-hub/main/Rules/Mihomo/Regional/us.list
+  custom_jp:
+    type: http
+    interval: 86400
+    behavior: classical
+    format: text
+    url: https://raw.githubusercontent.com/allen0039/proxy-resource-hub/main/Rules/Mihomo/Regional/jp.list
+  custom_sg:
+    type: http
+    interval: 86400
+    behavior: classical
+    format: text
+    url: https://raw.githubusercontent.com/allen0039/proxy-resource-hub/main/Rules/Mihomo/Regional/sg.list
+  custom_de:
+    type: http
+    interval: 86400
+    behavior: classical
+    format: text
+    url: https://raw.githubusercontent.com/allen0039/proxy-resource-hub/main/Rules/Mihomo/Regional/de.list
+  custom_direct:
+    type: http
+    interval: 86400
+    behavior: classical
+    format: text
+    url: https://raw.githubusercontent.com/allen0039/proxy-resource-hub/main/Rules/Mihomo/Custom/direct.list
+  direct-ai:
+    type: http
+    interval: 86400
+    behavior: classical
+    format: text
+    url: https://raw.githubusercontent.com/allen0039/proxy-resource-hub/main/Rules/Mihomo/AI/direct-ai.list
+  personal_domain:
+    type: http
+    interval: 86400
+    behavior: classical
+    format: text
+    url: https://raw.githubusercontent.com/allen0039/proxy-resource-hub/main/Rules/Mihomo/Personal/Domain.list
+  pt_domain:
+    type: http
+    interval: 86400
+    behavior: classical
+    format: text
+    url: https://raw.githubusercontent.com/allen0039/proxy-resource-hub/main/Rules/Mihomo/PT/Domain.list
+  china_telecom:
+    type: http
+    interval: 86400
+    behavior: classical
+    format: yaml
+    url: https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/rule/Clash/ChinaTelecom/ChinaTelecom.yaml
+  r13_PrivateRelay:
+    type: http
+    interval: 86400
+    behavior: classical
+    format: text
+    url: https://raw.githubusercontent.com/allen0039/proxy-resource-hub/main/Rules/Apple/PrivateRelay.list
+  icloud:
+    type: http
+    interval: 86400
+    behavior: classical
+    format: yaml
+    url: https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/rule/Clash/iCloud/iCloud.yaml
+  r15_reject:
+    type: http
+    interval: 86400
+    behavior: domain
+    format: text
+    url: https://ruleset.skk.moe/Clash/domainset/reject.txt
+  r16_reject:
+    type: http
+    interval: 86400
+    behavior: classical
+    format: text
+    url: https://ruleset.skk.moe/Clash/non_ip/reject.txt
+  r17_reject-no-drop:
+    type: http
+    interval: 86400
+    behavior: classical
+    format: text
+    url: https://ruleset.skk.moe/Clash/non_ip/reject-no-drop.txt
+  biliintl_domain:
+    type: http
+    interval: 86400
+    behavior: classical
+    format: yaml
+    url: https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/rule/Clash/BiliBili/BiliBili.yaml
+  cn_media_domain:
+    type: http
+    interval: 86400
+    behavior: classical
+    format: yaml
+    url: https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/rule/Clash/ChinaMedia/ChinaMedia.yaml
+  r20_domestic:
+    type: http
+    interval: 86400
+    behavior: classical
+    format: text
+    url: https://ruleset.skk.moe/Clash/non_ip/domestic.txt
+  speedtest_domain:
+    type: http
+    interval: 86400
+    behavior: domain
+    format: text
+    url: https://ruleset.skk.moe/Clash/domainset/speedtest.txt
+  r22_apple_cdn:
+    type: http
+    interval: 86400
+    behavior: domain
+    format: text
+    url: https://ruleset.skk.moe/Clash/domainset/apple_cdn.txt
+  r23_microsoft_cdn:
+    type: http
+    interval: 86400
+    behavior: classical
+    format: text
+    url: https://ruleset.skk.moe/Clash/non_ip/microsoft_cdn.txt
+  apple_cn_domain:
+    type: http
+    interval: 86400
+    behavior: classical
+    format: text
+    url: https://ruleset.skk.moe/Clash/non_ip/apple_cn.txt
+  gemini:
+    type: http
+    interval: 86400
+    behavior: classical
+    format: text
+    url: https://raw.githubusercontent.com/allen0039/proxy-resource-hub/main/Rules/Mihomo/Google/gemini.list
+  ai_priority:
+    type: http
+    interval: 86400
+    behavior: classical
+    format: text
+    url: https://raw.githubusercontent.com/allen0039/proxy-resource-hub/main/Rules/Mihomo/AI/ai.list
+  ai:
+    type: http
+    interval: 86400
+    behavior: classical
+    format: text
+    url: https://ruleset.skk.moe/Clash/non_ip/ai.txt
+  github_domain:
+    type: http
+    interval: 86400
+    behavior: classical
+    format: yaml
+    url: https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/refs/heads/master/rule/Clash/GitHub/GitHub.yaml
+  docker:
+    type: http
+    interval: 86400
+    behavior: classical
+    format: yaml
+    url: https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/rule/Clash/Docker/Docker.yaml
+  youtube_domain:
+    type: http
+    interval: 86400
+    behavior: classical
+    format: yaml
+    url: https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/refs/heads/master/rule/Clash/YouTube/YouTube.yaml
+  onedrive_domain:
+    type: http
+    interval: 86400
+    behavior: classical
+    format: yaml
+    url: https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/refs/heads/master/rule/Clash/OneDrive/OneDrive.yaml
+  tiktok_domain:
+    type: http
+    interval: 86400
+    behavior: classical
+    format: yaml
+    url: https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/rule/Clash/TikTok/TikTok.yaml
+  netflix_domain:
+    type: http
+    interval: 86400
+    behavior: classical
+    format: yaml
+    url: https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/refs/heads/master/rule/Clash/Netflix/Netflix.yaml
+  emby_domain:
+    type: http
+    interval: 86400
+    behavior: classical
+    format: yaml
+    url: https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/rule/Clash/Emby/Emby.yaml
+  disney_domain:
+    type: http
+    interval: 86400
+    behavior: classical
+    format: yaml
+    url: https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/rule/Clash/Disney/Disney.yaml
+  hbo_domain:
+    type: http
+    interval: 86400
+    behavior: classical
+    format: yaml
+    url: https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/rule/Clash/HBO/HBO.yaml
+  bahamut_domain:
+    type: http
+    interval: 86400
+    behavior: classical
+    format: yaml
+    url: https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/rule/Clash/Bahamut/Bahamut.yaml
+  porn_domain:
+    type: http
+    interval: 86400
+    behavior: classical
+    format: text
+    url: https://raw.githubusercontent.com/ACL4SSR/ACL4SSR/master/Clash/Ruleset/Porn.list
+  paypal_domain:
+    type: http
+    interval: 86400
+    behavior: classical
+    format: yaml
+    url: https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/refs/heads/master/rule/Clash/PayPal/PayPal.yaml
+  spotify_domain:
+    type: http
+    interval: 86400
+    behavior: classical
+    format: yaml
+    url: https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/refs/heads/master/rule/Clash/Spotify/Spotify.yaml
+  telegram_domain:
+    type: http
+    interval: 86400
+    behavior: classical
+    format: text
+    url: https://ruleset.skk.moe/Clash/non_ip/telegram.txt
+  twitter_domain:
+    type: http
+    interval: 86400
+    behavior: classical
+    format: yaml
+    url: https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/rule/Clash/Twitter/Twitter.yaml
+  facebook_domain:
+    type: http
+    interval: 86400
+    behavior: classical
+    format: yaml
+    url: https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/rule/Clash/Facebook/Facebook.yaml
+  instagram_domain:
+    type: http
+    interval: 86400
+    behavior: classical
+    format: yaml
+    url: https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/rule/Clash/Instagram/Instagram.yaml
+  threads_domain:
+    type: http
+    interval: 86400
+    behavior: classical
+    format: yaml
+    url: https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/rule/Clash/Threads/Threads.yaml
+  whatsapp_domain:
+    type: http
+    interval: 86400
+    behavior: classical
+    format: yaml
+    url: https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/rule/Clash/Whatsapp/Whatsapp.yaml
+  google_domain:
+    type: http
+    interval: 86400
+    behavior: classical
+    format: yaml
+    url: https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/rule/Clash/Google/Google.yaml
+  epic_domain:
+    type: http
+    interval: 86400
+    behavior: classical
+    format: yaml
+    url: https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/rule/Clash/Epic/Epic.yaml
+  sony_domain:
+    type: http
+    interval: 86400
+    behavior: classical
+    format: yaml
+    url: https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/rule/Clash/Sony/Sony.yaml
+  games_domain:
+    type: http
+    interval: 86400
+    behavior: classical
+    format: yaml
+    url: https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/rule/Clash/Steam/Steam.yaml
+  nintendo_domain:
+    type: http
+    interval: 86400
+    behavior: classical
+    format: yaml
+    url: https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/rule/Clash/Nintendo/Nintendo.yaml
+  microsoft_domain:
+    type: http
+    interval: 86400
+    behavior: classical
+    format: text
+    url: https://ruleset.skk.moe/Clash/non_ip/microsoft.txt
+  apple_domain:
+    type: http
+    interval: 86400
+    behavior: classical
+    format: text
+    url: https://ruleset.skk.moe/Clash/non_ip/apple_services.txt
+  global_media_domain:
+    type: http
+    interval: 86400
+    behavior: classical
+    format: text
+    url: https://ruleset.skk.moe/Clash/non_ip/stream.txt
+  shopping_domain:
+    type: http
+    interval: 86400
+    behavior: classical
+    format: text
+    url: https://raw.githubusercontent.com/allen0039/proxy-resource-hub/main/Rules/Mihomo/shop/shopping.list
+  cdn_domain:
+    type: http
+    interval: 86400
+    behavior: domain
+    format: text
+    url: https://ruleset.skk.moe/Clash/domainset/cdn.txt
+  cdn_skk:
+    type: http
+    interval: 86400
+    behavior: classical
+    format: text
+    url: https://ruleset.skk.moe/Clash/non_ip/cdn.txt
+  geolocation-!cn:
+    type: http
+    interval: 86400
+    behavior: classical
+    format: text
+    url: https://ruleset.skk.moe/Clash/non_ip/global.txt
+  r59_gfw:
+    type: http
+    interval: 86400
+    behavior: classical
+    format: text
+    url: https://raw.githubusercontent.com/Loyalsoldier/surge-rules/release/ruleset/gfw.txt
+  telegram_asn:
+    type: http
+    interval: 86400
+    behavior: classical
+    format: text
+    url: https://ruleset.skk.moe/Clash/ip/telegram_asn.txt
+  telegram_ip:
+    type: http
+    interval: 86400
+    behavior: classical
+    format: text
+    url: https://ruleset.skk.moe/Clash/ip/telegram.txt
+  r62_domestic:
+    type: http
+    interval: 86400
+    behavior: classical
+    format: text
+    url: https://ruleset.skk.moe/Clash/ip/domestic.txt
+  cn_ip:
+    type: http
+    interval: 86400
+    behavior: classical
+    format: text
+    url: https://ruleset.skk.moe/Clash/ip/china_ip.txt
