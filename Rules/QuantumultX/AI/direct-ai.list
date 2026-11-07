@@ -5,3 +5,7 @@ host-suffix, abrdns.com, proxy
 host-suffix, muyuan.do, proxy
 host-suffix, 7r.fit, proxy
 host-suffix, muapi.cn, proxy
+
+
+# DeepSeek API / Web 服务直连，覆盖通用 AI 代理规则
+host-suffix, deepseek.com, proxy

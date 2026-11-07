@@ -4,3 +4,6 @@ muyuan.do
 7r.fit
 muapi.cn
 
+
+# DeepSeek API / Web 服务直连，覆盖通用 AI 代理规则
+deepseek.com
