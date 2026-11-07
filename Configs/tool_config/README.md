@@ -63,8 +63,10 @@ App Store 链接指向应用官方商店页面。部分应用可能未在所有�
 | 你使用的客户端 | 下载文件 | 格式 |
 | --- | --- | --- |
 | Mihomo、Clash Meta、OpenClash | [mihomo_allen.yaml](mihomo_allen.yaml) · [Raw 下载](https://raw.githubusercontent.com/allen0039/proxy-resource-hub/main/Configs/tool_config/mihomo_allen.yaml) | YAML |
+| Mihomo（无 Tailscale） | [mihomo_allen_no-tailscale.yaml](mihomo_allen_no-tailscale.yaml) | YAML |
 | Surge for Mac | [surge_mac_allen.conf](surge_mac_allen.conf) · [Raw 下载](https://raw.githubusercontent.com/allen0039/proxy-resource-hub/main/Configs/tool_config/surge_mac_allen.conf) | Surge 配置 |
 | Surge for iPhone | [surge_iphone_allen.conf](surge_iphone_allen.conf) · [Raw 下载](https://raw.githubusercontent.com/allen0039/proxy-resource-hub/main/Configs/tool_config/surge_iphone_allen.conf) | Surge 配置 |
+| Surge for iPhone（无 Tailscale） | [surge_iphone_allen_no-tailscale.conf](surge_iphone_allen_no-tailscale.conf) | Surge 配置 |
 | Quantumult X | [quantumultx_allen.conf](quantumultx_allen.conf) · [Raw 下载](https://raw.githubusercontent.com/allen0039/proxy-resource-hub/main/Configs/tool_config/quantumultx_allen.conf) | Quantumult X 配置 |
 | Loon | [loon_allen.lcf](loon_allen.lcf) · [Raw 下载](https://raw.githubusercontent.com/allen0039/proxy-resource-hub/main/Configs/tool_config/loon_allen.lcf) | Loon 配置 |
 | Egern | [egern_byallen.yaml](egern_byallen.yaml) · [Raw 下载](https://raw.githubusercontent.com/allen0039/proxy-resource-hub/main/Configs/tool_config/egern_byallen.yaml) | Egern YAML 配置 |

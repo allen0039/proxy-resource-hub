@@ -1,3 +1,5 @@
+# 使用前请先替换下方第一个“获取到的订阅链接”；其余订阅可按需启用。
+# 不要把带 token、密码或个人节点信息的链接提交到公开仓库。
 ## 订阅提供商：节点先在这里汇总，再由“全部节点”统一引用
 proxy-providers:
   拼好鸡:
@@ -20,11 +22,13 @@ proxy-providers:
       url: http://cp.cloudflare.com/generate_204
       interval: 300
     proxy: DIRECT
+# Tailscale 首次使用：将 auth-key 替换为自己的短期/受限密钥，并按需修改 hostname。
+# 导入后在“ Tailscale策略 ”组中选择 Tailscale；无须 Tailscale 时请使用无 Tailscale 版本。
 ## 本地固定出口，不参与地区节点策略组
 proxies:
   - name: Tailscale
     type: tailscale
-    hostname: mihomo-openwrt
+    hostname: mihomo-device
     state-dir: ./tailscale-mihomo
     ephemeral: false
     udp: true
@@ -48,6 +52,7 @@ profile:
   store-selected: true
   store-fake-ip: true
 external-controller: 0.0.0.0:9090
+# 请改成自己的强随机口令；external-controller 对局域网开放时尤其要避免使用简单密码。
 secret: CHANGE_ME
 external-ui: ui
 external-ui-name: zashboard
@@ -610,6 +615,12 @@ proxy-groups:
     empty-fallback: DIRECT
     filter: (?i)(家宽|verizon$)
     icon: https://raw.githubusercontent.com/allen0039/proxy-resource-hub/main/icons/home.png
+  # 独立入口：在客户端策略页选择此组即可触发/查看 Tailscale 连接。
+  - name: Tailscale策略
+    type: select
+    include-all: true
+    filter: ^Tailscale$
+    icon: https://tailscale.com/favicon.ico
   - name: 全部节点
     type: select
     include-all: true
@@ -618,7 +629,7 @@ proxy-groups:
     icon: https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/Server.png
 ## 分流规则
 rules:
-  - DOMAIN-SUFFIX,ts.net,Tailscale
+  - DOMAIN-SUFFIX,ts.net,Tailscale策略
   - DOMAIN-SUFFIX,tailscale.com,DIRECT
   - DOMAIN-SUFFIX,private-service-3.invalid,美国节点
   - DOMAIN-SUFFIX,private-service-2.invalid,日本节点

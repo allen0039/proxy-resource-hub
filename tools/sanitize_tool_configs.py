@@ -460,6 +460,8 @@ def sanitize_mihomo(text: str) -> str:
     sanitized = _rename_provider_tokens(normalized, names)
     sanitized = _replace_mihomo_provider_urls(sanitized)
     sanitized = _sanitize_mihomo_proxy_scalars(sanitized)
+    # Hostnames can identify a private device; keep the public template generic.
+    sanitized = re.sub(r"(?m)^(\s*hostname:\s*).*$", r"\1mihomo-device", sanitized)
     return _drop_nonpublic_ip_routing_rules(sanitized)
 
 
