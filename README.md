@@ -1,378 +1,66 @@
 # Proxy Resource Hub
 
-[![Validate rules](https://github.com/allen0039/proxy-resource-hub/actions/workflows/validate-rules.yml/badge.svg)](https://github.com/allen0039/proxy-resource-hub/actions/workflows/validate-rules.yml)
+[![Sync generated rules](https://github.com/allen0039/proxy-resource-hub/actions/workflows/sync-generated-rules.yml/badge.svg)](https://github.com/allen0039/proxy-resource-hub/actions/workflows/sync-generated-rules.yml)
 
-面向 Mihomo、Surge、Quantumult X、Loon 和 Egern 的代理配置与分流规则仓库。仓库提供六份脱敏配置模板，以及 AI、个人域名、PT 站点、海淘购物、SKK CDN/Download 和 Surge 等价 Egern 原生规则订阅。
+面向 Mihomo、Surge、Quantumult X、Loon 和 Egern 的公开脱敏配置与分流规则仓库。配置模板包含地区节点策略、AI、媒体、Apple、PT、个人域名、海淘和 CDN 等规则，并由 GitHub Actions 自动校验和生成。
 
 > [!IMPORTANT]
-> `Configs/tool_config/` 中的文件是公开脱敏模板，不是开箱即用的节点订阅。使用前必须在自己的私人副本中替换 `获取到的订阅链接`、`CHANGE_ME`、本地节点和 MITM 证书。不要把填写后的私人配置提交到公开仓库。
+> `Configs/tool_config/` 中的文件是公开模板，不包含真实订阅、节点密码或个人密钥。导入前请复制到本地私人文件，替换占位符；不要把填写后的私人配置提交到 GitHub。
 
-## 内容导航
+## 配置文件
 
-- [快速开始](#快速开始)
-- [客户端配置教程](#客户端配置教程)
-- [配置与策略说明](#配置与策略说明)
-- [规则订阅](#规则订阅)
-- [维护与自动更新](#维护与自动更新)
-- [安全与脱敏](#安全与脱敏)
-
-## 可用资源
-
-### 脱敏配置模板
-
-| 客户端 | 配置文件 | 订阅配置位置 | 单节点配置位置 |
+| 客户端 | 启用 Tailscale | 不启用 Tailscale | 说明 |
 | --- | --- | --- | --- |
-| Mihomo | [mihomo_allen.yaml](Configs/tool_config/mihomo_allen.yaml) · [Raw](https://raw.githubusercontent.com/allen0039/proxy-resource-hub/main/Configs/tool_config/mihomo_allen.yaml) | `proxy-providers` | `proxies` |
-| Surge for Mac | [surge_mac_allen.conf](Configs/tool_config/surge_mac_allen.conf) · [Raw](https://raw.githubusercontent.com/allen0039/proxy-resource-hub/main/Configs/tool_config/surge_mac_allen.conf) | `[Proxy Group]` 中的 `policy-path` | 按需添加 `[Proxy]` |
-| Surge for iPhone | [surge_iphone_allen.conf](Configs/tool_config/surge_iphone_allen.conf) · [Raw](https://raw.githubusercontent.com/allen0039/proxy-resource-hub/main/Configs/tool_config/surge_iphone_allen.conf) | `[Proxy Group]` 中的 `policy-path` | 按需添加 `[Proxy]` |
-| Quantumult X | [quantumultx_allen.conf](Configs/tool_config/quantumultx_allen.conf) · [Raw](https://raw.githubusercontent.com/allen0039/proxy-resource-hub/main/Configs/tool_config/quantumultx_allen.conf) | `[server_remote]` | `[server_local]` |
-| Loon | [loon_allen.lcf](Configs/tool_config/loon_allen.lcf) · [Raw](https://raw.githubusercontent.com/allen0039/proxy-resource-hub/main/Configs/tool_config/loon_allen.lcf) | `[Remote Proxy]` | 按需添加 `[Proxy]` |
-| Egern | [egern_byallen.yaml](Configs/tool_config/egern_byallen.yaml) · [Raw](https://raw.githubusercontent.com/allen0039/proxy-resource-hub/main/Configs/tool_config/egern_byallen.yaml) | `policy_groups` 中的 `urls` | 在私人副本中按需添加 |
+| Mihomo / Clash Meta / OpenClash | [mihomo_allen.yaml](Configs/tool_config/mihomo_allen.yaml) | [mihomo_allen_no-tailscale.yaml](Configs/tool_config/mihomo_allen_no-tailscale.yaml) | YAML；Android 可使用 FlClash、Clash Verge Rev 等客户端 |
+| Surge for iPhone / iPad | [surge_iphone_allen.conf](Configs/tool_config/surge_iphone_allen.conf) | [surge_iphone_allen_no-tailscale.conf](Configs/tool_config/surge_iphone_allen_no-tailscale.conf) | 启用版在策略页提供 `Tailscale策略` |
+| Surge for Mac | [surge_mac_allen.conf](Configs/tool_config/surge_mac_allen.conf) | — | 使用 Surge 原生 `Tailnet` |
+| Quantumult X | [quantumultx_allen.conf](Configs/tool_config/quantumultx_allen.conf) | — | 不写入伪造 Tailscale 字段 |
+| Loon | [loon_allen.lcf](Configs/tool_config/loon_allen.lcf) | — | 使用系统 Tailscale 或其他兼容方案 |
+| Egern | [egern_byallen.yaml](Configs/tool_config/egern_byallen.yaml) | — | 使用系统 Tailscale 或其他兼容方案 |
 
-### 规则类型
-
-| 规则 | 用途 | 模板默认策略 |
-| --- | --- | --- |
-| AI 服务 | OpenAI、Claude、Gemini 等 AI 服务 | `AI` 或自定义 AI 策略 |
-| 公益 AI | 指定公益 AI 站点 | 直连 |
-| 个人域名 | 个人维护的域名 | 直连 |
-| PT 站点 | 经确认的 PT 站点域名 | `日本节点` |
-| 海淘购物 | Amazon、eBay、REI、Backcountry 与户外品牌商城 | `海淘购物` 或自定义手动策略 |
-| SKK CDN | CDN 与静态资源域名 | `CDN` |
-| SKK Download | 下载域名规则 | 仅自动维护，六份模板当前未启用 |
-| Egern Surge 对齐层 | 拦截、局域网、国内域名/IP、AI、Google、Sony 与全球媒体等 | 按公开 Egern 模板中的对应策略 |
+每个文件均提供 [Raw 下载](https://raw.githubusercontent.com/allen0039/proxy-resource-hub/main/Configs/tool_config/)。Raw 地址用于下载模板，不建议直接作为远程配置长期使用。
 
 ## 快速开始
 
-### 1. 选择并下载配置
+1. 下载对应客户端的模板，复制为私人副本。
+2. 将第一个启用订阅中的 `获取到的订阅链接` 替换为自己的订阅 URL。保留订阅名称（默认是 `拼好鸡`），否则地区策略组可能无法读取节点。
+3. Mihomo 将 `secret: CHANGE_ME` 改为强随机口令；Surge 的订阅地址位于 `[Proxy Group]` 的 `policy-path=`。
+4. 导入客户端并更新节点、规则和远程资源。
+5. 确认地区组和 `Final` 有可用节点后，再按需启用 MITM、脚本或插件。
 
-从上方表格选择对应客户端，打开 `Raw` 链接后下载为本地文件。建议保留一份未修改的公开模板，并单独创建私人配置副本。
+### Mihomo Tailscale
 
-不要直接把公开 Raw 地址长期作为远程配置订阅，因为模板中的节点地址、密码和证书都是占位内容。
+启用版包含 `type: tailscale` 出口和独立的 `Tailscale策略` 组。首次使用前：
 
-### 2. 替换私人信息
+- 将 `auth-key: CHANGE_ME` 换成自己的短期或受限密钥；
+- 按需修改 `hostname` 和 `state-dir`；
+- 在客户端策略页选择 `Tailscale策略` 中的 Tailscale；
+- `ts.net`、`100.64.0.0/10` 和家庭局域网规则会指向该策略组。
 
-在私人副本中处理以下占位内容：
+无 Tailscale 需求请直接使用 `mihomo_allen_no-tailscale.yaml`。Mihomo 安卓端对内置 Tailscale 出口的延迟测速支持取决于内核版本，测速失败不等于连接不可用，应通过实际访问 Tailscale 设备验证。
 
-| 占位内容 | 处理方式 |
-| --- | --- |
-| `获取到的订阅链接` | 替换为自己的节点订阅 URL |
-| `CHANGE_ME` | 设置控制器口令、UUID、密码或其他密钥 |
-| `Configure local proxy nodes privately.` | 按客户端语法添加单节点；不需要时保留注释即可 |
-| `Configure MITM certificate and passphrase locally.` | 在设备本地生成或导入 MITM 证书和口令 |
+### Surge iPhone Tailscale
 
-默认只启用第一份订阅，名称为 `拼好鸡`；其余保留订阅依次命名为 `机场`、`自建`、`备用`、`优选`。替换订阅 URL 时不要随意修改名称，否则地区策略组可能无法读取节点。
+启用版包含 Surge 原生 `[Tailscale home-tailnet]` 段和 `Tailscale策略` 组。首次使用需在 Surge 的 Tailscale 策略编辑器完成交互登录，并在策略页选择 `Tailnet`。不需要 Tailscale 时使用 `surge_iphone_allen_no-tailscale.conf`。
 
-### 3. 导入客户端
+Surge Mac 使用原生 `Tailnet` 配置；Quantumult X、Loon 和 Egern 模板不添加非原生 Tailscale 字段，避免导入后出现兼容性问题。
 
-1. 将修改后的私人配置导入对应客户端。
-2. 更新节点订阅、远程规则和插件资源。
-3. 检查 `香港优选`、`日本优选`、`新加坡优选`、`美国优选` 是否能读取节点。
-4. 在通用代理入口和 `Final` 中选择需要的默认出口；Quantumult X 的通用入口是内置小写 `proxy`。
-5. 确认网页访问、DNS、流媒体和直连站点工作正常后，再启用 MITM、脚本或插件。
+## 规则资源
 
-不同客户端版本的导入按钮名称可能略有差异，但配置区段和占位字段保持一致。
+规则按客户端格式生成，主要包括：
 
-### 4. 首次使用检查
+- AI 与 Google/Gemini；
+- Apple、iCloud、Private Relay；
+- YouTube、Telegram、Netflix、Spotify、TikTok、游戏和媒体；
+- PT 站点、个人域名、海淘购物；
+- CDN、下载、直连和地区规则；
+- Egern 原生 YAML 规则及 Quantumult X/Loon 的 SKK 转换规则。
 
-- 节点列表为空：检查订阅是否启用、URL 是否有效，以及节点名称能否匹配地区筛选正则。
-- 规则提示策略不存在：确认规则引用的策略名在策略组中已经定义，名称和大小写必须一致。
-- MITM 或重写失败：确认系统已经安装并信任本地证书，且客户端相关开关已启用。
-- YAML 无法加载：检查 Mihomo 缩进，不要使用 Tab，也不要破坏锚点和列表层级。
-- 订阅更新失败：先确认网络出口和订阅有效性，不要通过全局关闭证书校验规避证书问题。
+规则源位于 `Rules/Source/`，生成产物位于 `Rules/Mihomo/`、`Rules/Surge/`、`Rules/QuantumultX/`、`Rules/Loon/` 和 `Rules/Egern/`。普通规则使用公开远程 URL，配置模板会按客户端语法引用它们。
 
-## Tailscale 默认行为
+## 安全与脱敏
 
-公开模板中的 Tailscale 配置默认全部关闭。Mihomo、Surge Mac 和 Surge iPhone 的配置文件内保留了带中文说明的注释示例；需要使用时，在私人副本中按说明取消注释，并把家庭 LAN 网段替换成自己的网段。Surge 需要在策略编辑器中完成交互登录，Mihomo 可使用短期、预授权的 `auth-key`；密钥不要写入公开仓库、远程订阅或聊天记录。
-
-Tailscale 只应承载明确指向它的 `ts.net`、`100.64.0.0/10` 和家庭 LAN 规则，公网域名继续使用原有分流。启用后不要让同一设备同时运行另一套客户端的 TUN 或增强模式。Quantumult X、Loon 和 Egern 模板不添加伪造的 Tailscale 字段；需要这些客户端接入时，请使用系统 Tailscale 客户端或单独的兼容方案。
-
-## 客户端配置教程
-
-### Mihomo
-
-1. 打开 `Configs/tool_config/mihomo_allen.yaml`。
-2. 在 `proxy-providers` 中替换启用订阅的 `url`。
-3. 将 `secret: CHANGE_ME` 改为强口令；如不需要远程控制，也应限制控制接口的访问范围。
-4. 单节点写入 `proxies`，订阅节点由 `proxy-providers` 提供。
-5. 加载配置后更新 Provider，并检查地区组是否获得节点。
-
-```yaml
-proxy-providers:
-  拼好鸡:
-    url: "获取到的订阅链接"
-    type: http
-    interval: 46400
-    health-check:
-      enable: true
-      url: http://cp.cloudflare.com/generate_204
-      interval: 300
-    proxy: DIRECT
-
-secret: CHANGE_ME
-```
-
-`proxy` 只表示下载订阅时使用的出口，不代表订阅内节点流量全部直连。这里使用 Mihomo 内置的 `DIRECT`，无需再定义名为“直连”的本地节点。模板同时显式写出每个策略组和规则 Provider 的完整字段，不依赖 YAML 合并锚点，避免妙妙屋等订阅转换工具丢失 `Apple` 等策略组。模板默认校验节点 TLS 证书。
-
-### Surge for Mac / iPhone
-
-1. 在 `[Proxy Group]` 找到 `拼好鸡`。
-2. 只替换 `policy-path=` 后面的 URL，保留策略组名称和其他参数。
-3. 需要启用备用订阅时，替换对应 URL 后删除该行开头的 `#`。
-4. 如需手写节点，添加 `[Proxy]` 区段并使用 Surge 节点语法。
-5. MITM 证书必须在设备本地配置，不要使用公开模板中的占位注释代替证书。
-
-```ini
-[Proxy Group]
-拼好鸡 = select, policy-path=获取到的订阅链接, update-interval=86400, include-all-proxies=0
-```
-
-地区组通过 `include-other-group=拼好鸡` 读取节点。若重命名订阅组，需要同步修改所有 `include-other-group` 引用。
-
-Surge Mac 模板保留 qB 下载器来源 IP 直连规则；Surge iPhone 不包含该类规则，避免客户端兼容问题。
-
-### Quantumult X
-
-1. 在 `[server_remote]` 中替换订阅 URL，并通过 `enabled=true/false` 控制启停。
-2. 原生 Quantumult X 订阅使用 `opt-parser=false`；只有需要转换的非原生订阅才设置 `opt-parser=true`。
-3. 单节点直接添加到保留的 `[server_local]`。
-4. `[filter_remote]` 中的 `force-policy` 必须对应 `[policy]` 中存在的策略名。
-5. 在 `[mitm]` 中配置本地生成的证书和口令。
-
-```ini
-[server_remote]
-获取到的订阅链接, tag=拼好鸡, update-interval=172800, opt-parser=false, enabled=true
-
-[server_local]
-# 在这里按 Quantumult X 节点语法逐行添加单节点
-```
-
-### Loon
-
-1. 在 `[Remote Proxy]` 中替换等号后的订阅 URL。
-2. `enabled=true` 表示启用，`enabled=false` 表示仅保留配置。
-3. 保持 `skip-cert-verify=false`，除非已经明确确认特定订阅的证书兼容问题。
-4. 如需手写单节点，可在 `[Remote Proxy]` 前添加 `[Proxy]` 区段。
-5. 地区节点为空时，检查 `[Remote Filter]` 的正则和订阅节点名称。
-
-```ini
-[Remote Proxy]
-拼好鸡 = 获取到的订阅链接,udp=true,skip-cert-verify=false,enabled=true
-```
-
-Loon 的远程规则位于 `[Remote Rule]`，插件位于 `[Plugin]`。启用需要 HTTPS 解密的插件前，必须先正确配置 `[Mitm]`。
-
-## 配置与策略说明
-
-### 策略组顺序
-
-地区相关策略在六份模板中按客户端能力采用以下顺序：
-
-```text
-香港优选 → 日本优选 → 新加坡优选 → 美国优选
-香港节点 → 台湾节点 → 日本节点 → 新加坡节点 → 美国节点
-韩国节点 → 英国节点 → 德国节点 → 其他节点组
-```
-
-- `优选`：自动测速并选择地区内延迟较低的节点。
-- `节点`：手动选择指定地区节点；个别客户端中的台湾、韩国组可能使用自动测速。
-- `Proxy`：Surge、Loon 和 Mihomo 的通用代理入口；Quantumult X 使用内置小写 `proxy`，不额外定义同名静态策略组。
-- `Final`：未匹配流量的最终出口。
-- `直连策略`、`DIRECT` 或 `direct`：不同客户端中的直连策略名称。
-
-### 业务策略
-
-模板包含 Google、AI、YouTube、Telegram、Netflix、Emby、Disney+、GitHub、PayPal、Spotify、Microsoft、游戏平台、Apple、TikTok、测速、CDN、OneDrive 等独立策略组。修改某类业务的出口时，优先调整对应策略组，不要直接修改远程规则内容。
-
-`CDN` 作为独立策略组保留，便于处理 Cloudflare 和 SKK CDN 规则。`Download` 规则仍由 GitHub Actions 自动生成，但当前模板不启用 Download 策略组，以避免国外下载域名被过度分流。
-
-### 本地规则优先级
-
-所有客户端都按从上到下首次匹配生效。本地精确规则位于远程大类规则之前，最终规则必须位于末尾。
-
-六份模板使用 `api.github.com` 本地精确规则固定走 `GitHub`。Gemini / Google AI 在支持仓库自有 `Google/gemini.list` 的客户端中优先加载该规则；本地只保留 `gemini.google.com` 精确兜底。`githubusercontent.com`、`cloudflare.com`、`gstatic.com`、`googleusercontent.com` 和 `DOMAIN-KEYWORD,googleapis` 等宽泛本地规则保持停用，避免覆盖无关业务；其他 AI 服务先加载仓库自有 `AI/ai.list`，再加载第三方 AI 规则作为补充。
-
-Mihomo 将自有 AI 精确规则置于 Cloudflare 大类规则之前。Loon 的 AI、测速、Steam 和 Game 补充规则使用 Blackmatrix 的 Loon 原生列表；当前无法下载的 Kelee 插件只作停用备份保留。
-
-Surge Mac 和 Mihomo 支持 qB 下载器来源 IP 直连保护。使用时应把模板中的私有网段地址改成自己的下载器地址，并保持这些规则位于规则列表最前。Quantumult X、Loon 和 Surge iPhone 不包含这类来源 IP 规则。
-
-## 规则订阅
-
-### 订阅地址表
-
-| 规则 | Mihomo | Surge | Quantumult X | Loon |
-| --- | --- | --- | --- | --- |
-| Gemini / Google AI | [订阅](https://raw.githubusercontent.com/allen0039/proxy-resource-hub/main/Rules/Mihomo/Google/gemini.list) | [订阅](https://raw.githubusercontent.com/allen0039/proxy-resource-hub/main/Rules/Surge/Google/gemini.list) | [订阅](https://raw.githubusercontent.com/allen0039/proxy-resource-hub/main/Rules/QuantumultX/Google/gemini.list) | [订阅](https://raw.githubusercontent.com/allen0039/proxy-resource-hub/main/Rules/Loon/Google/gemini.list) |
-| AI 服务 | [订阅](https://raw.githubusercontent.com/allen0039/proxy-resource-hub/main/Rules/Mihomo/AI/ai.list) | [订阅](https://raw.githubusercontent.com/allen0039/proxy-resource-hub/main/Rules/Surge/AI/ai.list) | [订阅](https://raw.githubusercontent.com/allen0039/proxy-resource-hub/main/Rules/QuantumultX/AI/ai.list) | [订阅](https://raw.githubusercontent.com/allen0039/proxy-resource-hub/main/Rules/Loon/AI/ai.list) |
-| 公益 AI | [订阅](https://raw.githubusercontent.com/allen0039/proxy-resource-hub/main/Rules/Mihomo/AI/direct-ai.list) | [订阅](https://raw.githubusercontent.com/allen0039/proxy-resource-hub/main/Rules/Surge/AI/direct-ai.list) | [订阅](https://raw.githubusercontent.com/allen0039/proxy-resource-hub/main/Rules/QuantumultX/AI/direct-ai.list) | [订阅](https://raw.githubusercontent.com/allen0039/proxy-resource-hub/main/Rules/Loon/AI/direct-ai.list) |
-| iCloud 数据直连 | — | [订阅](https://raw.githubusercontent.com/allen0039/proxy-resource-hub/main/Rules/Apple/iCloud.list) | — | [订阅](https://raw.githubusercontent.com/allen0039/proxy-resource-hub/main/Rules/Apple/iCloud.list) |
-| Apple Private Relay | — | [订阅](https://raw.githubusercontent.com/allen0039/proxy-resource-hub/main/Rules/Apple/PrivateRelay.list) | — | [订阅](https://raw.githubusercontent.com/allen0039/proxy-resource-hub/main/Rules/Apple/PrivateRelay.list) |
-| 自定义直连 | [订阅](https://raw.githubusercontent.com/allen0039/proxy-resource-hub/main/Rules/Mihomo/Custom/direct.list) | [订阅](https://raw.githubusercontent.com/allen0039/proxy-resource-hub/main/Rules/Surge/Custom/direct.list) | [订阅](https://raw.githubusercontent.com/allen0039/proxy-resource-hub/main/Rules/QuantumultX/Custom/direct.list) | [订阅](https://raw.githubusercontent.com/allen0039/proxy-resource-hub/main/Rules/Loon/Custom/direct.list) |
-| UU远程（Mac 进程直连） | — | [订阅](https://raw.githubusercontent.com/allen0039/proxy-resource-hub/main/Rules/Surge/Custom/uuyuancheng.list) | — | [订阅](https://raw.githubusercontent.com/allen0039/proxy-resource-hub/main/Rules/Loon/Custom/uuyuancheng.list) |
-| 个人域名 | [订阅](https://raw.githubusercontent.com/allen0039/proxy-resource-hub/main/Rules/Mihomo/Personal/Domain.list) | [订阅](https://raw.githubusercontent.com/allen0039/proxy-resource-hub/main/Rules/Surge/Personal/Domain.list) | [订阅](https://raw.githubusercontent.com/allen0039/proxy-resource-hub/main/Rules/QuantumultX/Personal/Domain.list) | [订阅](https://raw.githubusercontent.com/allen0039/proxy-resource-hub/main/Rules/Loon/Personal/Domain.list) |
-| PT 站点 | [订阅](https://raw.githubusercontent.com/allen0039/proxy-resource-hub/main/Rules/Mihomo/PT/Domain.list) | [订阅](https://raw.githubusercontent.com/allen0039/proxy-resource-hub/main/Rules/Surge/PT/Domain.list) | [订阅](https://raw.githubusercontent.com/allen0039/proxy-resource-hub/main/Rules/QuantumultX/PT/Domain.list) | [订阅](https://raw.githubusercontent.com/allen0039/proxy-resource-hub/main/Rules/Loon/PT/Domain.list) |
-| 海淘购物 | [订阅](https://raw.githubusercontent.com/allen0039/proxy-resource-hub/main/Rules/Mihomo/shop/shopping.list) | [订阅](https://raw.githubusercontent.com/allen0039/proxy-resource-hub/main/Rules/Surge/shop/shopping.list) | [订阅](https://raw.githubusercontent.com/allen0039/proxy-resource-hub/main/Rules/QuantumultX/shop/shopping.list) | [订阅](https://raw.githubusercontent.com/allen0039/proxy-resource-hub/main/Rules/Loon/shop/shopping.list) |
-| SKK CDN | 使用 SKK 原生格式 | 使用 SKK 原生格式 | [订阅](https://raw.githubusercontent.com/allen0039/proxy-resource-hub/main/Rules/QuantumultX/SKK/CDN.list) | [订阅](https://raw.githubusercontent.com/allen0039/proxy-resource-hub/main/Rules/Loon/SKK/CDN.list) |
-| SKK Download | 使用 SKK 原生格式 | 使用 SKK 原生格式 | [订阅](https://raw.githubusercontent.com/allen0039/proxy-resource-hub/main/Rules/QuantumultX/SKK/Download.list) | [订阅](https://raw.githubusercontent.com/allen0039/proxy-resource-hub/main/Rules/Loon/SKK/Download.list) |
-
-PT 规则当前包含 36 个经确认的站点域名。书签中明确排除的站点和 PT 工具链接不在该规则集中。
-
-### 单独添加规则订阅
-
-以下示例使用 PT 规则并默认通过 `日本节点` 策略组连接。策略名称可以替换，但必须确保对应策略已经存在。
-
-#### Apple Push 代理与 iCloud 直连
-
-`PrivateRelay.list` 必须放在 `iCloud.list` 前面，避免 `mask.icloud.com` 被 iCloud 后缀规则提前直连。Apple Push 策略组以及 Surge 的 `always-real-ip`、Loon 的 `real-ip` 仍由本地配置维护。
-
-```ini
-# Surge（在 [Rule] 中添加）
-RULE-SET,https://raw.githubusercontent.com/allen0039/proxy-resource-hub/main/Rules/Apple/PrivateRelay.list,Apple
-RULE-SET,https://raw.githubusercontent.com/allen0039/proxy-resource-hub/main/Rules/Apple/iCloud.list,DIRECT
-
-# Loon（在 [Remote Rule] 中添加，并保持相同顺序）
-https://raw.githubusercontent.com/allen0039/proxy-resource-hub/main/Rules/Apple/PrivateRelay.list, policy=Apple, tag=Apple Private Relay, enabled=true
-https://raw.githubusercontent.com/allen0039/proxy-resource-hub/main/Rules/Apple/iCloud.list, policy=DIRECT, tag=iCloud直连, enabled=true
-```
-
-#### UU远程（仅 Mac）
-
-UU远程使用多个后台进程；开启 Loon for Mac 的 Tunnel 或 Surge Mac 的增强模式时，建议把对应规则集指定为 `DIRECT`，避免经代理节点转发。规则集只适用于 Mac，不应导入 iPhone、iPad 或 Apple TV。只编辑 `Rules/Source/allenrules/uuyuancheng.list`；Surge 和 Loon 的 `Custom/uuyuancheng.list` 是生成结果，禁止手动编辑。
-
-```ini
-# Surge Mac
-RULE-SET,https://raw.githubusercontent.com/allen0039/proxy-resource-hub/main/Rules/Surge/Custom/uuyuancheng.list,DIRECT
-
-# Loon for Mac（在 [Remote Rule] 中添加）
-https://raw.githubusercontent.com/allen0039/proxy-resource-hub/main/Rules/Loon/Custom/uuyuancheng.list,DIRECT
-```
-
-#### Mihomo
-
-```yaml
-rule-providers:
-  pt_domain:
-    type: http
-    behavior: classical
-    format: text
-    url: https://raw.githubusercontent.com/allen0039/proxy-resource-hub/main/Rules/Mihomo/PT/Domain.list
-    path: ./ruleset/PT-Domain.list
-    interval: 86400
-
-rules:
-  - RULE-SET,pt_domain,日本节点
-```
-
-#### Surge
-
-```ini
-[Rule]
-RULE-SET,https://raw.githubusercontent.com/allen0039/proxy-resource-hub/main/Rules/Surge/PT/Domain.list,日本节点
-```
-
-#### Quantumult X
-
-```ini
-[filter_remote]
-https://raw.githubusercontent.com/allen0039/proxy-resource-hub/main/Rules/QuantumultX/PT/Domain.list, tag=PT站点, force-policy=日本节点, update-interval=86400, opt-parser=false, enabled=true
-```
-
-#### Loon
-
-```ini
-[Remote Rule]
-https://raw.githubusercontent.com/allen0039/proxy-resource-hub/main/Rules/Loon/PT/Domain.list, policy=日本节点, tag=PT站点, enabled=true
-```
-
-### Custom / Regional 自定义路由订阅
-
-自定义直连与地区路由规则从六个策略源文件维护：`Rules/Source/allenrules/direct.list`、`Rules/Source/allenrules/hk.list`、`Rules/Source/allenrules/us.list`、`Rules/Source/allenrules/jp.list`、`Rules/Source/allenrules/sg.list` 和 `Rules/Source/allenrules/de.list`。每个非注释行使用 `RULE-TYPE,VALUE` 两列，文件名决定策略；它们生成一条 Custom DIRECT 与香港、美国、日本、新加坡、德国五条 Regional 资源。修改对应源文件会同时更新独立规则 URL 的内容，以及下一次生成的客户端模板版本。`Rules/Source/allenrules/uuyuancheng.list` 是独立的 Mac 进程规则源，不属于这六个域名策略源；它只生成 Surge 与 Loon 的 UU 远程规则。
-
-| 策略组 | Mihomo | Surge | Quantumult X | Loon |
-| --- | --- | --- | --- | --- |
-| 香港节点 (`hk`) | [订阅](https://raw.githubusercontent.com/allen0039/proxy-resource-hub/main/Rules/Mihomo/Regional/hk.list) | [订阅](https://raw.githubusercontent.com/allen0039/proxy-resource-hub/main/Rules/Surge/Regional/hk.list) | [订阅](https://raw.githubusercontent.com/allen0039/proxy-resource-hub/main/Rules/QuantumultX/Regional/hk.list) | [订阅](https://raw.githubusercontent.com/allen0039/proxy-resource-hub/main/Rules/Loon/Regional/hk.list) |
-| 美国节点 (`us`) | [订阅](https://raw.githubusercontent.com/allen0039/proxy-resource-hub/main/Rules/Mihomo/Regional/us.list) | [订阅](https://raw.githubusercontent.com/allen0039/proxy-resource-hub/main/Rules/Surge/Regional/us.list) | [订阅](https://raw.githubusercontent.com/allen0039/proxy-resource-hub/main/Rules/QuantumultX/Regional/us.list) | [订阅](https://raw.githubusercontent.com/allen0039/proxy-resource-hub/main/Rules/Loon/Regional/us.list) |
-| 日本节点 (`jp`) | [订阅](https://raw.githubusercontent.com/allen0039/proxy-resource-hub/main/Rules/Mihomo/Regional/jp.list) | [订阅](https://raw.githubusercontent.com/allen0039/proxy-resource-hub/main/Rules/Surge/Regional/jp.list) | [订阅](https://raw.githubusercontent.com/allen0039/proxy-resource-hub/main/Rules/QuantumultX/Regional/jp.list) | [订阅](https://raw.githubusercontent.com/allen0039/proxy-resource-hub/main/Rules/Loon/Regional/jp.list) |
-| 新加坡节点 (`sg`) | [订阅](https://raw.githubusercontent.com/allen0039/proxy-resource-hub/main/Rules/Mihomo/Regional/sg.list) | [订阅](https://raw.githubusercontent.com/allen0039/proxy-resource-hub/main/Rules/Surge/Regional/sg.list) | [订阅](https://raw.githubusercontent.com/allen0039/proxy-resource-hub/main/Rules/QuantumultX/Regional/sg.list) | [订阅](https://raw.githubusercontent.com/allen0039/proxy-resource-hub/main/Rules/Loon/Regional/sg.list) |
-| 德国节点 (`de`) | [订阅](https://raw.githubusercontent.com/allen0039/proxy-resource-hub/main/Rules/Mihomo/Regional/de.list) | [订阅](https://raw.githubusercontent.com/allen0039/proxy-resource-hub/main/Rules/Surge/Regional/de.list) | [订阅](https://raw.githubusercontent.com/allen0039/proxy-resource-hub/main/Rules/QuantumultX/Regional/de.list) | [订阅](https://raw.githubusercontent.com/allen0039/proxy-resource-hub/main/Rules/Loon/Regional/de.list) |
-
-以下示例把美国节点规则绑定到已有的 `美国节点` 策略组；可按相同方式替换 URL 和策略组名称。
-
-#### Mihomo
-
-```yaml
-rule-providers:
-  regional_us:
-    type: http
-    behavior: classical
-    format: text
-    url: https://raw.githubusercontent.com/allen0039/proxy-resource-hub/main/Rules/Mihomo/Regional/us.list
-    path: ./ruleset/Regional-us.list
-    interval: 86400
-
-rules:
-  - RULE-SET,regional_us,美国节点
-```
-
-#### Surge
-
-```ini
-[Rule]
-RULE-SET,https://raw.githubusercontent.com/allen0039/proxy-resource-hub/main/Rules/Surge/Regional/us.list,美国节点
-```
-
-#### Quantumult X
-
-```ini
-[filter_remote]
-https://raw.githubusercontent.com/allen0039/proxy-resource-hub/main/Rules/QuantumultX/Regional/us.list, tag=地区路由-美国节点, force-policy=美国节点, update-interval=86400, opt-parser=false, enabled=true
-```
-
-#### Loon
-
-```ini
-[Remote Rule]
-https://raw.githubusercontent.com/allen0039/proxy-resource-hub/main/Rules/Loon/Regional/us.list, policy=美国节点, tag=地区路由-美国节点, enabled=true
-```
-
-## 维护与自动更新
-
-### 手工规则维护
-
-常规跨客户端域名只在 `Rules/Source/` 中维护一次，各客户端目录中的生成文件不要直接编辑。`Rules/Apple/` 是 Surge 与 Loon 共用的 classical 规则，直接维护其中的 `iCloud.list` 与 `PrivateRelay.list`，每行使用 `RULE-TYPE,VALUE` 格式。
-
-```bash
-python3 tools/generate_rules.py
-python3 tools/generate_rules.py --check
-python3 -m unittest discover -s tests -v
-```
-
-更新规则时：
-
-1. 修改 `Rules/Source/` 中对应的源文件。
-2. 运行 `python3 tools/generate_rules.py` 生成各客户端规则。
-3. 运行检查和测试。
-4. 将源文件与全部生成结果放在同一个提交中。
-
-`.github/workflows/validate-rules.yml` 会在 Push 和 Pull Request 时运行测试，并检查生成文件是否最新。
-
-### SKK 自动更新
-
-`.github/workflows/update-skk-rules.yml` 每天北京时间 04:17 自动获取 SKK 及 Egern 配置使用的选定 Surge 规则源，校验来源、许可证、最低条目数和原生字段后转换。也可以从 GitHub Actions 手动运行 `workflow_dispatch`。
-
-自动化只会提交公开规则，不会修改 `Configs/`：
-
-- `Rules/QuantumultX/SKK/CDN.list`
-- `Rules/QuantumultX/SKK/Download.list`
-- `Rules/Loon/SKK/CDN.list`
-- `Rules/Loon/SKK/Download.list`
-- `Rules/Egern/` 中由 `tools/update_egern_rules.py` 声明的原生 YAML 输出
-
-Egern 转换器严格拒绝未知规则类型和未知选项；SKK 的唯一复合规则由公开 Egern 配置以内联 `and` 规则承载。SKK 转换产物的来源和许可证范围见 [Rules/SKK/README.md](Rules/SKK/README.md)。
-
-### 生成脱敏配置
-
-公开模板由 `tools/sanitize_tool_configs.py` 从本地私人配置生成。必须显式指定私人配置目录：
+公开模板会将订阅 URL、控制器口令、UUID、节点认证、Tailscale `auth-key`、证书和私钥替换为占位内容。生成工具为 [`tools/sanitize_tool_configs.py`](tools/sanitize_tool_configs.py)，本地生成方式：
 
 ```bash
 python3 tools/sanitize_tool_configs.py \
@@ -380,37 +68,19 @@ python3 tools/sanitize_tool_configs.py \
   --output-dir Configs/tool_config
 ```
 
-生成器会替换节点订阅、控制器密钥、UUID、节点认证、P12、证书和私钥，并在写入前验证公开输出。脚本日志只显示公开文件名，不输出私人源值。
+提交前请检查：
 
-## 目录结构
+- 没有真实订阅 URL、token、密码或证书；
+- 没有设备私有 IP、主机名或 Tailscale 密钥；
+- `CHANGE_ME` 和 `获取到的订阅链接` 仍为占位符；
+- 配置语法和规则引用均通过测试。
 
-```text
-Configs/
-└── tool_config/             # 六份公开脱敏配置模板
-Rules/
-├── Source/                  # AI、个人域名和 PT 的唯一手工维护入口
-├── Mihomo/                  # Mihomo 规则
-├── Surge/                   # Surge 规则
-├── QuantumultX/             # Quantumult X 规则及 SKK 转换结果
-├── Loon/                    # Loon 规则及 SKK 转换结果
-├── Egern/                   # Egern 原生 YAML 规则
-└── SKK/                     # SKK 来源与许可证说明
-tools/
-├── generate_rules.py        # 生成跨客户端规则
-├── sanitize_tool_configs.py # 生成脱敏配置
-├── update_egern_rules.py    # 将 Surge 来源转换为 Egern 原生 YAML
-└── update_skk_rules.py      # 转换 SKK 规则
-tests/                        # 生成、脱敏和自动更新测试
+## 自动化维护
+
+GitHub Actions 会在推送和定时任务中生成规则、检查远程资源、验证配置结构，并在生成内容变化时提交公开规则。完整测试位于 `tests/`；本地运行：
+
+```bash
+python3 -m unittest discover -s tests -v
 ```
 
-## 安全与脱敏
-
-- 只在私人副本中保存真实订阅 URL、节点密码、UUID、控制器口令和证书。
-- 不要把机场订阅、MITM 证书、私钥或带 Token 的 URL 提交到 GitHub。
-- `skip-cert-verify=false` 和 `skip-server-cert-verify=false` 表示保持证书校验，建议维持默认值。
-- 配置引用多个第三方规则、图标和插件；启用前应自行确认来源、更新状态和适用范围。
-- 修改规则后先进行小范围验证。过宽的 `DOMAIN-KEYWORD` 规则可能误匹配无关域名。
-
-## 免责声明
-
-本仓库用于个人配置维护与技术研究。不同客户端版本、网络环境和订阅格式可能存在差异，使用者应在导入前检查配置，并自行承担第三方规则、插件和脚本带来的兼容性及安全风险。
+仓库只接受公开脱敏内容。私人订阅、真实节点、证书、密钥和本地设备规则应保留在仓库外。
