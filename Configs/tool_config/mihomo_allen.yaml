@@ -1,6 +1,7 @@
+## 订阅提供商：节点先在这里汇总，再由“全部节点”统一引用
 # 使用前请先替换下方第一个“获取到的订阅链接”；其余订阅可按需启用。
 # 不要把带 token、密码或个人节点信息的链接提交到公开仓库。
-## 订阅提供商：节点先在这里汇总，再由“全部节点”统一引用
+
 proxy-providers:
   拼好鸡:
     url: "获取到的订阅链接"
@@ -619,6 +620,7 @@ proxy-groups:
   - name: Tailscale策略
     type: select
     include-all: true
+    empty-fallback: DIRECT
     filter: ^Tailscale$
     icon: https://tailscale.com/favicon.ico
   - name: 全部节点

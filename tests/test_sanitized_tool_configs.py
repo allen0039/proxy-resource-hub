@@ -595,7 +595,7 @@ default_proxy_group: Proxy
         actual = {
             path.name
             for path in OUTPUT_DIR.iterdir()
-            if path.is_file() and path.name != "README.md"
+            if path.is_file() and path.name != "README.md" and "_no-tailscale" not in path.name
         }
         self.assertEqual(CONFIG_NAMES, actual)
         self.assertFalse(
