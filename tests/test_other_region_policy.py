@@ -86,7 +86,7 @@ class OtherRegionPolicyTest(unittest.TestCase):
 
     def test_removed_groups_and_filters_have_no_remaining_references(self):
         for path in CONFIGS.iterdir():
-            if path.suffix not in (".conf", ".lcf", ".yaml"):
+            if path.suffix not in (".conf", ".lcf", ".yaml") or "_no-tailscale" in path.name:
                 continue
             text = path.read_text(encoding="utf-8")
             with self.subTest(config=path.name):

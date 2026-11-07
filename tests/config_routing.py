@@ -131,7 +131,14 @@ def assert_canonical_local(test, name):
         }
     elif name.startswith('mihomo'):
         required = {
-            (rule[0], rule[1], 'Tailscale' if rule == ('DOMAIN-SUFFIX', 'ts.net', 'Tailnet') else rule[2])
+            (rule[0], rule[1], 'Tailscale策略' if rule[2] == 'Tailnet' else rule[2])
+            for rule in required
+        }
+    # Surge Mac keeps the original Tailnet policy name; iPhone exposes the
+    # same endpoint through the user-visible Tailscale策略 group.
+    if name == 'surge_mac_allen.conf':
+        required = {
+            (rule[0], rule[1], 'Tailnet' if rule[2] == 'Tailscale策略' else rule[2])
             for rule in required
         }
     missing = required - set(actual)
