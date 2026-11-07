@@ -58,6 +58,22 @@ Surge Mac 使用原生 `Tailnet` 配置；Quantumult X、Loon 和 Egern 模板�
 
 规则源位于 `Rules/Source/`，生成产物位于 `Rules/Mihomo/`、`Rules/Surge/`、`Rules/QuantumultX/`、`Rules/Loon/` 和 `Rules/Egern/`。普通规则使用公开远程 URL，配置模板会按客户端语法引用它们。
 
+## 规则订阅地址
+
+以下规则由 `Rules/Source/allenrules/` 中的源文件生成，源文件是唯一维护入口。
+源文件包括 `Rules/Source/allenrules/direct.list`、`Rules/Source/allenrules/hk.list`、`Rules/Source/allenrules/us.list`、`Rules/Source/allenrules/jp.list`、`Rules/Source/allenrules/sg.list` 和 `Rules/Source/allenrules/de.list`。
+
+| 规则 | Mihomo | Surge | Quantumult X | Loon |
+| --- | --- | --- | --- | --- |
+| 自定义直连 | [订阅](https://raw.githubusercontent.com/allen0039/proxy-resource-hub/main/Rules/Mihomo/Custom/direct.list) | [订阅](https://raw.githubusercontent.com/allen0039/proxy-resource-hub/main/Rules/Surge/Custom/direct.list) | [订阅](https://raw.githubusercontent.com/allen0039/proxy-resource-hub/main/Rules/QuantumultX/Custom/direct.list) | [订阅](https://raw.githubusercontent.com/allen0039/proxy-resource-hub/main/Rules/Loon/Custom/direct.list) |
+| 香港节点 | [订阅](https://raw.githubusercontent.com/allen0039/proxy-resource-hub/main/Rules/Mihomo/Regional/hk.list) | [订阅](https://raw.githubusercontent.com/allen0039/proxy-resource-hub/main/Rules/Surge/Regional/hk.list) | [订阅](https://raw.githubusercontent.com/allen0039/proxy-resource-hub/main/Rules/QuantumultX/Regional/hk.list) | [订阅](https://raw.githubusercontent.com/allen0039/proxy-resource-hub/main/Rules/Loon/Regional/hk.list) |
+| 美国节点 | [订阅](https://raw.githubusercontent.com/allen0039/proxy-resource-hub/main/Rules/Mihomo/Regional/us.list) | [订阅](https://raw.githubusercontent.com/allen0039/proxy-resource-hub/main/Rules/Surge/Regional/us.list) | [订阅](https://raw.githubusercontent.com/allen0039/proxy-resource-hub/main/Rules/QuantumultX/Regional/us.list) | [订阅](https://raw.githubusercontent.com/allen0039/proxy-resource-hub/main/Rules/Loon/Regional/us.list) |
+| 日本节点 | [订阅](https://raw.githubusercontent.com/allen0039/proxy-resource-hub/main/Rules/Mihomo/Regional/jp.list) | [订阅](https://raw.githubusercontent.com/allen0039/proxy-resource-hub/main/Rules/Surge/Regional/jp.list) | [订阅](https://raw.githubusercontent.com/allen0039/proxy-resource-hub/main/Rules/QuantumultX/Regional/jp.list) | [订阅](https://raw.githubusercontent.com/allen0039/proxy-resource-hub/main/Rules/Loon/Regional/jp.list) |
+| 新加坡节点 | [订阅](https://raw.githubusercontent.com/allen0039/proxy-resource-hub/main/Rules/Mihomo/Regional/sg.list) | [订阅](https://raw.githubusercontent.com/allen0039/proxy-resource-hub/main/Rules/Surge/Regional/sg.list) | [订阅](https://raw.githubusercontent.com/allen0039/proxy-resource-hub/main/Rules/QuantumultX/Regional/sg.list) | [订阅](https://raw.githubusercontent.com/allen0039/proxy-resource-hub/main/Rules/Loon/Regional/sg.list) |
+| 德国节点 | [订阅](https://raw.githubusercontent.com/allen0039/proxy-resource-hub/main/Rules/Mihomo/Regional/de.list) | [订阅](https://raw.githubusercontent.com/allen0039/proxy-resource-hub/main/Rules/Surge/Regional/de.list) | [订阅](https://raw.githubusercontent.com/allen0039/proxy-resource-hub/main/Rules/QuantumultX/Regional/de.list) | [订阅](https://raw.githubusercontent.com/allen0039/proxy-resource-hub/main/Rules/Loon/Regional/de.list) |
+
+UU 远程规则源为 `Rules/Source/allenrules/uuyuancheng.list`，对应生成结果 [Surge](https://raw.githubusercontent.com/allen0039/proxy-resource-hub/main/Rules/Surge/Custom/uuyuancheng.list) 和 [Loon](https://raw.githubusercontent.com/allen0039/proxy-resource-hub/main/Rules/Loon/Custom/uuyuancheng.list)。生成结果，禁止手动编辑。
+
 ## 安全与脱敏
 
 公开模板会将订阅 URL、控制器口令、UUID、节点认证、Tailscale `auth-key`、证书和私钥替换为占位内容。生成工具为 [`tools/sanitize_tool_configs.py`](tools/sanitize_tool_configs.py)，本地生成方式：
