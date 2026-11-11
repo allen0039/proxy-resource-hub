@@ -3,9 +3,9 @@
 # Derived from https://github.com/SukkaW/Surge
 # Source: https://ruleset.skk.moe/List/domainset/download.conf
 # Source: https://ruleset.skk.moe/List/non_ip/download.conf
-# Upstream Last Updated: 2026-10-25T14:53:23.056Z (domainset)
+# Upstream Last Updated: 2026-11-10T07:17:12.870Z (domainset)
 # Upstream Last Updated: 2026-08-05T12:33:04.408Z (non_ip)
-# Rule count: 1979
+# Rule count: 1980
 
 DOMAIN,7h15.ru1353t.1s.m4d3.by.5ukk4w.skk.moe
 DOMAIN-SUFFIX,gcr.io
@@ -353,6 +353,7 @@ DOMAIN,apache.saix.net
 DOMAIN,apache.uvigo.es
 DOMAIN,apt.izzysoft.de
 DOMAIN,c.1password.com
+DOMAIN,cdn.altstore.io
 DOMAIN,cpan.stu.edu.tw
 DOMAIN,cpan.webdesk.ru
 DOMAIN,ctan.ebinger.cc
