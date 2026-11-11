@@ -1,1 +1,12 @@
 .worktrees/
+.private/
+.planning/
+backups/
+*.bundle
+*.p12
+*.pfx
+*.key
+.env
+.env.*
+__pycache__/
+*.pyc

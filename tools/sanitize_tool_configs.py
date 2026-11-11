@@ -2,6 +2,7 @@
 from __future__ import annotations
 
 import argparse
+import json
 import re
 import sys
 from pathlib import Path
@@ -18,6 +19,8 @@ OUTPUT_NAMES = {
     "Surge-iPhone.conf": "surge_iphone_allen.conf",
     "quantumult_byallen.conf": "quantumultx_allen.conf",
     "allenloon.lcf": "loon_allen.lcf",
+    "mihomo_byallen_no-tailscale.yaml": "mihomo_allen_no-tailscale.yaml",
+    "Surge-iPhone-no-tailscale.conf": "surge_iphone_allen_no-tailscale.conf",
 }
 CONFIG_NAMES = set(OUTPUT_NAMES.values())
 DEFAULT_SUBSCRIPTION_NAME = "拼好鸡"
@@ -42,7 +45,10 @@ IP_ROUTING_RULE_RE = re.compile(
     r"\s*[^,\s]+\s*,\s*([^,\s]+)",
     re.IGNORECASE,
 )
-PEM_MARKERS = ("BEGIN PRIVATE KEY", "BEGIN CERTIFICATE")
+PEM_MARKERS = (
+    "BEGIN PRIVATE KEY", "BEGIN CERTIFICATE", "BEGIN RSA PRIVATE KEY",
+    "BEGIN EC PRIVATE KEY", "BEGIN OPENSSH PRIVATE KEY", "BEGIN ENCRYPTED PRIVATE KEY",
+)
 EGERN_FORBIDDEN_SECTIONS = {
     "proxies",
     "mitm",
@@ -51,6 +57,28 @@ EGERN_FORBIDDEN_SECTIONS = {
     "scripting",
     "scriptings",
 }
+MIHOMO_CREDENTIAL_KEYS = {
+    "password", "passwd", "passphrase", "secret", "token", "auth-key",
+    "private-key", "private_key", "certificate", "key", "uuid", "username",
+    "client-key", "client-certificate", "public-key", "short-id", "psk",
+    "obfs-password", "access-token", "api-key",
+}
+MIHOMO_ENDPOINT_KEYS = {"server", "servername", "sni", "peer", "remote-dns-resolve"}
+
+
+def _is_mihomo_credential_key(key: str) -> bool:
+    return key in MIHOMO_CREDENTIAL_KEYS or bool(
+        re.search(r"(?:^|[-_])(?:password|passwd|passphrase|secret|token|auth[-_]key|api[-_]key)$", key)
+    )
+
+
+def _sanitize_commented_credentials(text: str) -> str:
+    pattern = re.compile(
+        r"(?im)^(\s*[#;]\s*(?:[-]\s*)?(?:password|passwd|passphrase|secret|token|"
+        r"auth-key|private-key|private_key|certificate|ca-p12|ca-passphrase|p12|"
+        r"http-api|http-api-tls|api-key)\s*[:=]\s*).+$"
+    )
+    return pattern.sub(lambda match: match.group(1) + "CHANGE_ME", text)
 
 
 class SanitizationError(ValueError):
@@ -163,7 +191,7 @@ def _drop_nonpublic_ip_routing_rules(text: str) -> str:
 
 
 def sanitize_surge(text: str, slug: str) -> str:
-    lines = normalize_text(text).splitlines()
+    lines = normalize_text(_sanitize_commented_credentials(text)).splitlines()
     output: list[str] = []
     current = ""
     subscription_index = 0
@@ -231,7 +259,7 @@ def sanitize_surge(text: str, slug: str) -> str:
 
 
 def sanitize_quantumultx(text: str) -> str:
-    lines = normalize_text(text).splitlines()
+    lines = normalize_text(_sanitize_commented_credentials(text)).splitlines()
     output: list[str] = []
     current = ""
     subscription_index = 0
@@ -297,7 +325,7 @@ def sanitize_quantumultx(text: str) -> str:
 
 
 def sanitize_loon(text: str) -> str:
-    lines = normalize_text(text).splitlines()
+    lines = normalize_text(_sanitize_commented_credentials(text)).splitlines()
     output: list[str] = []
     current = ""
     subscription_index = 0
@@ -419,47 +447,105 @@ def _replace_mihomo_provider_urls(text: str) -> str:
 
 
 def _sanitize_mihomo_proxy_scalars(text: str) -> str:
-    lines = text.splitlines()
-    output: list[str] = []
-    current = ""
-    replacements = {
-        "server": "example.com",
-        "uuid": "CHANGE_ME",
-        "password": "CHANGE_ME",
-        "private-key": "CHANGE_ME",
-        "certificate": "CHANGE_ME",
-        "token": "CHANGE_ME",
-        "key": "CHANGE_ME",
-        "auth-key": "CHANGE_ME",
-    }
+    try:
+        if any(isinstance(token, yaml.AliasToken) for token in yaml.scan(text)):
+            parsed = yaml.safe_load(text)
+            active_values: set[int] = set()
 
-    for line in lines:
-        if line and not line.startswith((" ", "\t", "#")) and ":" in line:
-            current = line.split(":", 1)[0].strip().casefold()
-        if current == "proxies":
-            match = re.match(
-                r"^(\s+(?:-\s+)?)(server|uuid|password|private-key|certificate|token|key|auth-key)(:\s*).*$",
-                line,
-            )
-            if match:
-                line = (
-                    match.group(1)
-                    + match.group(2)
-                    + match.group(3)
-                    + replacements[match.group(2)]
-                )
-        if re.match(r"^secret:\s*", line):
-            line = "secret: CHANGE_ME"
-        output.append(line)
-    return "\n".join(output)
+            def check_cycles(value: object) -> None:
+                if not isinstance(value, (dict, list)):
+                    return
+                if id(value) in active_values:
+                    raise SanitizationError("mihomo: recursive YAML aliases are not supported")
+                active_values.add(id(value))
+                for nested in value.values() if isinstance(value, dict) else value:
+                    check_cycles(nested)
+                active_values.remove(id(value))
+
+            check_cycles(parsed)
+
+            class ExpandedDumper(yaml.SafeDumper):
+                def ignore_aliases(self, data):
+                    return True
+
+            text = yaml.dump(parsed, Dumper=ExpandedDumper, allow_unicode=True, sort_keys=False, width=1000)
+        document = yaml.compose(text)
+    except yaml.YAMLError:
+        raise SanitizationError("mihomo: source YAML cannot be parsed") from None
+    if not isinstance(document, yaml.MappingNode):
+        raise SanitizationError("mihomo: source YAML root is not a mapping")
+    edits: dict[tuple[int, int], str] = {}
+    active: set[int] = set()
+
+    def replace(node: yaml.Node, value: str) -> None:
+        edits[(node.start_mark.index, node.end_mark.index)] = value
+
+    def walk(node: yaml.Node, proxy: bool = False) -> None:
+        if id(node) in active:
+            raise SanitizationError("mihomo: recursive YAML aliases are not supported")
+        active.add(id(node))
+        if isinstance(node, yaml.MappingNode):
+            keys: set[str] = set()
+            for key, nested in node.value:
+                if not isinstance(key, yaml.ScalarNode) or key.value in keys:
+                    raise SanitizationError("mihomo: duplicate or non-scalar YAML key")
+                keys.add(key.value)
+                normalized_key = key.value.casefold()
+                if _is_mihomo_credential_key(normalized_key):
+                    replace(nested, "CHANGE_ME")
+                elif normalized_key in {"authentication", "users"}:
+                    replace(nested, "[]")
+                elif normalized_key == "headers":
+                    replace(nested, "{}")
+                elif proxy and normalized_key in MIHOMO_ENDPOINT_KEYS:
+                    replace(nested, "example.com")
+                elif proxy and normalized_key == "hostname":
+                    replace(nested, "mihomo-device")
+                elif proxy and normalized_key == "state-dir":
+                    replace(nested, "./tailscale-state")
+                else:
+                    walk(nested, proxy)
+        elif isinstance(node, yaml.SequenceNode):
+            for nested in node.value:
+                walk(nested, proxy)
+        active.remove(id(node))
+
+    for key, value in document.value:
+        if key.value == "proxy-providers" and isinstance(value, yaml.MappingNode):
+            for _, provider in value.value:
+                if isinstance(provider, yaml.MappingNode):
+                    for field, nested in provider.value:
+                        if field.value == "url":
+                            replace(nested, json.dumps(SUBSCRIPTION_URL_PLACEHOLDER, ensure_ascii=False))
+        if key.value == "proxy-groups" and isinstance(value, yaml.SequenceNode):
+            for group in value.value:
+                if not isinstance(group, yaml.MappingNode):
+                    continue
+                fields = {field.value: nested for field, nested in group.value}
+                include_all = fields.get("include-all")
+                if include_all is not None and include_all.value == "true" and "empty-fallback" not in fields:
+                    if group.flow_style:
+                        insertion = group.end_mark.index - 1
+                        edits[(insertion, insertion)] = ", empty-fallback: DIRECT"
+                    else:
+                        field = next(field for field, _ in group.value if field.value == "include-all")
+                        replace(include_all, "true\n" + " " * field.start_mark.column + "empty-fallback: DIRECT")
+        walk(value, key.value == "proxies")
+        if _is_mihomo_credential_key(key.value.casefold()):
+            replace(value, "CHANGE_ME")
+        if key.value in {"authentication", "users"}:
+            replace(value, "[]")
+    for (start, end), replacement in sorted(edits.items(), reverse=True):
+        text = text[:start] + replacement + text[end:]
+    return text
 
 
 def sanitize_mihomo(text: str) -> str:
-    normalized = normalize_text(text)
+    normalized = normalize_text(_sanitize_commented_credentials(text))
     names = _provider_names(normalized)
     sanitized = _rename_provider_tokens(normalized, names)
-    sanitized = _replace_mihomo_provider_urls(sanitized)
     sanitized = _sanitize_mihomo_proxy_scalars(sanitized)
+    sanitized = _replace_mihomo_provider_urls(sanitized)
     # Hostnames can identify a private device; keep the public template generic.
     sanitized = re.sub(r"(?m)^(\s*hostname:\s*).*$", r"\1mihomo-device", sanitized)
     return _drop_nonpublic_ip_routing_rules(sanitized)
@@ -737,9 +823,27 @@ def _validate_mihomo(filename: str, text: str) -> None:
             raise SanitizationError(
                 f"{filename}: provider download policy must use built-in DIRECT"
             )
-    for proxy in proxies:
-        if isinstance(proxy, dict) and "auth-key" in proxy and proxy["auth-key"] != "CHANGE_ME":
-            raise SanitizationError(f"{filename}: Tailscale auth-key is not sanitized")
+    def reject_private_fields(value: object, proxy: bool = False) -> None:
+        if isinstance(value, dict):
+            for key, nested in value.items():
+                normalized_key = str(key).casefold()
+                if _is_mihomo_credential_key(normalized_key) and nested != "CHANGE_ME":
+                    raise SanitizationError(f"{filename}: credential field is not sanitized")
+                if normalized_key in {"authentication", "users"} and nested:
+                    raise SanitizationError(f"{filename}: authentication entries remain")
+                if normalized_key == "headers" and nested:
+                    raise SanitizationError(f"{filename}: request headers remain")
+                if proxy and normalized_key in MIHOMO_ENDPOINT_KEYS and nested != "example.com":
+                    raise SanitizationError(f"{filename}: private proxy endpoint remains")
+                if proxy and normalized_key == "hostname" and nested != "mihomo-device":
+                    raise SanitizationError(f"{filename}: private device hostname remains")
+                reject_private_fields(nested, proxy)
+        elif isinstance(value, list):
+            for nested in value:
+                reject_private_fields(nested, proxy)
+
+    reject_private_fields(parsed)
+    reject_private_fields(proxies, True)
     if parsed.get("secret") != "CHANGE_ME":
         raise SanitizationError(f"{filename}: controller secret is not sanitized")
 
@@ -894,6 +998,8 @@ def _validate_egern(filename: str, text: str) -> None:
 
 
 def validate_common_patterns(filename: str, text: str) -> None:
+    if _sanitize_commented_credentials(text) != text:
+        raise SanitizationError(f"{filename}: credential in commented configuration remains")
     if UUID_RE.search(text):
         raise SanitizationError(f"{filename}: UUID remains")
     if any(marker in text for marker in PEM_MARKERS):
@@ -911,7 +1017,7 @@ def validate_common_patterns(filename: str, text: str) -> None:
 
 
 def validate_client_structure(filename: str, text: str) -> None:
-    if filename == "mihomo_allen.yaml":
+    if filename in {"mihomo_allen.yaml", "mihomo_allen_no-tailscale.yaml"}:
         _validate_mihomo(filename, text)
     elif filename == "egern_byallen.yaml":
         _validate_egern(filename, text)
@@ -927,11 +1033,72 @@ def validate_sanitized_outputs(outputs: dict[str, str]) -> None:
         validate_client_structure(filename, text)
 
 
+def load_privacy_policy(source_dir: Path, privacy_file: Path | None) -> dict[str, list[str]]:
+    path = privacy_file if privacy_file is not None else source_dir / ".private" / "publish-privacy.json"
+    if not path.is_file():
+        if privacy_file is not None:
+            raise SanitizationError("private publishing policy is missing")
+        return {"private_domains": [], "private_literals": []}
+    try:
+        policy = json.loads(path.read_text(encoding="utf-8"))
+    except (OSError, ValueError):
+        raise SanitizationError("private publishing policy cannot be read") from None
+    if not isinstance(policy, dict):
+        raise SanitizationError("private publishing policy must be a mapping")
+    result = {}
+    for key in ("private_domains", "private_literals"):
+        values = policy.get(key, [])
+        if not isinstance(values, list) or not all(isinstance(value, str) and value for value in values):
+            raise SanitizationError("private publishing policy contains invalid entries")
+        result[key] = values
+    return result
+
+
+def apply_privacy_policy(filename: str, text: str, policy: dict[str, list[str]]) -> str:
+    domains = policy["private_domains"]
+    if filename == "egern_byallen.yaml" and domains:
+        parsed = yaml.safe_load(text)
+        parsed["rules"] = [
+            rule for rule in parsed["rules"]
+            if not any(domain.casefold() in json.dumps(rule, ensure_ascii=False).casefold() for domain in domains)
+        ]
+        header = []
+        for line in text.splitlines():
+            if not line.startswith("#"):
+                break
+            header.append(line)
+        text = "\n".join(header) + "\n" + yaml.safe_dump(parsed, allow_unicode=True, sort_keys=False, width=1000)
+    else:
+        text = "\n".join(
+            line for line in text.splitlines()
+            if not any(domain.casefold() in line.casefold() for domain in domains)
+        )
+    for value in [*domains, *policy["private_literals"]]:
+        if value.casefold() in text.casefold():
+            raise SanitizationError(f"{filename}: private publishing value remains")
+    return normalize_text(text)
+
+
+def public_template_notes(filename: str, text: str) -> str:
+    notes = [
+        "# 公开模板：请填写自己的订阅，并在本机配置认证信息。",
+        "# 私人设备、服务域名与地址应仅保存在本地副本中。",
+    ]
+    if "_no-tailscale" in filename:
+        notes.append("# 此版本不包含 Tailscale 出口；需要时请选择启用版。")
+    lines = text.splitlines()
+    for note in reversed(notes):
+        if note not in lines:
+            lines.insert(1, note)
+    return normalize_text("\n".join(lines))
+
+
 def generate(
     source_dir: Path,
     output_dir: Path,
     only: set[str] | None = None,
     check: bool = False,
+    privacy_file: Path | None = None,
 ) -> dict[str, str]:
     if source_dir.resolve() == output_dir.resolve():
         raise SanitizationError("source and output directories must be different")
@@ -944,7 +1111,10 @@ def generate(
         "allenloon.lcf": sanitize_loon,
         "mihomo_byallen.yaml": sanitize_mihomo,
         "egern_byallen.yaml": sanitize_egern,
+        "mihomo_byallen_no-tailscale.yaml": sanitize_mihomo,
+        "Surge-iPhone-no-tailscale.conf": lambda text: sanitize_surge(text, "surge-iphone"),
     }
+    policy = load_privacy_policy(source_dir, privacy_file)
     outputs: dict[str, str] = {}
     for source_name, output_name in OUTPUT_NAMES.items():
         if only is not None and source_name not in only:
@@ -952,9 +1122,12 @@ def generate(
         source_path = source_dir / source_name
         if not source_path.is_file():
             raise SanitizationError(f"missing private source category: {source_name}")
-        outputs[output_name] = sanitizers[source_name](
-            drop_local_only_blocks(source_path.read_text(encoding="utf-8"))
+        outputs[output_name] = apply_privacy_policy(
+            output_name,
+            sanitizers[source_name](drop_local_only_blocks(source_path.read_text(encoding="utf-8"))),
+            policy,
         )
+        outputs[output_name] = public_template_notes(output_name, outputs[output_name])
     if only is None:
         validate_sanitized_outputs(outputs)
     else:
@@ -980,6 +1153,7 @@ def generate(
 def main() -> int:
     parser = argparse.ArgumentParser()
     parser.add_argument("--source-dir", type=Path, required=True)
+    parser.add_argument("--privacy-file", type=Path)
     parser.add_argument(
         "--output-dir", type=Path, default=ROOT / "Configs" / "tool_config"
     )
@@ -996,6 +1170,7 @@ def main() -> int:
         outputs = generate(
             args.source_dir, args.output_dir,
             only=set(args.only) if args.only else None, check=args.check,
+            privacy_file=args.privacy_file,
         )
     except (OSError, UnicodeError, SanitizationError) as error:
         print(error, file=sys.stderr)

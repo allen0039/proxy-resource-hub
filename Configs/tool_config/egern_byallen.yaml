@@ -1,4 +1,6 @@
 # Allen 维护 - Egern 配置
+# 公开模板：请填写自己的订阅，并在本机配置认证信息。
+# 私人设备、服务域名与地址应仅保存在本地副本中。
 # APNs 默认关闭：include_all_networks 和 include_apns 均为 false。
 # 开启时将这两个字段改为 true；蜂窝与本地网络接管仍保持 false。
 # 在 policy_groups 列表中加入以下策略组（删除示例行的 # 和紧随其后的空格）：
@@ -737,15 +739,6 @@ rules:
 - domain_suffix:
     match: push.apple.com
     policy: DIRECT
-- domain_suffix:
-    match: private-service-3.invalid
-    policy: 美国节点
-- domain_suffix:
-    match: private-service-2.invalid
-    policy: 日本节点
-- domain_suffix:
-    match: private-service-4.invalid
-    policy: 美国节点
 - domain_suffix:
     match: api.flyapi.tech
     policy: 美国节点

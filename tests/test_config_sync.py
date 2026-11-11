@@ -31,7 +31,7 @@ class ConfigSyncTests(unittest.TestCase):
 
     def test_check_detects_drift_without_writing_or_disclosing_content(self):
         sanitizer.generate(self.source, self.output)
-        self.assertEqual(6, len(sanitizer.generate(self.source, self.output, check=True)))
+        self.assertEqual(8, len(sanitizer.generate(self.source, self.output, check=True)))
         target = self.output / "surge_mac_allen.conf"
         target.write_text(target.read_text() + "# drift sentinel\n")
         before = {path.name: path.read_bytes() for path in self.output.iterdir()}

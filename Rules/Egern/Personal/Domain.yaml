@@ -1,8 +1,2 @@
-# Generated from Rules/Source/Personal/Domain.txt by tools/generate_rules.py. Do not edit.
-
-domain_suffix_set:
-  # Allen 的个人站点（默认：直连）
-  - private-service-1.invalid
-  - private-service-2.invalid
-  - private-service-3.invalid
-  - private-service-4.invalid
+# Compatibility feed. Keep personal service rules in private client configurations.
+domain_suffix_set: []

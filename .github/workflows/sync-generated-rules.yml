@@ -35,6 +35,8 @@ jobs:
         run: python3 tools/generate_rules.py
 
       - name: Run tests
+        run: python3 tools/check_public_privacy.py --check-identity
+      - name: Run regression tests
         run: python3 -m unittest discover -s tests -v
 
       - name: Verify generated files

@@ -1,7 +1,3 @@
 # Generated from Rules/Source/Personal/Domain.txt by tools/generate_rules.py. Do not edit.
 
-# Allen 的个人站点（默认：直连）
-host-suffix, private-service-1.invalid, proxy
-host-suffix, private-service-2.invalid, proxy
-host-suffix, private-service-3.invalid, proxy
-host-suffix, private-service-4.invalid, proxy
+# Compatibility feed. Keep personal service rules in private client configurations.

@@ -28,6 +28,7 @@ jobs:
       - name: Run tests
         run: |
           python3 -m pip install -r requirements-test.txt
+          python3 tools/check_public_privacy.py --check-identity
           python3 -m unittest discover -s tests -v
       - name: Commit changed public rule files
         run: |

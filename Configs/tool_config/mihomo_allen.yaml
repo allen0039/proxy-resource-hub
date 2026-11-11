@@ -1,7 +1,6 @@
 ## 订阅提供商：节点先在这里汇总，再由“全部节点”统一引用
-# 使用前请先替换下方第一个“获取到的订阅链接”；其余订阅可按需启用。
-# 不要把带 token、密码或个人节点信息的链接提交到公开仓库。
-
+# 公开模板：请填写自己的订阅，并在本机配置认证信息。
+# 私人设备、服务域名与地址应仅保存在本地副本中。
 proxy-providers:
   拼好鸡:
     url: "获取到的订阅链接"
@@ -23,14 +22,12 @@ proxy-providers:
       url: http://cp.cloudflare.com/generate_204
       interval: 300
     proxy: DIRECT
-# Tailscale 首次使用：将 auth-key 替换为自己的短期/受限密钥，并按需修改 hostname。
-# 导入后在“ Tailscale策略 ”组中选择 Tailscale；无须 Tailscale 时请使用无 Tailscale 版本。
 ## 本地固定出口，不参与地区节点策略组
 proxies:
   - name: Tailscale
     type: tailscale
     hostname: mihomo-device
-    state-dir: ./tailscale-mihomo
+    state-dir: ./tailscale-state
     ephemeral: false
     udp: true
     accept-routes: true
@@ -53,7 +50,6 @@ profile:
   store-selected: true
   store-fake-ip: true
 external-controller: 0.0.0.0:9090
-# 请改成自己的强随机口令；external-controller 对局域网开放时尤其要避免使用简单密码。
 secret: CHANGE_ME
 external-ui: ui
 external-ui-name: zashboard
@@ -633,9 +629,6 @@ proxy-groups:
 rules:
   - DOMAIN-SUFFIX,ts.net,Tailscale策略
   - DOMAIN-SUFFIX,tailscale.com,DIRECT
-  - DOMAIN-SUFFIX,private-service-3.invalid,美国节点
-  - DOMAIN-SUFFIX,private-service-2.invalid,日本节点
-  - DOMAIN-SUFFIX,private-service-4.invalid,美国节点
   - DOMAIN-SUFFIX,api.flyapi.tech,美国节点
   - DOMAIN-SUFFIX,nodeseek.com,日本节点
   - DOMAIN,rfc.uhdnow.com,RFC节点

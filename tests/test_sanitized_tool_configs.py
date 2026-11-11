@@ -158,9 +158,10 @@ def load_sanitizer():
 
 
 class SanitizedToolConfigTests(unittest.TestCase):
-    def test_local_only_direct_server_address_is_not_published(self):
-        for name in CONFIG_NAMES:
-            self.assertNotIn('192.0.2.10', (OUTPUT_DIR / name).read_text())
+    def test_local_only_server_rules_are_not_published(self):
+        sanitizer = load_sanitizer()
+        source = "# LOCAL_ONLY_BEGIN\nIP-CIDR,203.0.113.55/32,DIRECT\n# LOCAL_ONLY_END\n"
+        self.assertEqual("\n", sanitizer.drop_local_only_blocks(source))
 
     def test_committed_configs_define_a_disjoint_germany_policy_group(self):
         configs = {
@@ -303,9 +304,9 @@ FINAL,Main
     def test_sanitizer_removes_device_source_ip_rules_but_keeps_direct_networks(self):
         sanitizer = load_sanitizer()
         source = (
-            "SRC-IP,192.0.2.11,DIRECT\n"
-            "  - SRC-IP-CIDR,192.0.2.12/32,DIRECT\n"
-            "# SRC-IP-CIDR,192.0.2.13/32,DIRECT\n"
+            "SRC-IP,192.0.2.10,DIRECT\n"
+            "  - SRC-IP-CIDR,192.0.2.11/32,DIRECT\n"
+            "# SRC-IP-CIDR,192.0.2.12/32,DIRECT\n"
             "IP-CIDR,192.168.0.0/16,DIRECT,no-resolve\n"
         )
         result = sanitizer._drop_nonpublic_ip_routing_rules(source)
@@ -595,9 +596,9 @@ default_proxy_group: Proxy
         actual = {
             path.name
             for path in OUTPUT_DIR.iterdir()
-            if path.is_file() and path.name != "README.md" and "_no-tailscale" not in path.name
+            if path.is_file() and path.name != "README.md"
         }
-        self.assertEqual(CONFIG_NAMES, actual)
+        self.assertEqual(load_sanitizer().CONFIG_NAMES, actual)
         self.assertFalse(
             {"surge-Mac.conf", "Surge-iPhone.conf", "mihomo_byallen-nokey.yaml"}
             & actual
@@ -608,7 +609,10 @@ default_proxy_group: Proxy
             name: (OUTPUT_DIR / name).read_text(encoding="utf-8")
             for name in CONFIG_NAMES
         }
-        sanitizer.validate_sanitized_outputs(outputs)
+        sanitizer.validate_sanitized_outputs({
+            name: (OUTPUT_DIR / name).read_text(encoding="utf-8")
+            for name in sanitizer.CONFIG_NAMES
+        })
         combined = "\n".join(outputs.values())
         self.assertIsNone(re.search(r"(?i)token=[^\s,]+", combined))
         self.assertNotIn("BEGIN PRIVATE KEY", combined)
@@ -829,7 +833,7 @@ default_proxy_group: Proxy
         self.assertLess(names.index(HOME_POLICY_NAME), names.index("全部节点"))
 
     def test_committed_outputs_exclude_private_custom_rule_keywords(self):
-        private_keywords = {"private-node.invalid", "allen0039"}
+        private_keywords = {"private-node.invalid", "private-service.invalid"}
         rule_pattern = re.compile(
             r"^\s*-?\s*(?:DOMAIN|DOMAIN-SUFFIX|DOMAIN-KEYWORD|"
             r"HOST|HOST-SUFFIX|HOST-KEYWORD)\s*,\s*([^,\s]+)",

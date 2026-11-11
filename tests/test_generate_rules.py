@@ -273,7 +273,7 @@ class RuleGeneratorTests(unittest.TestCase):
             encoding="utf-8"
         )
 
-        self.assertIn("六份公开模板默认启用", config_readme)
+        self.assertIn("八份公开模板默认启用", config_readme)
         self.assertIn("Rules/Source/allenrules/", config_readme)
         self.assertIn("六个源文件", config_readme)
         self.assertNotIn("Rules/Source/Custom/allenrules.list", config_readme)
@@ -642,12 +642,7 @@ class RuleGeneratorTests(unittest.TestCase):
         outputs = generator.build_outputs(ROOT)
         source = ROOT / "Rules" / "Source" / "Personal" / "Domain.txt"
         old_source = ROOT / "Rules" / "Source" / "Personal" / "sites.txt"
-        expected_domains = (
-            "private-service-1.invalid",
-            "private-service-2.invalid",
-            "private-service-3.invalid",
-            "private-service-4.invalid",
-        )
+        expected_domains = ()
 
         self.assertTrue(source.exists())
         self.assertFalse(old_source.exists())

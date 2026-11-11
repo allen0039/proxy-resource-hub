@@ -18,6 +18,8 @@ jobs:
       - name: Install test dependencies
         run: python3 -m pip install -r requirements-test.txt
       - name: Run tests
+        run: python3 tools/check_public_privacy.py --check-identity
+      - name: Run regression tests
         run: python3 -m unittest discover -s tests -v
       - name: Check generated files
         run: python3 tools/generate_rules.py --check
