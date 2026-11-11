@@ -642,7 +642,7 @@ class RuleGeneratorTests(unittest.TestCase):
         outputs = generator.build_outputs(ROOT)
         source = ROOT / "Rules" / "Source" / "Personal" / "Domain.txt"
         old_source = ROOT / "Rules" / "Source" / "Personal" / "sites.txt"
-        expected_domains = ()
+        expected_domains = ("placeholder.invalid",)
 
         self.assertTrue(source.exists())
         self.assertFalse(old_source.exists())

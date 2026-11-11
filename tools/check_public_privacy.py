@@ -81,8 +81,10 @@ def check(root: Path, staged: bool, privacy_file: Path | None, identity: bool) -
                 sanitizer.validate_client_structure(path.name, text)
             except sanitizer.SanitizationError:
                 errors.append(f"{name}: template privacy or structure validation failed")
-        if name == "Rules/Source/Personal/Domain.txt" and any(line.strip() and not line.lstrip().startswith("#") for line in text.splitlines()):
-            errors.append(f"{name}: personal compatibility feed must remain empty")
+        if name == "Rules/Source/Personal/Domain.txt":
+            active = [line.strip() for line in text.splitlines() if line.strip() and not line.lstrip().startswith("#")]
+            if active != ["placeholder.invalid"]:
+                errors.append(f"{name}: personal compatibility feed must contain only its reserved placeholder")
     if identity:
         emails = subprocess.check_output(["git", "-C", str(root), "log", "-1", "--format=%ae%n%ce"], text=True).splitlines()
         if any(not (email.endswith("@users.noreply.github.com") or email == "noreply@github.com") for email in emails):

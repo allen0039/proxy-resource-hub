@@ -1,1 +1,2 @@
 # Compatibility feed. Keep personal service rules in private client configurations.
+placeholder.invalid

@@ -34,9 +34,10 @@ Before committing, check the exact index with:
 python3 tools/check_public_privacy.py --staged
 ```
 
-The public Personal feed is an empty compatibility endpoint. Keep personal
-service routing in private client configurations before removing it from a
-shared feed. Use the GitHub noreply identity for public commits.
+The public Personal feed contains only `placeholder.invalid` so clients can
+load a valid compatibility endpoint. Keep personal service routing in private
+client configurations before removing it from a shared feed. Use the GitHub
+noreply identity for public commits.
 
 The privacy checker reports file names, line numbers and issue categories.
 Do not add assertions that print an entire private configuration on failure.

@@ -1,2 +1,3 @@
 # Compatibility feed. Keep personal service rules in private client configurations.
-domain_suffix_set: []
+domain_suffix_set:
+  - placeholder.invalid
