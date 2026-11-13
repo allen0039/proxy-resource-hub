@@ -3,9 +3,9 @@
 # Derived from https://github.com/SukkaW/Surge
 # Source: https://ruleset.skk.moe/List/domainset/cdn.conf
 # Source: https://ruleset.skk.moe/List/non_ip/cdn.conf
-# Upstream Last Updated: 2026-11-04T07:38:37.836Z (domainset)
+# Upstream Last Updated: 2026-11-12T14:50:46.102Z (domainset)
 # Upstream Last Updated: 2026-10-23T06:28:09.042Z (non_ip)
-# Rule count: 4784
+# Rule count: 4785
 
 host, 7h15.ru1353t.1s.m4d3.by.5ukk4w.skk.moe, proxy
 host, 0x0.st, proxy
@@ -3266,6 +3266,7 @@ host, imgproxy.flathub.org, proxy
 host, instafeed.nfcube.com, proxy
 host-suffix, ipfs.genenetwork.org, proxy
 host-suffix, ipfs.scalaproject.io, proxy
+host, iprsoftwaremedia.com, proxy
 host, jac.yahoosandbox.com, proxy
 host, js.verygoodvault.com, proxy
 host, jsmodule.svc.litv.tv, proxy
