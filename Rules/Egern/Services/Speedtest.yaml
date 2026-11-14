@@ -2,7 +2,7 @@
 # SPDX-License-Identifier: AGPL-3.0-only
 # Derived from https://github.com/SukkaW/Surge
 # Source: https://ruleset.skk.moe/List/domainset/speedtest.conf
-# Rule count: 3490
+# Rule count: 3494
 
 domain_set:
   - "7h15.ru1353t.1s.m4d3.by.5ukk4w.skk.moe"
@@ -541,6 +541,7 @@ domain_set:
   - "stmilton.rogers.com"
   - "stoshawa.rogers.com"
   - "stottawa.rogers.com"
+  - "test-pbx.opiquad.it"
   - "test.accesso.net.br"
   - "test.mycloudvps.net"
   - "test.rnfibra.com.br"
@@ -1275,6 +1276,7 @@ domain_set:
   - "teste.xfconnect.com.br"
   - "teste.xtremenet.com.br"
   - "tr-bursa.elmashost.com"
+  - "velocidade.tpnt.com.br"
   - "venusone.horystech.com"
   - "zeusnet.almotafael.com"
   - "akrd-speedtest.loni.org"
@@ -1585,6 +1587,7 @@ domain_set:
   - "speedtest-01.omnitel.biz"
   - "speedtest-1.litfibre.com"
   - "speedtest-2.hynetwifi.it"
+  - "speedtest-bg.planetel.it"
   - "speedtest-cbr.cdn.on.net"
   - "speedtest-de.unihost.com"
   - "speedtest-de.webdade.com"
@@ -2296,6 +2299,7 @@ domain_set:
   - "speedtest.northernaccess.de"
   - "speedtest.nyc.elcro.digital"
   - "speedtest.par2.as216190.net"
+  - "speedtest.paynetdigital.com"
   - "speedtest.phlconnect.com.br"
   - "speedtest.phoenix.xiber.net"
   - "speedtest.phx01.orion.cloud"

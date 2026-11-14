@@ -4,7 +4,7 @@
 # Source: https://ruleset.skk.moe/List/non_ip/domestic.conf
 # Source: https://ruleset.skk.moe/List/ip/domestic.conf
 # Source: https://ruleset.skk.moe/List/ip/china_ip.conf
-# Rule count: 4765
+# Rule count: 4770
 
 no_resolve: true
 
@@ -27,10 +27,12 @@ domain_set:
   - "www.viayoo.com"
   - "config.ubnt.com"
   - "www.layuicdn.com"
+  - "app.jianguoyun.com"
   - "time.xtracloud.net"
   - "assets1.xboxlive.cn"
   - "assets2.xboxlive.cn"
   - "ocsp.globalsign.com"
+  - "comet.jianguoyun.com"
   - "ocsp2.globalsign.com"
   - "cn.download.nvidia.com"
   - "gstore.val.manlaxy.com"
@@ -1724,6 +1726,7 @@ ip_cidr_set:
   - "103.31.200.0/22"
   - "103.35.104.0/22"
   - "103.35.254.0/24"
+  - "103.36.28.0/22"
   - "103.36.36.0/22"
   - "103.36.63.0/24"
   - "103.36.96.0/22"
@@ -2412,6 +2415,7 @@ ip_cidr_set:
   - "111.235.182.0/24"
   - "112.0.0.0/10"
   - "112.64.0.0/14"
+  - "112.73.96.0/19"
   - "112.74.0.0/16"
   - "112.80.0.0/12"
   - "112.96.0.0/13"
@@ -3298,6 +3302,7 @@ ip_cidr_set:
   - "124.71.128.0/18"
   - "124.71.192.0/19"
   - "124.71.224.0/20"
+  - "124.71.241.0/24"
   - "124.71.244.0/23"
   - "124.71.250.0/24"
   - "124.72.0.0/13"
@@ -3514,7 +3519,6 @@ ip_cidr_set:
   - "156.107.170.0/24"
   - "156.107.179.0/24"
   - "156.107.181.0/24"
-  - "156.227.239.0/24"
   - "156.232.9.0/24"
   - "156.232.10.0/23"
   - "157.0.0.0/16"
@@ -3719,6 +3723,7 @@ ip_cidr_set:
   - "182.200.0.0/13"
   - "182.240.0.0/13"
   - "182.254.0.0/16"
+  - "182.255.60.0/22"
   - "183.0.0.0/10"
   - "183.64.0.0/13"
   - "183.78.180.0/22"
