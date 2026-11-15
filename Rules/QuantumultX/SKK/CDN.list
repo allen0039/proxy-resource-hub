@@ -3,9 +3,9 @@
 # Derived from https://github.com/SukkaW/Surge
 # Source: https://ruleset.skk.moe/List/domainset/cdn.conf
 # Source: https://ruleset.skk.moe/List/non_ip/cdn.conf
-# Upstream Last Updated: 2026-11-13T08:54:24.339Z (domainset)
+# Upstream Last Updated: 2026-11-15T14:06:23.819Z (domainset)
 # Upstream Last Updated: 2026-10-23T06:28:09.042Z (non_ip)
-# Rule count: 4786
+# Rule count: 4788
 
 host, 7h15.ru1353t.1s.m4d3.by.5ukk4w.skk.moe, proxy
 host, 0x0.st, proxy
@@ -2659,6 +2659,7 @@ host, maps.wikimedia.org, proxy
 host, maptile.osmand.net, proxy
 host, media-cms.ayoba.me, proxy
 host, media.cgtrader.com, proxy
+host, media.datacamp.com, proxy
 host, media.flaticon.com, proxy
 host, media.formula1.com, proxy
 host, media.gamestop.com, proxy
@@ -3353,6 +3354,7 @@ host, static.grammarly.com, proxy
 host, static.helpjuice.com, proxy
 host, static.incapsula.com, proxy
 host, static.infomaniak.ch, proxy
+host, static.karousell.com, proxy
 host, static.macupdate.com, proxy
 host, static.mediafire.com, proxy
 host, static.meteoblue.com, proxy
