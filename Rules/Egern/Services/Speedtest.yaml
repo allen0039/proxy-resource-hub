@@ -2,7 +2,7 @@
 # SPDX-License-Identifier: AGPL-3.0-only
 # Derived from https://github.com/SukkaW/Surge
 # Source: https://ruleset.skk.moe/List/domainset/speedtest.conf
-# Rule count: 3495
+# Rule count: 3497
 
 domain_set:
   - "7h15.ru1353t.1s.m4d3.by.5ukk4w.skk.moe"
@@ -1542,6 +1542,7 @@ domain_set:
   - "cbpuspeed.aspensmart.net"
   - "cesu-hz.zjtelecom.com.cn"
   - "cesu-nb.zjtelecom.com.cn"
+  - "dallas.outboundrix.cloud"
   - "dc1-speed1.alpha-tech.us"
   - "fla-st01.provenet.com.br"
   - "fra-eq5-tptest1.31173.se"
@@ -2230,6 +2231,7 @@ domain_set:
   - "speed.kansas.smishcraft.com"
   - "speed.lax-1.serverforge.org"
   - "speedtest-asiago.wifiweb.it"
+  - "speedtest-bne0.encoo.com.au"
   - "speedtest-ist1.netlojik.com"
   - "speedtest-lax.perfectip.net"
   - "speedtest-lhr-01.pdx.net.uk"
