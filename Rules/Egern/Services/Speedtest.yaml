@@ -2,7 +2,7 @@
 # SPDX-License-Identifier: AGPL-3.0-only
 # Derived from https://github.com/SukkaW/Surge
 # Source: https://ruleset.skk.moe/List/domainset/speedtest.conf
-# Rule count: 3509
+# Rule count: 3510
 
 domain_set:
   - "7h15.ru1353t.1s.m4d3.by.5ukk4w.skk.moe"
@@ -2218,6 +2218,7 @@ domain_set:
   - "ihgtelecom.brsserver.com.br"
   - "ipl3pt.syd.ops.aspac.uu.net"
   - "itanetwork.brsserver.com.br"
+  - "kc.speedtest.rustbanned.net"
   - "lax-cos2-ookla-1.99.network"
   - "lmb1-ookla.perf.fastedge.it"
   - "madvpdspeedtesta.voiped.com"
