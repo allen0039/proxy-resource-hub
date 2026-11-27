@@ -2,7 +2,7 @@
 # SPDX-License-Identifier: AGPL-3.0-only
 # Derived from https://github.com/SukkaW/Surge
 # Source: https://ruleset.skk.moe/List/domainset/speedtest.conf
-# Rule count: 3512
+# Rule count: 3513
 
 domain_set:
   - "7h15.ru1353t.1s.m4d3.by.5ukk4w.skk.moe"
@@ -3161,6 +3161,7 @@ domain_set:
   - "lnk-speedtest.networknebraska.net"
   - "mum-speedtest.digianaspeednet.com"
   - "mumbaispeedtest.pioneeronline.com"
+  - "ookla-london3.tropicalhosting.net"
   - "ookla-speedtest.starverse.network"
   - "ooklaspeedtest-ist1.quickzone.net"
   - "poitiers3.d2m.c2d.liveservices.fr"
