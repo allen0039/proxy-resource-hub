@@ -3,9 +3,9 @@
 # Derived from https://github.com/SukkaW/Surge
 # Source: https://ruleset.skk.moe/List/domainset/cdn.conf
 # Source: https://ruleset.skk.moe/List/non_ip/cdn.conf
-# Upstream Last Updated: 2026-11-26T08:43:16.325Z (domainset)
+# Upstream Last Updated: 2026-11-27T12:05:50.057Z (domainset)
 # Upstream Last Updated: 2026-10-23T06:28:09.042Z (non_ip)
-# Rule count: 4792
+# Rule count: 4782
 
 host, 7h15.ru1353t.1s.m4d3.by.5ukk4w.skk.moe, proxy
 host, 0x0.st, proxy
@@ -1033,7 +1033,6 @@ host-suffix, picsum.photos, proxy
 host-suffix, place-hold.it, proxy
 host, pomf2.lain.la, proxy
 host, r2.dejavu.moe, proxy
-host, r2cdn.c7d.dev, proxy
 host-suffix, randomuser.me, proxy
 host-suffix, rawgithub.com, proxy
 host-suffix, rcsobjects.it, proxy
@@ -1350,7 +1349,6 @@ host, s1.divhunt.com, proxy
 host, s3.2233778.xyz, proxy
 host-suffix, sbcdnvideo.com, proxy
 host, scache.vzw.com, proxy
-host, scdn.clerk.com, proxy
 host, sdata.ndtv.com, proxy
 host, sdk.qikify.com, proxy
 host-suffix, sentry-cdn.com, proxy
@@ -1378,7 +1376,6 @@ host, static.reo.dev, proxy
 host, static.snyk.io, proxy
 host, static.toss.im, proxy
 host, static.xns.one, proxy
-host, static.yfsp.tv, proxy
 host, stc.utdstc.com, proxy
 host-suffix, sthlstatic.com, proxy
 host, stream.mux.com, proxy
@@ -1651,7 +1648,6 @@ host-suffix, net.anydesk.com, proxy
 host-suffix, nftstorage.link, proxy
 host, object.innei.in, proxy
 host, objects.hit.moe, proxy
-host, pacdn.500px.org, proxy
 host-suffix, parastorage.com, proxy
 host, pcz.javidol.org, proxy
 host-suffix, permaweb.eu.org, proxy
@@ -1882,7 +1878,6 @@ host-suffix, dc-telemetry.net, proxy
 host-suffix, directupload.net, proxy
 host-suffix, dockerstatic.com, proxy
 host-suffix, dreamscape.cloud, proxy
-host, drscdn.500px.org, proxy
 host, e.deviantart.net, proxy
 host, embed.lantern.io, proxy
 host, embed.reddit.com, proxy
@@ -2046,7 +2041,6 @@ host-suffix, s3.wasabisys.com, proxy
 host, s8.maxstream.org, proxy
 host-suffix, scribdassets.com, proxy
 host, sdk.customfit.ai, proxy
-host, segapi.clerk.com, proxy
 host, shots.codepen.io, proxy
 host-suffix, sny.monosnap.com, proxy
 host, static.arxiv.org, proxy
@@ -2699,7 +2693,6 @@ host, proxy.spigotmc.org, proxy
 host, public.hare200.com, proxy
 host, public.popclip.app, proxy
 host-suffix, quip-marketing.com, proxy
-host, r2cdn.corespeed.io, proxy
 host, reader.readmoo.com, proxy
 host, registry.oomol.com, proxy
 host-suffix, replicate.delivery, proxy
@@ -3459,6 +3452,7 @@ host, cdn.freebiesupply.com, proxy
 host, cdn.heapanalytics.com, proxy
 host, cdn.joincommunity.xyz, proxy
 host-suffix, cdn.printfriendly.com, proxy
+host, cdn.protect.clerk.com, proxy
 host, cdn.prowritingaid.com, proxy
 host, cdn.shoppinggives.com, proxy
 host, cdn.simplelocalize.io, proxy
@@ -3552,7 +3546,6 @@ host, media.cleanshot.cloud, proxy
 host, media.games.dmm.co.jp, proxy
 host, media.gettyimages.com, proxy
 host, media.graphassets.com, proxy
-host, media.hentaifreak.org, proxy
 host, media.identity.ui.com, proxy
 host, media.invisioncic.com, proxy
 host, media.istockphoto.com, proxy
@@ -3884,7 +3877,6 @@ host, assets.clever-cloud.com, proxy
 host, assets.clickfunnels.com, proxy
 host-suffix, assets.digitalocean.com, proxy
 host, assets.lemonsqueezy.com, proxy
-host, assets.mcp.corespeed.io, proxy
 host, assets.science.nasa.gov, proxy
 host, assets.singaporeair.com, proxy
 host, assets.streamlinehq.com, proxy
@@ -4141,9 +4133,7 @@ host, segment.digitalocean.com, proxy
 host, service-icons.zeabur.com, proxy
 host-suffix, settings.crashlytics.com, proxy
 host, sf-coze-web-cdn.coze.com, proxy
-host, showcase.abovemarket.com, proxy
 host, sp-spiegel-de.spiegel.de, proxy
-host, spotlightimage.biggo.com, proxy
 host, static-assets.mapbox.com, proxy
 host, static-assets.vinted.com, proxy
 host, static-forms.klaviyo.com, proxy
@@ -4268,7 +4258,6 @@ host, tiles.maps.opensearch.org, proxy
 host, trekcdnprod.azureedge.net, proxy
 host, tuf-repo-cdn.sigstore.dev, proxy
 host, ubistatic2-a.akamaihd.net, proxy
-host, unlimited-cdn.waifu2x.net, proxy
 host, vz-2222604c-50b.b-cdn.net, proxy
 host, vz-c0fe498e-5ab.b-cdn.net, proxy
 host, web-assets.esetstatic.com, proxy
@@ -4585,6 +4574,7 @@ host, android-safebrowsing.google.com, proxy
 host, bookface-static.ycombinator.com, proxy
 host, brand-assets.cne.ngc.nvidia.com, proxy
 host, bunnycdn-video-assets.b-cdn.net, proxy
+host, cdn-resize-prod-com.500px.cloud, proxy
 host, cdn-widgetsrepository.yotpo.com, proxy
 host, cdn.playersupport.riotgames.com, proxy
 host, cdn.techcommunity.microsoft.com, proxy

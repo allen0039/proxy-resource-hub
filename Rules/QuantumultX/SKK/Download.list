@@ -3,9 +3,9 @@
 # Derived from https://github.com/SukkaW/Surge
 # Source: https://ruleset.skk.moe/List/domainset/download.conf
 # Source: https://ruleset.skk.moe/List/non_ip/download.conf
-# Upstream Last Updated: 2026-11-10T07:17:12.870Z (domainset)
+# Upstream Last Updated: 2026-11-27T12:05:50.058Z (domainset)
 # Upstream Last Updated: 2026-08-05T12:33:04.408Z (non_ip)
-# Rule count: 1980
+# Rule count: 1975
 
 host, 7h15.ru1353t.1s.m4d3.by.5ukk4w.skk.moe, proxy
 host-suffix, gcr.io, proxy
@@ -125,7 +125,6 @@ host, ftp.daum.net, proxy
 host, ftp.eq.uc.pt, proxy
 host, ftp.funet.fi, proxy
 host, ftp.is.co.za, proxy
-host, ftp.ktug.org, proxy
 host, ftp.lanet.kr, proxy
 host, ftp.linux.cz, proxy
 host, ftp.linux.it, proxy
@@ -771,7 +770,6 @@ host, cdimage.ubuntu.com, proxy
 host, cisco.yuntu.com.tw, proxy
 host, cpan-mirror.rbc.ru, proxy
 host, cpan.dcc.uchile.cl, proxy
-host, cpan.mines-albi.fr, proxy
 host, ctan.dcc.uchile.cl, proxy
 host, ctan.math.utah.edu, proxy
 host, ctan.mines-albi.fr, proxy
@@ -1460,10 +1458,8 @@ host, mirror.debian.ikoula.com, proxy
 host, mirror.digitaloceans.dev, proxy
 host, mirror.dimensiondata.com, proxy
 host, mirror.grid.uchicago.edu, proxy
-host, mirror.library.ucy.ac.cy, proxy
 host-suffix, mirror.liquidtelecom.com, proxy
 host, mirror.mythic-beasts.com, proxy
-host, mirror.netcologne.de.org, proxy
 host, mirror.ubuntu.ikoula.com, proxy
 host, mirror.unix-solutions.be, proxy
 host, mirror.us.mirhosting.net, proxy
@@ -1602,7 +1598,6 @@ host, mirror.bharatdatacenter.com, proxy
 host, mirror.domainhizmetleri.com, proxy
 host, mirror.improve.nordlo.cloud, proxy
 host, mirror.retentionrange.co.bw, proxy
-host, mirror.thunderhosting.cloud, proxy
 host, mirror.united-gameserver.de, proxy
 host, mirrors.advancedhosters.com, proxy
 host-suffix, oss-ap-south-1.aliyuncs.com, proxy
